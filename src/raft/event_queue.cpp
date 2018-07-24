@@ -30,7 +30,7 @@ namespace SJTU {
 			while(true) {
 				boost::unique_lock<boost::mutex> lk(mtx_);
 				/// only when events_ are present can execute forward...
-				cond_.wait(lk, [] { return !events_.empty(); });
+				cond_.wait(lk, [this] { return !events_.empty(); });
 				auto event = events_.front(); events_.pop();
 				event();
 			}
@@ -38,7 +38,7 @@ namespace SJTU {
 
 		void addEvent(std::function<void()> f) {
 			boost::unique_lock<boost::mutex> lk(mtx_);
-			cond_.wait(lk, [] { return events_.empty(); });
+			cond_.wait(lk, [this] { return events_.empty(); });
 			events_.push(std::move(f));
 		}
 	};
@@ -49,5 +49,4 @@ namespace SJTU {
 	void EventQueue::addEvent(std::function<void()> f) {
 		pImpl->addEvent(std::move(f));
 	}
-
 };

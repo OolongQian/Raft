@@ -2,8 +2,8 @@
 
 namespace SJTU {
 	struct Server::Impl {
-		gRPC ClientEnd;
-		raft::Raft raft;
+		// gRPC ClientEnd;
+		// raft::Raft raft;
 	};
 
 	void Server::Start() {}

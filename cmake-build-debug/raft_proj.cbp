@@ -38,8 +38,8 @@
 				</MakeCommands>
 			</Target>
 			<Target title="raft_proj">
-				<Option output="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/src/libraft_proj.a" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/src"/>
+				<Option output="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin/libraft_proj.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
 				<Option compiler="gcc"/>
@@ -53,15 +53,15 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 raft_proj"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 raft_proj"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="raft_proj/fast">
-				<Option output="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/src/libraft_proj.a" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/src"/>
+				<Option output="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin/libraft_proj.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
 				<Option compiler="gcc"/>
@@ -75,15 +75,15 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 raft_proj/fast"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 raft_proj/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="hello">
-				<Option output="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/src/hello" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/src"/>
+				<Option output="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin/hello" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -97,15 +97,15 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 hello"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 hello"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="hello/fast">
-				<Option output="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/src/hello" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/src"/>
+				<Option output="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin/hello" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -119,10 +119,10 @@
 					<Add directory="/Library/Frameworks"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 hello/fast"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/src/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 hello/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed\ system/raft_proj/cmake-build-debug/bin/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
@@ -133,9 +133,15 @@
 		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/src/raft/event_queue.cpp">
 			<Option target="raft_proj"/>
 		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/src/raft/raft.cpp">
+			<Option target="raft_proj"/>
+		</Unit>
 		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/src/server.cpp">
 			<Option target="raft_proj"/>
 			<Option target="hello"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/src/time/timer.cpp">
+			<Option target="raft_proj"/>
 		</Unit>
 		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>

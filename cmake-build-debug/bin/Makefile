@@ -111,6 +111,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+bin/CMakeFiles/raft_proj.dir/rule:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f CMakeFiles/Makefile2 bin/CMakeFiles/raft_proj.dir/rule
+.PHONY : bin/CMakeFiles/raft_proj.dir/rule
+
+# Convenience name for target.
+raft_proj: bin/CMakeFiles/raft_proj.dir/rule
+
+.PHONY : raft_proj
+
+# fast build rule for target.
+raft_proj/fast:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/build
+.PHONY : raft_proj/fast
+
+# Convenience name for target.
 bin/CMakeFiles/hello.dir/rule:
 	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f CMakeFiles/Makefile2 bin/CMakeFiles/hello.dir/rule
 .PHONY : bin/CMakeFiles/hello.dir/rule
@@ -131,6 +146,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/main.cpp.o
 	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/hello.dir/build.make bin/CMakeFiles/hello.dir/main.cpp.o
 .PHONY : main.cpp.o
 
@@ -140,6 +156,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/main.cpp.i
 	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/hello.dir/build.make bin/CMakeFiles/hello.dir/main.cpp.i
 .PHONY : main.cpp.i
 
@@ -149,8 +166,120 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/main.cpp.s
 	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/hello.dir/build.make bin/CMakeFiles/hello.dir/main.cpp.s
 .PHONY : main.cpp.s
+
+raft/event_queue.o: raft/event_queue.cpp.o
+
+.PHONY : raft/event_queue.o
+
+# target to build an object file
+raft/event_queue.cpp.o:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o
+.PHONY : raft/event_queue.cpp.o
+
+raft/event_queue.i: raft/event_queue.cpp.i
+
+.PHONY : raft/event_queue.i
+
+# target to preprocess a source file
+raft/event_queue.cpp.i:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.i
+.PHONY : raft/event_queue.cpp.i
+
+raft/event_queue.s: raft/event_queue.cpp.s
+
+.PHONY : raft/event_queue.s
+
+# target to generate assembly for a file
+raft/event_queue.cpp.s:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.s
+.PHONY : raft/event_queue.cpp.s
+
+raft/raft.o: raft/raft.cpp.o
+
+.PHONY : raft/raft.o
+
+# target to build an object file
+raft/raft.cpp.o:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o
+.PHONY : raft/raft.cpp.o
+
+raft/raft.i: raft/raft.cpp.i
+
+.PHONY : raft/raft.i
+
+# target to preprocess a source file
+raft/raft.cpp.i:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.i
+.PHONY : raft/raft.cpp.i
+
+raft/raft.s: raft/raft.cpp.s
+
+.PHONY : raft/raft.s
+
+# target to generate assembly for a file
+raft/raft.cpp.s:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.s
+.PHONY : raft/raft.cpp.s
+
+server.o: server.cpp.o
+
+.PHONY : server.o
+
+# target to build an object file
+server.cpp.o:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/server.cpp.o
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/hello.dir/build.make bin/CMakeFiles/hello.dir/server.cpp.o
+.PHONY : server.cpp.o
+
+server.i: server.cpp.i
+
+.PHONY : server.i
+
+# target to preprocess a source file
+server.cpp.i:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/server.cpp.i
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/hello.dir/build.make bin/CMakeFiles/hello.dir/server.cpp.i
+.PHONY : server.cpp.i
+
+server.s: server.cpp.s
+
+.PHONY : server.s
+
+# target to generate assembly for a file
+server.cpp.s:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/server.cpp.s
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/hello.dir/build.make bin/CMakeFiles/hello.dir/server.cpp.s
+.PHONY : server.cpp.s
+
+time/timer.o: time/timer.cpp.o
+
+.PHONY : time/timer.o
+
+# target to build an object file
+time/timer.cpp.o:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/time/timer.cpp.o
+.PHONY : time/timer.cpp.o
+
+time/timer.i: time/timer.cpp.i
+
+.PHONY : time/timer.i
+
+# target to preprocess a source file
+time/timer.cpp.i:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/time/timer.cpp.i
+.PHONY : time/timer.cpp.i
+
+time/timer.s: time/timer.cpp.s
+
+.PHONY : time/timer.s
+
+# target to generate assembly for a file
+time/timer.cpp.s:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/time/timer.cpp.s
+.PHONY : time/timer.cpp.s
 
 # Help Target
 help:
@@ -160,10 +289,23 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... raft_proj"
 	@echo "... hello"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... raft/event_queue.o"
+	@echo "... raft/event_queue.i"
+	@echo "... raft/event_queue.s"
+	@echo "... raft/raft.o"
+	@echo "... raft/raft.i"
+	@echo "... raft/raft.s"
+	@echo "... server.o"
+	@echo "... server.i"
+	@echo "... server.s"
+	@echo "... time/timer.o"
+	@echo "... time/timer.i"
+	@echo "... time/timer.s"
 .PHONY : help
 
 

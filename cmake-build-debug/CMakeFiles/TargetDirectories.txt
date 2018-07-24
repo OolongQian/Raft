@@ -1,6 +1,6 @@
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/CMakeFiles/rebuild_cache.dir
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/src/CMakeFiles/rebuild_cache.dir
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/src/CMakeFiles/edit_cache.dir
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/src/CMakeFiles/raft_proj.dir
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/src/CMakeFiles/hello.dir
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin/CMakeFiles/rebuild_cache.dir
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin/CMakeFiles/edit_cache.dir
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin/CMakeFiles/raft_proj.dir
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin/CMakeFiles/hello.dir

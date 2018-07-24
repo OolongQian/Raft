@@ -120,7 +120,7 @@ raft_proj: cmake_check_build_system
 
 # fast build rule for target.
 raft_proj/fast:
-	$(MAKE) -f src/CMakeFiles/raft_proj.dir/build.make src/CMakeFiles/raft_proj.dir/build
+	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/build
 .PHONY : raft_proj/fast
 
 #=============================================================================
@@ -133,7 +133,7 @@ hello: cmake_check_build_system
 
 # fast build rule for target.
 hello/fast:
-	$(MAKE) -f src/CMakeFiles/hello.dir/build.make src/CMakeFiles/hello.dir/build
+	$(MAKE) -f bin/CMakeFiles/hello.dir/build.make bin/CMakeFiles/hello.dir/build
 .PHONY : hello/fast
 
 # Help Target

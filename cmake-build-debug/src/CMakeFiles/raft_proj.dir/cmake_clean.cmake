@@ -1,7 +1,9 @@
 file(REMOVE_RECURSE
   "CMakeFiles/raft_proj.dir/main.cpp.o"
   "CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o"
+  "CMakeFiles/raft_proj.dir/raft/raft.cpp.o"
   "CMakeFiles/raft_proj.dir/server.cpp.o"
+  "CMakeFiles/raft_proj.dir/time/timer.cpp.o"
   "libraft_proj.pdb"
   "libraft_proj.a"
 )

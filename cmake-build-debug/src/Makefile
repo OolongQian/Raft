@@ -197,6 +197,33 @@ raft/event_queue.cpp.s:
 	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f src/CMakeFiles/raft_proj.dir/build.make src/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.s
 .PHONY : raft/event_queue.cpp.s
 
+raft/raft.o: raft/raft.cpp.o
+
+.PHONY : raft/raft.o
+
+# target to build an object file
+raft/raft.cpp.o:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f src/CMakeFiles/raft_proj.dir/build.make src/CMakeFiles/raft_proj.dir/raft/raft.cpp.o
+.PHONY : raft/raft.cpp.o
+
+raft/raft.i: raft/raft.cpp.i
+
+.PHONY : raft/raft.i
+
+# target to preprocess a source file
+raft/raft.cpp.i:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f src/CMakeFiles/raft_proj.dir/build.make src/CMakeFiles/raft_proj.dir/raft/raft.cpp.i
+.PHONY : raft/raft.cpp.i
+
+raft/raft.s: raft/raft.cpp.s
+
+.PHONY : raft/raft.s
+
+# target to generate assembly for a file
+raft/raft.cpp.s:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f src/CMakeFiles/raft_proj.dir/build.make src/CMakeFiles/raft_proj.dir/raft/raft.cpp.s
+.PHONY : raft/raft.cpp.s
+
 server.o: server.cpp.o
 
 .PHONY : server.o
@@ -227,6 +254,33 @@ server.cpp.s:
 	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f src/CMakeFiles/hello.dir/build.make src/CMakeFiles/hello.dir/server.cpp.s
 .PHONY : server.cpp.s
 
+time/timer.o: time/timer.cpp.o
+
+.PHONY : time/timer.o
+
+# target to build an object file
+time/timer.cpp.o:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f src/CMakeFiles/raft_proj.dir/build.make src/CMakeFiles/raft_proj.dir/time/timer.cpp.o
+.PHONY : time/timer.cpp.o
+
+time/timer.i: time/timer.cpp.i
+
+.PHONY : time/timer.i
+
+# target to preprocess a source file
+time/timer.cpp.i:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f src/CMakeFiles/raft_proj.dir/build.make src/CMakeFiles/raft_proj.dir/time/timer.cpp.i
+.PHONY : time/timer.cpp.i
+
+time/timer.s: time/timer.cpp.s
+
+.PHONY : time/timer.s
+
+# target to generate assembly for a file
+time/timer.cpp.s:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(MAKE) -f src/CMakeFiles/raft_proj.dir/build.make src/CMakeFiles/raft_proj.dir/time/timer.cpp.s
+.PHONY : time/timer.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -243,9 +297,15 @@ help:
 	@echo "... raft/event_queue.o"
 	@echo "... raft/event_queue.i"
 	@echo "... raft/event_queue.s"
+	@echo "... raft/raft.o"
+	@echo "... raft/raft.i"
+	@echo "... raft/raft.s"
 	@echo "... server.o"
 	@echo "... server.i"
 	@echo "... server.s"
+	@echo "... time/timer.o"
+	@echo "... time/timer.i"
+	@echo "... time/timer.s"
 .PHONY : help
 
 

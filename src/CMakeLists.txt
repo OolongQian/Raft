@@ -19,3 +19,6 @@ target_link_libraries(${PROJECT_NAME}
         ${PROTOBUF_LIBRARIES}
         ${GRPC_LIBRARIES}
         )
+
+# some strange problems, add some compile command to fix 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lboost_system -lboost_filesystem")
