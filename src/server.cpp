@@ -1,12 +1,18 @@
 #include "../include/server.h"
+#include "../include/raft/raft.h"
 
 namespace SJTU {
 	struct Server::Impl {
 		// gRPC ClientEnd;
-		// raft::Raft raft;
+		Raft raft;
 	};
 
-	void Server::Start() {}
+	void Server::StartUp() {
+		pImpl->raft.init();
+		pImpl->raft.Start();
+	}
 
-	void Server::ShutDown() {}
+	void Server::ShutDown() {
+
+	}
 };

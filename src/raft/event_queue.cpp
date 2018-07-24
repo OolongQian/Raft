@@ -1,4 +1,4 @@
-#include "../../include/raft/event_queue.h"
+#include "../../include/raft/event_queue/event_queue.h"
 
 #include <queue>
 #include <functional>
@@ -15,6 +15,7 @@ namespace SJTU {
 		 * */
 		boost::mutex mtx_;
 		boost::condition_variable cond_;
+		boost::thread th_;
 
 
 		/**
@@ -41,6 +42,16 @@ namespace SJTU {
 			cond_.wait(lk, [this] { return events_.empty(); });
 			events_.push(std::move(f));
 		}
+
+		void Start() {
+			th_ = boost::thread(execute);
+		}
+
+		void Stop() {
+			th_.interrupt();
+			if(th_.joinable())
+				th_.join();
+		}
 	};
 
 	/**
@@ -48,5 +59,13 @@ namespace SJTU {
 	 * */
 	void EventQueue::addEvent(std::function<void()> f) {
 		pImpl->addEvent(std::move(f));
+	}
+
+	void EventQueue::Start() {
+		pImpl->Start();
+	}
+
+	void EventQueue::Stop() {
+		pImpl->Stop();
 	}
 };

@@ -1,5 +1,1 @@
-#include <boost/thread.hpp>
-
-int main() {
-	return 0;
-}
+#include "/include/server.h"

@@ -11,6 +11,8 @@ namespace SJTU {
 		/// timer starts to count down.
 		void Start();
 
+		void Stop();
+
 		/**
 		 * When a timer runs into the case of timeout, it behaves differently with respect to
 		 * its current identity.
@@ -26,6 +28,8 @@ namespace SJTU {
 		 * Note that BindAction needs to be invoked before Start in order to work properly.
 		 * */
 		void BindAction(std::function<void() > f);
+
+		void BindPushEvent(std::function<void(std::function<void()> ) > f);
 
 	private:
 		struct Impl;

@@ -6,7 +6,7 @@
 namespace SJTU {
 	class Server {
 	public:
-		void Start();
+		void StartUp();
 		void ShutDown();
 
 	private:

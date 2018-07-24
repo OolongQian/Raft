@@ -5,9 +5,20 @@
 
 namespace SJTU {
 	class Raft {
+	public:
 		/**
 		 * I haven't figured out what raft can do, so I just leave it here.
 		 * */
+
+		/**
+		 * bind terminate action for timer and start eventQueue and Timer.
+		 * */
+		void init();
+
+		void Start();
+
+		void Stop();
+
 	private:
 		struct Impl;
 		std::unique_ptr <Impl> pImpl;
