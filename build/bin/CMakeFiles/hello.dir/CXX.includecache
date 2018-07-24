@@ -1,0 +1,12 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/src/main.cpp
+iostream
+-
+

@@ -1,0 +1,57 @@
+/Applications/CLion.app/Contents/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj"
+-- Found GRPC: /usr/local/lib/libgrpc++.dylib;/usr/local/lib/libgrpc.dylib;/usr/local/lib/libgpr.dylib; plugin - /usr/local/bin/grpc_cpp_plugin
+CMake Warning at /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:801 (message):
+  New Boost version may have incorrect or missing dependencies and imported
+  targets
+Call Stack (most recent call first):
+  /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:907 (_Boost_COMPONENT_DEPENDENCIES)
+  /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:1542 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:10 (FIND_PACKAGE)
+
+
+CMake Warning at /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:801 (message):
+  New Boost version may have incorrect or missing dependencies and imported
+  targets
+Call Stack (most recent call first):
+  /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:907 (_Boost_COMPONENT_DEPENDENCIES)
+  /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:1542 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:10 (FIND_PACKAGE)
+
+
+CMake Warning at /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:801 (message):
+  New Boost version may have incorrect or missing dependencies and imported
+  targets
+Call Stack (most recent call first):
+  /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:907 (_Boost_COMPONENT_DEPENDENCIES)
+  /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:1542 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:10 (FIND_PACKAGE)
+
+
+CMake Warning at /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:801 (message):
+  New Boost version may have incorrect or missing dependencies and imported
+  targets
+Call Stack (most recent call first):
+  /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:907 (_Boost_COMPONENT_DEPENDENCIES)
+  /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:1542 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:10 (FIND_PACKAGE)
+
+
+CMake Warning at /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:801 (message):
+  New Boost version may have incorrect or missing dependencies and imported
+  targets
+Call Stack (most recent call first):
+  /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:907 (_Boost_COMPONENT_DEPENDENCIES)
+  /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:1542 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:10 (FIND_PACKAGE)
+
+
+-- Boost version: 1.67.0
+-- Found the following Boost libraries:
+--   system
+--   thread
+--   chrono
+--   date_time
+--   atomic
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug
