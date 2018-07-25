@@ -1,7 +1,6 @@
 #include "../include/server.h"
 #include <thread>
 
-
 int main() {
 	SJTU::Server server;
 	server.StartUp();

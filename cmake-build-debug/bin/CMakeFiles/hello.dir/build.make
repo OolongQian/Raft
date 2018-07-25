@@ -43,10 +43,10 @@ RM = /Applications/CLion.app/Contents/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj"
+CMAKE_SOURCE_DIR = "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug"
+CMAKE_BINARY_DIR = "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug"
 
 # Include any dependencies generated for this target.
 include bin/CMakeFiles/hello.dir/depend.make
@@ -59,16 +59,16 @@ include bin/CMakeFiles/hello.dir/flags.make
 
 bin/CMakeFiles/hello.dir/main.cpp.o: bin/CMakeFiles/hello.dir/flags.make
 bin/CMakeFiles/hello.dir/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object bin/CMakeFiles/hello.dir/main.cpp.o"
-	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hello.dir/main.cpp.o -c "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/src/main.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object bin/CMakeFiles/hello.dir/main.cpp.o"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hello.dir/main.cpp.o -c "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/main.cpp"
 
 bin/CMakeFiles/hello.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hello.dir/main.cpp.i"
-	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/src/main.cpp" > CMakeFiles/hello.dir/main.cpp.i
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/main.cpp" > CMakeFiles/hello.dir/main.cpp.i
 
 bin/CMakeFiles/hello.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hello.dir/main.cpp.s"
-	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/src/main.cpp" -o CMakeFiles/hello.dir/main.cpp.s
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/main.cpp" -o CMakeFiles/hello.dir/main.cpp.s
 
 bin/CMakeFiles/hello.dir/main.cpp.o.requires:
 
@@ -107,8 +107,8 @@ bin/hello: /usr/local/lib/libgrpc++.dylib
 bin/hello: /usr/local/lib/libgrpc.dylib
 bin/hello: /usr/local/lib/libgpr.dylib
 bin/hello: bin/CMakeFiles/hello.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable hello"
-	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin" && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/hello.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable hello"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/hello.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 bin/CMakeFiles/hello.dir/build: bin/hello
@@ -120,10 +120,10 @@ bin/CMakeFiles/hello.dir/requires: bin/CMakeFiles/hello.dir/main.cpp.o.requires
 .PHONY : bin/CMakeFiles/hello.dir/requires
 
 bin/CMakeFiles/hello.dir/clean:
-	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin" && $(CMAKE_COMMAND) -P CMakeFiles/hello.dir/cmake_clean.cmake
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && $(CMAKE_COMMAND) -P CMakeFiles/hello.dir/cmake_clean.cmake
 .PHONY : bin/CMakeFiles/hello.dir/clean
 
 bin/CMakeFiles/hello.dir/depend:
-	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj" "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/src" "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug" "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin" "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug/bin/CMakeFiles/hello.dir/DependInfo.cmake" --color=$(COLOR)
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft" "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src" "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug" "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin/CMakeFiles/hello.dir/DependInfo.cmake" --color=$(COLOR)
 .PHONY : bin/CMakeFiles/hello.dir/depend
 

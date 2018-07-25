@@ -1,4 +1,4 @@
-# Install script for directory: /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/src
+# Install script for directory: /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

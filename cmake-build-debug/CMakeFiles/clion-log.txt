@@ -1,4 +1,4 @@
-/Applications/CLion.app/Contents/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj"
+/Applications/CLion.app/Contents/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft"
 CMake Warning at /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.10/Modules/FindBoost.cmake:801 (message):
   New Boost version may have incorrect or missing dependencies and imported
   targets
@@ -114,4 +114,4 @@ Call Stack (most recent call first):
 -- Found GRPC: /usr/local/lib/libgrpc++.dylib;/usr/local/lib/libgrpc.dylib;/usr/local/lib/libgpr.dylib; plugin - /usr/local/bin/grpc_cpp_plugin
 -- Configuring done
 -- Generating done
--- Build files have been written to: /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/cmake-build-debug
+-- Build files have been written to: /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug

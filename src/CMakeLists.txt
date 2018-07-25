@@ -1,5 +1,4 @@
-file(GLOB_RECURSE LIB_SOURCE *.cpp *.cc)
-
+file(GLOB_RECURSE LIB_SOURCE *.cpp *.cc *.h)
 
 add_library(${PROJECT_NAME} STATIC ${LIB_SOURCE} ${INCLUDE_DIRECTORIES})
 
@@ -19,11 +18,12 @@ target_link_libraries(${PROJECT_NAME}
         )
 
 ADD_EXECUTABLE(hello main.cpp)
+
 target_link_libraries(hello
         ${PROJECT_NAME}
         ${Boost_LIBRARIES}
         ${PROTOBUF_LIBRARIES}
         ${GRPC_LIBRARIES})
 
-# some strange problems, add some compile command to fix 
+# some strange problems, add some compile command to fix
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lboost_system -lboost_filesystem")
