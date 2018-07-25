@@ -6,6 +6,9 @@
 namespace SJTU {
 	class Raft {
 	public:
+		Raft() {}
+
+		~Raft();
 		/**
 		 * I haven't figured out what raft can do, so I just leave it here.
 		 * */

@@ -6,6 +6,9 @@
 namespace SJTU {
 	class EventQueue {
 	public:
+		EventQueue() {}
+
+		~EventQueue();
 
 		/**
 		 * This Start() member function triggers EventQueue's execution,

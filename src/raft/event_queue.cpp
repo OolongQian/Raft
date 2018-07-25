@@ -54,6 +54,7 @@ namespace SJTU {
 		}
 	};
 
+	EventQueue::~EventQueue() = default;
 	/**
 	 * have to be synchronized by Impl.
 	 * */

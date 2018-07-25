@@ -4,15 +4,16 @@
 namespace SJTU {
 	struct Server::Impl {
 		// gRPC ClientEnd;
-		Raft raft;
+		// Raft raft;
 	};
 
+	Server::~Server() = default;
 	void Server::StartUp() {
-		pImpl->raft.init();
-		pImpl->raft.Start();
+		// pImpl->raft.init();
+		// pImpl->raft.Start();
 	}
 
 	void Server::ShutDown() {
-
+		// pImpl->raft.Stop();
 	}
 };

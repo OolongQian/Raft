@@ -6,6 +6,9 @@
 namespace SJTU {
 	class Server {
 	public:
+		Server() : pImpl(std::make_unique<Impl>()) {}
+
+		~Server();
 		void StartUp();
 		void ShutDown();
 

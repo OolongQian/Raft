@@ -6,19 +6,25 @@ namespace SJTU {
 	struct Timer::Impl {
 		int time_;   /// use boost::chrono lib later on.
 		std::function<void()> timeOutAction_;
-		std::function<void()> pushEvent_;
+		std::function<void(std::function<void()>)> pushEvent_;
 		boost::thread th;
 	};
 
+	Timer::~Timer() = default;
+
 	void Timer::BindAction(std::function<void()> f) {
 		pImpl->timeOutAction_ = std::move(f);
+	}
+
+	void Timer::BindPushEvent(std::function<void(std::function<void()>)> f) {
+		pImpl->pushEvent_ = std::move(f);
 	}
 
 	void Timer::Start() {
 		pImpl->th = boost::thread([this] {
 			// sleep(pImpl->time_);
 			sleep(1);
-			pImpl->timeOutAction_();
+			pImpl->pushEvent_(pImpl->timeOutAction_);
 		});
 	}
 

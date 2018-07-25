@@ -10,11 +10,13 @@ namespace SJTU {
 		Timer timer_;
 	};
 
+	Raft::~Raft() = default;
+
 	void Raft::init() {
 		pImpl->timer_.BindAction([] {
 			std::cout << "timer's terminate action is triggered" << std::endl;
 		});
-		pImpl->timer_.BindPushEvent(pImpl->eventQueue_.addEvent); 
+		pImpl->timer_.BindPushEvent(std::bind(&EventQueue::addEvent, &pImpl->eventQueue_, std::placeholders::_1));
 	}
 
 	void Raft::Start() {
