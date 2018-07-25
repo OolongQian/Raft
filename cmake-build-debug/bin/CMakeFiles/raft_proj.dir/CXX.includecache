@@ -9,6 +9,8 @@
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/include/raft/event_queue/event_queue.h
 functional
 -
+memory
+-
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/include/raft/raft.h
 memory

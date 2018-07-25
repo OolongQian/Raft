@@ -37,3 +37,26 @@ raft 逻辑需要发送各种rpc，并且监听各种rpc，而这些rpc我都不
 这样的话总体的架构就为：rpc、timer、eventQueue。
 
 因为我现在还不会gRPC，但是我又想写一点代码，所以我还是先写timer和eventQueue。
+
+
+
+现在是2018年7月25日上午。
+raft工程已经有了长足的进展，我现在已经弄懂了这个工程的基本架构，我现在需要进行深入的思考，考虑到这个工程的细节问题，再继续做下去。
+我接下来要深入思考各个模块究竟是怎么交互的。
+
+raft当中有timer eventQueue 和 rpcServer。然后rpcServer和timer会根据它们收到的msg来作出相应的回应，并且将这个回应塞进eventQueue
+里面。
+
+这样的话我在 raft 当中，在初始化的时候就要给它们bind一个向eventQueue当中塞入function<void>的函数。（如果没有这个函数
+那么，子模块各种具体作用的函数会频繁修改，但是往eventQueue当中塞入函数的这个method是不变的，如果我们的设计选择不bind塞入函数的函数，
+就会做很多重复工作，这是不合时宜的）。
+好，现在bind函数已经就绪。
+
+那么raftRPC和timer都是根据什么作出具体的回应的呢？是根据它们的identity，因此每次identity转换的时候，我们都需要进行重新bind。
+这就是identity transform所做的事情。其实我想写什么都可以，我只要写在那里，构造一个对象，写一点成员函数，然后bind给timer就行了。
+
+timer需要什么，它会进行的动作仅仅是在timeout的时候在eventQueue里面绑定一个东西。
+那么raftRPC server需要什么呢？它需要的仅仅是在收到requestVoteRPC和AppendEntryRPC的时候作出反应即可，因此所需要bind的动作还是
+挺有限的。
+诶，话说我为什么要考虑这个问题，大概是因为我怕在bind的过程当中bind太多的函数进到这些对象当中去，导致写得很丑陋，但是我稍微考虑一下感觉
+并不会发生这种问题，but anyway，我接下来抄写一下论文当中的三个identity的具体动作，然后接下来的工作是写好框架，接下来学习gRPC。

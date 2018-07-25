@@ -28,48 +28,43 @@ namespace SJTU {
 		 * threads to add to it.
 		 * */
 		void execute() {
-			while(true) {
+			while (true) {
 				boost::unique_lock<boost::mutex> lk(mtx_);
 				/// only when events_ are present can execute forward...
+				printf("thread is waiting...\n");
 				cond_.wait(lk, [this] { return !events_.empty(); });
-				auto event = events_.front(); events_.pop();
+				printf("thread keeps going...\n");
+				auto event = events_.front();
+				events_.pop();
 				event();
 			}
 		}
-
-		void addEvent(std::function<void()> f) {
-			boost::unique_lock<boost::mutex> lk(mtx_);
-			cond_.wait(lk, [this] { return events_.empty(); });
-			events_.push(std::move(f));
-		}
-
-		void Start() {
-			th_ = boost::thread(std::bind(&EventQueue::Impl::execute, this));
-		}
-
-		void Stop() {
-			th_.interrupt();
-			if(th_.joinable())
-				th_.join();
-		}
 	};
 
-	EventQueue::EventQueue(): pImpl(std::make_unique<Impl>()) {}
+	EventQueue::EventQueue() : pImpl(std::make_unique<Impl>()) {}
 
 	EventQueue::~EventQueue() = default;
+
 	/**
 	 * have to be synchronized by Impl.
 	 * */
 	void EventQueue::addEvent(std::function<void()> f) {
-		pImpl->addEvent(std::move(f));
+		boost::unique_lock<boost::mutex> lk(pImpl->mtx_);
+		// cond_.wait(lk, [this] { return events_.empty(); });
+		pImpl->events_.push(std::move(f));
+		pImpl->cond_.notify_one();
 	}
 
 	void EventQueue::Start() {
-		pImpl->Start();
+		printf("event queue is starting and thread is sent out...\n");
+		pImpl->th_ = boost::thread([this] {
+			pImpl->execute();
+		});
 	}
 
 	void EventQueue::Stop() {
-		pImpl->Stop();
+		pImpl->th_.interrupt();
+		if (pImpl->th_.joinable())
+			pImpl->th_.join();
 	}
-
 };

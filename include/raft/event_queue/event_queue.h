@@ -2,6 +2,7 @@
 #define RAFT_PROJ_EVENT_QUEUE_H
 
 #include <functional>
+#include <memory>
 
 namespace SJTU {
 	class EventQueue {
@@ -18,6 +19,7 @@ namespace SJTU {
 		 * This is essentially a "model of producer and consumer".
 		 * */
 		void Start();
+
 		void Stop();
 
 		/**

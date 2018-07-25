@@ -29,8 +29,12 @@ namespace SJTU {
 		 *
 		 * Note that BindAction needs to be invoked before Start in order to work properly.
 		 * */
-		void BindAction(std::function<void() > f);
+		void BindTimeOutAction(std::function<void()> f);
 
+		/**
+		 * This function is AddEvent member function inside the EventQueue class, which allows timer
+		 * to insert whatever function it wants into EventQueue.
+		 * */
 		void BindPushEvent(std::function<void(std::function<void()> ) > f);
 
 	private:

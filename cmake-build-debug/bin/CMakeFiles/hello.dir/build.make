@@ -91,6 +91,17 @@ hello_EXTERNAL_OBJECTS =
 bin/hello: bin/CMakeFiles/hello.dir/main.cpp.o
 bin/hello: bin/CMakeFiles/hello.dir/build.make
 bin/hello: bin/libraft_proj.a
+bin/hello: /usr/local/lib/libboost_thread-mt.dylib
+bin/hello: /usr/local/lib/libboost_log-mt.dylib
+bin/hello: /usr/local/lib/libboost_unit_test_framework-mt.dylib
+bin/hello: /usr/local/lib/libboost_serialization-mt.dylib
+bin/hello: /usr/local/lib/libboost_chrono-mt.dylib
+bin/hello: /usr/local/lib/libboost_system-mt.dylib
+bin/hello: /usr/local/lib/libboost_date_time-mt.dylib
+bin/hello: /usr/local/lib/libboost_atomic-mt.dylib
+bin/hello: /usr/local/lib/libboost_log_setup-mt.dylib
+bin/hello: /usr/local/lib/libboost_filesystem-mt.dylib
+bin/hello: /usr/local/lib/libboost_regex-mt.dylib
 bin/hello: /usr/local/lib/libprotobuf.dylib
 bin/hello: /usr/local/lib/libgrpc++.dylib
 bin/hello: /usr/local/lib/libgrpc.dylib

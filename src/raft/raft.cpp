@@ -15,10 +15,17 @@ namespace SJTU {
 	Raft::~Raft() = default;
 
 	void Raft::init() {
-		pImpl->timer_.BindAction([] {
+		printf("raft is initting...\n");
+		printf("raft is binding terminate action...\n");
+
+		pImpl->timer_.BindPushEvent(std::bind(&EventQueue::addEvent, &pImpl->eventQueue_, std::placeholders::_1));
+		pImpl->timer_.BindTimeOutAction([] {
 			std::cout << "timer's terminate action is triggered" << std::endl;
 		});
-		pImpl->timer_.BindPushEvent(std::bind(&EventQueue::addEvent, &pImpl->eventQueue_, std::placeholders::_1));
+
+//		pImpl->timer_.BindTimeOutAction(std::bind(&EventQueue::addEvent, &pImpl->eventQueue_, [] {
+//			std::cout << "timer's terminate action is triggered" << std::endl;
+//		}));
 	}
 
 	void Raft::Start() {
