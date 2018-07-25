@@ -111,19 +111,6 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named raft_proj
-
-# Build rule for target.
-raft_proj: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 raft_proj
-.PHONY : raft_proj
-
-# fast build rule for target.
-raft_proj/fast:
-	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/build
-.PHONY : raft_proj/fast
-
-#=============================================================================
 # Target rules for targets named hello
 
 # Build rule for target.
@@ -136,6 +123,19 @@ hello/fast:
 	$(MAKE) -f bin/CMakeFiles/hello.dir/build.make bin/CMakeFiles/hello.dir/build
 .PHONY : hello/fast
 
+#=============================================================================
+# Target rules for targets named raft_proj
+
+# Build rule for target.
+raft_proj: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 raft_proj
+.PHONY : raft_proj
+
+# fast build rule for target.
+raft_proj/fast:
+	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/build
+.PHONY : raft_proj/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -144,8 +144,8 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... raft_proj"
 	@echo "... hello"
+	@echo "... raft_proj"
 .PHONY : help
 
 

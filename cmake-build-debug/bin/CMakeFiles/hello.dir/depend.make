@@ -4,7 +4,3 @@
 bin/CMakeFiles/hello.dir/main.cpp.o: ../include/server.h
 bin/CMakeFiles/hello.dir/main.cpp.o: ../src/main.cpp
 
-bin/CMakeFiles/hello.dir/server.cpp.o: ../include/raft/raft.h
-bin/CMakeFiles/hello.dir/server.cpp.o: ../include/server.h
-bin/CMakeFiles/hello.dir/server.cpp.o: ../src/server.cpp
-

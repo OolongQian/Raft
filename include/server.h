@@ -6,10 +6,12 @@
 namespace SJTU {
 	class Server {
 	public:
-		Server() : pImpl(std::make_unique<Impl>()) {}
+		Server();
 
 		~Server();
+
 		void StartUp();
+
 		void ShutDown();
 
 	private:
@@ -17,5 +19,6 @@ namespace SJTU {
 		std::unique_ptr<Impl> pImpl;
 	};
 };
+
 
 #endif //RAFT_PROJ_SERVER_H

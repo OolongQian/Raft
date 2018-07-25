@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/include/server.h
+memory
+-
+
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/src/main.cpp
+../include/server.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/include/server.h
+thread
+-
+

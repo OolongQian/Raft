@@ -26,12 +26,6 @@ Boost_CHRONO_LIBRARY_DEBUG:FILEPATH=/usr/local/lib/libboost_chrono-mt.dylib
 //Boost chrono library (release)
 Boost_CHRONO_LIBRARY_RELEASE:FILEPATH=/usr/local/lib/libboost_chrono-mt.dylib
 
-//Boost COMPONENT library (debug)
-Boost_COMPONENT_LIBRARY_DEBUG:FILEPATH=Boost_COMPONENT_LIBRARY_DEBUG-NOTFOUND
-
-//Boost COMPONENT library (release)
-Boost_COMPONENT_LIBRARY_RELEASE:FILEPATH=Boost_COMPONENT_LIBRARY_RELEASE-NOTFOUND
-
 //Boost date_time library (debug)
 Boost_DATE_TIME_LIBRARY_DEBUG:FILEPATH=/usr/local/lib/libboost_date_time-mt.dylib
 
@@ -243,9 +237,6 @@ GRPCPP_LIBRARY:FILEPATH=/usr/local/lib/libgrpc++.dylib
 //Path to a program.
 GRPC_CPP_PLUGIN:FILEPATH=/usr/local/bin/grpc_cpp_plugin
 
-//The directory containing a CMake configuration file for GRPC.
-GRPC_DIR:PATH=GRPC_DIR-NOTFOUND
-
 //Path to a library.
 GRPC_LIBRARY:FILEPATH=/usr/local/lib/libgrpc.dylib
 
@@ -298,10 +289,6 @@ Boost_ATOMIC_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 Boost_CHRONO_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_CHRONO_LIBRARY_RELEASE
 Boost_CHRONO_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: Boost_COMPONENT_LIBRARY_DEBUG
-Boost_COMPONENT_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: Boost_COMPONENT_LIBRARY_RELEASE
-Boost_COMPONENT_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_DATE_TIME_LIBRARY_DEBUG
 Boost_DATE_TIME_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_DATE_TIME_LIBRARY_RELEASE
@@ -484,7 +471,7 @@ Protobuf_PROTOC_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Protobuf_PROTOC_LIBRARY_RELEASE
 Protobuf_PROTOC_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //Components requested for this build tree.
-_Boost_COMPONENTS_SEARCHED:INTERNAL=COMPONENT;atomic;chrono;date_time;system;thread
+_Boost_COMPONENTS_SEARCHED:INTERNAL=atomic;chrono;date_time;system;thread
 //Last used Boost_INCLUDE_DIR value.
 _Boost_INCLUDE_DIR_LAST:INTERNAL=/usr/local/include
 //Last used Boost_LIBRARY_DIR_DEBUG value.
@@ -495,4 +482,6 @@ _Boost_LIBRARY_DIR_RELEASE_LAST:INTERNAL=/usr/local/lib
 _Boost_NAMESPACE_LAST:INTERNAL=boost
 //Last used Boost_USE_MULTITHREADED value.
 _Boost_USE_MULTITHREADED_LAST:INTERNAL=TRUE
+//Last used Boost_USE_STATIC_LIBS value.
+_Boost_USE_STATIC_LIBS_LAST:INTERNAL=FALSE
 

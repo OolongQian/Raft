@@ -7,7 +7,7 @@
 namespace SJTU {
 	class Timer {
 	public:
-		Timer() {}
+		Timer();
 
 		~Timer();
 		/// timer starts to count down.

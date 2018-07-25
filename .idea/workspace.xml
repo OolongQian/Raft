@@ -2,8 +2,8 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
-      <config projectName="raft_proj" targetName="hello" />
       <config projectName="raft_proj" targetName="raft_proj" />
+      <config projectName="raft_proj" targetName="hello" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -13,31 +13,58 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ae9abb6e-d064-437d-a685-86c1734c862a" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/build/CMakeFiles/CMakeOutput.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/CXX.includecache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/depend.internal" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/build/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/build/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/build/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/build/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/cmake_clean.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/main.cpp.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/server.cpp.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/raft_proj.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/build/bin/CMakeFiles/raft_proj.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/raft_proj.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/build/bin/CMakeFiles/raft_proj.dir/depend.internal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/raft_proj.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/build/bin/CMakeFiles/raft_proj.dir/depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/raft_proj.dir/main.cpp.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/raft_proj.dir/server.cpp.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/raft_proj.dir/time/timer.cpp.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bin/hello" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bin/libraft_proj.a" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/6" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/8" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/build/bin/CMakeFiles/hello.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/build/bin/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/raft_proj.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/build/bin/CMakeFiles/raft_proj.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/bin/CMakeFiles/raft_proj.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/build/bin/CMakeFiles/raft_proj.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/bin/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/build/bin/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/count.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Progress/count.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/raft_proj.dir/DependInfo.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/raft_proj.dir/build.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/raft_proj.dir/cmake_clean.cmake" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/raft_proj.dir/depend.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/raft_proj.dir/flags.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/raft_proj.dir/link.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/raft_proj.dir/progress.make" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/hello.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/hello.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/hello.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/hello.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/hello.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/hello.dir/cmake_clean.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/hello.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/hello.dir/depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/raft_proj.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/raft_proj.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/hello.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/hello.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/hello.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/hello.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/hello.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/hello.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/raft_proj.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/raft_proj.dir/flags.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/raft_proj.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/bin/CMakeFiles/raft_proj.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/bin/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/bin/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/raft_proj.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/raft_proj.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/raft/event_queue/event_queue.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/raft/event_queue/event_queue.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/raft/raft.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/raft/raft.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/raft/timer/timer.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/raft/timer/timer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/server.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/server.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/raft/event_queue.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/raft/event_queue.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/raft/raft.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/raft/raft.cpp" afterDir="false" />
@@ -55,14 +82,20 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="server.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/server.cpp">
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-              <folding>
-                <element signature="e#0#30#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="198">
+              <caret line="9" column="32" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="23" selection-start-column="23" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -70,26 +103,17 @@
       <file leaf-file-name="server.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/include/server.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="15" column="32" lean-forward="true" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+            <state relative-caret-position="436">
+              <caret line="22" selection-start-line="22" selection-end-line="22" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="raft.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/include/raft/raft.h">
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="24" column="4" lean-forward="true" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="timer.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/include/raft/timer/timer.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+            <state relative-caret-position="440">
+              <caret line="20" column="21" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -107,6 +131,9 @@
     <findStrings>
       <find>unique</find>
       <find>BindAction</find>
+      <find>SJTU::Raft::Stop()</find>
+      <find>Raft::Stop()</find>
+      <find>std::bind</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -123,18 +150,18 @@
         <option value="$PROJECT_DIR$/include/raft/eventQueue.h" />
         <option value="$PROJECT_DIR$/include/raft/event_queue.h" />
         <option value="$PROJECT_DIR$/include/time/timer.hpp" />
-        <option value="$PROJECT_DIR$/src/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/include/time/timer.h" />
+        <option value="$PROJECT_DIR$/src/raft/raft.cpp" />
+        <option value="$PROJECT_DIR$/include/raft/raft.h" />
+        <option value="$PROJECT_DIR$/src/server.cpp" />
+        <option value="$PROJECT_DIR$/include/raft/event_queue/event_queue.h" />
+        <option value="$PROJECT_DIR$/include/raft/timer/timer.h" />
+        <option value="$PROJECT_DIR$/src/time/timer.cpp" />
+        <option value="$PROJECT_DIR$/src/raft/event_queue.cpp" />
+        <option value="$PROJECT_DIR$/src/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/main.cpp" />
         <option value="$PROJECT_DIR$/include/server.h" />
-        <option value="$PROJECT_DIR$/src/raft/raft.cpp" />
-        <option value="$PROJECT_DIR$/include/raft/timer/timer.h" />
-        <option value="$PROJECT_DIR$/src/time/timer.cpp" />
-        <option value="$PROJECT_DIR$/include/raft/event_queue/event_queue.h" />
-        <option value="$PROJECT_DIR$/src/raft/event_queue.cpp" />
-        <option value="$PROJECT_DIR$/include/raft/raft.h" />
-        <option value="$PROJECT_DIR$/src/server.cpp" />
       </list>
     </option>
   </component>
@@ -240,7 +267,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Build All">
+  <component name="RunManager" selected="Application.hello">
     <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="raft_proj" RUN_TARGET_NAME="hello" EXPLICIT_BUILD_TARGET_NAME="all" />
     <configuration name="hello" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="raft_proj" TARGET_NAME="hello" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="raft_proj" RUN_TARGET_NAME="hello" />
     <configuration name="raft_proj" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="raft_proj" TARGET_NAME="raft_proj" CONFIG_NAME="Debug" />
@@ -266,7 +293,7 @@
       <workItem from="1532413914508" duration="532000" />
       <workItem from="1532415541373" duration="9561000" />
       <workItem from="1532431889232" duration="171000" />
-      <workItem from="1532432081608" duration="4504000" />
+      <workItem from="1532432081608" duration="7315000" />
     </task>
     <task id="LOCAL-00001" summary="Basic declaration for initial modules">
       <created>1532432023043</created>
@@ -282,26 +309,32 @@
       <option name="project" value="LOCAL" />
       <updated>1532433837883</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="problems in unique pointer">
+      <created>1532479003391</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1532479003391</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18418000" />
+    <option name="totallyTimeSpent" value="21229000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13319239" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13319239" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.32969698" />
-      <window_info anchor="bottom" id="CMake" order="7" weight="0.26060605" />
+      <window_info active="true" anchor="bottom" id="Messages" order="7" visible="true" weight="0.32969698" />
+      <window_info anchor="bottom" id="CMake" order="7" weight="0.25939393" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32969698" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32969698" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.36242425" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.37333333" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -339,9 +372,12 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <MESSAGE value="Basic declaration for initial modules" />
     <MESSAGE value="encounter some problems in functional programming" />
-    <option name="LAST_COMMIT_MESSAGE" value="encounter some problems in functional programming" />
+    <MESSAGE value="problems in unique pointer" />
+    <option name="LAST_COMMIT_MESSAGE" value="problems in unique pointer" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -353,9 +389,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="18" column="26" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -466,20 +499,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/FindGRPC.cmake">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="31" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/include/raft/event_queue.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
@@ -503,93 +522,101 @@
     </entry>
     <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/memory">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="2234" column="18" selection-start-line="2234" selection-start-column="18" selection-end-line="2234" selection-end-column="18" />
+        <state relative-caret-position="388">
+          <caret line="2244" column="8" lean-forward="true" selection-start-line="2244" selection-start-column="8" selection-end-line="2244" selection-end-column="8" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+    <entry file="file://$PROJECT_DIR$/include/raft/raft.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
+        <state relative-caret-position="-65">
+          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="20" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/raft/raft.cpp">
+    <entry file="file://$PROJECT_DIR$/include/raft/timer/timer.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
+          <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="52" lean-forward="true" selection-start-line="9" selection-start-column="18" selection-end-line="9" selection-end-column="52" />
           <folding>
-            <element signature="e#0#36#0" expanded="true" />
+            <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/time/timer.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
-          <folding>
-            <element signature="e#0#43#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="441">
+          <caret line="23" column="22" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/include/raft/event_queue/event_queue.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="18" column="12" lean-forward="true" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
+        <state relative-caret-position="209">
+          <caret line="27" column="14" selection-start-line="27" selection-start-column="14" selection-end-line="27" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/raft/raft.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="28" column="7" selection-start-line="28" selection-start-column="7" selection-end-line="28" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#36#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/raft/event_queue.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="56" column="38" selection-start-line="56" selection-start-column="38" selection-end-line="56" selection-end-column="38" />
+        <state relative-caret-position="351">
+          <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/raft/timer/timer.h">
+    <entry file="file://$PROJECT_DIR$/src/FindGRPC.cmake">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        <state relative-caret-position="154">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/raft/raft.h">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="24" column="4" lean-forward="true" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="4" />
+        <state relative-caret-position="198">
+          <caret line="9" column="32" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/server.cpp">
+    <entry file="file://$PROJECT_DIR$/src/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
+        <state>
+          <caret column="23" selection-start-column="23" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="20" column="21" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/include/server.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="15" column="32" lean-forward="true" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+        <state relative-caret-position="436">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
     </entry>

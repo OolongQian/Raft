@@ -9,6 +9,7 @@ namespace SJTU {
 		std::function<void(std::function<void()>)> pushEvent_;
 		boost::thread th;
 	};
+	Timer::Timer() : pImpl(std::make_unique<Impl>()) {}
 
 	Timer::~Timer() = default;
 
@@ -33,4 +34,5 @@ namespace SJTU {
 		if(pImpl->th.joinable())
 			pImpl->th.join();
 	}
+
 };

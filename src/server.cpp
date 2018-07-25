@@ -3,17 +3,20 @@
 
 namespace SJTU {
 	struct Server::Impl {
-		// gRPC ClientEnd;
-		// Raft raft;
+//		 gRPC ClientEnd;
+		 Raft raft;
 	};
+
+	Server::Server() : pImpl(std::make_unique<Impl>()) {}
 
 	Server::~Server() = default;
 	void Server::StartUp() {
-		// pImpl->raft.init();
-		// pImpl->raft.Start();
+		pImpl->raft.init();
+		pImpl->raft.Start();
 	}
 
 	void Server::ShutDown() {
-		// pImpl->raft.Stop();
+		pImpl->raft.Stop();
 	}
+
 };

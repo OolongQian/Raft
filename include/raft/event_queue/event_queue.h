@@ -6,7 +6,7 @@
 namespace SJTU {
 	class EventQueue {
 	public:
-		EventQueue() {}
+		EventQueue();
 
 		~EventQueue();
 

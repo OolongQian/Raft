@@ -1,11 +1,12 @@
 #include "../include/server.h"
-#include <unistd.h>
+#include <thread>
+
 
 int main() {
 	SJTU::Server server;
 	server.StartUp();
 
-	sleep(10);
+	std::this_thread::sleep_for(std::chrono::seconds(10));
 	server.ShutDown();
 	return 0;
 }

@@ -10,6 +10,8 @@ namespace SJTU {
 		Timer timer_;
 	};
 
+	Raft::Raft() : pImpl(std::make_unique<Impl>()) {}
+
 	Raft::~Raft() = default;
 
 	void Raft::init() {

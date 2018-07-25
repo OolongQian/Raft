@@ -6,7 +6,7 @@
 namespace SJTU {
 	class Raft {
 	public:
-		Raft() {}
+		Raft();
 
 		~Raft();
 		/**
@@ -24,7 +24,7 @@ namespace SJTU {
 
 	private:
 		struct Impl;
-		std::unique_ptr <Impl> pImpl;
+		std::unique_ptr<Impl> pImpl;
 	};
 };
 

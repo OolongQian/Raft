@@ -44,7 +44,7 @@ namespace SJTU {
 		}
 
 		void Start() {
-			th_ = boost::thread(execute);
+			th_ = boost::thread(std::bind(&EventQueue::Impl::execute, this));
 		}
 
 		void Stop() {
@@ -53,6 +53,8 @@ namespace SJTU {
 				th_.join();
 		}
 	};
+
+	EventQueue::EventQueue(): pImpl(std::make_unique<Impl>()) {}
 
 	EventQueue::~EventQueue() = default;
 	/**
@@ -69,4 +71,5 @@ namespace SJTU {
 	void EventQueue::Stop() {
 		pImpl->Stop();
 	}
+
 };
