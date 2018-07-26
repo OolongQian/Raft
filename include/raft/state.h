@@ -11,15 +11,15 @@ namespace SJTU {
 		/// persistent state on all servers.
 		int currentTerm;
 		int votedFor;
-		Log logs[];
+		Log *logs;
 
 		/// volatile state on all servers.
 		int commitIndex;
 		int lastApplied;
 
 		/// volatile state on leaders.
-		int nextIndex[];
-		int matchIndex[];
+		int *nextIndex;
+		int *matchIndex;
 	};
 };
 

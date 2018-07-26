@@ -11,16 +11,16 @@
  * */
 
 namespace SJTU {
-	struct CppAppendEntriesRequest {
+	class CppAppendEntriesRequest { ;
 	};
 
-	struct CppAppendEntriesResponse {
+	class CppAppendEntriesResponse { ;
 	};
 
-	struct CppRequestVoteRequest {
+	class CppRequestVoteRequest { ;
 	};
 
-	struct CppRequestVoteResponse {
+	class CppRequestVoteResponse { ;
 	};
 };
 

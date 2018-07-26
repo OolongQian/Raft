@@ -4,7 +4,7 @@
 
 namespace SJTU {
 	struct Server::Impl {
-		Impl(const std::string &filename) : raft(info) {
+		explicit Impl(const std::string &filename) : raft(info) {
 			info.load(filename);
 		}
 //		 gRPC ClientEnd;
@@ -12,7 +12,7 @@ namespace SJTU {
 		ServerInfo info;
 	};
 
-	Server(const std::string &filename) : pImpl(std::make_unique<Impl>(filename)) {}
+	Server::Server(const std::string &filename) : pImpl(std::make_unique<Impl>(filename)) {}
 
 	Server::~Server() = default;
 

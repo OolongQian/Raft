@@ -6,7 +6,7 @@
 namespace SJTU {
 	class Server {
 	public:
-		Server();
+		Server(const std::string &filename);
 
 		~Server();
 

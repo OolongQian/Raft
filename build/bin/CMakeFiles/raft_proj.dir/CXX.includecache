@@ -6,6 +6,30 @@
 
 #IncludeRegexTransform: 
 
+../include/common.h
+cstdint
+-
+string
+-
+macro.h
+../include/macro.h
+
+../include/log/log.h
+
+../include/macro.h
+
+../include/raft/event_queue/event_queue.h
+functional
+-
+memory
+-
+
+../include/raft/raft.h
+memory
+-
+server_info.h
+-
+
 ../include/raft/raft_proto/raft_peer.grpc.pb.h
 raft_peer.pb.h
 ../include/raft/raft_proto/raft_peer.pb.h
@@ -56,24 +80,72 @@ google/protobuf/extension_set.h
 google/protobuf/unknown_field_set.h
 -
 
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/event_queue/event_queue.h
+../include/raft/raft_proto/raft_peer_client.h
+raft_peer.grpc.pb.h
+../include/raft/raft_proto/raft_peer.grpc.pb.h
+iostream
+-
+memory
+-
+cstring
+-
+grpc/grpc.h
+-
+grpc++/channel.h
+-
+grpc++/client_context.h
+-
+grpc++/create_channel.h
+-
+grpc++/security/credentials.h
+-
+
+../include/raft/raft_proto/raft_peer_server.h
+raft_peer.grpc.pb.h
+../include/raft/raft_proto/raft_peer.grpc.pb.h
+iostream
+-
+cstring
+-
+mutex
+-
+grpc/grpc.h
+-
+grpc++/server.h
+-
+grpc++/server_builder.h
+-
+grpc++/server_context.h
+-
+grpc++/security/server_credentials.h
+-
+boost/thread/lock_guard.hpp
+-
+
+../include/raft/state.h
+../log/log.h
+../include/log/log.h
+
+../include/raft/timer/timer.h
 functional
 -
 memory
 -
 
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft.h
+../include/server.h
 memory
 -
 
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/timer/timer.h
-functional
+../include/server_info.h
+common.h
+../include/common.h
+macro.h
+../include/macro.h
+cstdint
 -
-memory
+vector
 -
-
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/server.h
-memory
+string
 -
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.grpc.pb.cc
@@ -215,14 +287,14 @@ boost/thread/lock_guard.hpp
 -
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/main.cpp
-../include/server.h
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/server.h
+server.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/server.h
 thread
 -
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/event_queue/event_queue.cpp
-../../../include/raft/event_queue/event_queue.h
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/event_queue/event_queue.h
+raft/event_queue/event_queue.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/event_queue/raft/event_queue/event_queue.h
 queue
 -
 functional
@@ -235,12 +307,18 @@ boost/thread/condition_variable.hpp
 -
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft.cpp
-../../include/raft/raft.h
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft.h
-../../include/raft/event_queue/event_queue.h
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/event_queue/event_queue.h
-../../include/raft/timer/timer.h
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/timer/timer.h
+raft/raft.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/raft.h
+raft/event_queue/event_queue.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/event_queue/event_queue.h
+raft/timer/timer.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/timer/timer.h
+raft/state.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/state.h
+raft/raft_proto/raft_peer_server.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/raft_proto/raft_peer_server.h
+raft/raft_proto/raft_peer_client.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/raft_proto/raft_peer_client.h
 iostream
 -
 
@@ -293,18 +371,20 @@ third_party/protobuf/version.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_server.cc
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/time/timer.cpp
-../../../include/raft/timer/timer.h
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/timer/timer.h
+raft/timer/timer.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/time/raft/timer/timer.h
 boost/thread.hpp
 -
 functional
 -
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/server.cpp
-../include/server.h
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/server.h
-../include/raft/raft.h
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft.h
+server_info.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/server_info.h
+server.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/server.h
+raft/raft.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft.h
 
 /usr/local/include/boost/assert.hpp
 boost/config.hpp

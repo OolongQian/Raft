@@ -2,6 +2,7 @@
 #define RAFT_PROJ_RAFT_PEER_SERVER_H
 
 #include "raft_peer.grpc.pb.h"
+#include "cpp_msg_wrapper.h"
 
 #include <iostream>
 #include <cstring>
@@ -17,16 +18,25 @@ namespace SJTU {
 	/**
 	 * A class that implements interface created by gRPC
 	 * */
-	class RaftPeerServerImpl final : public RaftPeerService::Service {
+	using RequestVoteFunc = std::function<CppRequestVoteResponse(CppRequestVoteRequest)>;
+	using AppendEntriesFunc = std::function<CppAppendEntriesResponse(CppAppendEntriesRequest)>;
+
+	class RaftPeerServiceImpl final : public RaftPeerService::Service {
+
 	public:
-		RaftPeerServerImpl();
+		RaftPeerServiceImpl();
 
 		grpc::Status AppendEntriesRPC(grpc::ServerContext *context, const PbAppendEntriesRequest *request,
 																	PbAppendEntriesResponse *response) override;
 
 		grpc::Status RequestVoteRPC(grpc::ServerContext *context, const PbRequestVoteRequest *request,
 																PbRequestVoteResponse *response) override;
+
+	public:
+		RequestVoteFunc requestVoteFunc;
+		AppendEntriesFunc appendEntriesFunc;
 	};
+
 };
 
 #endif //RAFT_PROJ_RAFT_PEER_SERVER_H

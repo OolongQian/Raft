@@ -12,9 +12,9 @@
 #include <grpc++/create_channel.h>
 #include <grpc++/security/credentials.h>
 
-class RaftPeerClient {
+class RaftPeerClientImpl {
 public:
-	explicit RaftPeerClient(const std::shared_ptr<grpc::Channel> &channel) :
+	explicit RaftPeerClientImpl(const std::shared_ptr<grpc::Channel> &channel) :
 			stub_(RaftPeerService::NewStub(channel)) {}
 
 private:
