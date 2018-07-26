@@ -1,13 +1,16 @@
-#include "../../include/raft/raft.h"
-#include "../../include/raft/event_queue/event_queue.h"
-#include "../../include/raft/timer/timer.h"
+#include "raft/raft.h"
+#include "raft/event_queue/event_queue.h"
+#include "raft/timer/timer.h"
+#include "raft/state.h"
 
 #include <iostream>
+
 
 namespace SJTU {
 	struct Raft::Impl {
 		EventQueue eventQueue_;
 		Timer timer_;
+		State state;
 
 	};
 

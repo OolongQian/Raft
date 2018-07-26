@@ -16,5 +16,4 @@ namespace SJTU {
 	};
 };
 
-
 #endif //RAFT_PROJ_LEADER_H

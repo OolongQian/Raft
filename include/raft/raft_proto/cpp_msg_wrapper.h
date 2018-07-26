@@ -13,10 +13,13 @@
 namespace SJTU {
 	struct CppAppendEntriesRequest {
 	};
+
 	struct CppAppendEntriesResponse {
 	};
+
 	struct CppRequestVoteRequest {
 	};
+
 	struct CppRequestVoteResponse {
 	};
 };

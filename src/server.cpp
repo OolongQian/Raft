@@ -1,5 +1,5 @@
-#include "../include/server.h"
-#include "../include/raft/raft.h"
+#include "server.h"
+#include "raft/raft.h"
 
 namespace SJTU {
 	struct Server::Impl {
