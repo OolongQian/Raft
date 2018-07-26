@@ -15,6 +15,10 @@ namespace SJTU {
 
 		void Stop();
 
+		void Pause();
+
+		void Resume();
+
 		/**
 		 * When a timer runs into the case of timeout, it behaves differently with respect to
 		 * its current identity.

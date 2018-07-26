@@ -8,11 +8,15 @@ namespace SJTU {
 	/// implements identity_base abstract class.
 	class Candidate : IdentityBase {
 	public:
+		explicit Candidate(State &state) : IdentityBase(state) {}
+
 		~Candidate() override;
 
 		CppAppendEntriesResponse ProcsAppendEntriesFunc(CppAppendEntriesRequest) override;
 
 		CppRequestVoteResponse ProcsRequestVoteFunc(CppRequestVoteRequest) override;
+
+		void TimeOutFunc() override;
 	};
 };
 

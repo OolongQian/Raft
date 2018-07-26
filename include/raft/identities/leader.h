@@ -8,11 +8,15 @@ namespace SJTU {
 	/// implements identity_base abstract class.
 	class Leader : IdentityBase {
 	public:
+		explicit Leader(State &state) : IdentityBase(state) {}
+
 		~Leader() override;
 
 		CppAppendEntriesResponse ProcsAppendEntriesFunc(CppAppendEntriesRequest) override;
 
 		CppRequestVoteResponse ProcsRequestVoteFunc(CppRequestVoteRequest) override;
+
+		void TimeOutFunc() override;
 	};
 };
 

@@ -20,6 +20,9 @@ namespace SJTU {
 		/// volatile state on leaders.
 		int *nextIndex;
 		int *matchIndex;
+
+		/// find whether one entry exists in current log.
+//		bool IfLogContains(const Log &entry);
 	};
 };
 

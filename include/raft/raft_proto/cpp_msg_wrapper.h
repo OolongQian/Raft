@@ -11,16 +11,38 @@
  * */
 
 namespace SJTU {
-	class CppAppendEntriesRequest { ;
+	struct CppAppendEntriesRequest {
+		int term;
+		int leaderId;
+		int prevLogIndex;
+		int prevLogTerm;
+		Log *entries;
+		int leaderCommit;
+
+		CppAppendEntriesRequest() = default;
 	};
 
-	class CppAppendEntriesResponse { ;
+	struct CppAppendEntriesResponse {
+		int term;
+		bool success;
+
+		CppAppendEntriesResponse() = default;
 	};
 
-	class CppRequestVoteRequest { ;
+	struct CppRequestVoteRequest {
+		int term;
+		int candidateId;
+		int lastLogIndex;
+		int lastLogTerm;
+
+		CppRequestVoteRequest() = default;
 	};
 
-	class CppRequestVoteResponse { ;
+	struct CppRequestVoteResponse {
+		int term;
+		bool voteGranted;
+
+		CppRequestVoteResponse() = default;
 	};
 };
 

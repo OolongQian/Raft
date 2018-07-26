@@ -5,7 +5,9 @@
  * A container of one entry of log information.
  * */
 namespace SJTU {
-	struct Log { ;
+	struct Log {
+		std::string command;
+		int term;
 	};
 };
 

@@ -1636,11 +1636,17 @@ bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/common.h
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/log/log.h
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/macro.h
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/event_queue/event_queue.h
+bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/identities/candidate.h
+bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/identities/follower.h
+bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/identities/identity_base.h
+bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/identities/leader.h
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/raft.h
+bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/raft_proto/cpp_msg_wrapper.h
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/raft_proto/raft_peer.grpc.pb.h
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/raft_proto/raft_peer.pb.h
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/raft_proto/raft_peer_client.h
-bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/raft_proto/raft_peer_server.h
+bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/raft_proto/raft_peer_service.h
+bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/raft_rpc/raft_server.h
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/state.h
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/timer/timer.h
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/server_info.h
@@ -2055,7 +2061,6 @@ bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o: /usr/local/inclu
 
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o: ../src/raft/raft_proto/raft_peer_client.cc
 
-bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o: ../src/raft/raft_proto/raft_peer_server.cc
 
 bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o: ../include/raft/timer/timer.h
 bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o: ../src/raft/time/timer.cpp

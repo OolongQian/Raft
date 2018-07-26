@@ -1637,11 +1637,17 @@ bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o
  ../include/log/log.h
  ../include/macro.h
  ../include/raft/event_queue/event_queue.h
+ ../include/raft/identities/candidate.h
+ ../include/raft/identities/follower.h
+ ../include/raft/identities/identity_base.h
+ ../include/raft/identities/leader.h
  ../include/raft/raft.h
+ ../include/raft/raft_proto/cpp_msg_wrapper.h
  ../include/raft/raft_proto/raft_peer.grpc.pb.h
  ../include/raft/raft_proto/raft_peer.pb.h
  ../include/raft/raft_proto/raft_peer_client.h
- ../include/raft/raft_proto/raft_peer_server.h
+ ../include/raft/raft_proto/raft_peer_service.h
+ ../include/raft/raft_rpc/raft_server.h
  ../include/raft/state.h
  ../include/raft/timer/timer.h
  ../include/server_info.h
@@ -2056,7 +2062,6 @@ bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o
  /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_client.cc
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o
- /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_server.cc
 bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o
  ../include/raft/timer/timer.h
  /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/time/timer.cpp

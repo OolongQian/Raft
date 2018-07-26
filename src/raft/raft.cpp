@@ -3,6 +3,7 @@
 #include "raft/timer/timer.h"
 #include "raft/state.h"
 #include "raft/raft_proto/raft_peer_client.h"
+#include "raft/raft_rpc/raft_server.h"
 
 #include "raft/identities/follower.h"
 #include "raft/identities/candidate.h"
@@ -10,7 +11,6 @@
 
 #include <iostream>
 #include <vector>
-#include <raft/raft_rpc/raft_server.h>
 
 namespace SJTU {
 	struct Raft::Impl {
@@ -60,13 +60,14 @@ namespace SJTU {
 	Raft::~Raft() = default;
 
 	void Raft::init() {
-		printf("raft is initting...\n");
-		printf("raft is binding terminate action...\n");
 
-		pImpl->timer_.BindPushEvent(std::bind(&EventQueue::addEvent, &pImpl->eventQueue_, std::placeholders::_1));
-		pImpl->timer_.BindTimeOutAction([] {
-			std::cout << "timer's terminate action is triggered" << std::endl;
-		});
+//		printf("raft is initting...\n");
+//		printf("raft is binding terminate action...\n");
+//
+//		pImpl->timer_.BindPushEvent(std::bind(&EventQueue::addEvent, &pImpl->eventQueue_, std::placeholders::_1));
+//		pImpl->timer_.BindTimeOutAction([] {
+//			std::cout << "timer's terminate action is triggered" << std::endl;
+//		});
 
 //		pImpl->timer_.BindTimeOutAction(std::bind(&EventQueue::addEvent, &pImpl->eventQueue_, [] {
 //			std::cout << "timer's terminate action is triggered" << std::endl;
@@ -74,12 +75,20 @@ namespace SJTU {
 	}
 
 	void Raft::Start() {
-		pImpl->eventQueue_.Start();
-		pImpl->timer_.Start();
+
+		/// these are test code, timer_ should be set or reset inside other functions I think...
+		/**
+		 * I just haven't sorted out how to organize identity transformation synchronously.
+		 * Why not just transform myself to candidate right here right now?
+		 * */
+
+
+//		pImpl->eventQueue_.Start();
+//		pImpl->timer_.Start();
 	}
 
 	void Raft::Stop() {
-		pImpl->eventQueue_.Stop();
-		pImpl->timer_.Stop();
+//		pImpl->eventQueue_.Stop();
+//		pImpl->timer_.Stop();
 	}
 };

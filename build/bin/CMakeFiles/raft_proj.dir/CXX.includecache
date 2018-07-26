@@ -24,11 +24,29 @@ functional
 memory
 -
 
+../include/raft/identities/candidate.h
+identity_base.h
+../include/raft/identities/identity_base.h
+
+../include/raft/identities/follower.h
+identity_base.h
+../include/raft/identities/identity_base.h
+
+../include/raft/identities/identity_base.h
+raft/raft_proto/cpp_msg_wrapper.h
+-
+
+../include/raft/identities/leader.h
+identity_base.h
+../include/raft/identities/identity_base.h
+
 ../include/raft/raft.h
 memory
 -
 server_info.h
 -
+
+../include/raft/raft_proto/cpp_msg_wrapper.h
 
 ../include/raft/raft_proto/raft_peer.grpc.pb.h
 raft_peer.pb.h
@@ -100,9 +118,11 @@ grpc++/create_channel.h
 grpc++/security/credentials.h
 -
 
-../include/raft/raft_proto/raft_peer_server.h
+../include/raft/raft_proto/raft_peer_service.h
 raft_peer.grpc.pb.h
 ../include/raft/raft_proto/raft_peer.grpc.pb.h
+cpp_msg_wrapper.h
+../include/raft/raft_proto/cpp_msg_wrapper.h
 iostream
 -
 cstring
@@ -120,6 +140,10 @@ grpc++/server_context.h
 grpc++/security/server_credentials.h
 -
 boost/thread/lock_guard.hpp
+-
+
+../include/raft/raft_rpc/raft_server.h
+raft/raft_proto/raft_peer_service.h
 -
 
 ../include/raft/state.h
@@ -315,11 +339,19 @@ raft/timer/timer.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/timer/timer.h
 raft/state.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/state.h
-raft/raft_proto/raft_peer_server.h
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/raft_proto/raft_peer_server.h
 raft/raft_proto/raft_peer_client.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/raft_proto/raft_peer_client.h
+raft/identities/follower.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/identities/follower.h
+raft/identities/candidate.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/identities/candidate.h
+raft/identities/leader.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/identities/leader.h
 iostream
+-
+vector
+-
+raft/raft_rpc/raft_server.h
 -
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer.grpc.pb.cc
@@ -367,8 +399,6 @@ third_party/protobuf/version.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/third_party/protobuf/version.h
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_client.cc
-
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_server.cc
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/time/timer.cpp
 raft/timer/timer.h
