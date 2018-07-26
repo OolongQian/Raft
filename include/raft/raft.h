@@ -2,11 +2,12 @@
 #define RAFT_PROJ_RAFT_H
 
 #include <memory>
+#include <server_info.h>
 
 namespace SJTU {
 	class Raft {
 	public:
-		Raft();
+		explicit Raft(const ServerInfo &info);
 
 		~Raft();
 		/**

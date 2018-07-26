@@ -1,13 +1,18 @@
+#include "server_info.h"
 #include "server.h"
 #include "raft/raft.h"
 
 namespace SJTU {
 	struct Server::Impl {
+		Impl(const std::string &filename) : raft(info) {
+			info.load(filename);
+		}
 //		 gRPC ClientEnd;
 		Raft raft;
+		ServerInfo info;
 	};
 
-	Server::Server() : pImpl(std::make_unique<Impl>()) {}
+	Server(const std::string &filename) : pImpl(std::make_unique<Impl>(filename)) {}
 
 	Server::~Server() = default;
 

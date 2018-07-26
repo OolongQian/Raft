@@ -9,14 +9,18 @@
 
 namespace SJTU {
 	struct Raft::Impl {
+		explicit Impl(const ServerInfo &info) : info(info) {}
+
 		EventQueue eventQueue_;
 		Timer timer_;
 		State state_;
 		RaftPeerServerImpl server_end_;
-		RaftPeerClient client_end_;
+//		RaftPeerClient client_end_;
+
+		const ServerInfo &info;
 	};
 
-	Raft::Raft() : pImpl(std::make_unique<Impl>()) {}
+	Raft::Raft(const ServerInfo &info) : pImpl(std::make_unique<Impl>(info)) {}
 
 	Raft::~Raft() = default;
 
