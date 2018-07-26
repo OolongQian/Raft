@@ -17,9 +17,15 @@ namespace SJTU {
 	/**
 	 * A class that implements interface created by gRPC
 	 * */
-	class RaftPeerServiceImpl final : public RaftPeerService::Service {
+	class RaftPeerServerImpl final : public RaftPeerService::Service {
 	public:
+		RaftPeerServerImpl();
 
+		grpc::Status AppendEntriesRPC(grpc::ServerContext *context, const PbAppendEntriesRequest *request,
+																	PbAppendEntriesResponse *response) override;
+
+		grpc::Status RequestVoteRPC(grpc::ServerContext *context, const PbRequestVoteRequest *request,
+																PbRequestVoteResponse *response) override;
 	};
 };
 
