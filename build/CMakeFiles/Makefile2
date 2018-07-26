@@ -54,10 +54,10 @@ RM = /usr/local/Cellar/cmake/3.11.4/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj"
+CMAKE_SOURCE_DIR = "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/build"
+CMAKE_BINARY_DIR = "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build"
 
 #=============================================================================
 # Directory level rules for directory bin
@@ -83,10 +83,10 @@ bin/preinstall:
 # Target rules for target bin/CMakeFiles/hello.dir
 
 # All Build rule for target.
-bin/CMakeFiles/hello.dir/all:
+bin/CMakeFiles/hello.dir/all: bin/CMakeFiles/raft_proj.dir/all
 	$(MAKE) -f bin/CMakeFiles/hello.dir/build.make bin/CMakeFiles/hello.dir/depend
 	$(MAKE) -f bin/CMakeFiles/hello.dir/build.make bin/CMakeFiles/hello.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/build/CMakeFiles" --progress-num=1,2 "Built target hello"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build/CMakeFiles" --progress-num=1,2 "Built target hello"
 .PHONY : bin/CMakeFiles/hello.dir/all
 
 # Include target in all.
@@ -96,9 +96,9 @@ all: bin/CMakeFiles/hello.dir/all
 
 # Build rule for subdir invocation for target.
 bin/CMakeFiles/hello.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/build/CMakeFiles" 2
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build/CMakeFiles" 16
 	$(MAKE) -f CMakeFiles/Makefile2 bin/CMakeFiles/hello.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build/CMakeFiles" 0
 .PHONY : bin/CMakeFiles/hello.dir/rule
 
 # Convenience name for target.
@@ -123,7 +123,7 @@ clean: bin/CMakeFiles/hello.dir/clean
 bin/CMakeFiles/raft_proj.dir/all:
 	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/depend
 	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/build/CMakeFiles" --progress-num=3,4,5,6,7,8 "Built target raft_proj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build/CMakeFiles" --progress-num=3,4,5,6,7,8,9,10,11,12,13,14,15,16 "Built target raft_proj"
 .PHONY : bin/CMakeFiles/raft_proj.dir/all
 
 # Include target in all.
@@ -133,9 +133,9 @@ all: bin/CMakeFiles/raft_proj.dir/all
 
 # Build rule for subdir invocation for target.
 bin/CMakeFiles/raft_proj.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/build/CMakeFiles" 6
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build/CMakeFiles" 14
 	$(MAKE) -f CMakeFiles/Makefile2 bin/CMakeFiles/raft_proj.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/distributed system/raft_proj/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build/CMakeFiles" 0
 .PHONY : bin/CMakeFiles/raft_proj.dir/rule
 
 # Convenience name for target.

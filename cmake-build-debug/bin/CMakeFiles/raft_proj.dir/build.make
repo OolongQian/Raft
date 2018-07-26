@@ -81,28 +81,28 @@ bin/CMakeFiles/raft_proj.dir/main.cpp.o.provides: bin/CMakeFiles/raft_proj.dir/m
 bin/CMakeFiles/raft_proj.dir/main.cpp.o.provides.build: bin/CMakeFiles/raft_proj.dir/main.cpp.o
 
 
-bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o: bin/CMakeFiles/raft_proj.dir/flags.make
-bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o: ../src/raft/event_queue.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o"
-	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o -c "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/event_queue.cpp"
+bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o: bin/CMakeFiles/raft_proj.dir/flags.make
+bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o: ../src/raft/event_queue/event_queue.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o -c "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/event_queue/event_queue.cpp"
 
-bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/raft_proj.dir/raft/event_queue.cpp.i"
-	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/event_queue.cpp" > CMakeFiles/raft_proj.dir/raft/event_queue.cpp.i
+bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.i"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/event_queue/event_queue.cpp" > CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.i
 
-bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/raft_proj.dir/raft/event_queue.cpp.s"
-	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/event_queue.cpp" -o CMakeFiles/raft_proj.dir/raft/event_queue.cpp.s
+bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.s"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/event_queue/event_queue.cpp" -o CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.s
 
-bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o.requires:
+bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o.requires:
 
-.PHONY : bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o.requires
+.PHONY : bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o.requires
 
-bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o.provides: bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o.requires
-	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o.provides.build
-.PHONY : bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o.provides
+bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o.provides: bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o.requires
+	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o.provides.build
+.PHONY : bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o.provides
 
-bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o.provides.build: bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o
+bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o.provides.build: bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o
 
 
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: bin/CMakeFiles/raft_proj.dir/flags.make
@@ -129,9 +129,33 @@ bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o.provides: bin/CMakeFiles/raft_proj.
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o.provides.build: bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o
 
 
+bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o: bin/CMakeFiles/raft_proj.dir/flags.make
+bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o: ../src/raft/time/timer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o -c "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/time/timer.cpp"
+
+bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/raft_proj.dir/raft/time/timer.cpp.i"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/time/timer.cpp" > CMakeFiles/raft_proj.dir/raft/time/timer.cpp.i
+
+bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/raft_proj.dir/raft/time/timer.cpp.s"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/time/timer.cpp" -o CMakeFiles/raft_proj.dir/raft/time/timer.cpp.s
+
+bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o.requires:
+
+.PHONY : bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o.requires
+
+bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o.provides: bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o.requires
+	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o.provides.build
+.PHONY : bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o.provides
+
+bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o.provides.build: bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o
+
+
 bin/CMakeFiles/raft_proj.dir/server.cpp.o: bin/CMakeFiles/raft_proj.dir/flags.make
 bin/CMakeFiles/raft_proj.dir/server.cpp.o: ../src/server.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object bin/CMakeFiles/raft_proj.dir/server.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object bin/CMakeFiles/raft_proj.dir/server.cpp.o"
 	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raft_proj.dir/server.cpp.o -c "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/server.cpp"
 
 bin/CMakeFiles/raft_proj.dir/server.cpp.i: cmake_force
@@ -153,49 +177,233 @@ bin/CMakeFiles/raft_proj.dir/server.cpp.o.provides: bin/CMakeFiles/raft_proj.dir
 bin/CMakeFiles/raft_proj.dir/server.cpp.o.provides.build: bin/CMakeFiles/raft_proj.dir/server.cpp.o
 
 
-bin/CMakeFiles/raft_proj.dir/time/timer.cpp.o: bin/CMakeFiles/raft_proj.dir/flags.make
-bin/CMakeFiles/raft_proj.dir/time/timer.cpp.o: ../src/time/timer.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object bin/CMakeFiles/raft_proj.dir/time/timer.cpp.o"
-	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raft_proj.dir/time/timer.cpp.o -c "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/time/timer.cpp"
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o: bin/CMakeFiles/raft_proj.dir/flags.make
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o: ../src/hello_proto/hello.grpc.pb.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o -c "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.grpc.pb.cc"
 
-bin/CMakeFiles/raft_proj.dir/time/timer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/raft_proj.dir/time/timer.cpp.i"
-	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/time/timer.cpp" > CMakeFiles/raft_proj.dir/time/timer.cpp.i
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.i"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.grpc.pb.cc" > CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.i
 
-bin/CMakeFiles/raft_proj.dir/time/timer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/raft_proj.dir/time/timer.cpp.s"
-	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/time/timer.cpp" -o CMakeFiles/raft_proj.dir/time/timer.cpp.s
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.s"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.grpc.pb.cc" -o CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.s
 
-bin/CMakeFiles/raft_proj.dir/time/timer.cpp.o.requires:
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o.requires:
 
-.PHONY : bin/CMakeFiles/raft_proj.dir/time/timer.cpp.o.requires
+.PHONY : bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o.requires
 
-bin/CMakeFiles/raft_proj.dir/time/timer.cpp.o.provides: bin/CMakeFiles/raft_proj.dir/time/timer.cpp.o.requires
-	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/time/timer.cpp.o.provides.build
-.PHONY : bin/CMakeFiles/raft_proj.dir/time/timer.cpp.o.provides
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o.provides: bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o.requires
+	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o.provides.build
+.PHONY : bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o.provides
 
-bin/CMakeFiles/raft_proj.dir/time/timer.cpp.o.provides.build: bin/CMakeFiles/raft_proj.dir/time/timer.cpp.o
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o.provides.build: bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o
+
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o: bin/CMakeFiles/raft_proj.dir/flags.make
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o: ../src/hello_proto/hello.pb.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o -c "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.pb.cc"
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.i"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.pb.cc" > CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.i
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.s"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.pb.cc" -o CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.s
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o.requires:
+
+.PHONY : bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o.requires
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o.provides: bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o.requires
+	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o.provides.build
+.PHONY : bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o.provides
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o.provides.build: bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o
+
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o: bin/CMakeFiles/raft_proj.dir/flags.make
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o: ../src/hello_proto/hello_rpc_client.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o -c "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello_rpc_client.cc"
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.i"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello_rpc_client.cc" > CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.i
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.s"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello_rpc_client.cc" -o CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.s
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o.requires:
+
+.PHONY : bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o.requires
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o.provides: bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o.requires
+	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o.provides.build
+.PHONY : bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o.provides
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o.provides.build: bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o
+
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o: bin/CMakeFiles/raft_proj.dir/flags.make
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o: ../src/hello_proto/hello_rpc_server.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o -c "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello_rpc_server.cc"
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.i"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello_rpc_server.cc" > CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.i
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.s"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello_rpc_server.cc" -o CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.s
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o.requires:
+
+.PHONY : bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o.requires
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o.provides: bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o.requires
+	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o.provides.build
+.PHONY : bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o.provides
+
+bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o.provides.build: bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o
+
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o: bin/CMakeFiles/raft_proj.dir/flags.make
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o: ../src/raft/raft_proto/raft_peer.grpc.pb.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o -c "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer.grpc.pb.cc"
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.i"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer.grpc.pb.cc" > CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.i
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.s"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer.grpc.pb.cc" -o CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.s
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o.requires:
+
+.PHONY : bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o.requires
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o.provides: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o.requires
+	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o.provides.build
+.PHONY : bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o.provides
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o.provides.build: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o
+
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o: bin/CMakeFiles/raft_proj.dir/flags.make
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o: ../src/raft/raft_proto/raft_peer.pb.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o -c "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer.pb.cc"
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.i"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer.pb.cc" > CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.i
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.s"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer.pb.cc" -o CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.s
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o.requires:
+
+.PHONY : bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o.requires
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o.provides: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o.requires
+	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o.provides.build
+.PHONY : bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o.provides
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o.provides.build: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o
+
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o: bin/CMakeFiles/raft_proj.dir/flags.make
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o: ../src/raft/raft_proto/raft_peer_client.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o -c "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_client.cc"
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.i"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_client.cc" > CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.i
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.s"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_client.cc" -o CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.s
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o.requires:
+
+.PHONY : bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o.requires
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o.provides: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o.requires
+	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o.provides.build
+.PHONY : bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o.provides
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o.provides.build: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o
+
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o: bin/CMakeFiles/raft_proj.dir/flags.make
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o: ../src/raft/raft_proto/raft_peer_server.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o -c "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_server.cc"
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.i"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_server.cc" > CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.i
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.s"
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_server.cc" -o CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.s
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o.requires:
+
+.PHONY : bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o.requires
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o.provides: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o.requires
+	$(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o.provides.build
+.PHONY : bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o.provides
+
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o.provides.build: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o
 
 
 # Object files for target raft_proj
 raft_proj_OBJECTS = \
 "CMakeFiles/raft_proj.dir/main.cpp.o" \
-"CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o" \
+"CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o" \
 "CMakeFiles/raft_proj.dir/raft/raft.cpp.o" \
+"CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o" \
 "CMakeFiles/raft_proj.dir/server.cpp.o" \
-"CMakeFiles/raft_proj.dir/time/timer.cpp.o"
+"CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o" \
+"CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o" \
+"CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o" \
+"CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o" \
+"CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o" \
+"CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o" \
+"CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o" \
+"CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o"
 
 # External object files for target raft_proj
 raft_proj_EXTERNAL_OBJECTS =
 
 bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/main.cpp.o
-bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o
+bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o
 bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o
+bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o
 bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/server.cpp.o
-bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/time/timer.cpp.o
+bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o
+bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o
+bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o
+bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o
+bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o
+bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o
+bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o
+bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o
 bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/build.make
 bin/libraft_proj.a: bin/CMakeFiles/raft_proj.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library libraft_proj.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_14) "Linking CXX static library libraft_proj.a"
 	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && $(CMAKE_COMMAND) -P CMakeFiles/raft_proj.dir/cmake_clean_target.cmake
 	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug/bin" && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/raft_proj.dir/link.txt --verbose=$(VERBOSE)
 
@@ -205,10 +413,18 @@ bin/CMakeFiles/raft_proj.dir/build: bin/libraft_proj.a
 .PHONY : bin/CMakeFiles/raft_proj.dir/build
 
 bin/CMakeFiles/raft_proj.dir/requires: bin/CMakeFiles/raft_proj.dir/main.cpp.o.requires
-bin/CMakeFiles/raft_proj.dir/requires: bin/CMakeFiles/raft_proj.dir/raft/event_queue.cpp.o.requires
+bin/CMakeFiles/raft_proj.dir/requires: bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o.requires
 bin/CMakeFiles/raft_proj.dir/requires: bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o.requires
+bin/CMakeFiles/raft_proj.dir/requires: bin/CMakeFiles/raft_proj.dir/raft/time/timer.cpp.o.requires
 bin/CMakeFiles/raft_proj.dir/requires: bin/CMakeFiles/raft_proj.dir/server.cpp.o.requires
-bin/CMakeFiles/raft_proj.dir/requires: bin/CMakeFiles/raft_proj.dir/time/timer.cpp.o.requires
+bin/CMakeFiles/raft_proj.dir/requires: bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o.requires
+bin/CMakeFiles/raft_proj.dir/requires: bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o.requires
+bin/CMakeFiles/raft_proj.dir/requires: bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o.requires
+bin/CMakeFiles/raft_proj.dir/requires: bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o.requires
+bin/CMakeFiles/raft_proj.dir/requires: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o.requires
+bin/CMakeFiles/raft_proj.dir/requires: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o.requires
+bin/CMakeFiles/raft_proj.dir/requires: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o.requires
+bin/CMakeFiles/raft_proj.dir/requires: bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_server.cc.o.requires
 
 .PHONY : bin/CMakeFiles/raft_proj.dir/requires
 

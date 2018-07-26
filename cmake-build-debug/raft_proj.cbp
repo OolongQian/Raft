@@ -130,20 +130,50 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.grpc.pb.cc">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.grpc.pb.h">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.pb.cc">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.pb.h">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello_rpc_client.cc">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello_rpc_server.cc">
+			<Option target="raft_proj"/>
+		</Unit>
 		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/main.cpp">
 			<Option target="hello"/>
 			<Option target="raft_proj"/>
 		</Unit>
-		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/event_queue.cpp">
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/event_queue/event_queue.cpp">
 			<Option target="raft_proj"/>
 		</Unit>
 		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft.cpp">
 			<Option target="raft_proj"/>
 		</Unit>
-		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/server.cpp">
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer.grpc.pb.cc">
 			<Option target="raft_proj"/>
 		</Unit>
-		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/time/timer.cpp">
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer.pb.cc">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_client.cc">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_server.cc">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/time/timer.cpp">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/server.cpp">
 			<Option target="raft_proj"/>
 		</Unit>
 		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/CMakeLists.txt">
