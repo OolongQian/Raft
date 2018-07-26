@@ -60,3 +60,24 @@ timer需要什么，它会进行的动作仅仅是在timeout的时候在eventQue
 挺有限的。
 诶，话说我为什么要考虑这个问题，大概是因为我怕在bind的过程当中bind太多的函数进到这些对象当中去，导致写得很丑陋，但是我稍微考虑一下感觉
 并不会发生这种问题，but anyway，我接下来抄写一下论文当中的三个identity的具体动作，然后接下来的工作是写好框架，接下来学习gRPC。
+
+gRPC的 hello world 已经实现完毕，但是我发现了一个问题，每个raft::rpcServer需要既开server端口，又开client端口。然后我继续思考，
+其中server端口是等待的，是别人发过来的request我自己立即回应，其中grpc内部是多线程异步实现的，因此我在编写的时候需要让这个类多线程安全。
+每个server又有一个client端口，这个端口是向外面的其他server发送请求的，并且从我的实现当中可以看出，它一发出请求，就是立刻得到了，相当于
+join了。因此我每个server需要开一个server端口，若干个client端口，其中client端口的数量是根据自己的config文件中server的数量生成的。
+
+我需要冷静思考。我觉得整个架构似乎需要更多的flexibility才让我安心。
+
+经过我冷静思考之后，我准备列出整个raft需要做的事情。
+1. transform identity (init & reinit)
+2. do TimeOut action (Included in these, a clue that many functionality has to be executed within eventQueue)
+3. respond to an outside client request (to be considered)
+4. process RPC from outside (heartbeat, vote or not vote, appendEntry requests, record votes?), after which send out a respond.
+5. send out requests (accompanied by a respond? )
+
+How to organize these things once haunted me, but after some time of thinking, I sort out that may be response can be
+sent out immediately, while actions are put into eventQueue to be executed.
+
+Hence, the rpc interface function implementation send back request immediately based on current raft state, while it puts
+a function into eventQueue to do the task asynchronously.
+I have to ask big bread brother tomorrow.
