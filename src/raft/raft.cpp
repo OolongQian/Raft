@@ -2,16 +2,18 @@
 #include "raft/event_queue/event_queue.h"
 #include "raft/timer/timer.h"
 #include "raft/state.h"
+#include "raft/raft_proto/raft_peer_server.h"
+#include "raft/raft_proto/raft_peer_client.h"
 
 #include <iostream>
-
 
 namespace SJTU {
 	struct Raft::Impl {
 		EventQueue eventQueue_;
 		Timer timer_;
-		State state;
-
+		State state_;
+		RaftPeerServerImpl server_end_;
+		RaftPeerClient client_end_;
 	};
 
 	Raft::Raft() : pImpl(std::make_unique<Impl>()) {}

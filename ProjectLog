@@ -81,3 +81,47 @@ sent out immediately, while actions are put into eventQueue to be executed.
 Hence, the rpc interface function implementation send back request immediately based on current raft state, while it puts
 a function into eventQueue to do the task asynchronously.
 I have to ask big bread brother tomorrow.
+
+
+2018. 7. 26 Evening.
+Now, I have setup a program structure.
+I want to know what the program has to execute, I also want to know how to do them.
+How to do things concerns of how to assign tasks to multiple threads, which depends on the content of the tasks.
+Therefore, I have to figure out what the executions are.
+
+1. upon initialization:
+    follower: nothing to do.
+    candidate: start election, send RequestVote RPCs, and wait for other servers responses.
+    leader: send heartbeat to other server.
+2. do transformation when timeout:
+    follower: transform to candidate.
+    candidate: transform to candidate.
+    leader: election timeout is prevented.
+3...
+
+List read-only actions:
+    1. Whether-or-not vote for him? Follower.
+List write-data actions:
+    1. initialization -- change identity and states.
+    2. appendEntries RPC -- change states.
+List RPC concerning actions:
+    1. request vote, wait and see the results.
+    2. respond to successful or failed reply.
+
+analysis:
+    1.1 directly access state, use read_mutex.
+    2.1 shutdown rpc and timer. use eventQueue.
+    2.2 why not push it into eventQueue?
+    3.1 send out request vote simultaneously, which means using multiple threads.
+    3.2 change states.
+
+The situation is clear I think.
+For each server, it knows who its peers are. Assume it has 4 peers, then it launches
+4 threads for client-ends to communicate with other servers.
+
+Meanwhile, opens up its own server-end to reply peers' client-end request based on its current inner state configuration.
+Note that "If command received from client: append entry to local log, respond after entry applied to state machine".
+If respond only after entry applied to state machine??? Oh, I note that this is for command received from client, just leave
+it alone up to now.
+
+send out a timer to record time, and do timeout action when timeout.
