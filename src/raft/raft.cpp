@@ -8,6 +8,7 @@ namespace SJTU {
 	struct Raft::Impl {
 		EventQueue eventQueue_;
 		Timer timer_;
+
 	};
 
 	Raft::Raft() : pImpl(std::make_unique<Impl>()) {}
