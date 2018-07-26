@@ -19,7 +19,7 @@ namespace SJTU {
 
 		CppAppendEntriesResponse response;
 		response.success = true;
-		response.term = state.currentTerm;
+		response.term = state_.currentTerm;
 		printf("default appendEntriesFunc is called\n");
 		return response;
 	}
@@ -31,7 +31,7 @@ namespace SJTU {
 	CppRequestVoteResponse IdentityBase::ProcsRequestVoteFunc(SJTU::CppRequestVoteRequest request) {
 		CppRequestVoteResponse response;
 		response.voteGranted = true;
-		response.term = state.currentTerm;
+		response.term = state_.currentTerm;
 		printf("default requestVoteFunc is called\n");
 
 		/// real implementation.

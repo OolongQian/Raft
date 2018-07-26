@@ -125,3 +125,11 @@ If respond only after entry applied to state machine??? Oh, I note that this is 
 it alone up to now.
 
 send out a timer to record time, and do timeout action when timeout.
+
+When i'm implementing raft and three identities, I just kept wondering why not assign all tasks to each identities, and pass
+all utility variable and information to them. Let raft itself be a puppet.
+Instead, the proper way to do it is to pass limited variable (state and timer) to them, and bind a identity transform function
+to them. Because without the class wrapper raft, it will be awkward for a single identity itself to transform identity, raft
+behaves like a bridge linking three identities, meanwhile it lets three identities share one piece of memory of variables.
+
+Big bread brother's design is nothing but necessary. I'm deeply appreciate that.
