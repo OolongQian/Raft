@@ -18,16 +18,14 @@ namespace SJTU {
 	void Candidate::RequestVote() {
 //		for (int i = 0; i < client_ends_.size(); ++i) {
 		for (int i = 0; i < client_ends_.size(); ++i) {
-			// sleep(1);
+
 			client_ends_[i]->th = boost::thread([this, i]() mutable {
-				boost::lock_guard<boost::mutex> lk(mtx_);
 				PbRequestVoteRequest request = MakeVoteRequest();
 
 				PbRequestVoteResponse response;
 				grpc::ClientContext context;
 #ifndef _NOLOG
 				printf("Candidate sends out request to other server...\n");
-				printf("%lu\n", client_ends_.size());
 #endif
 				client_ends_[i]->stub_->RequestVoteRPC(&context, request, &response);      /// this line has serious problems.
 #ifndef _NOLOG
