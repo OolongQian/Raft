@@ -1639,6 +1639,7 @@ bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/event_queue/event_
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/identities/candidate.h
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/identities/follower.h
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/identities/identity_base.h
+bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/identities/identity_common.h
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/identities/leader.h
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/raft.h
 bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o: ../include/raft/raft_proto/cpp_msg_wrapper.h

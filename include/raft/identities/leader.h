@@ -1,16 +1,18 @@
 #ifndef RAFT_PROJ_LEADER_H
 #define RAFT_PROJ_LEADER_H
 
-#include "identity_base.h"
-#include "common.h"
+#include "identity_common.h"
 
 namespace SJTU {
 
 	/// implements identity_base abstract class.
 	class Leader : IdentityBase {
 	public:
-		explicit Leader(State &state, Timer &timer, std::function<void(IdentityNo)> transformer) :
-				IdentityBase(state, timer, transformer) {}
+//		explicit Leader(State &state, Timer &timer, std::function<void(int)> transformer) :
+//		state_(state), timer_(timer), identity_transformer(transformer) {}
+
+		explicit Leader(State &state, Timer &timer, std::function<void(int)> transformer) :
+				IdentityBase(state, timer, std::move(transformer)) {}
 
 		~Leader() override;
 

@@ -1640,6 +1640,7 @@ bin/CMakeFiles/raft_proj.dir/raft/raft.cpp.o
  ../include/raft/identities/candidate.h
  ../include/raft/identities/follower.h
  ../include/raft/identities/identity_base.h
+ ../include/raft/identities/identity_common.h
  ../include/raft/identities/leader.h
  ../include/raft/raft.h
  ../include/raft/raft_proto/cpp_msg_wrapper.h

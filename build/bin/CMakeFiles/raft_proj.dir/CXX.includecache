@@ -25,20 +25,40 @@ memory
 -
 
 ../include/raft/identities/candidate.h
-identity_base.h
-../include/raft/identities/identity_base.h
+identity_common.h
+../include/raft/identities/identity_common.h
 
 ../include/raft/identities/follower.h
-identity_base.h
-../include/raft/identities/identity_base.h
+identity_common.h
+../include/raft/identities/identity_common.h
 
 ../include/raft/identities/identity_base.h
+identity_common.h
+../include/raft/identities/identity_common.h
+functional
+-
+raft/timer/timer.h
+-
+raft/state.h
+-
 raft/raft_proto/cpp_msg_wrapper.h
 -
 
-../include/raft/identities/leader.h
+../include/raft/identities/identity_common.h
+common.h
+../include/raft/identities/common.h
 identity_base.h
 ../include/raft/identities/identity_base.h
+candidate.h
+../include/raft/identities/candidate.h
+follower.h
+../include/raft/identities/follower.h
+leader.h
+../include/raft/identities/leader.h
+
+../include/raft/identities/leader.h
+identity_common.h
+../include/raft/identities/identity_common.h
 
 ../include/raft/raft.h
 memory
@@ -315,6 +335,8 @@ server.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/server.h
 thread
 -
+string
+-
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/event_queue/event_queue.cpp
 raft/event_queue/event_queue.h
@@ -341,6 +363,8 @@ raft/state.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/state.h
 raft/raft_proto/raft_peer_client.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/raft_proto/raft_peer_client.h
+raft/raft_rpc/raft_server.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/raft_rpc/raft_server.h
 raft/identities/follower.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft/identities/follower.h
 raft/identities/candidate.h
@@ -350,8 +374,6 @@ raft/identities/leader.h
 iostream
 -
 vector
--
-raft/raft_rpc/raft_server.h
 -
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer.grpc.pb.cc

@@ -39,16 +39,18 @@ namespace SJTU {
 		 * Many heavy work is done, I wanna distribute these works to specialized classes,
 		 * thus leaving detailed implementation inside identities.
 		 * */
-		void IdentityTransform(IdentityNo);
+		void IdentityTransform(int);
 	};
 
 	Raft::Impl::Impl(const SJTU::ServerInfo &info) : info(info) {
-		identities_[FollowerNo] = std::make_unique<Follower>(state_, timer_, std::bind(&Raft::Impl::IdentityTransform, this,
-																																									 std::placeholders::_1));
-		identities_[CandidateNo] = std::make_unique<Candidate>(state_, timer_,
-																													 std::bind(&Raft::Impl::IdentityTransform, this,
-																																		 std::placeholders::_1);
-		identities_[LeaderNo] = std::make_unique<Leader>(state_, timer_, std::bind(&Raft::Impl::IdentityTransform, this,
+		std::function<void(int)> transformer = std::bind(&Raft::Impl::IdentityTransform, this, std::placeholders::_1);
+		identities_[FollowerNo] = std::make_unique<Follower>(state_, timer_, transformer);
+//		identities_[FollowerNo] = std::make_unique<Follower>(state_, timer_, std::bind(&Raft::Impl::IdentityTransform, this,
+//																																									 std::placeholders::_1));
+//		identities_[CandidateNo] = std::make_unique<Candidate>(state_, timer_,
+//																													 std::bind(&Raft::Impl::IdentityTransform, this,
+//																																		 std::placeholders::_1);
+//		identities_[LeaderNo] = std::make_unique<Leader>(state_, timer_, std::bind(&Raft::Impl::IdentityTransform, this,
 																																							 std::placeholders::_1);
 		currentIdentity_ = FollowerNo;
 
@@ -67,7 +69,7 @@ namespace SJTU {
 		server_end_.AsycRun();
 	}
 
-	void Raft::Impl::IdentityTransform(IdentityNo identityNo) {
+	void Raft::Impl::IdentityTransform(int identityNo) {
 		identities_[currentIdentity_]->leave();
 		currentIdentity_ = identityNo;
 		identities_[currentIdentity_]->init();

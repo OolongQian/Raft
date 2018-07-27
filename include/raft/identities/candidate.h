@@ -1,16 +1,18 @@
 #ifndef RAFT_PROJ_CANDIDATE_H
 #define RAFT_PROJ_CANDIDATE_H
 
-#include "identity_base.h"
-#include "common.h"
+#include "identity_common.h"
 
 namespace SJTU {
 
 	/// implements identity_base abstract class.
 	class Candidate : IdentityBase {
 	public:
-		explicit Candidate(State &state, Timer &timer, std::function<void(IdentityNo)> transformer) :
-				IdentityBase(state, timer, transformer) {}
+//		explicit Candidate(State &state, Timer &timer, std::function<void(int)> transformer) :
+//		state_(state), timer_(timer), identity_transformer(transformer) {}
+
+		explicit Candidate(State &state, Timer &timer, std::function<void(int)> transformer) :
+				IdentityBase(state, timer, std::move(transformer)) {}
 
 		~Candidate() override;
 
