@@ -1,4 +1,4 @@
-#include "server_info.h"
+#include "../include/server_info.h"
 
 #include <iostream>
 #include <boost/property_tree/json_parser.hpp>

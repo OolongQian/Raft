@@ -1,7 +1,20 @@
-#include "raft/identities/leader.h"
+#include "../../../include/raft/identities/leader.h"
 
 namespace SJTU {
+
+	Leader::~Leader() {
+
+	}
+
+	void Leader::init() {
+
+	}
+
+	void Leader::leave() {
+
+	}
+
 	void Leader::TimeOutFunc() {
-		printf("invoke leader's timeout Func\n");
+
 	}
 };

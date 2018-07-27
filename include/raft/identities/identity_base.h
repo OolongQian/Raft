@@ -1,12 +1,10 @@
 #ifndef RAFT_PROJ_IDENTITY_BASE_H
 #define RAFT_PROJ_IDENTITY_BASE_H
 
-#include "identity_common.h"
 
 #include <functional>
-#include <raft/timer/timer.h>
-#include <raft/state.h>
-#include <raft/raft_proto/cpp_msg_wrapper.h>
+#include "../state.h"
+#include "../raft_proto/cpp_msg_wrapper.h"
 
 namespace SJTU {
 	/**
@@ -14,10 +12,12 @@ namespace SJTU {
 	 * */
 	class IdentityBase {
 	public:
-		explicit IdentityBase(State &state, Timer &timer, std::function<void(int)> transformer) :
-				state_(state), timer_(timer), identity_transformer(transformer) {}
+//		IdentityBase() = default;
 
-		virtual ~IdentityBase() = default;
+		explicit IdentityBase(State &state, std::function<void(int)> transformer) :
+				state_(state), identity_transformer(std::move(transformer)) { ; }
+
+		virtual ~IdentityBase() { ; }
 
 		/// define two pure virtual functions.
 		/// look up virtual functions' definitions clearly.
@@ -34,8 +34,8 @@ namespace SJTU {
 
 	protected:
 		State &state_;
-		Timer &timer_;
 		std::function<void(int)> identity_transformer;
 	};
 };
+
 #endif //RAFT_PROJ_IDENTITY_BASE_H

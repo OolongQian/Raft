@@ -1,13 +1,8 @@
-#include "server.h"
-#include <thread>
 #include <string>
+#include "../include/server.h"
 
 int main() {
-	std::string config_filename = "raft_0.json";
+	std::string config_filename = "shit";
 	SJTU::Server server(config_filename);
-	server.StartUp();
-	std::this_thread::sleep_for(std::chrono::seconds(10));
-	server.ShutDown();
 	return 0;
-
 }

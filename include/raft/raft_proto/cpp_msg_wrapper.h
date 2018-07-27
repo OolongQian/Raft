@@ -9,6 +9,7 @@
  * Therefore we had better create such data wrappers in cpp version and define
  * some functions to convert between them.
  * */
+#include "../../log/log.h"
 
 namespace SJTU {
 	struct CppAppendEntriesRequest {

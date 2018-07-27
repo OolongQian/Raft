@@ -1,6 +1,6 @@
-#include "server_info.h"
-#include "server.h"
-#include "raft/raft.h"
+#include "../include/raft/raft.h"
+#include "../include/server_info.h"
+#include "../include/server.h"
 
 namespace SJTU {
 	struct Server::Impl {

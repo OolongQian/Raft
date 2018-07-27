@@ -2,7 +2,11 @@
 #define RAFT_PROJ_RAFT_H
 
 #include <memory>
-#include <server_info.h>
+#include "../server_info.h"
+#include "identities/follower.h"
+#include "identities/candidate.h"
+#include "identities/leader.h"
+#include "identities/identity_base.h"
 
 namespace SJTU {
 	class Raft {

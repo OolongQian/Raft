@@ -4,6 +4,8 @@
 /**
  * A container of one entry of log information.
  * */
+#include <string>
+
 namespace SJTU {
 	struct Log {
 		std::string command;

@@ -1,4 +1,5 @@
-#include "common.h"
+#include <string>
+#include "../include/common.h"
 
 namespace SJTU {
 

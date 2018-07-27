@@ -1,8 +1,16 @@
-#include "raft/identities/follower.h"
+#include "../../../include/raft/identities/follower.h"
 
 namespace SJTU {
+
+	Follower::~Follower() {
+	}
+
+	void Follower::init() {
+	}
+
+	void Follower::leave() {
+	}
+
 	void Follower::TimeOutFunc() {
-		printf("invoke follower's timeout Func\n");
-		identity_transformer(CandidateNo);
 	}
 };

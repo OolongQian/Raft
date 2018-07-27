@@ -11,7 +11,7 @@ else ()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -o2 -Wall")
 endif ()
 
-INCLUDE_DIRECTORIES(include/)
+#INCLUDE_DIRECTORIES(./include/)
 
 set(Boost_USE_STATIC_LIBS FALSE)
 find_package(Boost REQUIRED

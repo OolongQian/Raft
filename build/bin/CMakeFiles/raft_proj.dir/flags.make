@@ -6,5 +6,5 @@ CXX_FLAGS =  -o2 -Wall   -D BOOST_THREAD_VERSION=4 -D BOOST_LOG_DYN_LINK -std=gn
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I"/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include" -I/usr/local/include 
+CXX_INCLUDES = -I/usr/local/include 
 

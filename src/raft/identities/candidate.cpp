@@ -1,16 +1,21 @@
-#include "raft/identities/candidate.h"
+#include "../../../include/raft/identities/candidate.h"
 
 namespace SJTU {
 
-	/**
-	 * Initialize candidate, start a election.
-	 * */
+	Candidate::~Candidate() {
+		;
+	}
+
 	void Candidate::init() {
-		printf("Candidate start a election\n");
+		;
+	}
+
+	void Candidate::leave() {
+		;
 	}
 
 	void Candidate::TimeOutFunc() {
-		printf("invoke candidate's timeout Func\n");
-		identity_transformer(CandidateNo);
+		;
 	}
+
 };
