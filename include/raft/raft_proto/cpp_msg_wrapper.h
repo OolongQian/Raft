@@ -10,6 +10,7 @@
  * some functions to convert between them.
  * */
 #include "../../log/log.h"
+#include "raft_peer.pb.h"
 
 namespace SJTU {
 	struct CppAppendEntriesRequest {
@@ -21,6 +22,14 @@ namespace SJTU {
 		int leaderCommit;
 
 		CppAppendEntriesRequest() = default;
+
+		explicit CppAppendEntriesRequest(PbAppendEntriesRequest) {
+			;
+		}
+
+		PbAppendEntriesRequest Convert() {
+			return PbAppendEntriesRequest();
+		}
 	};
 
 	struct CppAppendEntriesResponse {
@@ -28,6 +37,14 @@ namespace SJTU {
 		bool success;
 
 		CppAppendEntriesResponse() = default;
+
+		explicit CppAppendEntriesResponse(PbAppendEntriesResponse) {
+			;
+		}
+
+		PbAppendEntriesResponse Convert() {
+			return PbAppendEntriesResponse();
+		}
 	};
 
 	struct CppRequestVoteRequest {
@@ -37,6 +54,14 @@ namespace SJTU {
 		int lastLogTerm;
 
 		CppRequestVoteRequest() = default;
+
+		explicit CppRequestVoteRequest(PbRequestVoteRequest) {
+			;
+		}
+
+		PbRequestVoteRequest Convert() {
+			return PbRequestVoteRequest();
+		}
 	};
 
 	struct CppRequestVoteResponse {
@@ -44,6 +69,14 @@ namespace SJTU {
 		bool voteGranted;
 
 		CppRequestVoteResponse() = default;
+
+		explicit CppRequestVoteResponse(PbRequestVoteResponse) {
+			;
+		}
+
+		PbRequestVoteResponse Convert() {
+			return PbRequestVoteResponse();
+		}
 	};
 };
 

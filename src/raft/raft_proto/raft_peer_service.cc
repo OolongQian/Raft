@@ -6,19 +6,23 @@
 
 namespace SJTU {
 
-	SJTU::RaftPeerServiceImpl::RaftPeerServiceImpl() {
+
+	RaftPeerServiceImpl::RaftPeerServiceImpl() {
 
 	}
 
 	grpc::Status
-	SJTU::RaftPeerServiceImpl::AppendEntriesRPC(grpc::ServerContext *context, const PbAppendEntriesRequest *request,
-																							PbAppendEntriesResponse *response) {
-		return Service::AppendEntriesRPC(context, request, response);
+	RaftPeerServiceImpl::AppendEntriesRPC(grpc::ServerContext *context, const PbAppendEntriesRequest *request,
+																				PbAppendEntriesResponse *response) {
+		CppAppendEntriesResponse cpp_response = appendEntriesFunc(CppAppendEntriesRequest(*request));
+		*response = cpp_response.Convert();
+		return grpc::Status::OK;
 	}
 
-	grpc::Status
-	SJTU::RaftPeerServiceImpl::RequestVoteRPC(grpc::ServerContext *context, const PbRequestVoteRequest *request,
-																						PbRequestVoteResponse *response) {
-		return Service::RequestVoteRPC(context, request, response);
+	grpc::Status RaftPeerServiceImpl::RequestVoteRPC(grpc::ServerContext *context, const PbRequestVoteRequest *request,
+																									 PbRequestVoteResponse *response) {
+		CppRequestVoteResponse cpp_response = requestVoteFunc(CppRequestVoteRequest(*request));
+		*response = cpp_response.Convert();
+		return grpc::Status::OK;
 	}
 };
