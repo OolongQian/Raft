@@ -129,8 +129,38 @@
 		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/common.cpp">
 			<Option target="raft_proj"/>
 		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.grpc.pb.cc">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.grpc.pb.h">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.pb.cc">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.pb.h">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello_rpc_client.cc">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello_rpc_server.cc">
+			<Option target="raft_proj"/>
+		</Unit>
 		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/main.cpp">
 			<Option target="hello"/>
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/identities/candidate.cpp">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/identities/follower.cpp">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/identities/identity_base.cpp">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/identities/leader.cpp">
 			<Option target="raft_proj"/>
 		</Unit>
 		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft.cpp">
@@ -146,6 +176,12 @@
 			<Option target="raft_proj"/>
 		</Unit>
 		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_service.cc">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_rpc/raft_server.cpp">
+			<Option target="raft_proj"/>
+		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/timer/timer.cpp">
 			<Option target="raft_proj"/>
 		</Unit>
 		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/server.cpp">

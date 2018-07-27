@@ -167,6 +167,114 @@ common.cpp.s:
 	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/common.cpp.s
 .PHONY : common.cpp.s
 
+hello_proto/hello.grpc.pb.o: hello_proto/hello.grpc.pb.cc.o
+
+.PHONY : hello_proto/hello.grpc.pb.o
+
+# target to build an object file
+hello_proto/hello.grpc.pb.cc.o:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.o
+.PHONY : hello_proto/hello.grpc.pb.cc.o
+
+hello_proto/hello.grpc.pb.i: hello_proto/hello.grpc.pb.cc.i
+
+.PHONY : hello_proto/hello.grpc.pb.i
+
+# target to preprocess a source file
+hello_proto/hello.grpc.pb.cc.i:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.i
+.PHONY : hello_proto/hello.grpc.pb.cc.i
+
+hello_proto/hello.grpc.pb.s: hello_proto/hello.grpc.pb.cc.s
+
+.PHONY : hello_proto/hello.grpc.pb.s
+
+# target to generate assembly for a file
+hello_proto/hello.grpc.pb.cc.s:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello.grpc.pb.cc.s
+.PHONY : hello_proto/hello.grpc.pb.cc.s
+
+hello_proto/hello.pb.o: hello_proto/hello.pb.cc.o
+
+.PHONY : hello_proto/hello.pb.o
+
+# target to build an object file
+hello_proto/hello.pb.cc.o:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.o
+.PHONY : hello_proto/hello.pb.cc.o
+
+hello_proto/hello.pb.i: hello_proto/hello.pb.cc.i
+
+.PHONY : hello_proto/hello.pb.i
+
+# target to preprocess a source file
+hello_proto/hello.pb.cc.i:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.i
+.PHONY : hello_proto/hello.pb.cc.i
+
+hello_proto/hello.pb.s: hello_proto/hello.pb.cc.s
+
+.PHONY : hello_proto/hello.pb.s
+
+# target to generate assembly for a file
+hello_proto/hello.pb.cc.s:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello.pb.cc.s
+.PHONY : hello_proto/hello.pb.cc.s
+
+hello_proto/hello_rpc_client.o: hello_proto/hello_rpc_client.cc.o
+
+.PHONY : hello_proto/hello_rpc_client.o
+
+# target to build an object file
+hello_proto/hello_rpc_client.cc.o:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.o
+.PHONY : hello_proto/hello_rpc_client.cc.o
+
+hello_proto/hello_rpc_client.i: hello_proto/hello_rpc_client.cc.i
+
+.PHONY : hello_proto/hello_rpc_client.i
+
+# target to preprocess a source file
+hello_proto/hello_rpc_client.cc.i:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.i
+.PHONY : hello_proto/hello_rpc_client.cc.i
+
+hello_proto/hello_rpc_client.s: hello_proto/hello_rpc_client.cc.s
+
+.PHONY : hello_proto/hello_rpc_client.s
+
+# target to generate assembly for a file
+hello_proto/hello_rpc_client.cc.s:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_client.cc.s
+.PHONY : hello_proto/hello_rpc_client.cc.s
+
+hello_proto/hello_rpc_server.o: hello_proto/hello_rpc_server.cc.o
+
+.PHONY : hello_proto/hello_rpc_server.o
+
+# target to build an object file
+hello_proto/hello_rpc_server.cc.o:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o
+.PHONY : hello_proto/hello_rpc_server.cc.o
+
+hello_proto/hello_rpc_server.i: hello_proto/hello_rpc_server.cc.i
+
+.PHONY : hello_proto/hello_rpc_server.i
+
+# target to preprocess a source file
+hello_proto/hello_rpc_server.cc.i:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.i
+.PHONY : hello_proto/hello_rpc_server.cc.i
+
+hello_proto/hello_rpc_server.s: hello_proto/hello_rpc_server.cc.s
+
+.PHONY : hello_proto/hello_rpc_server.s
+
+# target to generate assembly for a file
+hello_proto/hello_rpc_server.cc.s:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.s
+.PHONY : hello_proto/hello_rpc_server.cc.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -561,6 +669,18 @@ help:
 	@echo "... common.o"
 	@echo "... common.i"
 	@echo "... common.s"
+	@echo "... hello_proto/hello.grpc.pb.o"
+	@echo "... hello_proto/hello.grpc.pb.i"
+	@echo "... hello_proto/hello.grpc.pb.s"
+	@echo "... hello_proto/hello.pb.o"
+	@echo "... hello_proto/hello.pb.i"
+	@echo "... hello_proto/hello.pb.s"
+	@echo "... hello_proto/hello_rpc_client.o"
+	@echo "... hello_proto/hello_rpc_client.i"
+	@echo "... hello_proto/hello_rpc_client.s"
+	@echo "... hello_proto/hello_rpc_server.o"
+	@echo "... hello_proto/hello_rpc_server.i"
+	@echo "... hello_proto/hello_rpc_server.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

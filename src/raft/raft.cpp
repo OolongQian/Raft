@@ -54,7 +54,14 @@ namespace SJTU {
 	};
 
 	Raft::Impl::Impl(const ServerInfo &info) : info(info) {
+#ifndef _NOLOG
+		printf("Construct Raft's pImpl...\n");
+#endif
 		std::function<void(int)> transformer = std::bind(&Raft::Impl::IdentityTransform, this, std::placeholders::_1);
+
+#ifndef _NOLOG
+		printf("Construct three identities...\n");
+#endif
 
 		identities_[FollowerNo] = std::make_unique<Follower>(state_, timer_, transformer, client_ends_, info);
 		identities_[CandidateNo] = std::make_unique<Candidate>(state_, timer_, transformer, client_ends_, info);
@@ -62,7 +69,11 @@ namespace SJTU {
 
 		/// initialize client_ends_ and server_ends_.
 		/// bind server function adapter into server_end_...
+#ifndef _NOLOG
+		printf("Create client and server ends...\n");
+#endif
 		for (const ServerId &srv_id : info.get_srvList()) {
+			if (srv_id == info.get_local()) continue;
 			client_ends_.emplace_back(grpc::CreateChannel(srv_id.toString(), grpc::InsecureChannelCredentials()));
 
 			server_ends_.push_back(std::make_unique<RaftServer>(srv_id));
@@ -75,6 +86,9 @@ namespace SJTU {
 		/**
 		 * Timer should be modified so that we can specify what action burstOut at which time.
 		 * */
+#ifndef _NOLOG
+		printf("Bind timeout action adapter to timer\n");
+#endif
 		timer_.BindTimeAndAction(1, std::bind(&Impl::TimeOutActionAdapter, this));
 	}
 
@@ -101,8 +115,10 @@ namespace SJTU {
 
 namespace SJTU {
 
-	Raft::Raft(const ServerInfo &info) {
-
+	Raft::Raft(const ServerInfo &info) : pImpl(std::make_unique<Impl>(info)) {
+#ifndef _NOLOG
+		printf("Construct Raft...\n");
+#endif
 	}
 
 	Raft::~Raft() {
