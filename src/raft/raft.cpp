@@ -69,10 +69,6 @@ namespace SJTU {
 			server_ends_.push_back(std::make_unique<RaftServer>(srv_id));
 			server_ends_.back()->BindServiceFunc(std::bind(&Impl::ProcsRequestVoteAdapter, this, std::placeholders::_1),
 																					 std::bind(&Impl::ProcsAppendEntriesAdapter, this, std::placeholders::_1));
-//			server_ends_.push_back(std::move(RaftServer(srv_id)));
-//			server_ends_.emplace_back(srv_id);
-//			server_ends_.back().BindServiceFunc(std::bind(&Impl::ProcsRequestVoteAdapter, this, std::placeholders::_1),
-//																					std::bind(&Impl::ProcsAppendEntriesAdapter, this, std::placeholders::_1));
 		}
 
 		currentIdentity_ = DownNo;
