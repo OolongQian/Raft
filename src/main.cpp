@@ -39,13 +39,13 @@ public:
 };
 
 int main() {
-//	std::string config_filename = "raft_0.json";
-//	SJTU::Server server(config_filename);
-//	server.StartUp();
-//	sleep(100);
-	Foo f;
-	f.run2();
-	f.join();
+	std::string config_filename = "raft_0.json";
+	SJTU::Server server(config_filename);
+	server.StartUp();
+	sleep(100);
+//	Foo f;
+//	f.run2();
+//	f.join();
 //	f.run2();
 //	f.join();
 	return 0;

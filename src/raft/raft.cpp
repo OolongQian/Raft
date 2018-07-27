@@ -34,6 +34,9 @@ namespace SJTU {
 
 		const ServerInfo &info;
 
+		boost::atomic<bool> transforming{
+				false};  /// if there has been one transformation undergoing, the same transformation shouldn't be applied repeatedly.
+		boost::mutex mtx_transform;                /// a mutex used in identity_transform.
 		//  ---------------------------------------------------------------------
 		explicit Impl(const ServerInfo &info);
 
@@ -98,14 +101,24 @@ namespace SJTU {
 	}
 
 	void Raft::Impl::IdentityTransform(const IdentityNo identityNo) {
+		/// prevent multiple threads modify "transforming: bool" asynchronously.
+		boost::unique_lock<boost::mutex> lk(mtx_transform);
 #ifndef _NOLOG
-		printf("Push transformation into eventQueue_\n");
+		printf("Try to push transformation into eventQueue_\n");
 #endif
+		if (transforming) {
+			printf("There has been one identical transformation task undergoing... returning..\n");
+			return;
+		}
+		transforming = true;
+		lk.unlock();
+
 		eventQueue_.addEvent([this, identityNo]() mutable {
 			printf("Event queue start Identity transform\n");
 			if (currentIdentity_ != DownNo) identities_[currentIdentity_]->leave();
 			currentIdentity_ = identityNo;
 			identities_[currentIdentity_]->init();
+			transforming = false;
 		});
 	}
 

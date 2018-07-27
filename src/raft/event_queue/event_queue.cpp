@@ -30,9 +30,9 @@ namespace SJTU {
 			while (true) {
 				boost::unique_lock<boost::mutex> lk(mtx_);
 				/// only when events_ are present can execute forward...
-				printf("thread is waiting...\n");
+				printf("event_queue is waiting...\n");
 				cond_.wait(lk, [this] { return !events_.empty(); });
-				printf("thread keeps going...\n");
+				printf("event_queue keeps going...\n");
 				auto event = events_.front();
 				events_.pop();
 				event();
