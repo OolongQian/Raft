@@ -528,6 +528,7 @@ bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o: /usr/local/inclu
 bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o: /usr/local/include/grpcpp/support/status.h
 bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o: /usr/local/include/grpcpp/support/string_ref.h
 
+bin/CMakeFiles/raft_proj.dir/main.cpp.o: ../include/server.h
 bin/CMakeFiles/raft_proj.dir/main.cpp.o: ../src/main.cpp
 bin/CMakeFiles/raft_proj.dir/main.cpp.o: /usr/local/include/boost/assert.hpp
 bin/CMakeFiles/raft_proj.dir/main.cpp.o: /usr/local/include/boost/atomic.hpp
@@ -7974,11 +7975,14 @@ bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o: /usr/local/inclu
 
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o: ../src/raft/raft_proto/raft_peer_client.cc
 
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.o: ../include/common.h
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.o: ../include/log/log.h
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.o: ../include/macro.h
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.o: ../include/raft/raft_proto/cpp_msg_wrapper.h
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.o: ../include/raft/raft_proto/raft_peer.grpc.pb.h
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.o: ../include/raft/raft_proto/raft_peer.pb.h
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.o: ../include/raft/raft_proto/raft_peer_service.h
+bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.o: ../include/server_info.h
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.o: ../src/raft/raft_proto/raft_peer_service.cc
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.o: /usr/local/include/boost/assert.hpp
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.o: /usr/local/include/boost/config.hpp
@@ -8247,6 +8251,7 @@ bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o: ../include/raft/ra
 bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o: ../include/raft/raft_proto/raft_peer.pb.h
 bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o: ../include/raft/raft_proto/raft_peer_service.h
 bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o: ../include/raft/raft_rpc/raft_server.h
+bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o: ../include/server_info.h
 bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o: ../src/raft/raft_rpc/raft_server.cpp
 bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o: /usr/local/include/boost/assert.hpp
 bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o: /usr/local/include/boost/config.hpp

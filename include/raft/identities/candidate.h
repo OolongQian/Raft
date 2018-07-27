@@ -14,7 +14,7 @@ namespace SJTU {
 
 //		Candidate() : IdentityBase() {}
 		explicit Candidate(State &state, Timer &timer, std::function<void(int)> transformer,
-											 std::vector<RaftPeerClientImpl> &client_ends, const ServerInfo &info) :
+											 std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends, const ServerInfo &info) :
 				IdentityBase(state, timer, std::move(transformer), client_ends, info), votesReceived(0) {}
 
 		~Candidate() override;
@@ -35,6 +35,7 @@ namespace SJTU {
 
 	private:
 		boost::atomic<std::size_t> votesReceived{0};
+		boost::mutex mtx_;
 	};
 };
 

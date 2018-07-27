@@ -529,6 +529,7 @@ bin/CMakeFiles/raft_proj.dir/hello_proto/hello_rpc_server.cc.o
  /usr/local/include/grpcpp/support/status.h
  /usr/local/include/grpcpp/support/string_ref.h
 bin/CMakeFiles/raft_proj.dir/main.cpp.o
+ /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/server.h
  /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/main.cpp
  /usr/local/include/boost/assert.hpp
  /usr/local/include/boost/atomic.hpp
@@ -7975,11 +7976,14 @@ bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.pb.cc.o
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_client.cc.o
  /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_client.cc
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.o
+ /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/common.h
  /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/log/log.h
+ /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/macro.h
  /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/cpp_msg_wrapper.h
  /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_peer.grpc.pb.h
  /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_peer.pb.h
  /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_peer_service.h
+ /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/server_info.h
  /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer_service.cc
  /usr/local/include/boost/assert.hpp
  /usr/local/include/boost/config.hpp
@@ -8248,6 +8252,7 @@ bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o
  /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_peer.pb.h
  /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_peer_service.h
  /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_rpc/raft_server.h
+ /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/server_info.h
  /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_rpc/raft_server.cpp
  /usr/local/include/boost/assert.hpp
  /usr/local/include/boost/config.hpp

@@ -6,6 +6,10 @@
 
 #IncludeRegexTransform: 
 
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/server.h
+memory
+-
+
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/main.cpp
 string
 -
@@ -13,6 +17,8 @@ boost/thread.hpp
 -
 iostream
 -
+../include/server.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/server.h
 
 /usr/local/include/boost/assert.hpp
 boost/config.hpp

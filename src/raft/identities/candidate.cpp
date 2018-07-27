@@ -7,6 +7,7 @@ namespace SJTU {
 
 	void Candidate::init() {
 		++state_.currentTerm;
+		printf("client_end size: %lu\n", client_ends_.size());
 		RequestVote();
 	}
 
@@ -15,12 +16,20 @@ namespace SJTU {
 	void Candidate::TimeOutFunc() {}
 
 	void Candidate::RequestVote() {
+//		for (int i = 0; i < client_ends_.size(); ++i) {
 		for (int i = 0; i < client_ends_.size(); ++i) {
-			client_ends_[i].th = boost::thread([this] {
+			// sleep(1);
+			client_ends_[i]->th = boost::thread([this, i]() mutable {
+				boost::lock_guard<boost::mutex> lk(mtx_);
 				PbRequestVoteRequest request = MakeVoteRequest();
+
 				PbRequestVoteResponse response;
 				grpc::ClientContext context;
-				client_ends_[i].stub_->RequestVoteRPC(&context, request, &response);
+#ifndef _NOLOG
+				printf("Candidate sends out request to other server...\n");
+				printf("%lu\n", client_ends_.size());
+#endif
+				client_ends_[i]->stub_->RequestVoteRPC(&context, request, &response);      /// this line has serious problems.
 #ifndef _NOLOG
 				printf("Candidate received response from other server...\n");
 #endif
@@ -45,8 +54,17 @@ namespace SJTU {
 	}
 
 	PbRequestVoteRequest Candidate::MakeVoteRequest() {
-		CppRequestVoteRequest request(state_.currentTerm, info.get_local(), state_.logs.size() - 1,
-																	state_.logs.back().term);
-		return request.Convert();
+//		boost::lock_guard<boost::mutex> lk(mtx_);
+		if (state_.logs.empty()) {
+#ifndef _NOLOG
+			printf("current server's log is empty, initialize a trivial request...\n");
+#endif
+			CppRequestVoteRequest request(state_.currentTerm, info.get_local(), 0, -1);
+			return request.Convert();
+		} else {
+			CppRequestVoteRequest request(state_.currentTerm, info.get_local(), state_.logs.size() - 1,
+																		state_.logs.back().term);
+			return request.Convert();
+		}
 	}
 };

@@ -18,9 +18,11 @@ namespace SJTU {
 //		IdentityBase() = default;
 
 		explicit IdentityBase(State &state, Timer &timer, std::function<void(int)> transformer,
-													std::vector<RaftPeerClientImpl> &client_ends, const ServerInfo &info) :
+													std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends, const ServerInfo &info) :
 				state_(state), timer_(timer), identity_transformer(std::move(transformer)), client_ends_(client_ends),
-				info(info) {}
+				info(info) {
+//	printf("size of client_ends: %d\n", client_ends_.size());
+		}
 
 		virtual ~IdentityBase() { ; }
 
@@ -41,7 +43,7 @@ namespace SJTU {
 		State &state_;
 		Timer &timer_;
 		std::function<void(int)> identity_transformer;
-		std::vector<RaftPeerClientImpl> &client_ends_;
+		std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends_;
 		const ServerInfo &info;
 	};
 };

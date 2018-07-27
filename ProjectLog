@@ -133,3 +133,5 @@ to them. Because without the class wrapper raft, it will be awkward for a single
 behaves like a bridge linking three identities, meanwhile it lets three identities share one piece of memory of variables.
 
 Big bread brother's design is nothing but necessary. I'm deeply appreciate that.
+
+多线程的爆炸，多个线程同时访问同一个成员函数会爆炸！

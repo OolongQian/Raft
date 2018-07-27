@@ -18,6 +18,9 @@ public:
 	explicit RaftPeerClientImpl(const std::shared_ptr<grpc::Channel> &channel) :
 			stub_(RaftPeerService::NewStub(channel)) {}
 
+	~RaftPeerClientImpl() {
+		if (th.joinable()) th.join();
+	}
 	std::unique_ptr<RaftPeerService::Stub> stub_;
 	boost::thread th;
 };

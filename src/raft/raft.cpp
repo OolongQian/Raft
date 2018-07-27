@@ -26,7 +26,7 @@ namespace SJTU {
 		std::unique_ptr<IdentityBase> identities_[IdentityNum];
 
 		/// opens up multiple client_ends_, number of which depends on config.
-		std::vector<RaftPeerClientImpl> client_ends_;
+		std::vector<std::unique_ptr<RaftPeerClientImpl> > client_ends_;
 		/// because of some strange reason, server_ends_ cannot be copied or ... just use pointers.
 		std::vector<std::unique_ptr<RaftServer> > server_ends_;
 
@@ -57,15 +57,7 @@ namespace SJTU {
 #ifndef _NOLOG
 		printf("Construct Raft's pImpl...\n");
 #endif
-		std::function<void(int)> transformer = std::bind(&Raft::Impl::IdentityTransform, this, std::placeholders::_1);
 
-#ifndef _NOLOG
-		printf("Construct three identities...\n");
-#endif
-
-		identities_[FollowerNo] = std::make_unique<Follower>(state_, timer_, transformer, client_ends_, info);
-		identities_[CandidateNo] = std::make_unique<Candidate>(state_, timer_, transformer, client_ends_, info);
-		identities_[LeaderNo] = std::make_unique<Leader>(state_, timer_, transformer, client_ends_, info);
 
 		/// initialize client_ends_ and server_ends_.
 		/// bind server function adapter into server_end_...
@@ -74,7 +66,8 @@ namespace SJTU {
 #endif
 		for (const ServerId &srv_id : info.get_srvList()) {
 			if (srv_id == info.get_local()) continue;
-			client_ends_.emplace_back(grpc::CreateChannel(srv_id.toString(), grpc::InsecureChannelCredentials()));
+			client_ends_.push_back(std::make_unique<RaftPeerClientImpl>(
+					grpc::CreateChannel(srv_id.toString(), grpc::InsecureChannelCredentials())));
 
 			server_ends_.push_back(std::make_unique<RaftServer>(srv_id));
 			server_ends_.back()->BindServiceFunc(std::bind(&Impl::ProcsRequestVoteAdapter, this, std::placeholders::_1),
@@ -83,6 +76,14 @@ namespace SJTU {
 
 		currentIdentity_ = DownNo;
 
+#ifndef _NOLOG
+		printf("Construct three identities...\n");
+#endif
+		std::function<void(int)> transformer = std::bind(&Raft::Impl::IdentityTransform, this, std::placeholders::_1);
+		identities_[FollowerNo] = std::make_unique<Follower>(state_, timer_, transformer, client_ends_, info);
+		identities_[CandidateNo] = std::make_unique<Candidate>(state_, timer_, transformer, client_ends_, info);
+		identities_[LeaderNo] = std::make_unique<Leader>(state_, timer_, transformer, client_ends_, info);
+
 		/**
 		 * Timer should be modified so that we can specify what action burstOut at which time.
 		 * */
@@ -90,6 +91,11 @@ namespace SJTU {
 		printf("Bind timeout action adapter to timer\n");
 #endif
 		timer_.BindTimeAndAction(1, std::bind(&Impl::TimeOutActionAdapter, this));
+
+#ifndef _NOLOG
+		printf("Raft starts to transform to candidate\n");
+#endif
+		IdentityTransform(CandidateNo);
 	}
 
 	void Raft::Impl::IdentityTransform(IdentityNo identityNo) {

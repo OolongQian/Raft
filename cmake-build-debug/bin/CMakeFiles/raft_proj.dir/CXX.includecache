@@ -67,6 +67,8 @@ identities/identity_base.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/log/log.h
 raft_peer.pb.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_peer.pb.h
+../../server_info.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/server_info.h
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_peer.grpc.pb.h
 raft_peer.pb.h
@@ -175,6 +177,8 @@ functional
 -
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/state.h
+vector
+-
 ../log/log.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/log/log.h
 
@@ -351,6 +355,8 @@ boost/thread.hpp
 -
 iostream
 -
+../include/server.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/server.h
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/identities/candidate.cpp
 future
