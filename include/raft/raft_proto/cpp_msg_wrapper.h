@@ -11,11 +11,12 @@
  * */
 #include "../../log/log.h"
 #include "raft_peer.pb.h"
+#include "../../server_info.h"
 
 namespace SJTU {
 	struct CppAppendEntriesRequest {
 		int term;
-		int leaderId;
+		ServerId leaderId;
 		int prevLogIndex;
 		int prevLogTerm;
 		Log *entries;
@@ -49,11 +50,15 @@ namespace SJTU {
 
 	struct CppRequestVoteRequest {
 		int term;
-		int candidateId;
+		ServerId candidateId;
 		int lastLogIndex;
 		int lastLogTerm;
 
 		CppRequestVoteRequest() = default;
+
+		CppRequestVoteRequest(int term, ServerId candidateId, int lastLogIndex, int lastLogTerm) :
+				term(std::move(term)), candidateId(std::move(candidateId)), lastLogIndex(std::move(lastLogIndex)),
+				lastLogTerm(std::move(lastLogTerm)) {}
 
 		explicit CppRequestVoteRequest(PbRequestVoteRequest) {
 			;

@@ -45,6 +45,8 @@ namespace SJTU {
 	}
 
 	PbRequestVoteRequest Candidate::MakeVoteRequest() {
-
+		CppRequestVoteRequest request(state_.currentTerm, info.get_local(), state_.logs.size() - 1,
+																	state_.logs.back().term);
+		return request.Convert();
 	}
 };

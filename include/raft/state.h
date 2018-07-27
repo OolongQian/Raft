@@ -1,6 +1,7 @@
 #ifndef RAFT_PROJ_STATE_H
 #define RAFT_PROJ_STATE_H
 
+#include <vector>
 #include "../log/log.h"
 
 /**
@@ -11,7 +12,7 @@ namespace SJTU {
 		/// persistent state on all servers.
 		int currentTerm;
 		int votedFor;
-		Log *logs;
+		std::vector<Log> logs;
 
 		/// volatile state on all servers.
 		int commitIndex;

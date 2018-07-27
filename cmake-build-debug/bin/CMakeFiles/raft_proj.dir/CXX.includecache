@@ -137,6 +137,8 @@ grpc++/create_channel.h
 -
 grpc++/security/credentials.h
 -
+boost/thread.hpp
+-
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_peer_service.h
 raft_peer.grpc.pb.h
@@ -345,8 +347,10 @@ boost/thread/lock_guard.hpp
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/main.cpp
 string
 -
-../include/server.h
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/server.h
+boost/thread.hpp
+-
+iostream
+-
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/identities/candidate.cpp
 future
