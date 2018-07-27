@@ -61,6 +61,8 @@ identities/identity_base.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/cpp_msg_wrapper.h
 ../../log/log.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/log/log.h
+raft_peer.pb.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_peer.pb.h
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_peer.grpc.pb.h
 raft_peer.pb.h
@@ -161,6 +163,8 @@ boost/thread/lock_guard.hpp
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/cpp_msg_wrapper.h
 ../raft_proto/raft_peer_service.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_peer_service.h
+../../common.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/common.h
 functional
 -
 

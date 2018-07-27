@@ -27,8 +27,8 @@ namespace SJTU {
 
 		/// opens up multiple client_ends_, number of which depends on config.
 		std::vector<RaftPeerClientImpl> client_ends_;
-
-		RaftServer server_end_;
+		/// because of some strange reason, server_ends_ cannot be copied or ... just use pointers.
+		std::vector<std::unique_ptr<RaftServer> > server_ends_;
 
 		const ServerInfo &info;
 
@@ -60,20 +60,25 @@ namespace SJTU {
 		identities_[CandidateNo] = std::make_unique<Candidate>(state_, timer_, transformer, client_ends_);
 		identities_[LeaderNo] = std::make_unique<Leader>(state_, timer_, transformer, client_ends_);
 
-		/// initialize client_ends_...
+		/// initialize client_ends_ and server_ends_.
+		/// bind server function adapter into server_end_...
 		for (const ServerId &srv_id : info.get_srvList()) {
 			auto channel = grpc::CreateChannel(srv_id.toString(), grpc::InsecureChannelCredentials());
 			client_ends_.emplace_back(channel);
+
+			server_ends_.push_back(std::make_unique<RaftServer>(srv_id));
+			server_ends_.back()->BindServiceFunc(std::bind(&Impl::ProcsRequestVoteAdapter, this, std::placeholders::_1),
+																					 std::bind(&Impl::ProcsAppendEntriesAdapter, this, std::placeholders::_1));
+//			server_ends_.push_back(std::move(RaftServer(srv_id)));
+//			server_ends_.emplace_back(srv_id);
+//			server_ends_.back().BindServiceFunc(std::bind(&Impl::ProcsRequestVoteAdapter, this, std::placeholders::_1),
+//																					std::bind(&Impl::ProcsAppendEntriesAdapter, this, std::placeholders::_1));
 		}
 
 		currentIdentity_ = DownNo;
 
-		/// bind server function adapter into server_end_...
-		server_end_.BindServiceFunc(std::bind(&Impl::ProcsRequestVoteAdapter, this, std::placeholders::_1),
-																std::bind(&Impl::ProcsAppendEntriesAdapter, this, std::placeholders::_1));
-
 		/**
-		 * Timer should be modified so that qw
+		 * Timer should be modified so that we can specify what action burstOut at which time.
 		 * */
 		timer_.BindTimeOutAction(std::bind(&Impl::TimeOutActionAdapter, this));
 	}
@@ -87,17 +92,16 @@ namespace SJTU {
 	Raft::Impl::~Impl() {}
 
 	CppAppendEntriesResponse Raft::Impl::ProcsAppendEntriesAdapter(CppAppendEntriesRequest request) {
-		return identities_[currentIdentity_]->ProcsAppendEntriesFunc(std::move(request));
+		return identities_[currentIdentity_]->ProcsAppendEntriesFunc(request);
 	}
 
 	CppRequestVoteResponse Raft::Impl::ProcsRequestVoteAdapter(CppRequestVoteRequest request) {
-		return identities_[currentIdentity_]->ProcsRequestVoteFunc(std::move(request));
+		return identities_[currentIdentity_]->ProcsRequestVoteFunc(request);
 	}
 
 	void Raft::Impl::TimeOutActionAdapter() {
 		identities_[currentIdentity_]->TimeOutFunc();
 	}
-
 };
 
 namespace SJTU {

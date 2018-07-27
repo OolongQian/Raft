@@ -1208,7 +1208,9 @@ bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.o: /usr/local/
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.o: /usr/local/include/grpcpp/support/status.h
 bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.o: /usr/local/include/grpcpp/support/string_ref.h
 
+bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o: ../include/common.h
 bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o: ../include/log/log.h
+bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o: ../include/macro.h
 bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o: ../include/raft/raft_proto/cpp_msg_wrapper.h
 bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o: ../include/raft/raft_proto/raft_peer.grpc.pb.h
 bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o: ../include/raft/raft_proto/raft_peer.pb.h
