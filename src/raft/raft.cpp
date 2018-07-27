@@ -1,6 +1,6 @@
 #include "../../include/raft/raft.h"
 #include "../../include/raft/state.h"
-#include "../../include/raft/raft_proto/raft_peer_client.h"
+#include "../../include/raft/raft_rpc/raft_server.h"
 
 //#include "raft/identities/follower.h"
 //#include "raft/identities/candidate.h"
@@ -15,14 +15,20 @@
 #include "../../include/raft/identities/identity_base.h"
 
 namespace SJTU {
+	using RequestVoteFunc = std::function<CppRequestVoteResponse(CppRequestVoteRequest)>;
+	using AppendEntriesFunc = std::function<CppAppendEntriesResponse(CppAppendEntriesRequest)>;
+
 	struct Raft::Impl {
 		State state_;
+		Timer timer_;
 		int currentIdentity_;
 
 		std::unique_ptr<IdentityBase> identities_[IdentityNum];
 
 		/// opens up multiple client_ends_, number of which depends on config.
 		std::vector<RaftPeerClientImpl> client_ends_;
+
+		RaftServer server_end_;
 
 		const ServerInfo &info;
 
@@ -39,14 +45,20 @@ namespace SJTU {
 		 * thus leaving detailed implementation inside identities.
 		 * */
 		void IdentityTransform(IdentityNo);
+
+		CppAppendEntriesResponse ProcsAppendEntriesAdapter(CppAppendEntriesRequest);
+
+		CppRequestVoteResponse ProcsRequestVoteAdapter(CppRequestVoteRequest);
+
+		void TimeOutActionAdapter();
 	};
 
 	Raft::Impl::Impl(const ServerInfo &info) : info(info) {
 		std::function<void(int)> transformer = std::bind(&Raft::Impl::IdentityTransform, this, std::placeholders::_1);
 
-		identities_[FollowerNo] = std::make_unique<Follower>(state_, transformer);
-		identities_[CandidateNo] = std::make_unique<Candidate>(state_, transformer);
-		identities_[LeaderNo] = std::make_unique<Leader>(state_, transformer);
+		identities_[FollowerNo] = std::make_unique<Follower>(state_, timer_, transformer, client_ends_);
+		identities_[CandidateNo] = std::make_unique<Candidate>(state_, timer_, transformer, client_ends_);
+		identities_[LeaderNo] = std::make_unique<Leader>(state_, timer_, transformer, client_ends_);
 
 		/// initialize client_ends_...
 		for (const ServerId &srv_id : info.get_srvList()) {
@@ -54,16 +66,41 @@ namespace SJTU {
 			client_ends_.emplace_back(channel);
 		}
 
-		currentIdentity_ = FollowerNo;
+		currentIdentity_ = DownNo;
+
+		/// bind server function adapter into server_end_...
+		server_end_.BindServiceFunc(std::bind(&Impl::ProcsRequestVoteAdapter, this, std::placeholders::_1),
+																std::bind(&Impl::ProcsAppendEntriesAdapter, this, std::placeholders::_1));
+
+		/**
+		 * Timer should be modified so that qw
+		 * */
+		timer_.BindTimeOutAction(std::bind(&Impl::TimeOutActionAdapter, this));
 	}
 
 	void Raft::Impl::IdentityTransform(IdentityNo identityNo) {
-		identities_[currentIdentity_]->leave();
+		if (currentIdentity_ != DownNo) identities_[currentIdentity_]->leave();
 		currentIdentity_ = identityNo;
 		identities_[currentIdentity_]->init();
 	}
 
 	Raft::Impl::~Impl() {}
+
+	CppAppendEntriesResponse Raft::Impl::ProcsAppendEntriesAdapter(CppAppendEntriesRequest request) {
+		return identities_[currentIdentity_]->ProcsAppendEntriesFunc(std::move(request));
+	}
+
+	CppRequestVoteResponse Raft::Impl::ProcsRequestVoteAdapter(CppRequestVoteRequest request) {
+		return identities_[currentIdentity_]->ProcsRequestVoteFunc(std::move(request));
+	}
+
+	void Raft::Impl::TimeOutActionAdapter() {
+		identities_[currentIdentity_]->TimeOutFunc();
+	}
+
+};
+
+namespace SJTU {
 
 	Raft::Raft(const ServerInfo &info) {
 

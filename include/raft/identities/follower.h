@@ -11,8 +11,9 @@ namespace SJTU {
 //		explicit Follower(State &state, Timer &timer, std::function<void(int)> transformer) :
 //		state_(state), timer_(timer), identity_transformer(transformer) {}
 //		Follower() : IdentityBase() {}
-		explicit Follower(State &state, std::function<void(int)> transformer) :
-				IdentityBase(state, std::move(transformer)) { ; }
+		explicit Follower(State &state, Timer &timer, std::function<void(int)> transformer,
+											std::vector<RaftPeerClientImpl> &client_ends) :
+				IdentityBase(state, timer, std::move(transformer), client_ends) {}
 
 		~Follower() override;
 

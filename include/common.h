@@ -17,6 +17,7 @@ namespace SJTU {
 	const IdentityNo FollowerNo = 0;
 	const IdentityNo CandidateNo = 1;
 	const IdentityNo LeaderNo = 2;
+	const IdentityNo DownNo = 3;
 
 	using Port  = std::uint16_t;
 	using PrmIdx = std::uint64_t;

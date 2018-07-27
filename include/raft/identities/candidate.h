@@ -12,8 +12,9 @@ namespace SJTU {
 //		state_(state), timer_(timer), identity_transformer(transformer) {}
 
 //		Candidate() : IdentityBase() {}
-		explicit Candidate(State &state, std::function<void(int)> transformer) :
-				IdentityBase(state, std::move(transformer)) { ; }
+		explicit Candidate(State &state, Timer &timer, std::function<void(int)> transformer,
+											 std::vector<RaftPeerClientImpl> &client_ends) :
+				IdentityBase(state, timer, std::move(transformer), client_ends) {}
 
 		~Candidate() override;
 
