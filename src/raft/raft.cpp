@@ -56,15 +56,14 @@ namespace SJTU {
 	Raft::Impl::Impl(const ServerInfo &info) : info(info) {
 		std::function<void(int)> transformer = std::bind(&Raft::Impl::IdentityTransform, this, std::placeholders::_1);
 
-		identities_[FollowerNo] = std::make_unique<Follower>(state_, timer_, transformer, client_ends_);
-		identities_[CandidateNo] = std::make_unique<Candidate>(state_, timer_, transformer, client_ends_);
-		identities_[LeaderNo] = std::make_unique<Leader>(state_, timer_, transformer, client_ends_);
+		identities_[FollowerNo] = std::make_unique<Follower>(state_, timer_, transformer, client_ends_, info);
+		identities_[CandidateNo] = std::make_unique<Candidate>(state_, timer_, transformer, client_ends_, info);
+		identities_[LeaderNo] = std::make_unique<Leader>(state_, timer_, transformer, client_ends_, info);
 
 		/// initialize client_ends_ and server_ends_.
 		/// bind server function adapter into server_end_...
 		for (const ServerId &srv_id : info.get_srvList()) {
-			auto channel = grpc::CreateChannel(srv_id.toString(), grpc::InsecureChannelCredentials());
-			client_ends_.emplace_back(channel);
+			client_ends_.emplace_back(grpc::CreateChannel(srv_id.toString(), grpc::InsecureChannelCredentials()));
 
 			server_ends_.push_back(std::make_unique<RaftServer>(srv_id));
 			server_ends_.back()->BindServiceFunc(std::bind(&Impl::ProcsRequestVoteAdapter, this, std::placeholders::_1),
@@ -76,7 +75,7 @@ namespace SJTU {
 		/**
 		 * Timer should be modified so that we can specify what action burstOut at which time.
 		 * */
-		timer_.BindTimeOutAction(std::bind(&Impl::TimeOutActionAdapter, this));
+		timer_.BindTimeAndAction(1, std::bind(&Impl::TimeOutActionAdapter, this));
 	}
 
 	void Raft::Impl::IdentityTransform(IdentityNo identityNo) {

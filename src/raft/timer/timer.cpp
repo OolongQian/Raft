@@ -16,7 +16,8 @@ namespace SJTU {
 
 	Timer::~Timer() = default;
 
-	void Timer::BindTimeOutAction(std::function<void()> f) {
+	void Timer::BindTimeAndAction(int time_limit, std::function<void()> f) {
+		pImpl->time_ = time_limit;
 		pImpl->timeOutAction_ = std::move(f);
 	}
 

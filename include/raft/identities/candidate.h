@@ -2,6 +2,7 @@
 #define RAFT_PROJ_CANDIDATE_H
 
 #include "identity_base.h"
+#include "boost/atomic.hpp"
 
 namespace SJTU {
 
@@ -13,8 +14,8 @@ namespace SJTU {
 
 //		Candidate() : IdentityBase() {}
 		explicit Candidate(State &state, Timer &timer, std::function<void(int)> transformer,
-											 std::vector<RaftPeerClientImpl> &client_ends) :
-				IdentityBase(state, timer, std::move(transformer), client_ends) {}
+											 std::vector<RaftPeerClientImpl> &client_ends, const ServerInfo &info) :
+				IdentityBase(state, timer, std::move(transformer), client_ends, info), votesReceived(0) {}
 
 		~Candidate() override;
 
@@ -27,6 +28,12 @@ namespace SJTU {
 		void leave() override;
 
 		void TimeOutFunc() override;
+
+		void RequestVote();
+
+	private:
+//		boost::atomic<std::size_t> votesReceived{0};
+		int votesReceived;
 	};
 };
 

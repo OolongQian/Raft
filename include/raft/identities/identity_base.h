@@ -7,6 +7,7 @@
 #include "../raft_proto/cpp_msg_wrapper.h"
 #include "../raft_proto/raft_peer_client.h"
 #include "../timer/timer.h"
+#include "../../server_info.h"
 
 namespace SJTU {
 	/**
@@ -17,8 +18,9 @@ namespace SJTU {
 //		IdentityBase() = default;
 
 		explicit IdentityBase(State &state, Timer &timer, std::function<void(int)> transformer,
-													std::vector<RaftPeerClientImpl> &client_ends) :
-				state_(state), timer_(timer), identity_transformer(std::move(transformer)), client_ends_(client_ends) {}
+													std::vector<RaftPeerClientImpl> &client_ends, const ServerInfo &info) :
+				state_(state), timer_(timer), identity_transformer(std::move(transformer)), client_ends_(client_ends),
+				info(info) {}
 
 		virtual ~IdentityBase() { ; }
 
@@ -40,6 +42,7 @@ namespace SJTU {
 		Timer &timer_;
 		std::function<void(int)> identity_transformer;
 		std::vector<RaftPeerClientImpl> &client_ends_;
+		const ServerInfo &info;
 	};
 };
 
