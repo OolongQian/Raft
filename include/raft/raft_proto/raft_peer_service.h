@@ -36,7 +36,6 @@ namespace SJTU {
 		RequestVoteFunc requestVoteFunc;
 		AppendEntriesFunc appendEntriesFunc;
 	};
-
 };
 
 #endif //RAFT_PROJ_RAFT_PEER_SERVER_H

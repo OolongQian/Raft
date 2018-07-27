@@ -440,6 +440,60 @@ raft/raft_proto/raft_peer_service.cc.s:
 	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer_service.cc.s
 .PHONY : raft/raft_proto/raft_peer_service.cc.s
 
+raft/raft_rpc/raft_server.o: raft/raft_rpc/raft_server.cpp.o
+
+.PHONY : raft/raft_rpc/raft_server.o
+
+# target to build an object file
+raft/raft_rpc/raft_server.cpp.o:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o
+.PHONY : raft/raft_rpc/raft_server.cpp.o
+
+raft/raft_rpc/raft_server.i: raft/raft_rpc/raft_server.cpp.i
+
+.PHONY : raft/raft_rpc/raft_server.i
+
+# target to preprocess a source file
+raft/raft_rpc/raft_server.cpp.i:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.i
+.PHONY : raft/raft_rpc/raft_server.cpp.i
+
+raft/raft_rpc/raft_server.s: raft/raft_rpc/raft_server.cpp.s
+
+.PHONY : raft/raft_rpc/raft_server.s
+
+# target to generate assembly for a file
+raft/raft_rpc/raft_server.cpp.s:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.s
+.PHONY : raft/raft_rpc/raft_server.cpp.s
+
+raft/timer/timer.o: raft/timer/timer.cpp.o
+
+.PHONY : raft/timer/timer.o
+
+# target to build an object file
+raft/timer/timer.cpp.o:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/timer/timer.cpp.o
+.PHONY : raft/timer/timer.cpp.o
+
+raft/timer/timer.i: raft/timer/timer.cpp.i
+
+.PHONY : raft/timer/timer.i
+
+# target to preprocess a source file
+raft/timer/timer.cpp.i:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/timer/timer.cpp.i
+.PHONY : raft/timer/timer.cpp.i
+
+raft/timer/timer.s: raft/timer/timer.cpp.s
+
+.PHONY : raft/timer/timer.s
+
+# target to generate assembly for a file
+raft/timer/timer.cpp.s:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/build" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/timer/timer.cpp.s
+.PHONY : raft/timer/timer.cpp.s
+
 server.o: server.cpp.o
 
 .PHONY : server.o
@@ -537,6 +591,12 @@ help:
 	@echo "... raft/raft_proto/raft_peer_service.o"
 	@echo "... raft/raft_proto/raft_peer_service.i"
 	@echo "... raft/raft_proto/raft_peer_service.s"
+	@echo "... raft/raft_rpc/raft_server.o"
+	@echo "... raft/raft_rpc/raft_server.i"
+	@echo "... raft/raft_rpc/raft_server.s"
+	@echo "... raft/timer/timer.o"
+	@echo "... raft/timer/timer.i"
+	@echo "... raft/timer/timer.s"
 	@echo "... server.o"
 	@echo "... server.i"
 	@echo "... server.s"

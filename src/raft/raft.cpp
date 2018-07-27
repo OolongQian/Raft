@@ -17,14 +17,16 @@
 namespace SJTU {
 	struct Raft::Impl {
 		State state_;
-//		int currentIdentity_;
+		int currentIdentity_;
+
+		std::unique_ptr<IdentityBase> identities_[IdentityNum];
+
+		/// opens up multiple client_ends_, number of which depends on config.
+		std::vector<RaftPeerClientImpl> client_ends_;
 
 		const ServerInfo &info;
 
-		std::unique_ptr<IdentityBase> identities_[IdentityNum];
-//		IdentityBase *identities_[IdentityNum];
-
-//  ---------------------------------------------------------------------
+		//  ---------------------------------------------------------------------
 		explicit Impl(const ServerInfo &info);
 
 		~Impl();
@@ -41,13 +43,24 @@ namespace SJTU {
 
 	Raft::Impl::Impl(const ServerInfo &info) : info(info) {
 		std::function<void(int)> transformer = std::bind(&Raft::Impl::IdentityTransform, this, std::placeholders::_1);
+
 		identities_[FollowerNo] = std::make_unique<Follower>(state_, transformer);
 		identities_[CandidateNo] = std::make_unique<Candidate>(state_, transformer);
 		identities_[LeaderNo] = std::make_unique<Leader>(state_, transformer);
+
+		/// initialize client_ends_...
+		for (const ServerId &srv_id : info.get_srvList()) {
+			auto channel = grpc::CreateChannel(srv_id.toString(), grpc::InsecureChannelCredentials());
+			client_ends_.emplace_back(channel);
+		}
+
+		currentIdentity_ = FollowerNo;
 	}
 
-	void Raft::Impl::IdentityTransform(int) {
-
+	void Raft::Impl::IdentityTransform(IdentityNo identityNo) {
+		identities_[currentIdentity_]->leave();
+		currentIdentity_ = identityNo;
+		identities_[currentIdentity_]->init();
 	}
 
 	Raft::Impl::~Impl() {}

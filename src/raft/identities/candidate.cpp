@@ -1,21 +1,11 @@
 #include "../../../include/raft/identities/candidate.h"
 
 namespace SJTU {
+	Candidate::~Candidate() {}
 
-	Candidate::~Candidate() {
-		;
-	}
+	void Candidate::init() {}
 
-	void Candidate::init() {
-		;
-	}
+	void Candidate::leave() {}
 
-	void Candidate::leave() {
-		;
-	}
-
-	void Candidate::TimeOutFunc() {
-		;
-	}
-
+	void Candidate::TimeOutFunc() {}
 };

@@ -27,5 +27,4 @@
 
 #define LOG_RID "{" << rid << "} "
 
-
 #endif //RAFT_PROJ_MACRO_H

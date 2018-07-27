@@ -6,6 +6,8 @@ file(REMOVE_RECURSE
         "CMakeFiles/raft_proj.dir/raft/identities/identity_base.cpp.o"
         "CMakeFiles/raft_proj.dir/raft/identities/leader.cpp.o"
   "CMakeFiles/raft_proj.dir/raft/raft.cpp.o"
+        "CMakeFiles/raft_proj.dir/raft/raft_rpc/raft_server.cpp.o"
+        "CMakeFiles/raft_proj.dir/raft/timer/timer.cpp.o"
   "CMakeFiles/raft_proj.dir/server.cpp.o"
         "CMakeFiles/raft_proj.dir/server_info.cpp.o"
         "CMakeFiles/raft_proj.dir/raft/raft_proto/raft_peer.grpc.pb.cc.o"
