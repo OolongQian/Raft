@@ -20,8 +20,9 @@ namespace SJTU {
 		printf("leaving candidate...shutting down all threads and client ends\n");
 #endif
 		for (size_t i = 0; i < client_ends_.size(); ++i) {
-			client_ends_[i]->th.interrupt();
-			if (client_ends_[i]->th.joinable()) client_ends_[i]->th.join();
+			if (client_ends_[i]->th.joinable()) {
+				client_ends_[i]->th.interrupt();
+			}
 		}
 	}
 
@@ -29,7 +30,7 @@ namespace SJTU {
 
 	void Candidate::RequestVote() {
 //		for (int i = 0; i < client_ends_.size(); ++i) {
-		for (int i = 0; i < client_ends_.size(); ++i) {
+		for (size_t i = 0; i < client_ends_.size(); ++i) {
 			client_ends_[i]->th = boost::thread([this, i]() mutable {
 				try {
 					PbRequestVoteRequest request = MakeVoteRequest();
@@ -49,7 +50,7 @@ namespace SJTU {
 
 					if (votesReceived >= info.get_srvList().size() / 2) {
 #ifndef _NOLOG
-						printf("There are %d servers in total. More than half votes received, start to transform to leader...\n",
+						printf("There are %lu servers in total. More than half votes received, start to transform to leader...\n",
 									 info.get_srvList().size());
 						printf("transforming to leader\n");
 #endif
@@ -59,7 +60,7 @@ namespace SJTU {
 					/**
 					 * Here I catch all kinds of exceptions. So ugly!!!
 					 * */
-				catch (...) {
+				catch (boost::thread_interrupted) {
 					printf("thread is interrupted and returned\n");
 					return;
 				}

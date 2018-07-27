@@ -1,6 +1,7 @@
 #include "../../../include/raft/timer/timer.h"
 #include <boost/thread.hpp>
 #include <functional>
+#include <thread>
 
 namespace SJTU {
 	struct Timer::Impl {
@@ -28,9 +29,11 @@ namespace SJTU {
 	void Timer::Start() {
 		pImpl->th = boost::thread([this] {
 			// sleep(pImpl->time_);
-			sleep(1);
-			printf("timer is pushing event...\n");
-			pImpl->pushEvent_(pImpl->timeOutAction_);
+//			std::this_thread::sleep_for(std::chrono::duration_cast())
+			std::this_thread::sleep_for(std::chrono::milliseconds(pImpl->time_));
+			printf("%d ms has passed! timer is pushing event...\n", pImpl->time_);
+			pImpl->timeOutAction_();
+//			pImpl->pushEvent_(pImpl->timeOutAction_);
 //			 pImpl->timeOutAction_();
 			// pImpl->pushEvent_([] { printf("push event...\n"); });
 		});

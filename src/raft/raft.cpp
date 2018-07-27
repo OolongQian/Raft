@@ -1,6 +1,7 @@
 #include "../../include/raft/raft.h"
 #include "../../include/raft/state.h"
 #include "../../include/raft/raft_rpc/raft_server.h"
+#include "../../include/raft/event_queue/event_queue.h"
 
 //#include "raft/identities/follower.h"
 //#include "raft/identities/candidate.h"
@@ -21,6 +22,7 @@ namespace SJTU {
 	struct Raft::Impl {
 		State state_;
 		Timer timer_;
+		EventQueue eventQueue_;
 		int currentIdentity_;
 
 		std::unique_ptr<IdentityBase> identities_[IdentityNum];
@@ -59,6 +61,14 @@ namespace SJTU {
 #endif
 
 
+#ifndef _NOLOG
+		printf("Construct three identities...\n");
+#endif
+		std::function<void(int)> transformer = std::bind(&Raft::Impl::IdentityTransform, this, std::placeholders::_1);
+		identities_[FollowerNo] = std::make_unique<Follower>(state_, timer_, transformer, client_ends_, info);
+		identities_[CandidateNo] = std::make_unique<Candidate>(state_, timer_, transformer, client_ends_, info);
+		identities_[LeaderNo] = std::make_unique<Leader>(state_, timer_, transformer, client_ends_, info);
+
 		/// initialize client_ends_ and server_ends_.
 		/// bind server function adapter into server_end_...
 #ifndef _NOLOG
@@ -76,14 +86,6 @@ namespace SJTU {
 
 		currentIdentity_ = DownNo;
 
-#ifndef _NOLOG
-		printf("Construct three identities...\n");
-#endif
-		std::function<void(int)> transformer = std::bind(&Raft::Impl::IdentityTransform, this, std::placeholders::_1);
-		identities_[FollowerNo] = std::make_unique<Follower>(state_, timer_, transformer, client_ends_, info);
-		identities_[CandidateNo] = std::make_unique<Candidate>(state_, timer_, transformer, client_ends_, info);
-		identities_[LeaderNo] = std::make_unique<Leader>(state_, timer_, transformer, client_ends_, info);
-
 		/**
 		 * Timer should be modified so that we can specify what action burstOut at which time.
 		 * */
@@ -91,20 +93,20 @@ namespace SJTU {
 		printf("Bind timeout action adapter to timer\n");
 #endif
 		timer_.BindTimeAndAction(1, std::bind(&Impl::TimeOutActionAdapter, this));
+		timer_.BindPushEvent(std::bind(&EventQueue::addEvent, &eventQueue_, std::placeholders::_1));
 
-#ifndef _NOLOG
-		printf("Raft starts to transform to candidate\n");
-#endif
-		IdentityTransform(CandidateNo);
 	}
 
-	void Raft::Impl::IdentityTransform(IdentityNo identityNo) {
+	void Raft::Impl::IdentityTransform(const IdentityNo identityNo) {
 #ifndef _NOLOG
-		printf("Start Identity transform\n");
+		printf("Push transformation into eventQueue_\n");
 #endif
-		if (currentIdentity_ != DownNo) identities_[currentIdentity_]->leave();
-		currentIdentity_ = identityNo;
-		identities_[currentIdentity_]->init();
+		eventQueue_.addEvent([this, identityNo]() mutable {
+			printf("Event queue start Identity transform\n");
+			if (currentIdentity_ != DownNo) identities_[currentIdentity_]->leave();
+			currentIdentity_ = identityNo;
+			identities_[currentIdentity_]->init();
+		});
 	}
 
 	Raft::Impl::~Impl() {}
@@ -140,6 +142,11 @@ namespace SJTU {
 
 	void Raft::Start() {
 
+#ifndef _NOLOG
+		printf("Raft starts to transform to candidate\n");
+#endif
+		pImpl->eventQueue_.Start();
+		pImpl->IdentityTransform(CandidateNo);
 	}
 
 	void Raft::Stop() {

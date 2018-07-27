@@ -20,6 +20,12 @@ string
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/macro.h
 
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/event_queue/event_queue.h
+functional
+-
+memory
+-
+
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/identities/candidate.h
 identity_base.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/identities/identity_base.h
@@ -358,6 +364,20 @@ iostream
 ../include/server.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/server.h
 
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/event_queue/event_queue.cpp
+../../../include/raft/event_queue/event_queue.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/event_queue/event_queue.h
+queue
+-
+functional
+-
+boost/thread.hpp
+-
+boost/thread/mutex.hpp
+-
+boost/thread/condition_variable.hpp
+-
+
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/identities/candidate.cpp
 future
 -
@@ -385,6 +405,8 @@ future
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/state.h
 ../../include/raft/raft_rpc/raft_server.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_rpc/raft_server.h
+../../include/raft/event_queue/event_queue.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/event_queue/event_queue.h
 iostream
 -
 vector
@@ -470,6 +492,8 @@ grpcpp/server_context.h
 boost/thread.hpp
 -
 functional
+-
+thread
 -
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/server.cpp

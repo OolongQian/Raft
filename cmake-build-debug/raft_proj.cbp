@@ -151,6 +151,9 @@
 			<Option target="hello"/>
 			<Option target="raft_proj"/>
 		</Unit>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/event_queue/event_queue.cpp">
+			<Option target="raft_proj"/>
+		</Unit>
 		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/identities/candidate.cpp">
 			<Option target="raft_proj"/>
 		</Unit>

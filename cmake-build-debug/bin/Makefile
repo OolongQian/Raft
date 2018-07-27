@@ -305,6 +305,33 @@ main.cpp.s:
 	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+raft/event_queue/event_queue.o: raft/event_queue/event_queue.cpp.o
+
+.PHONY : raft/event_queue/event_queue.o
+
+# target to build an object file
+raft/event_queue/event_queue.cpp.o:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o
+.PHONY : raft/event_queue/event_queue.cpp.o
+
+raft/event_queue/event_queue.i: raft/event_queue/event_queue.cpp.i
+
+.PHONY : raft/event_queue/event_queue.i
+
+# target to preprocess a source file
+raft/event_queue/event_queue.cpp.i:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.i
+.PHONY : raft/event_queue/event_queue.cpp.i
+
+raft/event_queue/event_queue.s: raft/event_queue/event_queue.cpp.s
+
+.PHONY : raft/event_queue/event_queue.s
+
+# target to generate assembly for a file
+raft/event_queue/event_queue.cpp.s:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.s
+.PHONY : raft/event_queue/event_queue.cpp.s
+
 raft/identities/candidate.o: raft/identities/candidate.cpp.o
 
 .PHONY : raft/identities/candidate.o
@@ -684,6 +711,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... raft/event_queue/event_queue.o"
+	@echo "... raft/event_queue/event_queue.i"
+	@echo "... raft/event_queue/event_queue.s"
 	@echo "... raft/identities/candidate.o"
 	@echo "... raft/identities/candidate.i"
 	@echo "... raft/identities/candidate.s"

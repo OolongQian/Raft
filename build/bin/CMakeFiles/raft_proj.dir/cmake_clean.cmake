@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
         "CMakeFiles/raft_proj.dir/common.cpp.o"
   "CMakeFiles/raft_proj.dir/main.cpp.o"
+        "CMakeFiles/raft_proj.dir/raft/event_queue/event_queue.cpp.o"
         "CMakeFiles/raft_proj.dir/raft/identities/candidate.cpp.o"
         "CMakeFiles/raft_proj.dir/raft/identities/follower.cpp.o"
         "CMakeFiles/raft_proj.dir/raft/identities/identity_base.cpp.o"
