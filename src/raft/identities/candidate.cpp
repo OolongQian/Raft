@@ -7,37 +7,61 @@ namespace SJTU {
 
 	void Candidate::init() {
 		++state_.currentTerm;
+#ifndef _NOLOG
 		printf("client_end size: %lu\n", client_ends_.size());
+		printf("vote for himself...\n");
+#endif
+		++votesReceived;
 		RequestVote();
 	}
 
-	void Candidate::leave() {}
+	void Candidate::leave() {
+#ifndef _NOLOG
+		printf("leaving candidate...shutting down all threads and client ends\n");
+#endif
+		for (size_t i = 0; i < client_ends_.size(); ++i) {
+			client_ends_[i]->th.interrupt();
+			if (client_ends_[i]->th.joinable()) client_ends_[i]->th.join();
+		}
+	}
 
 	void Candidate::TimeOutFunc() {}
 
 	void Candidate::RequestVote() {
 //		for (int i = 0; i < client_ends_.size(); ++i) {
 		for (int i = 0; i < client_ends_.size(); ++i) {
-
 			client_ends_[i]->th = boost::thread([this, i]() mutable {
-				PbRequestVoteRequest request = MakeVoteRequest();
+				try {
+					PbRequestVoteRequest request = MakeVoteRequest();
 
-				PbRequestVoteResponse response;
-				grpc::ClientContext context;
+					PbRequestVoteResponse response;
+					grpc::ClientContext context;
 #ifndef _NOLOG
-				printf("Candidate sends out request to other server...\n");
+					printf("Candidate sends out request to other server...\n");
 #endif
-				client_ends_[i]->stub_->RequestVoteRPC(&context, request, &response);      /// this line has serious problems.
-#ifndef _NOLOG
-				printf("Candidate received response from other server...\n");
-#endif
-				if (response.votegranted()) ++votesReceived;
 
-				if (votesReceived > info.get_srvList().size() / 2) {
+					client_ends_[i]->stub_->RequestVoteRPC(&context, request, &response);      /// this line has serious problems.
+
 #ifndef _NOLOG
-					printf("More than half votes received, start to transform to leader...\n");
+					printf("Candidate received response from other server...\n");
 #endif
-					identity_transformer(LeaderNo);
+					if (response.votegranted()) ++votesReceived;
+
+					if (votesReceived >= info.get_srvList().size() / 2) {
+#ifndef _NOLOG
+						printf("There are %d servers in total. More than half votes received, start to transform to leader...\n",
+									 info.get_srvList().size());
+						printf("transforming to leader\n");
+#endif
+						identity_transformer(LeaderNo);
+					}
+				}
+					/**
+					 * Here I catch all kinds of exceptions. So ugly!!!
+					 * */
+				catch (...) {
+					printf("thread is interrupted and returned\n");
+					return;
 				}
 			});
 		}
@@ -51,8 +75,11 @@ namespace SJTU {
 //		}
 	}
 
+	/**
+	 * access inner data member, synchronize it.
+	 * */
 	PbRequestVoteRequest Candidate::MakeVoteRequest() {
-//		boost::lock_guard<boost::mutex> lk(mtx_);
+		boost::lock_guard<boost::mutex> lk(mtx_);
 		if (state_.logs.empty()) {
 #ifndef _NOLOG
 			printf("current server's log is empty, initialize a trivial request...\n");

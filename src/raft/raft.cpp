@@ -99,6 +99,9 @@ namespace SJTU {
 	}
 
 	void Raft::Impl::IdentityTransform(IdentityNo identityNo) {
+#ifndef _NOLOG
+		printf("Start Identity transform\n");
+#endif
 		if (currentIdentity_ != DownNo) identities_[currentIdentity_]->leave();
 		currentIdentity_ = identityNo;
 		identities_[currentIdentity_]->init();
