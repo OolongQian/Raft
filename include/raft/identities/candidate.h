@@ -31,10 +31,10 @@ namespace SJTU {
 
 		void RequestVote();
 
+		PbRequestVoteRequest MakeVoteRequest();
 
 	private:
 		boost::atomic<std::size_t> votesReceived{0};
-
 	};
 };
 

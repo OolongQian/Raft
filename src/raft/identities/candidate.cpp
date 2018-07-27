@@ -15,6 +15,25 @@ namespace SJTU {
 	void Candidate::TimeOutFunc() {}
 
 	void Candidate::RequestVote() {
+		for (int i = 0; i < client_ends_.size(); ++i) {
+			client_ends_[i].th = boost::thread([this] {
+				PbRequestVoteRequest request = MakeVoteRequest();
+				PbRequestVoteResponse response;
+				grpc::ClientContext context;
+				client_ends_[i].stub_->RequestVoteRPC(&context, request, &response);
+#ifndef _NOLOG
+				printf("Candidate received response from other server...\n");
+#endif
+				if (response.votegranted()) ++votesReceived;
+
+				if (votesReceived > info.get_srvList().size() / 2) {
+#ifndef _NOLOG
+					printf("More than half votes received, start to transform to leader...\n");
+#endif
+					identity_transformer(LeaderNo);
+				}
+			});
+		}
 //		std::vector<std::future<PbRequestVoteResponse> >
 //		for (int i = 0; i < client_ends_.size(); ++i) {
 //
@@ -23,5 +42,9 @@ namespace SJTU {
 //			grpc::ClientContext context;
 //			client_ends_[i].stub_
 //		}
+	}
+
+	PbRequestVoteRequest Candidate::MakeVoteRequest() {
+
 	}
 };
