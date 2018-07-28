@@ -25,18 +25,24 @@ namespace SJTU {
 		pImpl->pushEvent_ = std::move(f);
 	}
 
-	void Timer::Start() {
-		pImpl->th = boost::thread([this] {
+	void Timer::Start(const bool repeat) {
+		pImpl->th = boost::thread([this, repeat] {
 			// sleep(pImpl->time_);
 //			std::this_thread::sleep_for(std::chrono::duration_cast())
-			try {
-				std::this_thread::sleep_for(std::chrono::milliseconds(pImpl->time_));
-				printf("%d ms has passed! timer is pushing event...\n", pImpl->time_);
-				pImpl->pushEvent_(pImpl->timeOutAction_);
+			if (repeat) {
+				printf("timer operates a repetitive work\n");
 			}
-			catch (boost::thread_interrupted &) {
-				printf("timer's sleep is interrupted... returning\n");
-				return;
+			while (repeat) {
+				try {
+					std::this_thread::sleep_for(std::chrono::milliseconds(pImpl->time_));
+					boost::this_thread::interruption_point();
+					printf("%d ms has passed! timer is pushing event...\n", pImpl->time_);
+					pImpl->pushEvent_(pImpl->timeOutAction_);
+				}
+				catch (boost::thread_interrupted &) {
+					printf("timer's sleep is interrupted... returning\n");
+					return;
+				}
 			}
 
 //			pImpl->timeOutAction_();

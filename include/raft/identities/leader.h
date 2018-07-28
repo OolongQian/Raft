@@ -26,6 +26,20 @@ namespace SJTU {
 		void leave() override;
 
 		void TimeOutFunc() override;
+
+		/**
+		 * Similar to Candidate::RequestVote().
+		 * Contained by TimeOutFunc adapter.
+		 *
+		 * Problem is raised, because heartbeat is sent repeatedly, if the previous
+		 * heartbeat is not responded while the next one is coming, what will happen?
+		 * */
+		void SendHeartBeat();
+
+		PbAppendEntriesRequest MakeHeartBeat();
+
+	private:
+		boost::mutex mtx_;
 	};
 };
 

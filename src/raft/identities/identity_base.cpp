@@ -3,7 +3,11 @@
 namespace SJTU {
 
 	CppAppendEntriesResponse SJTU::IdentityBase::ProcsAppendEntriesFunc(CppAppendEntriesRequest) {
-		return CppAppendEntriesResponse();
+		printf("appendEntriesRequest is received...trivially respond for now\n");
+		CppAppendEntriesResponse response;
+		response.term = state_.currentTerm;
+		response.success = true;
+		return response;
 	}
 
 	CppRequestVoteResponse SJTU::IdentityBase::ProcsRequestVoteFunc(CppRequestVoteRequest request) {

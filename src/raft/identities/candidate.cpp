@@ -11,8 +11,8 @@ namespace SJTU {
 #ifndef _NOLOG
 		printf("init to be candidate...\n");
 #endif
-		timer_.SetTimeOut(rand() % (info.get_electionTimeout() / 2) + info.get_electionTimeout() / 2);
-		timer_.Start();
+		timer_.SetTimeOut(rand() % (info.get_electionTimeout()) + info.get_electionTimeout());
+		timer_.Start(false);
 		++state_.currentTerm;
 #ifndef _NOLOG
 		printf("client_end size: %lu\n", client_ends_.size());

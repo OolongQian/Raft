@@ -157,7 +157,14 @@ namespace SJTU {
 		printf("Raft starts to transform to candidate\n");
 #endif
 		pImpl->eventQueue_.Start();
-		pImpl->IdentityTransform(FollowerNo); 
+		if (pImpl->info.get_local().toString() == "127.0.0.1:50000") {
+			pImpl->IdentityTransform(LeaderNo);
+		} else {
+			pImpl->IdentityTransform(FollowerNo);
+		}
+//		std::cout << pImpl->info.get_local().toString() << std::endl;
+//		if(pImpl->info.get_local().toString()) ;
+//		pImpl->IdentityTransform(LeaderNo);
 		// pImpl->IdentityTransform(CandidateNo);
 		printf("server number: %lu\n", pImpl->server_ends_.size());
 		for (size_t i = 0; i < pImpl->server_ends_.size(); ++i)
@@ -171,5 +178,6 @@ namespace SJTU {
 		pImpl->eventQueue_.Stop();
 		for (size_t i = 0; i < pImpl->server_ends_.size(); ++i)
 			pImpl->server_ends_[i]->Stop();
+		pImpl->timer_.Stop();
 	}
 }

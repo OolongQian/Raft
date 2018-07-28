@@ -9,8 +9,8 @@ namespace SJTU {
 #ifndef _NOLOG
 		printf("init to be follower...\n");
 #endif
-		timer_.SetTimeOut(rand() % (info.get_electionTimeout() / 2) + info.get_electionTimeout() / 2);
-		timer_.Start();
+		timer_.SetTimeOut(rand() % (info.get_electionTimeout()) + info.get_electionTimeout());
+		timer_.Start(false);
 	}
 
 	void Follower::leave() {

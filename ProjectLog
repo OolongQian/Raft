@@ -153,3 +153,9 @@ Then, what I'm going to do?
 Then, I keep working on three identities' functionality irrelevant to log.
 Reply in the server end is not worth doing. But active things like heartbeat is valuable to code.
 Next I'm working on heartbeat.
+
+Now heartbeat is working, and the reply from follower is working.
+It's time to finish working on followers.
+
+OK, the following work is to transform the previously trivial response into concrete and meaningful action, which firstly
+replies on specifying Log data structure. Meanwhile, reading raft paper is indispensable.

@@ -12,7 +12,7 @@ namespace SJTU {
 		~Timer();
 
 		/// timer starts to count down.
-		void Start();
+		void Start(bool);
 
 		void Stop();
 
@@ -31,6 +31,9 @@ namespace SJTU {
 		 * and here is the interface for that.
 		 *
 		 * Note that BindAction needs to be invoked before Start in order to work properly.
+		 *
+		 *
+		 * ans to 3. When leader timeouts, it sends out heartbeat, but this is a repetitive work.
 		 * */
 		void BindTimeOutAction(std::function<void()> f);
 

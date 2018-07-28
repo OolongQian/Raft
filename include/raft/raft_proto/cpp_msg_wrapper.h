@@ -14,49 +14,100 @@
 #include "../../server_info.h"
 
 namespace SJTU {
+
+	struct CppLogEntry {
+		std::string command;
+		std::string key;
+		std::string val;
+
+		CppLogEntry() = default;
+
+		CppLogEntry(std::string command, std::string key, std::string val) :
+				command(std::move(command)), key(std::move(key)), val(std::move(val)) {}
+
+		explicit CppLogEntry(const PbAppendEntriesRequest::Entry &entry) :
+				command(entry.command()), key(entry.key()), val(entry.val()) {}
+
+		PbAppendEntriesRequest_Entry Convert() const {
+			PbAppendEntriesRequest_Entry entry;
+			entry.set_command(command);
+			entry.set_key(key);
+			entry.set_val(val);
+			return entry;
+		}
+	};
+
 	struct CppAppendEntriesRequest {
-		int term;
+		long long term;
 		ServerId leaderId;
-		int prevLogIndex;
-		int prevLogTerm;
-		Log *entries;
-		int leaderCommit;
+		long long prevLogIndex;
+		long long prevLogTerm;
+		std::vector<CppLogEntry> entries;
+		long long leaderCommit;
 
 		CppAppendEntriesRequest() = default;
 
-		explicit CppAppendEntriesRequest(PbAppendEntriesRequest) {
-			;
+		CppAppendEntriesRequest(long long term, ServerId leaderId, long long prevLogIndex, long long prevLogTerm,
+														std::vector<CppLogEntry> entries, long long leaderCommit) :
+				term(term), leaderId(std::move(leaderId)), prevLogIndex(prevLogIndex), prevLogTerm(prevLogTerm),
+				entries(std::move(entries)), leaderCommit(leaderCommit) {}
+
+		explicit CppAppendEntriesRequest(const PbAppendEntriesRequest &request) : term(request.term()),
+																																							leaderId(request.leaderid()),
+																																							prevLogIndex(request.prevlogindex()),
+																																							prevLogTerm(request.prevlogterm()),
+																																							leaderCommit(request.leadercommit()) {
+			entries.clear();
+			for (int i = 0; i < request.entries_size(); ++i) {
+				entries.emplace_back(request.entries(i));
+			}
 		}
 
 		PbAppendEntriesRequest Convert() {
-			return PbAppendEntriesRequest();
+			PbAppendEntriesRequest request;
+			request.set_term(term);
+			request.set_leaderid(leaderId.toString());
+			request.set_prevlogindex(prevLogIndex);
+			request.set_prevlogterm(prevLogTerm);
+			for (const CppLogEntry &entry : entries) {
+				PbAppendEntriesRequest_Entry *elem = request.add_entries();
+				elem->set_command(entry.command);
+				elem->set_key(entry.key);
+				elem->set_val(entry.val);
+			}
+			request.set_leadercommit(leaderCommit);
+			return request;
 		}
 	};
 
 	struct CppAppendEntriesResponse {
-		int term;
+		long long term;
 		bool success;
 
 		CppAppendEntriesResponse() = default;
 
-		explicit CppAppendEntriesResponse(PbAppendEntriesResponse) {
-			;
-		}
+		CppAppendEntriesResponse(long long term, bool success) : term(term), success(success) {}
+
+		explicit CppAppendEntriesResponse(const PbAppendEntriesResponse &response) : term(response.term()),
+																																								 success(response.success()) {}
 
 		PbAppendEntriesResponse Convert() {
-			return PbAppendEntriesResponse();
+			PbAppendEntriesResponse response;
+			response.set_term(term);
+			response.set_success(success);
+			return response;
 		}
 	};
 
 	struct CppRequestVoteRequest {
-		int term;
+		long long term;
 		ServerId candidateId;
-		int lastLogIndex;
-		int lastLogTerm;
+		long long lastLogIndex;
+		long long lastLogTerm;
 
 		CppRequestVoteRequest() = default;
 
-		CppRequestVoteRequest(int term, ServerId candidateId, int lastLogIndex, int lastLogTerm) :
+		CppRequestVoteRequest(long long term, ServerId candidateId, long long lastLogIndex, long long lastLogTerm) :
 				term(term), candidateId(std::move(candidateId)), lastLogIndex(lastLogIndex), lastLogTerm(lastLogTerm) {}
 
 		explicit CppRequestVoteRequest(const PbRequestVoteRequest &request) : term(request.term()),
@@ -75,7 +126,7 @@ namespace SJTU {
 	};
 
 	struct CppRequestVoteResponse {
-		int term;
+		long long term;
 		bool voteGranted;
 
 		CppRequestVoteResponse() = default;
