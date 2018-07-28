@@ -35,6 +35,7 @@ namespace SJTU {
 				printf("event_queue keeps going...\n");
 				auto event = events_.front();
 				events_.pop();
+				lk.unlock();
 				event();
 			}
 		}

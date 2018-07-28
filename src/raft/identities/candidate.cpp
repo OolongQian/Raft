@@ -14,6 +14,7 @@ namespace SJTU {
 		printf("vote for himself...\n");
 #endif
 		++votesReceived;
+//		votesReceived = 1;
 		RequestVote();
 	}
 
@@ -25,8 +26,10 @@ namespace SJTU {
 		for (size_t i = 0; i < client_ends_.size(); ++i) {
 			if (client_ends_[i]->th.joinable()) {
 				client_ends_[i]->th.interrupt();
+				client_ends_[i]->th.join();
 			}
 		}
+		transforming = false;
 		timer_.Stop();
 	}
 
@@ -48,7 +51,7 @@ namespace SJTU {
 #ifndef _NOLOG
 				printf("Candidate sends out request to other server...\n");
 #endif
-
+				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(500));
 				client_ends_[i]->stub_->RequestVoteRPC(&context, request, &response);      /// this line has serious problems.
 
 #ifndef _NOLOG
@@ -56,7 +59,13 @@ namespace SJTU {
 #endif
 				if (response.votegranted()) ++votesReceived;
 
-				if (votesReceived > info.get_srvList().size() / 2) {
+				if (transforming) {
+#ifndef _NOLOG
+					printf("There has been one identical transformation task undergoing... returning..\n");
+#endif
+				}
+				if (votesReceived > info.get_srvList().size() / 2 && !transforming) {
+					transforming = true;
 #ifndef _NOLOG
 					printf("There are %lu servers in total. More than half votes received, start to transform to leader...\n",
 								 info.get_srvList().size());

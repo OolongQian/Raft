@@ -42,7 +42,18 @@ int main() {
 	std::string config_filename = "raft_0.json";
 	SJTU::Server server(config_filename);
 	server.StartUp();
-	sleep(1000);
+	sleep(100000);
+
+//	boost::thread t1([] {
+//		sleep(1);
+//	});
+//
+//	t1.join();
+//
+//	t1 = boost::thread([] {
+//		std::cout << "ah" << std::endl;
+//	});
+//	t1.join();
 //	Foo f;
 //	f.run2();
 //	f.join();

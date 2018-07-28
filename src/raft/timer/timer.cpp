@@ -48,6 +48,7 @@ namespace SJTU {
 
 	void Timer::Stop() {
 		pImpl->th.interrupt();
+		pImpl->th.join();
 	}
 
 	void Timer::SetTimeOut(int time_limit) {
