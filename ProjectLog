@@ -140,3 +140,7 @@ Now, candidate can be transformed and request vote is starting. Candidate is try
 
 // Then we may start to working on follower, which concerns with timer's timeout Action.
 Why not keep working on candidate to implement its timeout action? OK let's do this.
+
+Candidate's init (requestVote and Timer) is OK, the next thing needs to worry about is rpc server_end_.
+
+Let's check the follower's rpc_server_end implementation.

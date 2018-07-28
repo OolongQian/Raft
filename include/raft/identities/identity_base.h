@@ -35,6 +35,10 @@ namespace SJTU {
 
 		virtual CppAppendEntriesResponse ProcsAppendEntriesFunc(CppAppendEntriesRequest);
 
+		/**
+		 * In current naive implementation, because of no client, all clients will vote
+		 * for the requester kindly.
+		 * */
 		virtual CppRequestVoteResponse ProcsRequestVoteFunc(CppRequestVoteRequest);
 
 		/**

@@ -6,6 +6,9 @@ namespace SJTU {
 	Candidate::~Candidate() {}
 
 	void Candidate::init() {
+#ifndef _NOLOG
+		printf("init to be candidate...\n");
+#endif
 		timer_.SetTimeOut(rand() % (info.get_electionTimeout() / 2) + info.get_electionTimeout() / 2);
 		timer_.Start();
 		++state_.currentTerm;
@@ -13,8 +16,8 @@ namespace SJTU {
 		printf("client_end size: %lu\n", client_ends_.size());
 		printf("vote for himself...\n");
 #endif
-		++votesReceived;
-//		votesReceived = 1;
+//		++votesReceived;
+		votesReceived = 1;
 		RequestVote();
 	}
 

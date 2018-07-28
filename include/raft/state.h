@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "../log/log.h"
+#include "../common.h"
 
 /**
  * State is a class of container that stores raft common information inside of it.
@@ -11,7 +12,7 @@ namespace SJTU {
 	struct State {
 		/// persistent state on all servers.
 		int currentTerm;
-		int votedFor;
+		ServerId votedFor;
 		std::vector<Log> logs;
 
 		/// volatile state on all servers.

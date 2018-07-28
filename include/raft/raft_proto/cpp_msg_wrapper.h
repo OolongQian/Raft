@@ -65,7 +65,13 @@ namespace SJTU {
 		}
 
 		PbRequestVoteRequest Convert() {
-			return PbRequestVoteRequest();
+			PbRequestVoteRequest request;
+			request.set_term(term);
+			request.set_candidateid(candidateId.toString());
+			request.set_lastlogindex(lastLogIndex);
+			request.set_lastlogterm(lastLogTerm);
+
+			return request;
 		}
 	};
 
@@ -80,7 +86,10 @@ namespace SJTU {
 		}
 
 		PbRequestVoteResponse Convert() {
-			return PbRequestVoteResponse();
+			PbRequestVoteResponse response;
+			response.set_votegranted(voteGranted);
+			response.set_term(term);
+			return response;
 		}
 	};
 };
