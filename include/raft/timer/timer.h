@@ -16,9 +16,7 @@ namespace SJTU {
 
 		void Stop();
 
-		void Pause();
-
-		void Resume();
+		void SetTimeOut(int);
 
 		/**
 		 * When a timer runs into the case of timeout, it behaves differently with respect to
@@ -34,7 +32,7 @@ namespace SJTU {
 		 *
 		 * Note that BindAction needs to be invoked before Start in order to work properly.
 		 * */
-		void BindTimeAndAction(int time_limit, std::function<void()> f);
+		void BindTimeOutAction(std::function<void()> f);
 
 		/**
 		 * This function is AddEvent member function inside the EventQueue class, which allows timer

@@ -17,8 +17,7 @@ namespace SJTU {
 
 	Timer::~Timer() = default;
 
-	void Timer::BindTimeAndAction(int time_limit, std::function<void()> f) {
-		pImpl->time_ = time_limit;
+	void Timer::BindTimeOutAction(std::function<void()> f) {
 		pImpl->timeOutAction_ = std::move(f);
 	}
 
@@ -30,9 +29,17 @@ namespace SJTU {
 		pImpl->th = boost::thread([this] {
 			// sleep(pImpl->time_);
 //			std::this_thread::sleep_for(std::chrono::duration_cast())
-			std::this_thread::sleep_for(std::chrono::milliseconds(pImpl->time_));
-			printf("%d ms has passed! timer is pushing event...\n", pImpl->time_);
-			pImpl->timeOutAction_();
+			try {
+				std::this_thread::sleep_for(std::chrono::milliseconds(pImpl->time_));
+				printf("%d ms has passed! timer is pushing event...\n", pImpl->time_);
+				pImpl->pushEvent_(pImpl->timeOutAction_);
+			}
+			catch (boost::thread_interrupted &) {
+				printf("timer's sleep is interrupted... returning\n");
+				return;
+			}
+
+//			pImpl->timeOutAction_();
 //			pImpl->pushEvent_(pImpl->timeOutAction_);
 //			 pImpl->timeOutAction_();
 			// pImpl->pushEvent_([] { printf("push event...\n"); });
@@ -41,15 +48,9 @@ namespace SJTU {
 
 	void Timer::Stop() {
 		pImpl->th.interrupt();
-		if (pImpl->th.joinable())
-			pImpl->th.join();
 	}
 
-	void Timer::Pause() {
-
-	}
-
-	void Timer::Resume() {
-
+	void Timer::SetTimeOut(int time_limit) {
+		pImpl->time_ = time_limit;
 	}
 };

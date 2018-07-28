@@ -55,7 +55,7 @@ namespace SJTU {
 	}
 
 	void EventQueue::Start() {
-		printf("event queue is starting and thread is sent out...\n");
+		printf("event queue thread is sent out...\n");
 		pImpl->th_ = boost::thread([this] {
 			pImpl->execute();
 		});

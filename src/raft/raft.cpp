@@ -67,6 +67,8 @@ namespace SJTU {
 #ifndef _NOLOG
 		printf("Construct three identities...\n");
 #endif
+
+
 		std::function<void(int)> transformer = std::bind(&Raft::Impl::IdentityTransform, this, std::placeholders::_1);
 		identities_[FollowerNo] = std::make_unique<Follower>(state_, timer_, transformer, client_ends_, info);
 		identities_[CandidateNo] = std::make_unique<Candidate>(state_, timer_, transformer, client_ends_, info);
@@ -95,9 +97,8 @@ namespace SJTU {
 #ifndef _NOLOG
 		printf("Bind timeout action adapter to timer\n");
 #endif
-		timer_.BindTimeAndAction(1, std::bind(&Impl::TimeOutActionAdapter, this));
+		timer_.BindTimeOutAction(std::bind(&Impl::TimeOutActionAdapter, this));
 		timer_.BindPushEvent(std::bind(&EventQueue::addEvent, &eventQueue_, std::placeholders::_1));
-
 	}
 
 	void Raft::Impl::IdentityTransform(const IdentityNo identityNo) {
@@ -124,6 +125,9 @@ namespace SJTU {
 
 	Raft::Impl::~Impl() {}
 
+	/**
+	 * These are adaptable interfaces for server_ends.
+	 * */
 	CppAppendEntriesResponse Raft::Impl::ProcsAppendEntriesAdapter(CppAppendEntriesRequest request) {
 		return identities_[currentIdentity_]->ProcsAppendEntriesFunc(request);
 	}
@@ -132,6 +136,9 @@ namespace SJTU {
 		return identities_[currentIdentity_]->ProcsRequestVoteFunc(request);
 	}
 
+	/**
+	 * This is adaptable interface for timer_.
+	 * */
 	void Raft::Impl::TimeOutActionAdapter() {
 		identities_[currentIdentity_]->TimeOutFunc();
 	}

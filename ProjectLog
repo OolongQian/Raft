@@ -134,4 +134,9 @@ behaves like a bridge linking three identities, meanwhile it lets three identiti
 
 Big bread brother's design is nothing but necessary. I'm deeply appreciate that.
 
-多线程的爆炸，多个线程同时访问同一个成员函数会爆炸！
+be very careful about multi-threaded programming.
+
+Now, candidate can be transformed and request vote is starting. Candidate is trying to convert into leader.
+
+// Then we may start to working on follower, which concerns with timer's timeout Action.
+Why not keep working on candidate to implement its timeout action? OK let's do this.

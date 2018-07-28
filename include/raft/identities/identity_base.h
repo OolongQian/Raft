@@ -37,11 +37,28 @@ namespace SJTU {
 
 		virtual CppRequestVoteResponse ProcsRequestVoteFunc(CppRequestVoteRequest);
 
+		/**
+		 * Timeout functions don't need to be bound to timer,
+		 * define a timeoutFuncAdapter in raft or just use a lambda expression.
+		 * */
 		virtual void TimeOutFunc() = 0;
 
 	protected:
 		State &state_;
+
+		/**
+	   * Timer is bound into identities not for functionality (has been provided by raft apdapter),
+	 	 * but for pause and reset.
+	 	 *
+	 	 * The stop and restart are completed in init and leave functions.
+	 	 * */
 		Timer &timer_;
+
+		/**
+		 * This identity_transformer is bound to raft's "identity_transform" function, which
+		 * pushes a identity_transform lambda function into eventQueue and executed by another
+		 * thread. It's the same as invoking by timer_.
+		 * */
 		std::function<void(int)> identity_transformer;
 		std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends_;
 		const ServerInfo &info;

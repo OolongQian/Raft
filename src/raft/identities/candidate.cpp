@@ -6,6 +6,8 @@ namespace SJTU {
 	Candidate::~Candidate() {}
 
 	void Candidate::init() {
+		timer_.SetTimeOut(rand() % (info.get_electionTimeout() / 2) + info.get_electionTimeout() / 2);
+		timer_.Start();
 		++state_.currentTerm;
 #ifndef _NOLOG
 		printf("client_end size: %lu\n", client_ends_.size());
@@ -18,15 +20,22 @@ namespace SJTU {
 	void Candidate::leave() {
 #ifndef _NOLOG
 		printf("leaving candidate...shutting down all threads and client ends\n");
+		printf("leaving candidate...stop candidate timer\n");
 #endif
 		for (size_t i = 0; i < client_ends_.size(); ++i) {
 			if (client_ends_[i]->th.joinable()) {
 				client_ends_[i]->th.interrupt();
 			}
 		}
+		timer_.Stop();
 	}
 
-	void Candidate::TimeOutFunc() {}
+	/**
+	 * This function is pushed by timer into event queue instead of executing by timer.
+	 * */
+	void Candidate::TimeOutFunc() {
+		identity_transformer(CandidateNo);
+	}
 
 	void Candidate::RequestVote() {
 //		for (int i = 0; i < client_ends_.size(); ++i) {
@@ -47,7 +56,7 @@ namespace SJTU {
 #endif
 				if (response.votegranted()) ++votesReceived;
 
-				if (votesReceived >= info.get_srvList().size() / 2) {
+				if (votesReceived > info.get_srvList().size() / 2) {
 #ifndef _NOLOG
 					printf("There are %lu servers in total. More than half votes received, start to transform to leader...\n",
 								 info.get_srvList().size());
