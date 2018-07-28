@@ -61,7 +61,7 @@ namespace SJTU {
 
 #ifndef _NOLOG
 				printf("Candidate received response from other server...\n");
-				printf("it says: term %d, requestVote %d\n", response.term(), int(response.votegranted()));
+				printf("it says: term %lld, requestVote %d\n", response.term(), int(response.votegranted()));
 #endif
 				if (response.votegranted()) ++votesReceived;
 

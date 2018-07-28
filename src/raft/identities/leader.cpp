@@ -58,7 +58,7 @@ namespace SJTU {
 
 #ifndef _NOLOG
 				printf("Leader received response from other server...\n");
-				printf("it says: term %d, success %d\n", response.term(), int(response.success()));
+				printf("it says: term %lld, success %d\n", response.term(), int(response.success()));
 #endif
 			});
 		}
@@ -69,7 +69,8 @@ namespace SJTU {
 #ifndef _NOLOG
 		printf("current server's log is empty, initialize a trivial request...\n");
 #endif
-		CppAppendEntriesRequest request(state_.currentTerm, info.get_local().toString(), 0, -1, nullptr,
+		std::vector<CppLogEntry> vec_tmp(0);
+		CppAppendEntriesRequest request(state_.currentTerm, info.get_local().toString(), 0, -1, vec_tmp,
 																		state_.commitIndex);
 //		request.set_term(state_.currentTerm);
 //		request.set_leaderid(info.get_local().toString());
