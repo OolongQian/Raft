@@ -147,3 +147,9 @@ Let's check the follower's rpc_server_end implementation.
 
 Note that for gRPC server, server->Wait() function blocks this_thread until
 "The server must be either shutting down or some other thread must call Shutdown for this function to ever return."
+
+significant progress is made.
+Then, what I'm going to do?
+Then, I keep working on three identities' functionality irrelevant to log.
+Reply in the server end is not worth doing. But active things like heartbeat is valuable to code.
+Next I'm working on heartbeat.
