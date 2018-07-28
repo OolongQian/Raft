@@ -36,8 +36,8 @@ namespace SJTU {
 	private:
 		boost::atomic<std::size_t> votesReceived{0};
 		boost::mutex mtx_;
-		boost::atomic<bool> transforming{
-				false}; /// if there has been one transformation undergoing, the same transformation shouldn't be applied repeatedly.
+		/// if there has been one transformation undergoing, the same transformation shouldn't be applied repeatedly.
+		boost::atomic<bool> transforming{false};
 	};
 };
 

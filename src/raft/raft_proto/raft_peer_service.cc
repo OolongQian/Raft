@@ -25,4 +25,13 @@ namespace SJTU {
 		*response = cpp_response.Convert();
 		return grpc::Status::OK;
 	}
+
+	void RaftPeerServiceImpl::AsyncRun(const ServerId &id) {
+		grpc::ServerBuilder builder;
+		builder.AddListeningPort(id.toString(), grpc::InsecureServerCredentials());
+		builder.RegisterService(this);  /// itself has implemented required interfaces.
+		auto server = builder.BuildAndStart();
+		std::cout << "Server listening on " << id.toString() << std::endl;
+		server->Wait();
+	}
 };

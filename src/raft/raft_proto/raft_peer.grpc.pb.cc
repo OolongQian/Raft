@@ -2,6 +2,7 @@
 // If you make any local change, they will be lost.
 // source: raft_peer.proto
 
+#include "../../../include/raft/raft_proto/raft_peer.pb.h"
 #include "../../../include/raft/raft_proto/raft_peer.grpc.pb.h"
 
 #include <grpcpp/impl/codegen/async_stream.h>

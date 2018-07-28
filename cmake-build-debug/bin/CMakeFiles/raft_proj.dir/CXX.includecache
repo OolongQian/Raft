@@ -181,12 +181,16 @@ boost/thread/lock_guard.hpp
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/common.h
 functional
 -
+boost/thread.hpp
+-
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/state.h
 vector
 -
 ../log/log.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/log/log.h
+../common.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/common.h
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/timer/timer.h
 functional
@@ -423,6 +427,8 @@ vector
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/identities/identity_base.h
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft_proto/raft_peer.grpc.pb.cc
+../../../include/raft/raft_proto/raft_peer.pb.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_peer.pb.h
 ../../../include/raft/raft_proto/raft_peer.grpc.pb.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_peer.grpc.pb.h
 grpcpp/impl/codegen/async_stream.h

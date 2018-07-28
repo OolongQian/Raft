@@ -57,12 +57,12 @@ namespace SJTU {
 		CppRequestVoteRequest() = default;
 
 		CppRequestVoteRequest(int term, ServerId candidateId, int lastLogIndex, int lastLogTerm) :
-				term(std::move(term)), candidateId(std::move(candidateId)), lastLogIndex(std::move(lastLogIndex)),
-				lastLogTerm(std::move(lastLogTerm)) {}
+				term(term), candidateId(std::move(candidateId)), lastLogIndex(lastLogIndex), lastLogTerm(lastLogTerm) {}
 
-		explicit CppRequestVoteRequest(PbRequestVoteRequest) {
-			;
-		}
+		explicit CppRequestVoteRequest(const PbRequestVoteRequest &request) : term(request.term()),
+																																					candidateId(request.candidateid()),
+																																					lastLogIndex(request.lastlogindex()),
+																																					lastLogTerm(request.lastlogterm()) {}
 
 		PbRequestVoteRequest Convert() {
 			PbRequestVoteRequest request;
@@ -70,7 +70,6 @@ namespace SJTU {
 			request.set_candidateid(candidateId.toString());
 			request.set_lastlogindex(lastLogIndex);
 			request.set_lastlogterm(lastLogTerm);
-
 			return request;
 		}
 	};
@@ -81,9 +80,8 @@ namespace SJTU {
 
 		CppRequestVoteResponse() = default;
 
-		explicit CppRequestVoteResponse(PbRequestVoteResponse) {
-			;
-		}
+		explicit CppRequestVoteResponse(const PbRequestVoteResponse &request) :
+				term(request.term()), voteGranted(request.votegranted()) {}
 
 		PbRequestVoteResponse Convert() {
 			PbRequestVoteResponse response;

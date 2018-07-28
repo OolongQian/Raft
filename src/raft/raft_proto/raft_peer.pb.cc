@@ -24,19 +24,16 @@ public:
 	::google::protobuf::internal::ExplicitlyConstructed<PbAppendEntriesRequest>
 			_instance;
 } _PbAppendEntriesRequest_default_instance_;
-
 class PbAppendEntriesResponseDefaultTypeInternal {
 public:
 	::google::protobuf::internal::ExplicitlyConstructed<PbAppendEntriesResponse>
 			_instance;
 } _PbAppendEntriesResponse_default_instance_;
-
 class PbRequestVoteRequestDefaultTypeInternal {
 public:
 	::google::protobuf::internal::ExplicitlyConstructed<PbRequestVoteRequest>
 			_instance;
 } _PbRequestVoteRequest_default_instance_;
-
 class PbRequestVoteResponseDefaultTypeInternal {
 public:
 	::google::protobuf::internal::ExplicitlyConstructed<PbRequestVoteResponse>
@@ -190,12 +187,12 @@ namespace protobuf_raft_5fpeer_2eproto {
 		InitDefaults();
 		static const char descriptor[] GOOGLE_PROTOBUF_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
 				"\n\017raft_peer.proto\"\212\001\n\026PbAppendEntriesReq"
-				"uest\022\014\n\004term\030\001 \001(\005\022\020\n\010leaderId\030\002 \001(\005\022\024\n\014"
+				"uest\022\014\n\004term\030\001 \001(\005\022\020\n\010leaderId\030\002 \001(\t\022\024\n\014"
 				"prevLogIndex\030\003 \001(\005\022\023\n\013prevLogTerm\030\004 \001(\005\022"
 				"\017\n\007entries\030\005 \001(\005\022\024\n\014leaderCommit\030\006 \001(\005\"8"
 				"\n\027PbAppendEntriesResponse\022\014\n\004term\030\001 \001(\005\022"
 				"\017\n\007success\030\002 \001(\010\"d\n\024PbRequestVoteRequest"
-				"\022\014\n\004term\030\001 \001(\005\022\023\n\013candidateId\030\002 \001(\005\022\024\n\014l"
+				"\022\014\n\004term\030\001 \001(\005\022\023\n\013candidateId\030\002 \001(\t\022\024\n\014l"
 				"astLogIndex\030\003 \001(\005\022\023\n\013lastLogTerm\030\004 \001(\005\":"
 				"\n\025PbRequestVoteResponse\022\014\n\004term\030\001 \001(\005\022\023\n"
 				"\013voteGranted\030\002 \001(\0102\231\001\n\017RaftPeerService\022E"
@@ -214,7 +211,6 @@ namespace protobuf_raft_5fpeer_2eproto {
 		static ::google::protobuf::internal::once_flag once;
 		::google::protobuf::internal::call_once(once, AddDescriptorsImpl);
 	}
-
 // Force AddDescriptors() to be called at dynamic initialization time.
 	struct StaticDescriptorInitializer {
 		StaticDescriptorInitializer() {
@@ -227,7 +223,6 @@ namespace protobuf_raft_5fpeer_2eproto {
 
 void PbAppendEntriesRequest::InitAsDefaultInstance() {
 }
-
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int PbAppendEntriesRequest::kTermFieldNumber;
 const int PbAppendEntriesRequest::kLeaderIdFieldNumber;
@@ -249,6 +244,10 @@ PbAppendEntriesRequest::PbAppendEntriesRequest(const PbAppendEntriesRequest &fro
 		: ::google::protobuf::Message(),
 			_internal_metadata_(NULL) {
 	_internal_metadata_.MergeFrom(from._internal_metadata_);
+	leaderid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+	if (from.leaderid().size() > 0) {
+		leaderid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.leaderid_);
+	}
 	::memcpy(&term_, &from.term_,
 					 static_cast<size_t>(reinterpret_cast<char *>(&leadercommit_) -
 															 reinterpret_cast<char *>(&term_)) + sizeof(leadercommit_));
@@ -256,6 +255,7 @@ PbAppendEntriesRequest::PbAppendEntriesRequest(const PbAppendEntriesRequest &fro
 }
 
 void PbAppendEntriesRequest::SharedCtor() {
+	leaderid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 	::memset(&term_, 0, static_cast<size_t>(
 													reinterpret_cast<char *>(&leadercommit_) -
 													reinterpret_cast<char *>(&term_)) + sizeof(leadercommit_));
@@ -267,6 +267,7 @@ PbAppendEntriesRequest::~PbAppendEntriesRequest() {
 }
 
 void PbAppendEntriesRequest::SharedDtor() {
+	leaderid_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void PbAppendEntriesRequest::SetCachedSize(int size) const {
@@ -290,6 +291,7 @@ void PbAppendEntriesRequest::Clear() {
 	// Prevent compiler warnings about cached_has_bits being unused
 	(void) cached_has_bits;
 
+	leaderid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 	::memset(&term_, 0, static_cast<size_t>(
 													reinterpret_cast<char *>(&leadercommit_) -
 													reinterpret_cast<char *>(&term_)) + sizeof(leadercommit_));
@@ -320,14 +322,16 @@ bool PbAppendEntriesRequest::MergePartialFromCodedStream(
 				break;
 			}
 
-				// int32 leaderId = 2;
+				// string leaderId = 2;
 			case 2: {
 				if (static_cast< ::google::protobuf::uint8>(tag) ==
-						static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
-
-					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-							::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-							input, &leaderid_)));
+						static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+					DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+							input, this->mutable_leaderid()));
+					DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+							this->leaderid().data(), static_cast<int>(this->leaderid().length()),
+							::google::protobuf::internal::WireFormatLite::PARSE,
+							"PbAppendEntriesRequest.leaderId"));
 				} else {
 					goto handle_unusual;
 				}
@@ -421,9 +425,14 @@ void PbAppendEntriesRequest::SerializeWithCachedSizes(
 		::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->term(), output);
 	}
 
-	// int32 leaderId = 2;
-	if (this->leaderid() != 0) {
-		::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->leaderid(), output);
+	// string leaderId = 2;
+	if (this->leaderid().size() > 0) {
+		::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+				this->leaderid().data(), static_cast<int>(this->leaderid().length()),
+				::google::protobuf::internal::WireFormatLite::SERIALIZE,
+				"PbAppendEntriesRequest.leaderId");
+		::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+				2, this->leaderid(), output);
 	}
 
 	// int32 prevLogIndex = 3;
@@ -467,9 +476,15 @@ void PbAppendEntriesRequest::SerializeWithCachedSizes(
 		target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->term(), target);
 	}
 
-	// int32 leaderId = 2;
-	if (this->leaderid() != 0) {
-		target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->leaderid(), target);
+	// string leaderId = 2;
+	if (this->leaderid().size() > 0) {
+		::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+				this->leaderid().data(), static_cast<int>(this->leaderid().length()),
+				::google::protobuf::internal::WireFormatLite::SERIALIZE,
+				"PbAppendEntriesRequest.leaderId");
+		target =
+				::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+						2, this->leaderid(), target);
 	}
 
 	// int32 prevLogIndex = 3;
@@ -512,18 +527,18 @@ size_t PbAppendEntriesRequest::ByteSizeLong() const {
 						(::google::protobuf::internal::GetProto3PreserveUnknownsDefault() ? _internal_metadata_.unknown_fields()
 																																							: _internal_metadata_.default_instance()));
 	}
+	// string leaderId = 2;
+	if (this->leaderid().size() > 0) {
+		total_size += 1 +
+									::google::protobuf::internal::WireFormatLite::StringSize(
+											this->leaderid());
+	}
+
 	// int32 term = 1;
 	if (this->term() != 0) {
 		total_size += 1 +
 									::google::protobuf::internal::WireFormatLite::Int32Size(
 											this->term());
-	}
-
-	// int32 leaderId = 2;
-	if (this->leaderid() != 0) {
-		total_size += 1 +
-									::google::protobuf::internal::WireFormatLite::Int32Size(
-											this->leaderid());
 	}
 
 	// int32 prevLogIndex = 3;
@@ -581,11 +596,12 @@ void PbAppendEntriesRequest::MergeFrom(const PbAppendEntriesRequest &from) {
 	::google::protobuf::uint32 cached_has_bits = 0;
 	(void) cached_has_bits;
 
+	if (from.leaderid().size() > 0) {
+
+		leaderid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.leaderid_);
+	}
 	if (from.term() != 0) {
 		set_term(from.term());
-	}
-	if (from.leaderid() != 0) {
-		set_leaderid(from.leaderid());
 	}
 	if (from.prevlogindex() != 0) {
 		set_prevlogindex(from.prevlogindex());
@@ -626,8 +642,9 @@ void PbAppendEntriesRequest::Swap(PbAppendEntriesRequest *other) {
 
 void PbAppendEntriesRequest::InternalSwap(PbAppendEntriesRequest *other) {
 	using std::swap;
+	leaderid_.Swap(&other->leaderid_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+								 GetArenaNoVirtual());
 	swap(term_, other->term_);
-	swap(leaderid_, other->leaderid_);
 	swap(prevlogindex_, other->prevlogindex_);
 	swap(prevlogterm_, other->prevlogterm_);
 	swap(entries_, other->entries_);
@@ -645,7 +662,6 @@ void PbAppendEntriesRequest::InternalSwap(PbAppendEntriesRequest *other) {
 
 void PbAppendEntriesResponse::InitAsDefaultInstance() {
 }
-
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int PbAppendEntriesResponse::kTermFieldNumber;
 const int PbAppendEntriesResponse::kSuccessFieldNumber;
@@ -917,7 +933,6 @@ void PbAppendEntriesResponse::InternalSwap(PbAppendEntriesResponse *other) {
 
 void PbRequestVoteRequest::InitAsDefaultInstance() {
 }
-
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int PbRequestVoteRequest::kTermFieldNumber;
 const int PbRequestVoteRequest::kCandidateIdFieldNumber;
@@ -937,6 +952,10 @@ PbRequestVoteRequest::PbRequestVoteRequest(const PbRequestVoteRequest &from)
 		: ::google::protobuf::Message(),
 			_internal_metadata_(NULL) {
 	_internal_metadata_.MergeFrom(from._internal_metadata_);
+	candidateid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+	if (from.candidateid().size() > 0) {
+		candidateid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.candidateid_);
+	}
 	::memcpy(&term_, &from.term_,
 					 static_cast<size_t>(reinterpret_cast<char *>(&lastlogterm_) -
 															 reinterpret_cast<char *>(&term_)) + sizeof(lastlogterm_));
@@ -944,6 +963,7 @@ PbRequestVoteRequest::PbRequestVoteRequest(const PbRequestVoteRequest &from)
 }
 
 void PbRequestVoteRequest::SharedCtor() {
+	candidateid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 	::memset(&term_, 0, static_cast<size_t>(
 													reinterpret_cast<char *>(&lastlogterm_) -
 													reinterpret_cast<char *>(&term_)) + sizeof(lastlogterm_));
@@ -955,6 +975,7 @@ PbRequestVoteRequest::~PbRequestVoteRequest() {
 }
 
 void PbRequestVoteRequest::SharedDtor() {
+	candidateid_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void PbRequestVoteRequest::SetCachedSize(int size) const {
@@ -978,6 +999,7 @@ void PbRequestVoteRequest::Clear() {
 	// Prevent compiler warnings about cached_has_bits being unused
 	(void) cached_has_bits;
 
+	candidateid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 	::memset(&term_, 0, static_cast<size_t>(
 													reinterpret_cast<char *>(&lastlogterm_) -
 													reinterpret_cast<char *>(&term_)) + sizeof(lastlogterm_));
@@ -1008,14 +1030,16 @@ bool PbRequestVoteRequest::MergePartialFromCodedStream(
 				break;
 			}
 
-				// int32 candidateId = 2;
+				// string candidateId = 2;
 			case 2: {
 				if (static_cast< ::google::protobuf::uint8>(tag) ==
-						static_cast< ::google::protobuf::uint8>(16u /* 16 & 0xFF */)) {
-
-					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-							::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-							input, &candidateid_)));
+						static_cast< ::google::protobuf::uint8>(18u /* 18 & 0xFF */)) {
+					DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+							input, this->mutable_candidateid()));
+					DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+							this->candidateid().data(), static_cast<int>(this->candidateid().length()),
+							::google::protobuf::internal::WireFormatLite::PARSE,
+							"PbRequestVoteRequest.candidateId"));
 				} else {
 					goto handle_unusual;
 				}
@@ -1081,9 +1105,14 @@ void PbRequestVoteRequest::SerializeWithCachedSizes(
 		::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->term(), output);
 	}
 
-	// int32 candidateId = 2;
-	if (this->candidateid() != 0) {
-		::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->candidateid(), output);
+	// string candidateId = 2;
+	if (this->candidateid().size() > 0) {
+		::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+				this->candidateid().data(), static_cast<int>(this->candidateid().length()),
+				::google::protobuf::internal::WireFormatLite::SERIALIZE,
+				"PbRequestVoteRequest.candidateId");
+		::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+				2, this->candidateid(), output);
 	}
 
 	// int32 lastLogIndex = 3;
@@ -1117,9 +1146,15 @@ void PbRequestVoteRequest::SerializeWithCachedSizes(
 		target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->term(), target);
 	}
 
-	// int32 candidateId = 2;
-	if (this->candidateid() != 0) {
-		target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->candidateid(), target);
+	// string candidateId = 2;
+	if (this->candidateid().size() > 0) {
+		::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+				this->candidateid().data(), static_cast<int>(this->candidateid().length()),
+				::google::protobuf::internal::WireFormatLite::SERIALIZE,
+				"PbRequestVoteRequest.candidateId");
+		target =
+				::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+						2, this->candidateid(), target);
 	}
 
 	// int32 lastLogIndex = 3;
@@ -1152,18 +1187,18 @@ size_t PbRequestVoteRequest::ByteSizeLong() const {
 						(::google::protobuf::internal::GetProto3PreserveUnknownsDefault() ? _internal_metadata_.unknown_fields()
 																																							: _internal_metadata_.default_instance()));
 	}
+	// string candidateId = 2;
+	if (this->candidateid().size() > 0) {
+		total_size += 1 +
+									::google::protobuf::internal::WireFormatLite::StringSize(
+											this->candidateid());
+	}
+
 	// int32 term = 1;
 	if (this->term() != 0) {
 		total_size += 1 +
 									::google::protobuf::internal::WireFormatLite::Int32Size(
 											this->term());
-	}
-
-	// int32 candidateId = 2;
-	if (this->candidateid() != 0) {
-		total_size += 1 +
-									::google::protobuf::internal::WireFormatLite::Int32Size(
-											this->candidateid());
 	}
 
 	// int32 lastLogIndex = 3;
@@ -1207,11 +1242,12 @@ void PbRequestVoteRequest::MergeFrom(const PbRequestVoteRequest &from) {
 	::google::protobuf::uint32 cached_has_bits = 0;
 	(void) cached_has_bits;
 
+	if (from.candidateid().size() > 0) {
+
+		candidateid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.candidateid_);
+	}
 	if (from.term() != 0) {
 		set_term(from.term());
-	}
-	if (from.candidateid() != 0) {
-		set_candidateid(from.candidateid());
 	}
 	if (from.lastlogindex() != 0) {
 		set_lastlogindex(from.lastlogindex());
@@ -1246,8 +1282,9 @@ void PbRequestVoteRequest::Swap(PbRequestVoteRequest *other) {
 
 void PbRequestVoteRequest::InternalSwap(PbRequestVoteRequest *other) {
 	using std::swap;
+	candidateid_.Swap(&other->candidateid_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+										GetArenaNoVirtual());
 	swap(term_, other->term_);
-	swap(candidateid_, other->candidateid_);
 	swap(lastlogindex_, other->lastlogindex_);
 	swap(lastlogterm_, other->lastlogterm_);
 	_internal_metadata_.Swap(&other->_internal_metadata_);
@@ -1263,7 +1300,6 @@ void PbRequestVoteRequest::InternalSwap(PbRequestVoteRequest *other) {
 
 void PbRequestVoteResponse::InitAsDefaultInstance() {
 }
-
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int PbRequestVoteResponse::kTermFieldNumber;
 const int PbRequestVoteResponse::kVoteGrantedFieldNumber;

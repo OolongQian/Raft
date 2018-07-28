@@ -119,11 +119,11 @@ namespace SJTU {
 	 * These are adaptable interfaces for server_ends.
 	 * */
 	CppAppendEntriesResponse Raft::Impl::ProcsAppendEntriesAdapter(CppAppendEntriesRequest request) {
-		return identities_[currentIdentity_]->ProcsAppendEntriesFunc(request);
+		return identities_[currentIdentity_]->ProcsAppendEntriesFunc(std::move(request));
 	}
 
 	CppRequestVoteResponse Raft::Impl::ProcsRequestVoteAdapter(CppRequestVoteRequest request) {
-		return identities_[currentIdentity_]->ProcsRequestVoteFunc(request);
+		return identities_[currentIdentity_]->ProcsRequestVoteFunc(std::move(request));
 	}
 
 	/**
@@ -156,7 +156,10 @@ namespace SJTU {
 		printf("Raft starts to transform to candidate\n");
 #endif
 		pImpl->eventQueue_.Start();
-		pImpl->IdentityTransform(CandidateNo);
+		// pImpl->IdentityTransform(CandidateNo);
+		printf("server number: %lu\n", pImpl->server_ends_.size());
+		for (size_t i = 0; i < pImpl->server_ends_.size(); ++i)
+			pImpl->server_ends_[i]->Monitor();
 	}
 
 	void Raft::Stop() {

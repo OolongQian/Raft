@@ -7,7 +7,7 @@ service RaftPeerService {
 
 message PbAppendEntriesRequest {
     int32 term = 1; /// leader's term.
-    int32 leaderId = 2; /// so follower can redirect clients.
+    string leaderId = 2; /// so follower can redirect clients.
     int32 prevLogIndex = 3; /// index of log entry immeidately preceding new ones.
     int32 prevLogTerm = 4; /// term of prevLogIndex entry
     /// I have no idea which data type it should be, just write like this.
@@ -22,7 +22,7 @@ message PbAppendEntriesResponse {
 
 message PbRequestVoteRequest {
     int32 term = 1; /// candidate's term.
-    int32 candidateId = 2; /// candidate requesting vote.
+    string candidateId = 2; /// candidate requesting vote.
     int32 lastLogIndex = 3; /// index of candidate's last log entry.
     int32 lastLogTerm = 4; /// term of candidate's last log entry.
 }

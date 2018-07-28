@@ -32,6 +32,7 @@ namespace SJTU {
 		grpc::Status RequestVoteRPC(grpc::ServerContext *context, const PbRequestVoteRequest *request,
 																PbRequestVoteResponse *response) override;
 
+		void AsyncRun(const ServerId &);
 	public:
 		RequestVoteFunc requestVoteFunc;
 		AppendEntriesFunc appendEntriesFunc;

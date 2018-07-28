@@ -47,27 +47,16 @@ namespace protobuf_raft_5fpeer_2eproto {
 	void AddDescriptors();
 }  // namespace protobuf_raft_5fpeer_2eproto
 class PbAppendEntriesRequest;
-
 class PbAppendEntriesRequestDefaultTypeInternal;
-
 extern PbAppendEntriesRequestDefaultTypeInternal _PbAppendEntriesRequest_default_instance_;
-
 class PbAppendEntriesResponse;
-
 class PbAppendEntriesResponseDefaultTypeInternal;
-
 extern PbAppendEntriesResponseDefaultTypeInternal _PbAppendEntriesResponse_default_instance_;
-
 class PbRequestVoteRequest;
-
 class PbRequestVoteRequestDefaultTypeInternal;
-
 extern PbRequestVoteRequestDefaultTypeInternal _PbRequestVoteRequest_default_instance_;
-
 class PbRequestVoteResponse;
-
 class PbRequestVoteResponseDefaultTypeInternal;
-
 extern PbRequestVoteResponseDefaultTypeInternal _PbRequestVoteResponse_default_instance_;
 namespace google {
 	namespace protobuf {
@@ -199,6 +188,31 @@ public:
 
 	// accessors -------------------------------------------------------
 
+	// string leaderId = 2;
+	void clear_leaderid();
+
+	static const int kLeaderIdFieldNumber = 2;
+
+	const ::std::string &leaderid() const;
+
+	void set_leaderid(const ::std::string &value);
+
+#if LANG_CXX11
+
+	void set_leaderid(::std::string &&value);
+
+#endif
+
+	void set_leaderid(const char *value);
+
+	void set_leaderid(const char *value, size_t size);
+
+	::std::string *mutable_leaderid();
+
+	::std::string *release_leaderid();
+
+	void set_allocated_leaderid(::std::string *leaderid);
+
 	// int32 term = 1;
 	void clear_term();
 
@@ -207,15 +221,6 @@ public:
 	::google::protobuf::int32 term() const;
 
 	void set_term(::google::protobuf::int32 value);
-
-	// int32 leaderId = 2;
-	void clear_leaderid();
-
-	static const int kLeaderIdFieldNumber = 2;
-
-	::google::protobuf::int32 leaderid() const;
-
-	void set_leaderid(::google::protobuf::int32 value);
 
 	// int32 prevLogIndex = 3;
 	void clear_prevlogindex();
@@ -257,8 +262,8 @@ public:
 private:
 
 	::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+	::google::protobuf::internal::ArenaStringPtr leaderid_;
 	::google::protobuf::int32 term_;
-	::google::protobuf::int32 leaderid_;
 	::google::protobuf::int32 prevlogindex_;
 	::google::protobuf::int32 prevlogterm_;
 	::google::protobuf::int32 entries_;
@@ -521,6 +526,31 @@ public:
 
 	// accessors -------------------------------------------------------
 
+	// string candidateId = 2;
+	void clear_candidateid();
+
+	static const int kCandidateIdFieldNumber = 2;
+
+	const ::std::string &candidateid() const;
+
+	void set_candidateid(const ::std::string &value);
+
+#if LANG_CXX11
+
+	void set_candidateid(::std::string &&value);
+
+#endif
+
+	void set_candidateid(const char *value);
+
+	void set_candidateid(const char *value, size_t size);
+
+	::std::string *mutable_candidateid();
+
+	::std::string *release_candidateid();
+
+	void set_allocated_candidateid(::std::string *candidateid);
+
 	// int32 term = 1;
 	void clear_term();
 
@@ -529,15 +559,6 @@ public:
 	::google::protobuf::int32 term() const;
 
 	void set_term(::google::protobuf::int32 value);
-
-	// int32 candidateId = 2;
-	void clear_candidateid();
-
-	static const int kCandidateIdFieldNumber = 2;
-
-	::google::protobuf::int32 candidateid() const;
-
-	void set_candidateid(::google::protobuf::int32 value);
 
 	// int32 lastLogIndex = 3;
 	void clear_lastlogindex();
@@ -561,8 +582,8 @@ public:
 private:
 
 	::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+	::google::protobuf::internal::ArenaStringPtr candidateid_;
 	::google::protobuf::int32 term_;
-	::google::protobuf::int32 candidateid_;
 	::google::protobuf::int32 lastlogindex_;
 	::google::protobuf::int32 lastlogterm_;
 	mutable ::google::protobuf::internal::CachedSize _cached_size_;
@@ -724,44 +745,87 @@ private:
 inline void PbAppendEntriesRequest::clear_term() {
 	term_ = 0;
 }
-
 inline ::google::protobuf::int32 PbAppendEntriesRequest::term() const {
 	// @@protoc_insertion_point(field_get:PbAppendEntriesRequest.term)
 	return term_;
 }
-
 inline void PbAppendEntriesRequest::set_term(::google::protobuf::int32 value) {
 
 	term_ = value;
 	// @@protoc_insertion_point(field_set:PbAppendEntriesRequest.term)
 }
 
-// int32 leaderId = 2;
+// string leaderId = 2;
 inline void PbAppendEntriesRequest::clear_leaderid() {
-	leaderid_ = 0;
+	leaderid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
-inline ::google::protobuf::int32 PbAppendEntriesRequest::leaderid() const {
+inline const ::std::string &PbAppendEntriesRequest::leaderid() const {
 	// @@protoc_insertion_point(field_get:PbAppendEntriesRequest.leaderId)
-	return leaderid_;
+	return leaderid_.GetNoArena();
 }
 
-inline void PbAppendEntriesRequest::set_leaderid(::google::protobuf::int32 value) {
+inline void PbAppendEntriesRequest::set_leaderid(const ::std::string &value) {
 
-	leaderid_ = value;
+	leaderid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
 	// @@protoc_insertion_point(field_set:PbAppendEntriesRequest.leaderId)
+}
+
+#if LANG_CXX11
+
+inline void PbAppendEntriesRequest::set_leaderid(::std::string &&value) {
+
+	leaderid_.SetNoArena(
+			&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+	// @@protoc_insertion_point(field_set_rvalue:PbAppendEntriesRequest.leaderId)
+}
+
+#endif
+
+inline void PbAppendEntriesRequest::set_leaderid(const char *value) {
+			GOOGLE_DCHECK(value != NULL);
+
+	leaderid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+	// @@protoc_insertion_point(field_set_char:PbAppendEntriesRequest.leaderId)
+}
+
+inline void PbAppendEntriesRequest::set_leaderid(const char *value, size_t size) {
+
+	leaderid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+											 ::std::string(reinterpret_cast<const char *>(value), size));
+	// @@protoc_insertion_point(field_set_pointer:PbAppendEntriesRequest.leaderId)
+}
+
+inline ::std::string *PbAppendEntriesRequest::mutable_leaderid() {
+
+	// @@protoc_insertion_point(field_mutable:PbAppendEntriesRequest.leaderId)
+	return leaderid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+inline ::std::string *PbAppendEntriesRequest::release_leaderid() {
+	// @@protoc_insertion_point(field_release:PbAppendEntriesRequest.leaderId)
+
+	return leaderid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+inline void PbAppendEntriesRequest::set_allocated_leaderid(::std::string *leaderid) {
+	if (leaderid != NULL) {
+
+	} else {
+
+	}
+	leaderid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), leaderid);
+	// @@protoc_insertion_point(field_set_allocated:PbAppendEntriesRequest.leaderId)
 }
 
 // int32 prevLogIndex = 3;
 inline void PbAppendEntriesRequest::clear_prevlogindex() {
 	prevlogindex_ = 0;
 }
-
 inline ::google::protobuf::int32 PbAppendEntriesRequest::prevlogindex() const {
 	// @@protoc_insertion_point(field_get:PbAppendEntriesRequest.prevLogIndex)
 	return prevlogindex_;
 }
-
 inline void PbAppendEntriesRequest::set_prevlogindex(::google::protobuf::int32 value) {
 
 	prevlogindex_ = value;
@@ -772,12 +836,10 @@ inline void PbAppendEntriesRequest::set_prevlogindex(::google::protobuf::int32 v
 inline void PbAppendEntriesRequest::clear_prevlogterm() {
 	prevlogterm_ = 0;
 }
-
 inline ::google::protobuf::int32 PbAppendEntriesRequest::prevlogterm() const {
 	// @@protoc_insertion_point(field_get:PbAppendEntriesRequest.prevLogTerm)
 	return prevlogterm_;
 }
-
 inline void PbAppendEntriesRequest::set_prevlogterm(::google::protobuf::int32 value) {
 
 	prevlogterm_ = value;
@@ -788,12 +850,10 @@ inline void PbAppendEntriesRequest::set_prevlogterm(::google::protobuf::int32 va
 inline void PbAppendEntriesRequest::clear_entries() {
 	entries_ = 0;
 }
-
 inline ::google::protobuf::int32 PbAppendEntriesRequest::entries() const {
 	// @@protoc_insertion_point(field_get:PbAppendEntriesRequest.entries)
 	return entries_;
 }
-
 inline void PbAppendEntriesRequest::set_entries(::google::protobuf::int32 value) {
 
 	entries_ = value;
@@ -804,12 +864,10 @@ inline void PbAppendEntriesRequest::set_entries(::google::protobuf::int32 value)
 inline void PbAppendEntriesRequest::clear_leadercommit() {
 	leadercommit_ = 0;
 }
-
 inline ::google::protobuf::int32 PbAppendEntriesRequest::leadercommit() const {
 	// @@protoc_insertion_point(field_get:PbAppendEntriesRequest.leaderCommit)
 	return leadercommit_;
 }
-
 inline void PbAppendEntriesRequest::set_leadercommit(::google::protobuf::int32 value) {
 
 	leadercommit_ = value;
@@ -824,12 +882,10 @@ inline void PbAppendEntriesRequest::set_leadercommit(::google::protobuf::int32 v
 inline void PbAppendEntriesResponse::clear_term() {
 	term_ = 0;
 }
-
 inline ::google::protobuf::int32 PbAppendEntriesResponse::term() const {
 	// @@protoc_insertion_point(field_get:PbAppendEntriesResponse.term)
 	return term_;
 }
-
 inline void PbAppendEntriesResponse::set_term(::google::protobuf::int32 value) {
 
 	term_ = value;
@@ -840,12 +896,10 @@ inline void PbAppendEntriesResponse::set_term(::google::protobuf::int32 value) {
 inline void PbAppendEntriesResponse::clear_success() {
 	success_ = false;
 }
-
 inline bool PbAppendEntriesResponse::success() const {
 	// @@protoc_insertion_point(field_get:PbAppendEntriesResponse.success)
 	return success_;
 }
-
 inline void PbAppendEntriesResponse::set_success(bool value) {
 
 	success_ = value;
@@ -860,44 +914,87 @@ inline void PbAppendEntriesResponse::set_success(bool value) {
 inline void PbRequestVoteRequest::clear_term() {
 	term_ = 0;
 }
-
 inline ::google::protobuf::int32 PbRequestVoteRequest::term() const {
 	// @@protoc_insertion_point(field_get:PbRequestVoteRequest.term)
 	return term_;
 }
-
 inline void PbRequestVoteRequest::set_term(::google::protobuf::int32 value) {
 
 	term_ = value;
 	// @@protoc_insertion_point(field_set:PbRequestVoteRequest.term)
 }
 
-// int32 candidateId = 2;
+// string candidateId = 2;
 inline void PbRequestVoteRequest::clear_candidateid() {
-	candidateid_ = 0;
+	candidateid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
-inline ::google::protobuf::int32 PbRequestVoteRequest::candidateid() const {
+inline const ::std::string &PbRequestVoteRequest::candidateid() const {
 	// @@protoc_insertion_point(field_get:PbRequestVoteRequest.candidateId)
-	return candidateid_;
+	return candidateid_.GetNoArena();
 }
 
-inline void PbRequestVoteRequest::set_candidateid(::google::protobuf::int32 value) {
+inline void PbRequestVoteRequest::set_candidateid(const ::std::string &value) {
 
-	candidateid_ = value;
+	candidateid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
 	// @@protoc_insertion_point(field_set:PbRequestVoteRequest.candidateId)
+}
+
+#if LANG_CXX11
+
+inline void PbRequestVoteRequest::set_candidateid(::std::string &&value) {
+
+	candidateid_.SetNoArena(
+			&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+	// @@protoc_insertion_point(field_set_rvalue:PbRequestVoteRequest.candidateId)
+}
+
+#endif
+
+inline void PbRequestVoteRequest::set_candidateid(const char *value) {
+			GOOGLE_DCHECK(value != NULL);
+
+	candidateid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+	// @@protoc_insertion_point(field_set_char:PbRequestVoteRequest.candidateId)
+}
+
+inline void PbRequestVoteRequest::set_candidateid(const char *value, size_t size) {
+
+	candidateid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+													::std::string(reinterpret_cast<const char *>(value), size));
+	// @@protoc_insertion_point(field_set_pointer:PbRequestVoteRequest.candidateId)
+}
+
+inline ::std::string *PbRequestVoteRequest::mutable_candidateid() {
+
+	// @@protoc_insertion_point(field_mutable:PbRequestVoteRequest.candidateId)
+	return candidateid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+inline ::std::string *PbRequestVoteRequest::release_candidateid() {
+	// @@protoc_insertion_point(field_release:PbRequestVoteRequest.candidateId)
+
+	return candidateid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+inline void PbRequestVoteRequest::set_allocated_candidateid(::std::string *candidateid) {
+	if (candidateid != NULL) {
+
+	} else {
+
+	}
+	candidateid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), candidateid);
+	// @@protoc_insertion_point(field_set_allocated:PbRequestVoteRequest.candidateId)
 }
 
 // int32 lastLogIndex = 3;
 inline void PbRequestVoteRequest::clear_lastlogindex() {
 	lastlogindex_ = 0;
 }
-
 inline ::google::protobuf::int32 PbRequestVoteRequest::lastlogindex() const {
 	// @@protoc_insertion_point(field_get:PbRequestVoteRequest.lastLogIndex)
 	return lastlogindex_;
 }
-
 inline void PbRequestVoteRequest::set_lastlogindex(::google::protobuf::int32 value) {
 
 	lastlogindex_ = value;
@@ -908,12 +1005,10 @@ inline void PbRequestVoteRequest::set_lastlogindex(::google::protobuf::int32 val
 inline void PbRequestVoteRequest::clear_lastlogterm() {
 	lastlogterm_ = 0;
 }
-
 inline ::google::protobuf::int32 PbRequestVoteRequest::lastlogterm() const {
 	// @@protoc_insertion_point(field_get:PbRequestVoteRequest.lastLogTerm)
 	return lastlogterm_;
 }
-
 inline void PbRequestVoteRequest::set_lastlogterm(::google::protobuf::int32 value) {
 
 	lastlogterm_ = value;
@@ -928,12 +1023,10 @@ inline void PbRequestVoteRequest::set_lastlogterm(::google::protobuf::int32 valu
 inline void PbRequestVoteResponse::clear_term() {
 	term_ = 0;
 }
-
 inline ::google::protobuf::int32 PbRequestVoteResponse::term() const {
 	// @@protoc_insertion_point(field_get:PbRequestVoteResponse.term)
 	return term_;
 }
-
 inline void PbRequestVoteResponse::set_term(::google::protobuf::int32 value) {
 
 	term_ = value;
@@ -944,12 +1037,10 @@ inline void PbRequestVoteResponse::set_term(::google::protobuf::int32 value) {
 inline void PbRequestVoteResponse::clear_votegranted() {
 	votegranted_ = false;
 }
-
 inline bool PbRequestVoteResponse::votegranted() const {
 	// @@protoc_insertion_point(field_get:PbRequestVoteResponse.voteGranted)
 	return votegranted_;
 }
-
 inline void PbRequestVoteResponse::set_votegranted(bool value) {
 
 	votegranted_ = value;

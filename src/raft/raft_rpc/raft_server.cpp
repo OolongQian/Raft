@@ -6,15 +6,13 @@ namespace SJTU {
 
 	void RaftServer::BindServiceFunc(std::function<CppRequestVoteResponse(CppRequestVoteRequest)> f1,
 																	 std::function<CppAppendEntriesResponse(CppAppendEntriesRequest)> f2) {
-
+		server_end_.requestVoteFunc = std::move(f1);
+		server_end_.appendEntriesFunc = std::move(f2);
 	}
 
-	void RaftServer::AsycRun() {
-		grpc::ServerBuilder builder;
-		builder.AddListeningPort(serverId.toString(), grpc::InsecureServerCredentials());
-		builder.RegisterService(&server_end_);
-		auto server = builder.BuildAndStart();
-		std::cout << "Server listening on " << serverId.toString() << std::endl;
-		server->Wait();
+	void RaftServer::Monitor() {
+		th = boost::thread([this]() {
+			server_end_.AsyncRun(serverId);
+		});
 	}
 }
