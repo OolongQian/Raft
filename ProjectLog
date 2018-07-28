@@ -144,3 +144,6 @@ Why not keep working on candidate to implement its timeout action? OK let's do t
 Candidate's init (requestVote and Timer) is OK, the next thing needs to worry about is rpc server_end_.
 
 Let's check the follower's rpc_server_end implementation.
+
+Note that for gRPC server, server->Wait() function blocks this_thread until
+"The server must be either shutting down or some other thread must call Shutdown for this function to ever return."

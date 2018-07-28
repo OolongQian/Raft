@@ -11,7 +11,6 @@ namespace SJTU {
 #endif
 		timer_.SetTimeOut(rand() % (info.get_electionTimeout() / 2) + info.get_electionTimeout() / 2);
 		timer_.Start();
-
 	}
 
 	void Follower::leave() {

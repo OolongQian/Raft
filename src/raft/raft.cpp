@@ -35,7 +35,7 @@ namespace SJTU {
 		const ServerInfo &info;
 
 
-		boost::mutex mtx_transform;                /// a mutex used in identity_transform.
+//		boost::mutex mtx_transform;                /// a mutex used in identity_transform.
 		//  ---------------------------------------------------------------------
 		explicit Impl(const ServerInfo &info);
 
@@ -86,6 +86,7 @@ namespace SJTU {
 			server_ends_.push_back(std::make_unique<RaftServer>(srv_id));
 			server_ends_.back()->BindServiceFunc(std::bind(&Impl::ProcsRequestVoteAdapter, this, std::placeholders::_1),
 																					 std::bind(&Impl::ProcsAppendEntriesAdapter, this, std::placeholders::_1));
+			server_ends_.back()->PreMonitorInit();
 		}
 
 		currentIdentity_ = DownNo;
@@ -156,6 +157,7 @@ namespace SJTU {
 		printf("Raft starts to transform to candidate\n");
 #endif
 		pImpl->eventQueue_.Start();
+		pImpl->IdentityTransform(FollowerNo); 
 		// pImpl->IdentityTransform(CandidateNo);
 		printf("server number: %lu\n", pImpl->server_ends_.size());
 		for (size_t i = 0; i < pImpl->server_ends_.size(); ++i)
@@ -163,6 +165,11 @@ namespace SJTU {
 	}
 
 	void Raft::Stop() {
-
+#ifndef _NOLOG
+		printf("Raft starts to stop\n");
+#endif
+		pImpl->eventQueue_.Stop();
+		for (size_t i = 0; i < pImpl->server_ends_.size(); ++i)
+			pImpl->server_ends_[i]->Stop();
 	}
 }

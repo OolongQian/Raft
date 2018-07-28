@@ -28,10 +28,10 @@ private:
 	std::unique_ptr<HelloService::Stub> stub_;
 };
 
-int main() {
-	auto channel = grpc::CreateChannel("localhost:5000", grpc::InsecureChannelCredentials());
-	HelloClient client(channel);
-
-	client.SayHello("Worrrlllllddddddddd..........");
-	return 0;
-}
+//int main() {
+//	auto channel = grpc::CreateChannel("localhost:5000", grpc::InsecureChannelCredentials());
+//	HelloClient client(channel);
+//
+//	client.SayHello("Worrrlllllddddddddd..........");
+//	return 0;
+//}

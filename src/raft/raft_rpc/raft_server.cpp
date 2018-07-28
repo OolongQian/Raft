@@ -10,9 +10,23 @@ namespace SJTU {
 		server_end_.appendEntriesFunc = std::move(f2);
 	}
 
+	void RaftServer::PreMonitorInit() {
+		grpc::ServerBuilder builder;
+		builder.AddListeningPort(serverId.toString(), grpc::InsecureServerCredentials());
+		builder.RegisterService(&server_end_);  /// itself has implemented required interfaces.
+		server = builder.BuildAndStart();
+	}
+
 	void RaftServer::Monitor() {
 		th = boost::thread([this]() {
-			server_end_.AsyncRun(serverId);
+			std::cout << "Server listening on " << serverId.toString() << std::endl;
+			server->Wait();
 		});
 	}
-}
+
+	void RaftServer::Stop() {
+		printf("gracefully shutting down, and join monitoring thread...\n");
+		server->Shutdown();
+		th.join();
+	}
+};

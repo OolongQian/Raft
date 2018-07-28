@@ -2,7 +2,7 @@
 #include "../../../include/raft/identities/candidate.h"
 #include "../../../include/raft/raft_proto/raft_peer_service.h"
 
-#define  _NOLOG
+// #define  _NOLOG
 
 namespace SJTU {
 	Candidate::~Candidate() {}
@@ -61,6 +61,7 @@ namespace SJTU {
 
 #ifndef _NOLOG
 				printf("Candidate received response from other server...\n");
+				printf("it says: term %d, requestVote %d\n", response.term(), int(response.votegranted()));
 #endif
 				if (response.votegranted()) ++votesReceived;
 

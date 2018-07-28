@@ -17,10 +17,13 @@ namespace SJTU {
 
 		void BindServiceFunc(RequestVoteFunc f1, AppendEntriesFunc f2);
 
+		void PreMonitorInit();
 		/**
 		 * Setup server and monitor peer request.
 		 * */
 		void Monitor();
+
+		void Stop();
 
 	private:
 		const ServerId &serverId;
@@ -32,6 +35,7 @@ namespace SJTU {
 		 * */
 		RaftPeerServiceImpl server_end_;
 
+		std::unique_ptr<grpc::Server> server;
 		/**
 		 * Note that each raft_server has owns an independent thread so that they work concurrently.
 		 *
