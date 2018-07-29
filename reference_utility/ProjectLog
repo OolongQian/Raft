@@ -159,3 +159,8 @@ It's time to finish working on followers.
 
 OK, the following work is to transform the previously trivial response into concrete and meaningful action, which firstly
 replies on specifying Log data structure. Meanwhile, reading raft paper is indispensable.
+
+The next thing to do is to implement algorithm based on this paper, but how can I implement it in a well-formed order in
+order to do unit test in a manageable way?
+
+The next thing to do is implementing default server response.

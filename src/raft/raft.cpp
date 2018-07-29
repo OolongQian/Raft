@@ -34,10 +34,11 @@ namespace SJTU {
 
 		const ServerInfo &info;
 
+		std::map<std::string, std::string> &data;
 
 //		boost::mutex mtx_transform;                /// a mutex used in identity_transform.
 		//  ---------------------------------------------------------------------
-		explicit Impl(const ServerInfo &info);
+		explicit Impl(const ServerInfo &info, std::map<std::string, std::string> &data);
 
 		~Impl();
 
@@ -57,7 +58,7 @@ namespace SJTU {
 		void TimeOutActionAdapter();
 	};
 
-	Raft::Impl::Impl(const ServerInfo &info) : info(info) {
+	Raft::Impl::Impl(const ServerInfo &info, std::map<std::string, std::string> &data) : info(info), data(data) {
 #ifndef _NOLOG
 		printf("Construct Raft's pImpl...\n");
 #endif
@@ -99,6 +100,11 @@ namespace SJTU {
 #endif
 		timer_.BindTimeOutAction(std::bind(&Impl::TimeOutActionAdapter, this));
 		timer_.BindPushEvent(std::bind(&EventQueue::addEvent, &eventQueue_, std::placeholders::_1));
+
+		/**
+		 * After initializing useful building blocks, initializing states.
+		 * */
+		state_.Init();
 	}
 
 	void Raft::Impl::IdentityTransform(const IdentityNo identityNo) {
@@ -137,7 +143,8 @@ namespace SJTU {
 
 namespace SJTU {
 
-	Raft::Raft(const ServerInfo &info) : pImpl(std::make_unique<Impl>(info)) {
+	Raft::Raft(const ServerInfo &info, std::map<std::string, std::string> &data) : pImpl(
+			std::make_unique<Impl>(info, data)) {
 #ifndef _NOLOG
 		printf("Construct Raft...\n");
 #endif
@@ -165,7 +172,7 @@ namespace SJTU {
 //		std::cout << pImpl->info.get_local().toString() << std::endl;
 //		if(pImpl->info.get_local().toString()) ;
 //		pImpl->IdentityTransform(LeaderNo);
-		// pImpl->IdentityTransform(CandidateNo);
+// 		pImpl->IdentityTransform(CandidateNo);
 		printf("server number: %lu\n", pImpl->server_ends_.size());
 		for (size_t i = 0; i < pImpl->server_ends_.size(); ++i)
 			pImpl->server_ends_[i]->Monitor();

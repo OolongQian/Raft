@@ -9,46 +9,24 @@
  * Therefore we had better create such data wrappers in cpp version and define
  * some functions to convert between them.
  * */
-#include "../../log/log.h"
+#include "../../log/entry.h"
 #include "raft_peer.pb.h"
 #include "../../server_info.h"
 
 namespace SJTU {
-
-	struct CppLogEntry {
-		std::string command;
-		std::string key;
-		std::string val;
-
-		CppLogEntry() = default;
-
-		CppLogEntry(std::string command, std::string key, std::string val) :
-				command(std::move(command)), key(std::move(key)), val(std::move(val)) {}
-
-		explicit CppLogEntry(const PbAppendEntriesRequest::Entry &entry) :
-				command(entry.command()), key(entry.key()), val(entry.val()) {}
-
-		PbAppendEntriesRequest_Entry Convert() const {
-			PbAppendEntriesRequest_Entry entry;
-			entry.set_command(command);
-			entry.set_key(key);
-			entry.set_val(val);
-			return entry;
-		}
-	};
 
 	struct CppAppendEntriesRequest {
 		long long term;
 		ServerId leaderId;
 		long long prevLogIndex;
 		long long prevLogTerm;
-		std::vector<CppLogEntry> entries;
+		std::vector<Entry> entries;
 		long long leaderCommit;
 
 		CppAppendEntriesRequest() = default;
 
 		CppAppendEntriesRequest(long long term, ServerId leaderId, long long prevLogIndex, long long prevLogTerm,
-														std::vector<CppLogEntry> entries, long long leaderCommit) :
+														std::vector<Entry> entries, long long leaderCommit) :
 				term(term), leaderId(std::move(leaderId)), prevLogIndex(prevLogIndex), prevLogTerm(prevLogTerm),
 				entries(std::move(entries)), leaderCommit(leaderCommit) {}
 
@@ -69,11 +47,13 @@ namespace SJTU {
 			request.set_leaderid(leaderId.toString());
 			request.set_prevlogindex(prevLogIndex);
 			request.set_prevlogterm(prevLogTerm);
-			for (const CppLogEntry &entry : entries) {
+			for (const Entry &entry : entries) {
 				PbAppendEntriesRequest_Entry *elem = request.add_entries();
 				elem->set_command(entry.command);
 				elem->set_key(entry.key);
 				elem->set_val(entry.val);
+				elem->set_term(entry.term);
+				elem->set_entryindex(entry.entryIndex);
 			}
 			request.set_leadercommit(leaderCommit);
 			return request;

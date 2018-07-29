@@ -33,13 +33,13 @@ namespace SJTU {
 
 		virtual void leave() = 0;
 
-		virtual CppAppendEntriesResponse ProcsAppendEntriesFunc(CppAppendEntriesRequest);
+		virtual CppAppendEntriesResponse ProcsAppendEntriesFunc(const CppAppendEntriesRequest &);
 
 		/**
 		 * In current naive implementation, because of no client, all clients will vote
 		 * for the requester kindly.
 		 * */
-		virtual CppRequestVoteResponse ProcsRequestVoteFunc(CppRequestVoteRequest);
+		virtual CppRequestVoteResponse ProcsRequestVoteFunc(const CppRequestVoteRequest &);
 
 		/**
 		 * Timeout functions don't need to be bound to timer,

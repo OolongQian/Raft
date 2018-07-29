@@ -11,6 +11,8 @@ message PbAppendEntriesRequest {
         string command = 1;
         string key = 2;
         string val = 3;
+        int64 term = 4;
+        int64 entryIndex = 5;
     }
     int64 term = 1; /// leader's term.
     string leaderId = 2; /// so follower can redirect clients.

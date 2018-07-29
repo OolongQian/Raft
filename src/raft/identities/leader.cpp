@@ -13,6 +13,12 @@ namespace SJTU {
 		timer_.SetTimeOut(info.get_electionTimeout() / 2);
 		timer_.Start(true);
 		++state_.currentTerm;
+
+		for (const ServerId &id : info.get_srvList()) {
+			if (id == info.get_local()) continue;
+			state_.nextIndex[id] = state_.log.size() + 1;    /// init to be leader's last log index + 1.
+			state_.matchIndex[id] = 0;                        /// init to be 0, increase monotonically.
+		}
 	}
 
 	void Leader::leave() {
@@ -69,7 +75,7 @@ namespace SJTU {
 #ifndef _NOLOG
 		printf("current server's log is empty, initialize a trivial request...\n");
 #endif
-		std::vector<CppLogEntry> vec_tmp(0);
+		std::vector<Entry> vec_tmp(0);
 		CppAppendEntriesRequest request(state_.currentTerm, info.get_local().toString(), 0, -1, vec_tmp,
 																		state_.commitIndex);
 //		request.set_term(state_.currentTerm);

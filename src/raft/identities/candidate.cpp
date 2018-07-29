@@ -106,15 +106,15 @@ namespace SJTU {
 	 * */
 	PbRequestVoteRequest Candidate::MakeVoteRequest() {
 		boost::lock_guard<boost::mutex> lk(mtx_);
-		if (state_.logs.empty()) {
+		if (state_.log.empty()) {
 #ifndef _NOLOG
 			printf("current server's log is empty, initialize a trivial request...\n");
 #endif
 			CppRequestVoteRequest request(state_.currentTerm, info.get_local(), 0, -1);
 			return request.Convert();
 		} else {
-			CppRequestVoteRequest request(state_.currentTerm, info.get_local(), state_.logs.size() - 1,
-																		state_.logs.back().term);
+			CppRequestVoteRequest request(state_.currentTerm, info.get_local(), state_.log.size() - 1,
+																		state_.log.back().term);
 			return request.Convert();
 		}
 	}

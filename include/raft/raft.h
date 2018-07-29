@@ -11,7 +11,7 @@
 namespace SJTU {
 	class Raft {
 	public:
-		explicit Raft(const ServerInfo &info);
+		explicit Raft(const ServerInfo &info, std::map<std::string, std::string> &data);
 
 		~Raft();
 		/**

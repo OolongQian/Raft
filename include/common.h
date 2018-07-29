@@ -48,6 +48,11 @@ namespace SJTU {
 			return !(*this == rhs);
 		}
 
+		/// for using of std::map
+		bool operator<(const ServerId &rhs) const {
+			if (addr != rhs.addr) return addr < rhs.addr;
+			else return port < rhs.port;
+		}
 	private:
 		std::string addr;
 		Port port = 0;
