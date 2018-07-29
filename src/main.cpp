@@ -17,7 +17,6 @@
 #include <boost/thread/lock_guard.hpp>
 #include <boost/thread.hpp>
 
-#include "../include/raft/raft_proto/raft_peer.grpc.pb.h"
 class Foo {
 public:
 	boost::thread th1;

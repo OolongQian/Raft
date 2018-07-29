@@ -13,15 +13,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ae9abb6e-d064-437d-a685-86c1734c862a" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/log/entry.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/log/log_array.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/raft/state.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/log/entry.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/log/entry.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/raft/identities/identity_base.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/raft/identities/identity_base.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/raft/state.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/raft/state.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/raft/identities/identity_base.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/raft/identities/identity_base.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/raft/raft_proto/raft_peer_service.cc" beforeDir="false" afterPath="$PROJECT_DIR$/src/raft/raft_proto/raft_peer_service.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/server.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,7 +28,7 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
+    <splitter split-orientation="horizontal" split-proportion="0.7291005">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="identity_base.cpp" pinned="true" current-in-tab="false">
@@ -54,19 +49,6 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="raft.cpp" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/raft/raft.cpp">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="144">
-                  <caret line="9" column="9" lean-forward="true" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
-                  <folding>
-                    <element signature="e#0#36#0" expanded="true" />
-                    <element signature="e#305#324#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="candidate.cpp" pinned="true" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/raft/identities/candidate.cpp">
               <provider selected="true" editor-type-id="text-editor">
@@ -82,11 +64,17 @@
           <file leaf-file-name="main.cpp" pinned="true" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="233">
-                  <caret line="77" column="22" selection-start-line="77" selection-start-column="22" selection-end-line="77" selection-end-column="22" />
-                  <folding>
-                    <element signature="e#0#17#0" expanded="true" />
-                  </folding>
+                <state relative-caret-position="256">
+                  <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="state.cpp" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/raft/state.cpp">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="48">
+                  <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
                 </state>
               </provider>
             </entry>
@@ -98,8 +86,22 @@
           <file leaf-file-name="server.cpp" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/server.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="16">
-                  <caret line="1" column="33" lean-forward="true" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
+                <state relative-caret-position="64">
+                  <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+                  <folding>
+                    <element signature="e#0#33#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="server_info.cpp" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/server_info.cpp">
+              <provider selected="true" editor-type-id="text-editor">
+                <state>
+                  <folding>
+                    <element signature="e#0#35#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -169,7 +171,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/common.cpp" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/raft/raft_proto/raft_peer.pb.cc" />
         <option value="$PROJECT_DIR$/src/server_info.cpp" />
@@ -210,16 +211,17 @@
         <option value="$PROJECT_DIR$/src/raft/raft_proto/Makefile" />
         <option value="$PROJECT_DIR$/include/raft/raft_proto/cpp_msg_wrapper.h" />
         <option value="$PROJECT_DIR$/include/log/log_array.h" />
-        <option value="$PROJECT_DIR$/include/raft/state.h" />
         <option value="$PROJECT_DIR$/src/raft/raft_proto/raft_peer_service.cc" />
         <option value="$PROJECT_DIR$/include/raft/identities/identity_base.h" />
         <option value="$PROJECT_DIR$/include/raft/raft_proto/raft_peer.proto" />
-        <option value="$PROJECT_DIR$/src/main.cpp" />
         <option value="$PROJECT_DIR$/include/log/entry.h" />
         <option value="$PROJECT_DIR$/src/log/entry.cpp" />
         <option value="$PROJECT_DIR$/src/raft/identities/identity_base.cpp" />
         <option value="$PROJECT_DIR$/src/log/log_array.cpp" />
         <option value="$PROJECT_DIR$/src/server.cpp" />
+        <option value="$PROJECT_DIR$/src/main.cpp" />
+        <option value="$PROJECT_DIR$/include/raft/state.h" />
+        <option value="$PROJECT_DIR$/src/raft/state.cpp" />
       </list>
     </option>
   </component>
@@ -261,6 +263,12 @@
               <item name="raft_proj" type="b2602c69:ProjectViewProjectNode" />
               <item name="Raft" type="462c0819:PsiDirectoryNode" />
               <item name="include" type="462c0819:PsiDirectoryNode" />
+              <item name="hello_proto" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="raft_proj" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Raft" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
               <item name="log" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -268,6 +276,13 @@
               <item name="Raft" type="462c0819:PsiDirectoryNode" />
               <item name="include" type="462c0819:PsiDirectoryNode" />
               <item name="raft" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="raft_proj" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Raft" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+              <item name="raft" type="462c0819:PsiDirectoryNode" />
+              <item name="event_queue" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="raft_proj" type="b2602c69:ProjectViewProjectNode" />
@@ -311,13 +326,6 @@
               <item name="Raft" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="raft" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="raft_proj" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Raft" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="raft" type="462c0819:PsiDirectoryNode" />
-              <item name="raft_proto" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -403,7 +411,7 @@
       <workItem from="1532708004898" duration="102000" />
       <workItem from="1532741236389" duration="23606000" />
       <workItem from="1532835350490" duration="3967000" />
-      <workItem from="1532843543891" duration="2524000" />
+      <workItem from="1532843543891" duration="2914000" />
     </task>
     <task id="LOCAL-00001" summary="Basic declaration for initial modules">
       <created>1532432023043</created>
@@ -699,25 +707,32 @@
       <option name="project" value="LOCAL" />
       <updated>1532843566706</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="compile error">
+      <created>1532846181282</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1532846181282</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="128493000" />
+    <option name="totallyTimeSpent" value="128883000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="48" y="23" width="1392" height="817" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4973638" visible="true" weight="0.1480671" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.84305835" visible="true" weight="0.3107221" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info active="true" anchor="bottom" id="Messages" order="7" visible="true" weight="0.27638888" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.27638888" />
       <window_info anchor="bottom" id="CMake" order="7" weight="0.25694445" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50071734" side_tool="true" weight="0.31030303" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32969698" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.07515152" />
-      <window_info id="Structure" order="1" sideWeight="0.5026362" side_tool="true" weight="0.0" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49928263" weight="0.30972221" />
+      <window_info id="Structure" order="1" sideWeight="0.15694165" side_tool="true" visible="true" weight="0.3107221" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49928263" visible="true" weight="0.30972221" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.48848486" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -757,7 +772,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="add some placeholders about identities" />
     <MESSAGE value="add identity transformer to identities classes" />
     <MESSAGE value="before reconstruct" />
     <MESSAGE value="reconstructing" />
@@ -782,7 +796,8 @@
     <MESSAGE value="then, take the paper and algorithm seriously..." />
     <MESSAGE value="remove" />
     <MESSAGE value="working" />
-    <option name="LAST_COMMIT_MESSAGE" value="working" />
+    <MESSAGE value="compile error" />
+    <option name="LAST_COMMIT_MESSAGE" value="compile error" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -791,20 +806,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/trail_and_error/communication_test.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/include/google/protobuf/wire_format_lite_inl.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="705" selection-start-line="705" selection-end-line="705" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/__functional_base">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
@@ -1054,32 +1055,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="77" column="22" selection-start-line="77" selection-start-column="22" selection-end-line="77" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#17#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/include/raft/raft_proto/cpp_msg_wrapper.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="352">
           <caret line="22" column="19" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
           <folding>
             <element signature="e#436#464#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/include/raft/state.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="48" column="14" selection-start-line="48" selection-start-column="14" selection-end-line="48" selection-end-column="14" />
-          <folding>
-            <element signature="e#53#70#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1144,19 +1125,54 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/raft/raft.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="9" column="9" lean-forward="true" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
+        <state relative-caret-position="224">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
           <folding>
             <element signature="e#0#36#0" expanded="true" />
-            <element signature="e#305#324#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/server_info.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/server.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16">
-          <caret line="1" column="33" lean-forward="true" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
+        <state relative-caret-position="64">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/raft/state.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="32" column="11" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
+          <folding>
+            <element signature="e#53#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/raft/state.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
         </state>
       </provider>
     </entry>
