@@ -27,10 +27,11 @@ public:
 //int main() {
 //	std::string addr = "0.0.0.0:5000";
 //	HelloImpl service;
+//
 //	grpc::ServerBuilder builder;
 //	builder.AddListeningPort(addr, grpc::InsecureServerCredentials());
 //	builder.RegisterService(&service);
-//	auto server = builder.BuildAndStart();
+//	std::unique_ptr<grpc::Server> server = builder.BuildAndStart();
 //
 //	boost::thread th([&] () mutable {
 //		std::cout << "Server listening on " << addr << std::endl;

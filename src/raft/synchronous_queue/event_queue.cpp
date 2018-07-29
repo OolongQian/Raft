@@ -1,4 +1,4 @@
-#include "../../../include/raft/event_queue/event_queue.h"
+#include "../../../include/raft/synchronous_queue/event_queue.h"
 
 #include <queue>
 #include <functional>
@@ -30,9 +30,9 @@ namespace SJTU {
 			while (true) {
 				boost::unique_lock<boost::mutex> lk(mtx_);
 				/// only when events_ are present can execute forward...
-				printf("event_queue is waiting...\n");
+				printf("synchronous_queue is waiting...\n");
 				cond_.wait(lk, [this] { return !events_.empty(); });
-				printf("event_queue keeps going...\n");
+				printf("synchronous_queue keeps going...\n");
 				auto event = events_.front();
 				events_.pop();
 				lk.unlock();
