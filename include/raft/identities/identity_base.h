@@ -33,11 +33,24 @@ namespace SJTU {
 
 		virtual void leave() = 0;
 
+		/**
+		 * ProcsAppendEntriesFunc and ProcsRequestVoteFunc are two virtual functions implmented by
+		 * three candidates. They are bound by raft into server_ends_' function adapters, and invoked
+		 * by monitoring server_ends_.
+		 *
+		 * When raft receives other servers' requests, they generate responses based on their current
+		 * status meanwhile, in term, modify themselves.
+		 *
+		 * I have implemented response generation without self-modification.
+		 * I'm going to work on self-modification.
+		 * */
 		virtual CppAppendEntriesResponse ProcsAppendEntriesFunc(const CppAppendEntriesRequest &);
 
 		/**
-		 * In current naive implementation, because of no client, all clients will vote
-		 * for the requester kindly.
+		 * (In current naive implementation, because of no client, all clients will vote
+		 * for the requester kindly.)
+		 * Above is history now.
+		 *
 		 * */
 		virtual CppRequestVoteResponse ProcsRequestVoteFunc(const CppRequestVoteRequest &);
 
@@ -66,6 +79,15 @@ namespace SJTU {
 		std::function<void(int)> identity_transformer;
 		std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends_;
 		const ServerInfo &info;
+
+	protected:
+		virtual CppAppendEntriesResponse AppendEntriesResponseGeneration(const CppAppendEntriesRequest &);
+
+		virtual void AppendEntriesSelfModification(const CppAppendEntriesRequest &);
+
+		virtual CppRequestVoteResponse RequestVoteResponseGeneration(const CppRequestVoteRequest &);
+
+		virtual void RequestVoteSelfModification(const CppAppendEntriesRequest &);
 	};
 };
 

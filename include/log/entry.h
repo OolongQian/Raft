@@ -18,22 +18,11 @@ namespace SJTU {
 
 		Entry() = default;
 
-		Entry(std::string command, std::string key, std::string val, long long term, long long entryIndex) :
-				command(std::move(command)), key(std::move(key)), val(std::move(val)), term(term), entryIndex(entryIndex) {}
+		Entry(std::string command, std::string key, std::string val, long long term, long long entryIndex);
 
-		explicit Entry(const PbAppendEntriesRequest::Entry &entry) :
-				command(entry.command()), key(entry.key()), val(entry.val()), term(entry.term()),
-				entryIndex(entry.entryindex()) {}
+		explicit Entry(const PbAppendEntriesRequest::Entry &entry);
 
-		PbAppendEntriesRequest_Entry Convert() const {
-			PbAppendEntriesRequest_Entry entry;
-			entry.set_command(command);
-			entry.set_key(key);
-			entry.set_val(val);
-			entry.set_term(term);
-			entry.set_entryindex(entryIndex);
-			return entry;
-		}
+		PbAppendEntriesRequest_Entry Convert() const;
 	};
 
 

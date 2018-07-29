@@ -25,6 +25,4 @@ namespace SJTU {
 		*response = cpp_response.Convert();
 		return grpc::Status::OK;
 	}
-
-
 };
