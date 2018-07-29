@@ -7,6 +7,8 @@ namespace SJTU {
 	/// a adapted data structure for Entry.
 	class LogArray {
 	public:
+		LogArray() = default;
+
 		void clear();
 
 		/// return whether there exists an elem at pos.
