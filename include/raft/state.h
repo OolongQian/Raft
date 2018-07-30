@@ -22,8 +22,8 @@ namespace SJTU {
 		long long lastApplied;
 
 		/// volatile state on leaders.
-		std::map<ServerId, size_t> nextIndex;
-		std::map<ServerId, size_t> matchIndex;
+		std::map<ServerId, long long> nextIndex;
+		std::map<ServerId, long long> matchIndex;
 
 		/// find whether one entry exists in current log.
 //		bool IfLogContains(const Log &entry);
@@ -34,7 +34,6 @@ namespace SJTU {
 
 		/// in order to let the first log index be 1, push a trivial log in the front.
 		void Load();
-
 	};
 
 };

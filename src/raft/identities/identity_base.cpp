@@ -8,6 +8,7 @@ namespace SJTU {
 	}
 
 	CppRequestVoteResponse SJTU::IdentityBase::ProcsRequestVoteFunc(const CppRequestVoteRequest &request) {
+		RequestVoteSelfModification(request);
 		return RequestVoteResponseGeneration(request);
 	}
 
@@ -49,10 +50,6 @@ namespace SJTU {
 		return response;
 	}
 
-	void IdentityBase::AppendEntriesSelfModification(const CppAppendEntriesRequest &request) {
-
-	}
-
 	CppRequestVoteResponse IdentityBase::RequestVoteResponseGeneration(const CppRequestVoteRequest &request) {
 		/**
 		 * Default implementation.
@@ -90,7 +87,19 @@ namespace SJTU {
 		return response;
 	}
 
-	void IdentityBase::RequestVoteSelfModification(const CppAppendEntriesRequest &) {
+	void IdentityBase::AppendEntriesSelfModification(const CppAppendEntriesRequest &request) {
+		/// if commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine.
+		/// oh I suddenly realize that this should be automated by apply_queue!!!
+		if (request.term > state_.currentTerm) {
+			state_.currentTerm = request.term;
+			identity_transformer(FollowerNo);
+		}
+	}
 
+	void IdentityBase::RequestVoteSelfModification(const CppRequestVoteRequest &request) {
+		if (request.term > state_.currentTerm) {
+			state_.currentTerm = request.term;
+			identity_transformer(FollowerNo);
+		}
 	}
 };

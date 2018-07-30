@@ -33,10 +33,17 @@ namespace SJTU {
 		 *
 		 * Problem is raised, because heartbeat is sent repeatedly, if the previous
 		 * heartbeat is not responded while the next one is coming, what will happen?
+		 *
+		 * Heartbeat serves as appendEntries-RPCs simultaneously. If there are additional entries
+		 * need to be applied, then it just append entry, otherwise it's empty heartbeat.
 		 * */
 		void SendHeartBeat();
 
-		PbAppendEntriesRequest MakeHeartBeat();
+		/**
+		 * Heartbeat serves as appendEntries-RPCs simultaneously. If there are additional entries
+		 * need to be applied, then it just append entry, otherwise it's empty heartbeat.
+		 * */
+		PbAppendEntriesRequest MakeHeartBeat(const ServerId &);
 
 	private:
 		boost::mutex mtx_;

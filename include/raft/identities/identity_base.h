@@ -83,11 +83,16 @@ namespace SJTU {
 	protected:
 		virtual CppAppendEntriesResponse AppendEntriesResponseGeneration(const CppAppendEntriesRequest &);
 
-		virtual void AppendEntriesSelfModification(const CppAppendEntriesRequest &);
-
 		virtual CppRequestVoteResponse RequestVoteResponseGeneration(const CppRequestVoteRequest &);
 
-		virtual void RequestVoteSelfModification(const CppAppendEntriesRequest &);
+		/// the following two functions only need to worry about convert to follower.
+		/// these handle follower converting when receive request from other servers.
+		/// about the case of receiving responses, client_ends_ is the place to fix.
+
+		/// these two functions operate tranform to Follower, which resets timer.
+		virtual void AppendEntriesSelfModification(const CppAppendEntriesRequest &);
+
+		virtual void RequestVoteSelfModification(const CppRequestVoteRequest &);
 	};
 };
 

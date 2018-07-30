@@ -16,7 +16,7 @@ namespace SJTU {
 
 		for (const ServerId &id : info.get_srvList()) {
 			if (id == info.get_local()) continue;
-			state_.nextIndex[id] = state_.log.size() + 1;    /// init to be leader's last log index + 1.
+			state_.nextIndex[id] = state_.log.back().entryIndex;    /// init to be leader's last log index + 1.
 			state_.matchIndex[id] = 0;                        /// init to be 0, increase monotonically.
 		}
 	}
@@ -50,7 +50,7 @@ namespace SJTU {
 		}
 		for (size_t i = 0; i < client_ends_.size(); ++i) {
 			client_ends_[i]->th = boost::thread([this, i]() mutable {
-				PbAppendEntriesRequest request = MakeHeartBeat();
+				PbAppendEntriesRequest request = MakeHeartBeat(client_ends_[i]->id);
 
 				PbAppendEntriesResponse response;
 				grpc::ClientContext context;
@@ -66,17 +66,47 @@ namespace SJTU {
 				printf("Leader received response from other server...\n");
 				printf("it says: term %lld, success %d\n", response.term(), int(response.success()));
 #endif
+				if (response.success()) {
+					printf("appendEntries success, update nextIndex and matchIndex\n");
+					long long &matchIndex = state_.matchIndex[client_ends_[i]->id];
+					long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
+					long long lastEntryIndex = request.entries(request.entries_size() - 1).entryindex();
+					matchIndex = lastEntryIndex;
+					nextIndex = matchIndex + 1;
+				} else {
+					printf("appendEntries fail, decrement nextIndex and retry\n");
+					long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
+					--nextIndex;
+				}
+
+				if (state_.currentTerm < response.term()) {
+					printf("leader term smaller than other server, transform to follower...\n");
+					fprintf(stderr, "leader transform to follower, asynchronous disaster may happen.\n");
+					state_.currentTerm = response.term();
+					identity_transformer(FollowerNo);
+				}
 			});
 		}
 	}
 
-	PbAppendEntriesRequest Leader::MakeHeartBeat() {
+	PbAppendEntriesRequest Leader::MakeHeartBeat(const ServerId &id) {
 		boost::lock_guard<boost::mutex> lk(mtx_);
 #ifndef _NOLOG
 		printf("current server's log is empty, initialize a trivial request...\n");
 #endif
-		std::vector<Entry> vec_tmp(0);
-		CppAppendEntriesRequest request(state_.currentTerm, info.get_local().toString(), 0, -1, vec_tmp,
+
+		/**
+		 * If last log index >= nextIndex for a follower: send AppendEntries RPC with log entries starting at
+		 * nextIndex.
+		 * */
+		std::vector<Entry> append_entries;
+		append_entries.clear();
+		if (state_.log.back().entryIndex >= state_.nextIndex.at(id)) {
+			for (long long i = state_.nextIndex.at(id); i <= state_.log.back().entryIndex; ++i) {
+				append_entries.push_back(state_.log.at(i));
+			}
+		}
+		CppAppendEntriesRequest request(state_.currentTerm, info.get_local().toString(), 0, -1, std::move(append_entries),
 																		state_.commitIndex);
 //		request.set_term(state_.currentTerm);
 //		request.set_leaderid(info.get_local().toString());

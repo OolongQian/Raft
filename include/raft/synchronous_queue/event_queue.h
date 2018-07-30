@@ -3,6 +3,12 @@
 
 #include <functional>
 #include <memory>
+#include <queue>
+#include <functional>
+#include <boost/thread.hpp>
+#include <boost/thread/mutex.hpp>
+#include <boost/thread/condition_variable.hpp>
+
 
 namespace SJTU {
 	class EventQueue {
@@ -29,9 +35,15 @@ namespace SJTU {
 		 * */
 		void addEvent(std::function<void()> f);
 
+		void execute();
 	private:
-		struct Impl;
-		std::unique_ptr<Impl> pImpl;
+		/**
+		 * all boost::variables for synchronization are here, good!
+		 * */
+		std::queue<std::function<void()> > events_;
+		boost::mutex mtx_;
+		boost::condition_variable cond_;
+		boost::thread th_;
 	};
 };
 

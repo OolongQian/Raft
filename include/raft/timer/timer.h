@@ -3,6 +3,9 @@
 
 #include <functional>
 #include <memory>
+#include <boost/thread.hpp>
+#include <functional>
+#include <thread>
 
 namespace SJTU {
 	class Timer {
@@ -44,8 +47,10 @@ namespace SJTU {
 		void BindPushEvent(std::function<void(std::function<void()>)> f);
 
 	private:
-		struct Impl;
-		std::unique_ptr<Impl> pImpl;
+		int time_;   /// use boost::chrono lib later on.
+		std::function<void()> timeOutAction_;
+		std::function<void(std::function<void()>)> pushEvent_;
+		boost::thread th;
 	};
 };
 

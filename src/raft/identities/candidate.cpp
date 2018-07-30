@@ -59,6 +59,12 @@ namespace SJTU {
 				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(500));
 				client_ends_[i]->stub_->RequestVoteRPC(&context, request, &response);      /// this line has serious problems.
 
+				if (state_.currentTerm < response.term()) {
+					printf("candidate term smaller than other server's term, transform to follower...\n");
+					fprintf(stderr, "candidate transform to follower, asynchronous disaster may happen.\n");
+					state_.currentTerm = response.term();
+					identity_transformer(FollowerNo);
+				}
 #ifndef _NOLOG
 				printf("Candidate received response from other server...\n");
 				printf("it says: term %lld, requestVote %d\n", response.term(), int(response.votegranted()));

@@ -1,7 +1,7 @@
 #include "../../include/raft/raft.h"
 #include "../../include/raft/state.h"
 #include "../../include/raft/raft_rpc/raft_server.h"
-#include "../../include/raft/event_queue/event_queue.h"
+#include "../../include/raft/synchronous_queue/event_queue.h"
 
 //#include "raft/identities/follower.h"
 //#include "raft/identities/candidate.h"
@@ -14,6 +14,7 @@
 #include "../../include/raft/raft_proto/raft_peer_client.h"
 #include "../../include/server_info.h"
 #include "../../include/raft/identities/identity_base.h"
+#include "../../include/raft/synchronous_queue/apply_queue.h"
 
 namespace SJTU {
 	using RequestVoteFunc = std::function<CppRequestVoteResponse(CppRequestVoteRequest)>;
@@ -33,11 +34,14 @@ namespace SJTU {
 		std::vector<std::unique_ptr<RaftServer> > server_ends_;
 
 		const ServerInfo &info;
+		ApplyQueue applyQueue_;
 
-		std::map<std::string, std::string> &data;
+		/// raft algorithm needn't this, while applyQueue_ needs it.
+//		std::map<std::string, std::string> &data;
 
 //		boost::mutex mtx_transform;                /// a mutex used in identity_transform.
 		//  ---------------------------------------------------------------------
+
 		explicit Impl(const ServerInfo &info, std::map<std::string, std::string> &data);
 
 		~Impl();
@@ -58,7 +62,8 @@ namespace SJTU {
 		void TimeOutActionAdapter();
 	};
 
-	Raft::Impl::Impl(const ServerInfo &info, std::map<std::string, std::string> &data) : info(info), data(data) {
+	Raft::Impl::Impl(const ServerInfo &info, std::map<std::string, std::string> &data) : info(info),
+																																											 applyQueue_(data, state_) {
 #ifndef _NOLOG
 		printf("Construct Raft's pImpl...\n");
 #endif
@@ -82,7 +87,7 @@ namespace SJTU {
 		for (const ServerId &srv_id : info.get_srvList()) {
 			if (srv_id == info.get_local()) continue;
 			client_ends_.push_back(std::make_unique<RaftPeerClientImpl>(
-					grpc::CreateChannel(srv_id.toString(), grpc::InsecureChannelCredentials())));
+					grpc::CreateChannel(srv_id.toString(), grpc::InsecureChannelCredentials()), srv_id));
 
 			server_ends_.push_back(std::make_unique<RaftServer>(srv_id));
 			server_ends_.back()->BindServiceFunc(std::bind(&Impl::ProcsRequestVoteAdapter, this, std::placeholders::_1),
@@ -126,11 +131,11 @@ namespace SJTU {
 	 * These are adaptable interfaces for server_ends.
 	 * */
 	CppAppendEntriesResponse Raft::Impl::ProcsAppendEntriesAdapter(CppAppendEntriesRequest request) {
-		return identities_[currentIdentity_]->ProcsAppendEntriesFunc(std::move(request));
+		return identities_[currentIdentity_]->ProcsAppendEntriesFunc(request);
 	}
 
 	CppRequestVoteResponse Raft::Impl::ProcsRequestVoteAdapter(CppRequestVoteRequest request) {
-		return identities_[currentIdentity_]->ProcsRequestVoteFunc(std::move(request));
+		return identities_[currentIdentity_]->ProcsRequestVoteFunc(request);
 	}
 
 	/**

@@ -164,3 +164,5 @@ The next thing to do is to implement algorithm based on this paper, but how can 
 order to do unit test in a manageable way?
 
 The next thing to do is implementing default server response.
+
+ApplyQueue is constructed, the next thing is to implement self_modification.

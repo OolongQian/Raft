@@ -1,19 +1,12 @@
-#include "../include/raft/raft.h"
-#include "../include/server_info.h"
+
 #include "../include/server.h"
 
 namespace SJTU {
-	struct Server::Impl {
-		explicit Impl(const std::string &filename);
+	Server::Server(const std::string &filename) {
+#ifndef _NOLOG
+		printf("Construct Server...\n");
+#endif
 
-		void InitData();  /// init state machine inner data. (trivially by now)
-
-		std::unique_ptr<Raft> pRaft;
-		ServerInfo info;
-		std::map<std::string, std::string> data;  /// data to be coherent.
-	};
-
-	Server::Impl::Impl(const std::string &filename) { // : raft(info) {
 #ifndef _NOLOG
 		printf("Construct Server::Impl...\n");
 		printf("Loading .json file...\n");
@@ -32,31 +25,22 @@ namespace SJTU {
 		printf("Use configured info to initialize raft...\n");
 #endif
 		pRaft = std::make_unique<Raft>(info, data);
-
-	}
-
-	void Server::Impl::InitData() {
-		data.clear();
-	}
-};
-
-namespace SJTU {
-	Server::Server(const std::string &filename) : pImpl(std::make_unique<Impl>(filename)) {
-#ifndef _NOLOG
-		printf("Construct Server...\n");
-#endif
 	}
 
 	Server::~Server() = default;
 
 	void Server::StartUp() {
 		printf("server is starting up...\n");
-		pImpl->pRaft->init();
-		pImpl->pRaft->Start();
+		pRaft->init();
+		pRaft->Start();
 	}
 
 	void Server::ShutDown() {
 		printf("server is shuting down...\n");
-		pImpl->pRaft->Stop();
+		pRaft->Stop();
+	}
+
+	void Server::InitData() {
+		data.clear();
 	}
 };

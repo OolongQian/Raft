@@ -2,6 +2,7 @@
 #define RAFT_PROJ_RAFT_PEER_CLIENT_H
 
 #include "raft_peer.grpc.pb.h"
+#include "../../common.h"
 
 #include <iostream>
 #include <memory>
@@ -13,16 +14,19 @@
 #include <grpc++/security/credentials.h>
 #include <boost/thread.hpp>
 
-class RaftPeerClientImpl {
-public:
-	explicit RaftPeerClientImpl(const std::shared_ptr<grpc::Channel> &channel) :
-			stub_(RaftPeerService::NewStub(channel)) {}
+namespace SJTU {
+	class RaftPeerClientImpl {
+	public:
+		explicit RaftPeerClientImpl(const std::shared_ptr<grpc::Channel> &channel, ServerId id) :
+				stub_(RaftPeerService::NewStub(channel)), id(id) {}
 
-	~RaftPeerClientImpl() {
-		if (th.joinable()) th.join();
-	}
-	std::unique_ptr<RaftPeerService::Stub> stub_;
-	boost::thread th;
+		~RaftPeerClientImpl() {
+			if (th.joinable()) th.join();
+		}
+
+		std::unique_ptr<RaftPeerService::Stub> stub_;
+		boost::thread th;
+		ServerId id;
+	};
 };
-
 #endif //RAFT_PROJ_RAFT_PEER_CLIENT_H

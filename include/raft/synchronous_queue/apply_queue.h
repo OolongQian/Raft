@@ -1,20 +1,24 @@
 #ifndef RAFT_PROJ_APPLY_QUEUE_H
 #define RAFT_PROJ_APPLY_QUEUE_H
 
+#include <boost/thread/mutex.hpp>
+#include <boost/thread.hpp>
 #include "../../log/entry.h"
 #include "event_queue.h"
+#include "../state.h"
 
 namespace SJTU {
 	/**
-	 * This class behaves like EventQueue, using an additional thread, executing committed log command tirelessly.
-	 * The difference between this and EventQueue is that, EventQueue execute std::function<void()> while ApplyQueue
-	 * execute std::function<void(Entry)>.
+	 * "If commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine".
 	 *
-	 * Note that entry modifies map &data.
+	 * ApplyQueue has access to state_, and log. Meanwhile, in order to apply command, it needs to modify KV pairs.
+	 * this is a automated process where applyIndex is changed, this may result in Asynchronous disaster.
+	 *
+	 * ApplyQueue is the only means to increase lastApplied.
 	 * */
 	class ApplyQueue {
 	public:
-		explicit ApplyQueue(std::map<std::string, std::string> &data);
+		explicit ApplyQueue(std::map<std::string, std::string> &data, State &state);
 
 		~ApplyQueue();
 
@@ -24,12 +28,20 @@ namespace SJTU {
 
 		void applyCommand(Entry entry);
 
-	private:
+		/**
+		 * This is used when commitIndex is updated, notify the thread inside carry on.
+		 *
+		 * Because commitIndex won't be added by several threads, it needn't synchronize.
+		 * */
+		void notify();
 
-		/// apply_queue_ is an EventQueue with a thread instance inside.
-		/// this class is actually a function adapter.
-		EventQueue apply_queue_;
+	private:
+		State &state;
 		std::map<std::string, std::string> &data;
+
+		boost::mutex mtx;
+		boost::thread th;
+		boost::condition_variable cond;
 	};
 };
 
