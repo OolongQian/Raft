@@ -1,5 +1,19 @@
 #include "../../../include/raft/identities/identity_base.h"
 
+//#define _NOT_TRIVIAL_VOTE
+//#define _NOT_TRIVIAL_APPEND
+
+class A {
+public:
+	static A &getInstance() {
+		static A a;
+		return a;
+	}
+
+private:
+
+};
+
 namespace SJTU {
 
 	CppAppendEntriesResponse SJTU::IdentityBase::ProcsAppendEntriesFunc(const CppAppendEntriesRequest &request) {
@@ -22,6 +36,7 @@ namespace SJTU {
 		response.term = state_.currentTerm;
 
 		response.success = true;
+#ifdef _NOT_TRIVIAL_APPEND
 		/// reply false if request is out of date.
 		if (request.term < state_.currentTerm)
 			response.success = false;
@@ -43,7 +58,7 @@ namespace SJTU {
 			} else if (log.has(index) && log.at(index).term == entry.term)
 				continue;  /// add for completeness.
 		}
-
+#endif
 		if (request.leaderCommit > state_.commitIndex) {
 			state_.commitIndex = std::min(request.leaderCommit, request.entries.back().entryIndex);
 		}
@@ -59,9 +74,17 @@ namespace SJTU {
 		response.term = state_.currentTerm;
 
 		response.voteGranted = true;
+
+		std::cerr << "this voteGranted rule is for demonstration" << std::endl;
+		if (!state_.votedFor.empty() && state_.votedFor != request.candidateId)
+			response.voteGranted = false;
+		else {
+			response.voteGranted = true;
+			state_.votedFor = request.candidateId;
+		}
+#ifdef _NOT_TRIVIAL_VOTE
 		if (request.term < state_.currentTerm)
 			response.voteGranted = false;
-
 //		fprintf(stderr, "requestVoteRequest is received...I know nothing about up-to-date. Vote without hesitate\n");
 		fprintf(stderr, "requestVoteRequest is received...I haven't updated state_.votedFor field.\n");
 
@@ -84,6 +107,8 @@ namespace SJTU {
 			if (state_.log.back().entryIndex > request.lastLogIndex)  /// my log is longer.
 				response.voteGranted = false;
 		}
+#endif
+
 		return response;
 	}
 
@@ -92,6 +117,7 @@ namespace SJTU {
 		/// oh I suddenly realize that this should be automated by apply_queue!!!
 		if (request.term > state_.currentTerm) {
 			state_.currentTerm = request.term;
+			state_.votedFor.clear();
 			identity_transformer(FollowerNo);
 		}
 	}
@@ -99,6 +125,7 @@ namespace SJTU {
 	void IdentityBase::RequestVoteSelfModification(const CppRequestVoteRequest &request) {
 		if (request.term > state_.currentTerm) {
 			state_.currentTerm = request.term;
+			state_.votedFor.clear();
 			identity_transformer(FollowerNo);
 		}
 	}

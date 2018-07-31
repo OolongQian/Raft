@@ -3,7 +3,9 @@
 
 namespace SJTU {
 
-	EventQueue::EventQueue() {}
+	EventQueue::EventQueue() {
+		while (!events_.empty()) events_.pop();
+	}
 
 	EventQueue::~EventQueue() = default;
 
@@ -12,9 +14,8 @@ namespace SJTU {
 	 * */
 	void EventQueue::addEvent(std::function<void()> f) {
 		boost::unique_lock<boost::mutex> lk(mtx_);
-		// cond_.wait(lk, [this] { return events_.empty(); });
 		events_.push(std::move(f));
-		cond_.notify_one();
+		cond_.notify_all();
 	}
 
 	void EventQueue::Start() {
@@ -42,7 +43,6 @@ namespace SJTU {
 	void EventQueue::execute() {
 		while (true) {
 			boost::unique_lock<boost::mutex> lk(mtx_);
-			/// only when events_ are present can execute forward...
 			printf("synchronous_queue is waiting...\n");
 			cond_.wait(lk, [this] { return !events_.empty(); });
 			printf("synchronous_queue keeps going...\n");

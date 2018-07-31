@@ -10,18 +10,13 @@
 #include "../../server_info.h"
 
 namespace SJTU {
-	/**
-	 * A base class
-	 * */
+
 	class IdentityBase {
 	public:
-//		IdentityBase() = default;
-
 		explicit IdentityBase(State &state, Timer &timer, std::function<void(int)> transformer,
 													std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends, const ServerInfo &info) :
 				state_(state), timer_(timer), identity_transformer(std::move(transformer)), client_ends_(client_ends),
 				info(info) {
-//	printf("size of client_ends: %d\n", client_ends_.size());
 		}
 
 		virtual ~IdentityBase() { ; }
@@ -79,6 +74,9 @@ namespace SJTU {
 		std::function<void(int)> identity_transformer;
 		std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends_;
 		const ServerInfo &info;
+
+		/// if there has been one transformation undergoing, the same transformation shouldn't be applied repeatedly.
+		boost::atomic<bool> transforming{false};
 
 	protected:
 		virtual CppAppendEntriesResponse AppendEntriesResponseGeneration(const CppAppendEntriesRequest &);

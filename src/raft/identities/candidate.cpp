@@ -13,28 +13,28 @@ namespace SJTU {
 #endif
 		timer_.SetTimeOut(rand() % (info.get_electionTimeout()) + info.get_electionTimeout());
 		timer_.Start(false);
+
+		transforming = false;
+
 		++state_.currentTerm;
-#ifndef _NOLOG
-		printf("client_end size: %lu\n", client_ends_.size());
-		printf("vote for himself...\n");
-#endif
-//		++votesReceived;
+		state_.votedFor.clear();
+
 		votesReceived = 1;
 		RequestVote();
 	}
 
 	void Candidate::leave() {
-#ifndef _NOLOG
-		printf("leaving candidate...shutting down all threads and client ends\n");
-		printf("leaving candidate...stop candidate timer\n");
-#endif
+		transforming = true;
+
+		std::cerr << "clear votedFor record" << std::endl;
+		state_.votedFor.clear();
+
 		for (size_t i = 0; i < client_ends_.size(); ++i) {
 			if (client_ends_[i]->th.joinable()) {
 				client_ends_[i]->th.interrupt();
 				client_ends_[i]->th.join();
 			}
 		}
-		transforming = false;
 		timer_.Stop();
 	}
 
@@ -46,7 +46,6 @@ namespace SJTU {
 	}
 
 	void Candidate::RequestVote() {
-//		for (int i = 0; i < client_ends_.size(); ++i) {
 		for (size_t i = 0; i < client_ends_.size(); ++i) {
 			client_ends_[i]->th = boost::thread([this, i]() mutable {
 				PbRequestVoteRequest request = MakeVoteRequest();
@@ -63,6 +62,7 @@ namespace SJTU {
 					printf("candidate term smaller than other server's term, transform to follower...\n");
 					fprintf(stderr, "candidate transform to follower, asynchronous disaster may happen.\n");
 					state_.currentTerm = response.term();
+					state_.votedFor.clear();
 					identity_transformer(FollowerNo);
 				}
 #ifndef _NOLOG
@@ -77,7 +77,6 @@ namespace SJTU {
 #endif
 				}
 				if (votesReceived > info.get_srvList().size() / 2 && !transforming) {
-					transforming = true;
 #ifndef _NOLOG
 					printf("There are %lu servers in total. More than half votes received, start to transform to leader...\n",
 								 info.get_srvList().size());

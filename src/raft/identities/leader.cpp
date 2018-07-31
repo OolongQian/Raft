@@ -1,5 +1,7 @@
 #include "../../../include/raft/identities/leader.h"
 
+//#define _NOT_TRIVIAL_REQUEST
+
 namespace SJTU {
 
 	Leader::~Leader() {
@@ -13,15 +15,22 @@ namespace SJTU {
 		timer_.SetTimeOut(info.get_electionTimeout() / 2);
 		timer_.Start(true);
 		++state_.currentTerm;
+		state_.votedFor.clear();
 
 		for (const ServerId &id : info.get_srvList()) {
 			if (id == info.get_local()) continue;
 			state_.nextIndex[id] = state_.log.back().entryIndex;    /// init to be leader's last log index + 1.
 			state_.matchIndex[id] = 0;                        /// init to be 0, increase monotonically.
 		}
+
+		transforming = false;
 	}
 
 	void Leader::leave() {
+		transforming = true;
+
+		std::cerr << "clear votedFor record" << std::endl;
+		state_.votedFor.clear();
 #ifndef _NOLOG
 		printf("leaving leader...shutting down all threads and client ends\n");
 		printf("leaving leader...stop leader heartbeat\n");
@@ -37,6 +46,7 @@ namespace SJTU {
 
 	void Leader::TimeOutFunc() {
 		SendHeartBeat();
+		CheckCommitIndexUpdate();
 	}
 
 	void Leader::SendHeartBeat() {
@@ -68,21 +78,24 @@ namespace SJTU {
 #endif
 				if (response.success()) {
 					printf("appendEntries success, update nextIndex and matchIndex\n");
-					long long &matchIndex = state_.matchIndex[client_ends_[i]->id];
-					long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
-					long long lastEntryIndex = request.entries(request.entries_size() - 1).entryindex();
-					matchIndex = lastEntryIndex;
-					nextIndex = matchIndex + 1;
+					std::cerr << "deleted leader response for heartbeat" << std::endl;
+//					long long &matchIndex = state_.matchIndex[client_ends_[i]->id];
+//					long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
+//					long long lastEntryIndex = request.entries(request.entries_size() - 1).entryindex();
+//					matchIndex = lastEntryIndex;
+//					nextIndex = matchIndex + 1;
 				} else {
 					printf("appendEntries fail, decrement nextIndex and retry\n");
-					long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
-					--nextIndex;
+					std::cerr << "deleted leader response for heartbeat" << std::endl;
+//					long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
+//					--nextIndex;
 				}
 
 				if (state_.currentTerm < response.term()) {
 					printf("leader term smaller than other server, transform to follower...\n");
 					fprintf(stderr, "leader transform to follower, asynchronous disaster may happen.\n");
 					state_.currentTerm = response.term();
+					state_.votedFor.clear();
 					identity_transformer(FollowerNo);
 				}
 			});
@@ -101,11 +114,13 @@ namespace SJTU {
 		 * */
 		std::vector<Entry> append_entries;
 		append_entries.clear();
+#ifdef _NOT_TRIVIAL_REQUEST
 		if (state_.log.back().entryIndex >= state_.nextIndex.at(id)) {
 			for (long long i = state_.nextIndex.at(id); i <= state_.log.back().entryIndex; ++i) {
 				append_entries.push_back(state_.log.at(i));
 			}
 		}
+#endif
 		CppAppendEntriesRequest request(state_.currentTerm, info.get_local().toString(), 0, -1, std::move(append_entries),
 																		state_.commitIndex);
 //		request.set_term(state_.currentTerm);
@@ -115,5 +130,38 @@ namespace SJTU {
 //		request.set_entries(-1);	/// this should be optional.
 //		request.set_leadercommit(state_.commitIndex);
 		return request.Convert();
+	}
+
+	/**
+	 * See the last entry of description for leaders in paper.
+	 * */
+
+	void Leader::CheckCommitIndexUpdate() {
+		long long checked_N = -1;
+		long long cur_N = state_.commitIndex + 1;
+		int cnt = 0;
+
+		while (cur_N <= state_.log.back().entryIndex) {
+			if (state_.log.at(cur_N).term < state_.currentTerm) {
+				++cur_N;
+				continue;
+			} else if (state_.log.at(cur_N).term > state_.currentTerm) {
+				break;
+			}
+
+			for (const ServerId &id : info.get_srvList()) {
+				if (id == info.get_local()) continue;
+				if (state_.matchIndex.at(id) >= cur_N)
+					++cnt;
+			}
+			if (cnt > (info.get_srvList().size() - 1) / 2) checked_N = cur_N;
+			++cur_N;
+		}
+		if (checked_N == -1) {
+			printf("useless N check\n");
+		} else {
+			state_.commitIndex = checked_N;
+			printf("useful N check, set commitIndex to be %lld\n", state_.commitIndex);
+		}
 	}
 };

@@ -14,14 +14,6 @@ namespace SJTU {
 		explicit Raft(const ServerInfo &info, std::map<std::string, std::string> &data);
 
 		~Raft();
-		/**
-		 * I haven't figured out what raft can do, so I just leave it here.
-		 * */
-
-		/**
-		 * bind terminate action for timer and start eventQueue and Timer.
-		 * */
-		void init();
 
 		void Start();
 

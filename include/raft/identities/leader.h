@@ -39,6 +39,8 @@ namespace SJTU {
 		 * */
 		void SendHeartBeat();
 
+		void CheckCommitIndexUpdate();
+
 		/**
 		 * Heartbeat serves as appendEntries-RPCs simultaneously. If there are additional entries
 		 * need to be applied, then it just append entry, otherwise it's empty heartbeat.

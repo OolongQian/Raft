@@ -12,6 +12,8 @@ namespace SJTU {
 
 		~Server();
 
+		void Init();
+
 		void StartUp();
 
 		void ShutDown();

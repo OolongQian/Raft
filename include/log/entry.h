@@ -17,6 +17,11 @@ namespace SJTU {
 		long long entryIndex;
 
 		Entry() = default;
+//		{
+//			command.clear();
+//			key.clear();
+//			val.clear();
+//		}
 
 		Entry(std::string command, std::string key, std::string val, long long term, long long entryIndex);
 
