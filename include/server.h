@@ -18,6 +18,8 @@ namespace SJTU {
 
 		void ShutDown();
 
+		const ServerInfo &GetInfo();
+
 	private:
 		std::unique_ptr<Raft> pRaft;
 		ServerInfo info;

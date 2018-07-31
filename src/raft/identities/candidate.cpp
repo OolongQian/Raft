@@ -26,8 +26,7 @@ namespace SJTU {
 	void Candidate::leave() {
 		transforming = true;
 
-		std::cerr << "clear votedFor record" << std::endl;
-		state_.votedFor.clear();
+		votesReceived = 0;
 
 		for (size_t i = 0; i < client_ends_.size(); ++i) {
 			if (client_ends_[i]->th.joinable()) {
@@ -52,12 +51,19 @@ namespace SJTU {
 
 				PbRequestVoteResponse response;
 				grpc::ClientContext context;
-#ifndef _NOLOG
-				printf("Candidate sends out request to other server...\n");
-#endif
-				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(500));
-				client_ends_[i]->stub_->RequestVoteRPC(&context, request, &response);      /// this line has serious problems.
 
+				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(500));
+				grpc::Status status = client_ends_[i]->stub_->RequestVoteRPC(&context, request, &response);
+
+				if (!status.ok()) {
+					std::cout << status.error_code() << ": " << status.error_message() << std::endl;
+					return;
+				}
+
+#ifndef _NOLOG
+				printf("Candidate received response from other server...\n");
+				printf("it says: term %lld, requestVote %d\n", response.term(), int(response.votegranted()));
+#endif
 				if (state_.currentTerm < response.term()) {
 					printf("candidate term smaller than other server's term, transform to follower...\n");
 					fprintf(stderr, "candidate transform to follower, asynchronous disaster may happen.\n");
@@ -65,16 +71,14 @@ namespace SJTU {
 					state_.votedFor.clear();
 					identity_transformer(FollowerNo);
 				}
-#ifndef _NOLOG
-				printf("Candidate received response from other server...\n");
-				printf("it says: term %lld, requestVote %d\n", response.term(), int(response.votegranted()));
-#endif
+
 				if (response.votegranted()) ++votesReceived;
 
 				if (transforming) {
 #ifndef _NOLOG
 					printf("There has been one identical transformation task undergoing... returning..\n");
 #endif
+					return;
 				}
 				if (votesReceived > info.get_srvList().size() / 2 && !transforming) {
 #ifndef _NOLOG
@@ -96,14 +100,6 @@ namespace SJTU {
 				}
 			});
 		}
-//		std::vector<std::future<PbRequestVoteResponse> >
-//		for (int i = 0; i < client_ends_.size(); ++i) {
-//
-//			PbRequestVoteRequest request;
-//			request = MakeRequest();
-//			grpc::ClientContext context;
-//			client_ends_[i].stub_
-//		}
 	}
 
 	/**
@@ -111,17 +107,8 @@ namespace SJTU {
 	 * */
 	PbRequestVoteRequest Candidate::MakeVoteRequest() {
 		boost::lock_guard<boost::mutex> lk(mtx_);
-		if (state_.log.empty()) {
-#ifndef _NOLOG
-			printf("current server's log is empty, initialize a trivial request...\n");
-#endif
-			CppRequestVoteRequest request(state_.currentTerm, info.get_local(), 0, -1);
-			return request.Convert();
-		} else {
-			CppRequestVoteRequest request(state_.currentTerm, info.get_local(), state_.log.size() - 1,
-																		state_.log.back().term);
-			return request.Convert();
-		}
+		CppRequestVoteRequest request(state_.currentTerm, info.get_local(), state_.log.back().entryIndex,
+																	state_.log.back().term);
+		return request.Convert();
 	}
 };
-

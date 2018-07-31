@@ -7,6 +7,7 @@
 #include "identities/candidate.h"
 #include "identities/leader.h"
 #include "identities/identity_base.h"
+#include "../../src/test/debug_context/raft_debug_context.h"
 
 namespace SJTU {
 	class Raft {
@@ -19,7 +20,12 @@ namespace SJTU {
 
 		void Stop();
 
+		static RaftDebugContext &GetDebug() {
+			static RaftDebugContext debugContext;
+			return debugContext;
+		}
 	private:
+
 		struct Impl;
 		std::unique_ptr<Impl> pImpl;
 	};

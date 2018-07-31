@@ -32,7 +32,6 @@ namespace SJTU {
 	private:
 		boost::atomic<std::size_t> votesReceived{0};
 		boost::mutex mtx_;
-
 	};
 };
 

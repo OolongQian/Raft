@@ -1,18 +1,7 @@
 #include "../../../include/raft/identities/identity_base.h"
 
-//#define _NOT_TRIVIAL_VOTE
+#define _NOT_TRIVIAL_VOTE
 //#define _NOT_TRIVIAL_APPEND
-
-class A {
-public:
-	static A &getInstance() {
-		static A a;
-		return a;
-	}
-
-private:
-
-};
 
 namespace SJTU {
 
@@ -30,7 +19,7 @@ namespace SJTU {
 		/**
 		 * Default implementation.
 		 * */
-		fprintf(stderr, "appendEntriesRequest is received...Always respond success\n");
+//		fprintf(stderr, "appendEntriesRequest is received...Always respond success\n");
 
 		CppAppendEntriesResponse response;
 		response.term = state_.currentTerm;
@@ -75,18 +64,10 @@ namespace SJTU {
 
 		response.voteGranted = true;
 
-		std::cerr << "this voteGranted rule is for demonstration" << std::endl;
-		if (!state_.votedFor.empty() && state_.votedFor != request.candidateId)
-			response.voteGranted = false;
-		else {
-			response.voteGranted = true;
-			state_.votedFor = request.candidateId;
-		}
+
 #ifdef _NOT_TRIVIAL_VOTE
 		if (request.term < state_.currentTerm)
 			response.voteGranted = false;
-//		fprintf(stderr, "requestVoteRequest is received...I know nothing about up-to-date. Vote without hesitate\n");
-		fprintf(stderr, "requestVoteRequest is received...I haven't updated state_.votedFor field.\n");
 
 		/// "if votedFor is null or candidateId, and candidate's log is at least up-to-date as receiver's log, grant vote."
 		/// if this server has voted for others, refuse to grant vote.
@@ -99,13 +80,20 @@ namespace SJTU {
 		 * If the logs end with the same term, then whichever log is longer is more up-to-date.
 		 * */
 		/// or candidate's log is out-of-date, reject.
-
 		if (request.lastLogTerm != state_.log.back().term) {
 			if (state_.log.back().term > request.lastLogTerm)  /// my log is newer.
 				response.voteGranted = false;
 		} else {
 			if (state_.log.back().entryIndex > request.lastLogIndex)  /// my log is longer.
 				response.voteGranted = false;
+		}
+#else
+		std::cerr << "this voteGranted rule is for demonstration" << std::endl;
+		if (!state_.votedFor.empty() && state_.votedFor != request.candidateId)
+			response.voteGranted = false;
+		else {
+			response.voteGranted = true;
+			state_.votedFor = request.candidateId;
 		}
 #endif
 

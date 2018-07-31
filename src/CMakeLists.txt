@@ -1,4 +1,4 @@
-file(GLOB_RECURSE LIB_SOURCE *.cpp *.cc *.h)
+file(GLOB_RECURSE LIB_SOURCE *.cpp *.cc *.h *.hpp)
 
 add_library(${PROJECT_NAME} STATIC ${LIB_SOURCE} ${INCLUDE_DIRECTORIES})
 
@@ -17,7 +17,8 @@ target_link_libraries(${PROJECT_NAME}
         ${GRPC_LIBRARIES}
         )
 
-ADD_EXECUTABLE(hello main.cpp)
+ADD_EXECUTABLE(hello ./test/identity/TestFollower.cpp)
+
 
 target_link_libraries(hello
         ${PROJECT_NAME}

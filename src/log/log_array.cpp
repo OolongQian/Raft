@@ -34,4 +34,10 @@ namespace SJTU {
 	void LogArray::flushToEnd(const long long pos) {
 
 	}
+
+	LogArray::LogArray() {
+		Entry tmp;
+		tmp.entryIndex = tmp.term = 0;
+		v.push_back(std::move(tmp));
+	}
 };

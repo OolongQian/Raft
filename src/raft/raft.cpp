@@ -15,6 +15,7 @@
 #include "../../include/server_info.h"
 #include "../../include/raft/identities/identity_base.h"
 #include "../../include/raft/synchronous_queue/apply_queue.h"
+#include "../test/debug_context/raft_debug_context.h"
 
 namespace SJTU {
 	using RequestVoteFunc = std::function<CppRequestVoteResponse(CppRequestVoteRequest)>;
@@ -33,7 +34,6 @@ namespace SJTU {
 
 		std::vector<std::unique_ptr<RaftPeerClientImpl> > client_ends_;
 		std::unique_ptr<RaftServer> server_end_;
-
 
 		/// raft algorithm needn't this, while applyQueue_ needs it.
 //		std::map<std::string, std::string> &data;
@@ -92,6 +92,9 @@ namespace SJTU {
 	Raft::Impl::~Impl() {}
 
 	void Raft::Impl::IdentityTransform(const IdentityNo identityNo) {
+		RaftDebugContext &debugContext = GetDebug();
+		debugContext.before_tranform(currentIdentity_, identityNo);
+
 		eventQueue_.addEvent([this, identityNo]() mutable {
 			if (currentIdentity_ != DownNo)
 				identities_[currentIdentity_]->leave();
@@ -135,4 +138,5 @@ namespace SJTU {
 		pImpl->server_end_->Stop();
 		pImpl->timer_.Stop();
 	}
+
 }

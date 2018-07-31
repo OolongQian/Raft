@@ -7,7 +7,7 @@ namespace SJTU {
 	/// a adapted data structure for Entry.
 	class LogArray {
 	public:
-		LogArray() = default;
+		LogArray();
 
 		void clear();
 
@@ -27,6 +27,9 @@ namespace SJTU {
 
 		/// delete the existing entry and all that follow it, including the one at pos.
 		void flushToEnd(const long long pos);
+
+	private:
+		std::vector<Entry> v;
 	};
 };
 #endif //RAFT_PROJ_LOG_ARRAY_H

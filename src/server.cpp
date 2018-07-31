@@ -29,4 +29,8 @@ namespace SJTU {
 	void Server::InitData() {
 		data.clear();
 	}
+
+	const ServerInfo &Server::GetInfo() {
+		return info;
+	}
 };
