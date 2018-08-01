@@ -1,7 +1,7 @@
 #include "IdentityTestHelper.h"
-#include "../../../include/raft/raft_rpc/raft_server.h"
+#include "../../../include/raft/raft_proto/raft_server.h"
 #include "../../../src/raft/raft.cpp"
-#include "../../../include/myserver.h"
+#include "../../../include/my_server.h"
 
 namespace SJTU {
 
@@ -71,7 +71,7 @@ namespace SJTU {
 using namespace SJTU;
 
 int main() {
-//	SJTU::Follower_Basic();
+	SJTU::Follower_Basic();
 //	SJTU::Follower_AppendEntry();
 //	IdentityTestHelper helper;
 
@@ -97,36 +97,36 @@ int main() {
 //		sleep(1);
 //	const auto timeout = p[0]->GetInfo().get_electionTimeout() / 2;
 
-	std::string config_filename0 = "raft_0.json";
-	SJTU::Server server0(config_filename0);
-
-	server0.Init();
-	server0.StartUp();
-	const auto timeout = server0.GetInfo().get_electionTimeout() / 2;
-	const ServerId &id = server0.GetInfo().get_local();
-	myServer server(id.toString());
-	std::cout << "timeout " << timeout << std::endl;
-
-	std::vector<std::unique_ptr<RaftPeerClientImpl> > vClient;
-	for (int i = 0, appendTime = 10; i < appendTime; ++i) {
-		vClient.push_back(std::make_unique<RaftPeerClientImpl>(id));
-
-		vClient.back()->th = boost::thread([&vClient]() mutable {
-			grpc::ClientContext ctx;
-			PbAppendEntriesRequest msg;
-			PbAppendEntriesResponse rsp;
-			msg.set_term(0);
-
-			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(30));
-			grpc::Status status = vClient.back()->stub_->AppendEntriesRPC(&ctx, msg, &rsp);
-			printf("rpc sent\n");
-			printf("%s\n", status.error_details().c_str());
-			printf("%s\n", status.error_message().c_str());
-			printf("%d\n", status.error_code());
-			printf("%lld\n", rsp.term());
-		});
-		std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
-	}
-	sleep(10);
+//	std::string config_filename0 = "raft_0.json";
+//	SJTU::Server server0(config_filename0);
+//
+//	server0.Init();
+//	server0.StartUp();
+//	const auto timeout = server0.GetInfo().get_electionTimeout() / 2;
+//	const ServerId &id = server0.GetInfo().get_local();
+//	myServer server(id.toString());
+//	std::cout << "timeout " << timeout << std::endl;
+//
+//	std::vector<std::unique_ptr<RaftPeerClientImpl> > vClient;
+//	for (int i = 0, appendTime = 10; i < appendTime; ++i) {
+//		vClient.push_back(std::make_unique<RaftPeerClientImpl>(id));
+//
+//		vClient.back()->th = boost::thread([&vClient]() mutable {
+//			grpc::ClientContext ctx;
+//			PbAppendEntriesRequest msg;
+//			PbAppendEntriesResponse rsp;
+//			msg.set_term(0);
+//
+//			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(30));
+//			grpc::Status status = vClient.back()->stub_->AppendEntriesRPC(&ctx, msg, &rsp);
+//			printf("rpc sent\n");
+//			printf("%s\n", status.error_details().c_str());
+//			printf("%s\n", status.error_message().c_str());
+//			printf("%d\n", status.error_code());
+//			printf("%lld\n", rsp.term());
+//		});
+//		std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
+//	}
+//	sleep(10);
 	return 0;
 }

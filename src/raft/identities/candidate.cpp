@@ -1,6 +1,6 @@
 #include <future>
 #include "../../../include/raft/identities/candidate.h"
-#include "../../../include/raft/raft_proto/raft_peer_service.h"
+#include "../../../include/raft/raft_proto/raft_server.h"
 
 // #define  _NOLOG
 

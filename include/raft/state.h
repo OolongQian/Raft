@@ -4,7 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <map>
-#include "../common.h"
+#include "../server_info.h"
 #include "../log/log_array.h"
 
 /**

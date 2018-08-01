@@ -62,6 +62,7 @@ public:
 	}
 };
 
+/*
 int main() {
 	std::string config_filename0 = "raft_0.json";
 	std::string config_filename1 = "raft_1.json";
@@ -86,3 +87,4 @@ int main() {
 
 	return 0;
 }
+*/

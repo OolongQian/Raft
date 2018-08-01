@@ -1,7 +1,7 @@
 #ifndef RAFT_PROJ_IDENTITYTESTHELPER_H
 #define RAFT_PROJ_IDENTITYTESTHELPER_H
 
-#include "../../../include/common.h"
+#include "../../../include/server_info.h"
 #include "../../../include/server.h"
 
 

@@ -8,26 +8,71 @@
 #include "identities/leader.h"
 #include "identities/identity_base.h"
 #include "../../src/test/debug_context/raft_debug_context.h"
+#include "../my_server.h"
+#include "raft_proto/raft_server.h"
+#include "../../include/raft/synchronous_queue/event_queue.h"
+#include "synchronous_queue/apply_queue.h"
+
 
 namespace SJTU {
 	class Raft {
 	public:
 		explicit Raft(const ServerInfo &info, std::map<std::string, std::string> &data);
 
-		~Raft();
+		~Raft() {}
 
-		void Start();
+		void Start() {
+			eventQueue.Start();
+			applyQueue.Start();
+			IdentityTransform(FollowerNo);
+			server_end.PreMonitorInit();
+			server_end.Monitor();
+		}
 
-		void Stop();
+		void Stop() {
+			eventQueue.Stop();
+			applyQueue.Stop();
+			server_end.Stop();
+			timer.Stop();
+		}
 
 		static RaftDebugContext &GetDebug() {
 			static RaftDebugContext debugContext;
 			return debugContext;
 		}
-	private:
 
-		struct Impl;
-		std::unique_ptr<Impl> pImpl;
+
+	private:
+		State state;
+		const ServerInfo &info;
+
+		Timer timer;
+		EventQueue eventQueue;
+		ApplyQueue applyQueue;
+
+		int currentIdentity;
+		std::unique_ptr<IdentityBase> identities[IdentityNum];
+
+		RaftServer server_end;
+		std::vector<std::unique_ptr<RaftPeerClientImpl> > client_ends;
+
+		boost::thread th;
+
+	private:
+		/**
+		 * This function simply invokes identity classes' leave and init function.
+		 * But during identity transformation, server state changes (pass by reference).
+		 * timer is reset (pass by reference. rpc is set out.
+		 * Many heavy work is done, I wanna distribute these works to specialized classes,
+		 * thus leaving detailed implementation inside identities.
+		 * */
+		void IdentityTransform(IdentityNo);
+
+		CppAppendEntriesResponse ProcsAppendEntriesAdapter(CppAppendEntriesRequest);
+
+		CppRequestVoteResponse ProcsRequestVoteAdapter(CppRequestVoteRequest);
+
+		void TimeOutActionAdapter();
 	};
 };
 

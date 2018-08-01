@@ -2,7 +2,7 @@
 #define RAFT_PROJ_RAFT_PEER_CLIENT_H
 
 #include "raft_peer.grpc.pb.h"
-#include "../../common.h"
+#include "../../server_info.h"
 
 #include <iostream>
 #include <memory>

@@ -2,7 +2,7 @@
 #define RAFT_PROJ_RAFT_DEBUG_CONTEXT_H
 
 #include <functional>
-#include "../../../include/common.h"
+#include "../../../include/server_info.h"
 
 namespace SJTU {
 	class RaftDebugContext {

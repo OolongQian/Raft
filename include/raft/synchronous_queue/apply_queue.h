@@ -3,7 +3,7 @@
 
 #include <boost/thread/mutex.hpp>
 #include <boost/thread.hpp>
-#include "../../log/entry.h"
+#include "../../log/log_array.h"
 #include "event_queue.h"
 #include "../state.h"
 

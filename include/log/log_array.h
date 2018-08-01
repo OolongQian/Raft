@@ -1,9 +1,33 @@
 #ifndef RAFT_PROJ_LOG_ARRAY_H
 #define RAFT_PROJ_LOG_ARRAY_H
 
-#include "entry.h"
+#include <string>
+#include "../raft/raft_proto/raft_peer.pb.h"
 
 namespace SJTU {
+
+	struct Entry {
+		std::string command;
+		std::string key;
+		std::string val;
+		long long term;
+		long long entryIndex;
+
+		Entry() = default;
+//		{
+//			command.clear();
+//			key.clear();
+//			val.clear();
+//		}
+
+		Entry(std::string command, std::string key, std::string val, long long term, long long entryIndex);
+
+		explicit Entry(const PbAppendEntriesRequest::Entry &entry);
+
+		PbAppendEntriesRequest_Entry Convert() const;
+	};
+
+
 	/// a adapted data structure for Entry.
 	class LogArray {
 	public:

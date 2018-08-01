@@ -9,7 +9,7 @@
  * Therefore we had better create such data wrappers in cpp version and define
  * some functions to convert between them.
  * */
-#include "../../log/entry.h"
+#include "../../log/log_array.h"
 #include "raft_peer.pb.h"
 #include "../../server_info.h"
 
