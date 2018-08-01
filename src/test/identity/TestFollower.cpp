@@ -46,7 +46,7 @@ namespace SJTU {
 		auto id = srvs.front()->GetInfo().get_local();
 
 		std::vector<std::unique_ptr<RaftPeerClientImpl> > vClient;
-		for (int i = 0, appendTime = 1; i < appendTime; ++i) {
+		for (int i = 0, appendTime = 10; i < appendTime; ++i) {
 			vClient.push_back(std::make_unique<RaftPeerClientImpl>(id));
 
 			vClient.back()->th = boost::thread([&vClient]() mutable {
@@ -55,7 +55,7 @@ namespace SJTU {
 				PbAppendEntriesResponse rsp;
 				msg.set_term(100);
 
-				ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(3000));
+				ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(30));
 				grpc::Status status = vClient.back()->stub_->AppendEntriesRPC(&ctx, msg, &rsp);
 				printf("rpc sent\n");
 				printf("%lld\n", rsp.term());
@@ -68,8 +68,9 @@ namespace SJTU {
 			std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
 		}
 		sleep(1);
-		printf("%d %d\n", (int) F2C, (int) C2L);
 		srvs.front()->ShutDown();
+		assert(F2C == 0);
+		printf("create one follower, and send heartbeat to it manually, it remains follower\n");
 	}
 };
 

@@ -15,17 +15,32 @@ namespace SJTU {
 
 	void
 	IdentityTestHelper::sendHeartBeat(const std::vector<ServerId> &srvs, const ServerId &local, long long currentTerm) {
+		static std::vector<std::unique_ptr<RaftPeerClientImpl> > vClient;
+
+		vClient.clear();
 		for (auto &srv : srvs) {
-			if (srv == local)
-				continue;
+			if (srv == local) continue;
+			vClient.push_back(std::make_unique<RaftPeerClientImpl>(srv));
+		}
 
-			std::unique_ptr<RaftPeerClientImpl> pClient = std::make_unique<RaftPeerClientImpl>(srv);
-
-			grpc::ClientContext ctx;
-			PbAppendEntriesRequest msg;
-			PbAppendEntriesResponse rsp;
-			msg.set_term(currentTerm);
-			pClient->stub_->AppendEntriesRPC(&ctx, msg, &rsp);
+		for (int i = 0; i < vClient.size(); ++i) {
+			vClient[i]->th = boost::thread([this, i]() mutable {
+				PbAppendEntriesRequest request;
+				request.set_term(currentTerm);
+				PbAppendEntriesResponse response;
+				grpc::ClientContext context;
+				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(30));
+				grpc::Status status = vClient[i]->stub_->AppendEntriesRPC(&context, request, &response);
+				if (!status.ok()) {
+					printf("client number: %d ", i);
+					std::cout << status.error_code() << ": " << status.error_message() << std::endl;
+				} else {
+					printf("client number %d, feedback received, %lld\n", i, response.term());
+				}
+			});
+		}
+		for (int i = 0; i < vClient.size(); ++i) {
+			vClient[i]->th.join();
 		}
 	}
 };

@@ -5,7 +5,7 @@
 #include <functional>
 #include "../state.h"
 #include "../raft_proto/cpp_msg_wrapper.h"
-#include "../raft_proto/raft_peer_client.h"
+#include "../raft_proto/raft_client.h"
 #include "../timer/timer.h"
 #include "../../server_info.h"
 

@@ -49,10 +49,21 @@ namespace SJTU {
 		debugContext.before_tranform(currentIdentity, identityNo);
 		eventQueue.addEvent([this, identityNo]() mutable {
 			printf("transform from %d to %d\n", currentIdentity, identityNo);
+
 			if (currentIdentity != DownNo)
 				identities[currentIdentity]->leave();
+			else {
+				server_end.Monitor();
+			}
+
 			currentIdentity = identityNo;
-			identities[currentIdentity]->init();
+
+			if (currentIdentity != DownNo)
+				identities[currentIdentity]->init();
+			else {
+				timer.Stop();
+				server_end.Stop();
+			}
 		});
 	}
 

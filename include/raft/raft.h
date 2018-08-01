@@ -26,7 +26,7 @@ namespace SJTU {
 			applyQueue.Start();
 			IdentityTransform(FollowerNo);
 			server_end.PreMonitorInit();
-			server_end.Monitor();
+//			server_end.Monitor();		when get out of down, server_end starts to monitor.
 		}
 
 		void Stop() {
