@@ -60,4 +60,9 @@ namespace SJTU {
 	void Timer::SetTimeOut(int time_limit) {
 		time_ = time_limit;
 	}
+
+	void Timer::Reset() {
+		Stop();
+		Start(false);
+	}
 };

@@ -25,9 +25,9 @@ namespace SJTU {
 		void TimeOutFunc() override;
 
 	private:
-		virtual void AppendEntriesSelfModification(const CppAppendEntriesRequest &) override;
+//		virtual void AppendEntriesSelfModification(const CppAppendEntriesRequest &) override;
 
-		virtual void RequestVoteSelfModification(const CppRequestVoteRequest &) override;
+//		virtual void RequestVoteSelfModification(const CppRequestVoteRequest &) override;
 	};
 };
 

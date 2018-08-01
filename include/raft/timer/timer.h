@@ -21,6 +21,9 @@ namespace SJTU {
 
 		void SetTimeOut(int);
 
+		/// leave timeout action and time limit unchanged, just stop and restart, without repeat.
+		void Reset();
+
 		/**
 		 * When a timer runs into the case of timeout, it behaves differently with respect to
 		 * its current identity.

@@ -17,9 +17,11 @@
 namespace SJTU {
 	class RaftPeerClientImpl {
 	public:
-		explicit RaftPeerClientImpl(const std::shared_ptr<grpc::Channel> &channel, ServerId id) :
-				stub_(RaftPeerService::NewStub(channel)), id(id) {}
+		explicit RaftPeerClientImpl(ServerId id) :
+				stub_(RaftPeerService::NewStub(grpc::CreateChannel(id.toString(), grpc::InsecureChannelCredentials()))),
+				id(id) {}
 
+//id.toString()
 		~RaftPeerClientImpl() {
 			if (th.joinable()) th.join();
 		}
@@ -29,4 +31,5 @@ namespace SJTU {
 		ServerId id;
 	};
 };
+
 #endif //RAFT_PROJ_RAFT_PEER_CLIENT_H

@@ -25,11 +25,11 @@ namespace SJTU {
 		identity_transformer(CandidateNo);
 	}
 
-	void Follower::AppendEntriesSelfModification(const CppAppendEntriesRequest &) {
-		;
-	}
+//	void Follower::AppendEntriesSelfModification(const CppAppendEntriesRequest &) {
+//		;
+//	}
 
-	void Follower::RequestVoteSelfModification(const CppRequestVoteRequest &) {
-		;
-	}
+//	void Follower::RequestVoteSelfModification(const CppRequestVoteRequest &) {
+//		;
+//	}
 };

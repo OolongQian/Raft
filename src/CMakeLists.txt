@@ -16,7 +16,7 @@ target_link_libraries(${PROJECT_NAME}
         ${PROTOBUF_LIBRARIES}
         ${GRPC_LIBRARIES}
         )
-
+# ./test/identity/TestFollower.cpp
 ADD_EXECUTABLE(hello ./test/identity/TestFollower.cpp)
 
 

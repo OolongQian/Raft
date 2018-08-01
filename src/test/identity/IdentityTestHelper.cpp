@@ -19,8 +19,7 @@ namespace SJTU {
 			if (srv == local)
 				continue;
 
-			std::unique_ptr<RaftPeerClientImpl> pClient = std::make_unique<RaftPeerClientImpl>(
-					grpc::CreateChannel(srv.toString(), grpc::InsecureChannelCredentials()), srv);
+			std::unique_ptr<RaftPeerClientImpl> pClient = std::make_unique<RaftPeerClientImpl>(srv);
 
 			grpc::ClientContext ctx;
 			PbAppendEntriesRequest msg;
