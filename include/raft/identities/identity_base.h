@@ -39,7 +39,7 @@ namespace SJTU {
 		 * I have implemented response generation without self-modification.
 		 * I'm going to work on self-modification.
 		 * */
-		virtual CppAppendEntriesResponse ProcsAppendEntriesFunc(const CppAppendEntriesRequest &);
+		virtual void ProcsAppendEntriesFunc(const PbAppendEntriesRequest *, PbAppendEntriesResponse *);
 
 		/**
 		 * (In current naive implementation, because of no client, all clients will vote
@@ -47,7 +47,7 @@ namespace SJTU {
 		 * Above is history now.
 		 *
 		 * */
-		virtual CppRequestVoteResponse ProcsRequestVoteFunc(const CppRequestVoteRequest &);
+		virtual void ProcsRequestVoteFunc(const PbRequestVoteRequest *, PbRequestVoteResponse *);
 
 		/**
 		 * Timeout functions don't need to be bound to timer,
@@ -79,18 +79,18 @@ namespace SJTU {
 		boost::atomic<bool> transforming{false};
 
 	protected:
-		virtual CppAppendEntriesResponse AppendEntriesResponseGeneration(const CppAppendEntriesRequest &);
+		virtual void AppendEntriesResponseGeneration(const PbAppendEntriesRequest *, PbAppendEntriesResponse *);
 
-		virtual CppRequestVoteResponse RequestVoteResponseGeneration(const CppRequestVoteRequest &);
+		virtual void RequestVoteResponseGeneration(const PbRequestVoteRequest *, PbRequestVoteResponse *);
 
 		/// the following two functions only need to worry about convert to follower.
 		/// these handle follower converting when receive request from other servers.
 		/// about the case of receiving responses, client_ends_ is the place to fix.
 
 		/// these two functions operate tranform to Follower, which resets timer.
-		virtual void AppendEntriesSelfModification(const CppAppendEntriesRequest &);
+		virtual void AppendEntriesSelfModification(const PbAppendEntriesRequest *);
 
-		virtual void RequestVoteSelfModification(const CppRequestVoteRequest &);
+		virtual void RequestVoteSelfModification(const PbRequestVoteRequest *);
 	};
 };
 

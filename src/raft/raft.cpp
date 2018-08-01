@@ -10,6 +10,26 @@ namespace SJTU {
 		identities[CandidateNo] = std::make_unique<Candidate>(state, timer, transformer, client_ends, info);
 		identities[LeaderNo] = std::make_unique<Leader>(state, timer, transformer, client_ends, info);
 		currentIdentity = DownNo;
+
+		server_end.BindServiceFunc(
+				[this](const PbRequestVoteRequest *request, PbRequestVoteResponse *response) -> void {
+					identities[currentIdentity]->ProcsRequestVoteFunc(request, response);
+				},
+				[this](const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) -> void {
+					identities[currentIdentity]->ProcsAppendEntriesFunc(request, response);
+				});
+
+		/// gRPC client_ends
+		for (const ServerId &srv_id : info.get_srvList()) {
+			if (srv_id == info.get_local()) continue;
+			client_ends.push_back(std::make_unique<RaftPeerClientImpl>(srv_id));
+		}
+
+		/// timer
+		timer.BindTimeOutAction(std::bind(&Raft::TimeOutActionAdapter, this));
+		timer.BindPushEvent(std::bind(&EventQueue::addEvent, &eventQueue, std::placeholders::_1));
+
+		state.Init();
 	}
 
 	void Raft::IdentityTransform(IdentityNo identityNo) {
@@ -28,14 +48,6 @@ namespace SJTU {
 			currentIdentity = identityNo;
 			identities[currentIdentity]->init();
 		});
-	}
-
-	CppAppendEntriesResponse Raft::ProcsAppendEntriesAdapter(CppAppendEntriesRequest request) {
-		return identities[currentIdentity]->ProcsAppendEntriesFunc(request);
-	}
-
-	CppRequestVoteResponse Raft::ProcsRequestVoteAdapter(CppRequestVoteRequest request) {
-		return identities[currentIdentity]->ProcsRequestVoteFunc(request);
 	}
 
 	void Raft::TimeOutActionAdapter() {

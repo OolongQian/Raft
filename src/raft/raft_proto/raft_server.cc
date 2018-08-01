@@ -3,12 +3,6 @@
 
 namespace SJTU {
 
-	void RaftServer::BindServiceFunc(std::function<CppRequestVoteResponse(CppRequestVoteRequest)> f1,
-																	 std::function<CppAppendEntriesResponse(CppAppendEntriesRequest)> f2) {
-//		service.requestVoteFunc = std::move(f1);
-//		service.appendEntriesFunc = std::move(f2);
-	}
-
 	void RaftServer::PreMonitorInit() {
 		grpc::ServerBuilder builder;
 		builder.AddListeningPort(serverId.toString(), grpc::InsecureServerCredentials());
@@ -29,14 +23,17 @@ namespace SJTU {
 		th.join();
 	}
 
-	RaftServer::RaftPeerServiceImpl::RaftPeerServiceImpl() {
-
+	void RaftServer::BindServiceFunc(RaftServer::RequestVoteFunc f1, RaftServer::AppendEntriesFunc f2) {
+		service.requestVoteFunc = std::move(f1);
+		service.appendEntriesFunc = std::move(f2);
 	}
 
 	grpc::Status
 	RaftServer::RaftPeerServiceImpl::AppendEntriesRPC(grpc::ServerContext *context, const PbAppendEntriesRequest *request,
 																										PbAppendEntriesResponse *response) {
 		response->set_term(100);
+		printf("Append Entries RPC received\n");
+		appendEntriesFunc(request, response);
 		return grpc::Status::OK;
 	}
 
@@ -44,6 +41,8 @@ namespace SJTU {
 	RaftServer::RaftPeerServiceImpl::RequestVoteRPC(grpc::ServerContext *context, const PbRequestVoteRequest *request,
 																									PbRequestVoteResponse *response) {
 		response->set_term(100);
+		printf("Request Vote RPC received\n");
+		requestVoteFunc(request, response);
 		return grpc::Status::OK;
 	}
 };

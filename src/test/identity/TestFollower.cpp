@@ -6,6 +6,7 @@
 namespace SJTU {
 
 
+	/// 看看能不能变身
 	void Follower_Basic() {
 		printf("Follower_basic test...\n");
 		IdentityTestHelper helper;
@@ -55,9 +56,11 @@ namespace SJTU {
 				msg.set_term(0);
 
 				ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(300));
-				vClient.back()->stub_->AppendEntriesRPC(&ctx, msg, &rsp);
+				grpc::Status status = vClient.back()->stub_->AppendEntriesRPC(&ctx, msg, &rsp);
 				printf("rpc sent\n");
 				printf("%lld\n", rsp.term());
+				if (status.ok()) printf("msg is OK!\n");
+				else printf("msg is error\n");
 			});
 			std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
 		}
@@ -71,8 +74,8 @@ namespace SJTU {
 using namespace SJTU;
 
 int main() {
-	SJTU::Follower_Basic();
-//	SJTU::Follower_AppendEntry();
+//	SJTU::Follower_Basic();
+	SJTU::Follower_AppendEntry();
 //	IdentityTestHelper helper;
 
 //	auto p = helper.makeServers(1);

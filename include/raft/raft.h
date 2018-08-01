@@ -68,10 +68,6 @@ namespace SJTU {
 		 * */
 		void IdentityTransform(IdentityNo);
 
-		CppAppendEntriesResponse ProcsAppendEntriesAdapter(CppAppendEntriesRequest);
-
-		CppRequestVoteResponse ProcsRequestVoteAdapter(CppRequestVoteRequest);
-
 		void TimeOutActionAdapter();
 	};
 };

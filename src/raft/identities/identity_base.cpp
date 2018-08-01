@@ -1,78 +1,91 @@
 #include "../../../include/raft/identities/identity_base.h"
 
-#define _NOT_TRIVIAL_VOTE
-//#define _NOT_TRIVIAL_APPEND
+//#define _NOT_TRIVIAL_VOTE
+#define _NOT_TRIVIAL_APPEND
 
 namespace SJTU {
 
-	CppAppendEntriesResponse SJTU::IdentityBase::ProcsAppendEntriesFunc(const CppAppendEntriesRequest &request) {
+	void
+	SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
 		AppendEntriesSelfModification(request);
-		return AppendEntriesResponseGeneration(request);
+		AppendEntriesResponseGeneration(request, response);
 	}
 
-	CppRequestVoteResponse SJTU::IdentityBase::ProcsRequestVoteFunc(const CppRequestVoteRequest &request) {
+	void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
 		RequestVoteSelfModification(request);
-		return RequestVoteResponseGeneration(request);
+		RequestVoteResponseGeneration(request, response);
 	}
 
-	CppAppendEntriesResponse IdentityBase::AppendEntriesResponseGeneration(const CppAppendEntriesRequest &request) {
+	void IdentityBase::AppendEntriesResponseGeneration(const PbAppendEntriesRequest *request,
+																										 PbAppendEntriesResponse *response) {
 		/**
 		 * Default implementation.
 		 * */
 //		fprintf(stderr, "appendEntriesRequest is received...Always respond success\n");
 
-		CppAppendEntriesResponse response;
-		response.term = state_.currentTerm;
+		response->set_term(state_.currentTerm);
+		response->set_success(true);
 
-		response.success = true;
 #ifdef _NOT_TRIVIAL_APPEND
 		/// reply false if request is out of date.
-		if (request.term < state_.currentTerm)
-			response.success = false;
+		if (request->term() < state_.currentTerm)
+			response->set_success(false);
 		/// reply false if log doesn't contain an entry at prevLogIndex whose term matches prevLogTerm.
-		if (!state_.log.has(request.prevLogIndex) || state_.log.at(request.prevLogIndex).term != request.prevLogTerm)
-			response.success = false;
+		if (!state_.log.has(request->prevlogindex()) ||
+				state_.log.at(request->prevlogindex()).term != request->prevlogterm())
+			response->set_success(false);
+
+		if (request->entries_size() == 0) {
+			printf("receive empty entries (heartbeat), return...\n");
+			return;
+		}
+
 		/// if an existing entry conflicts with a new one (same index but different terms), delete the existing entry and all that follow it.
 		/// append any new entries not already in the log.
 		/// note that entryIndex should be monotonically increasing.
-		for (const Entry &entry : request.entries) {
-			const long long &index = entry.entryIndex;
+		for (int i = 0; i < request->entries_size(); ++i) {
+			const long long &index = request->entries(i).entryindex();
 			LogArray &log = state_.log;
 
+			Entry cpp_entry;
+			cpp_entry.term = request->entries(i).term();
+			cpp_entry.entryIndex = request->entries(i).entryindex();
+			cpp_entry.command = request->entries(i).command();
+			cpp_entry.key = request->entries(i).key();
+			cpp_entry.val = request->entries(i).val();
+
 			if (!log.has(index)) {
-				log.insert(entry, index);
-			} else if (log.has(index) && log.at(index).term != entry.term) {
+				log.insert(cpp_entry, index);
+			} else if (log.has(index) && log.at(index).term != cpp_entry.term) {
 				log.flushToEnd(index);
-				log.insert(entry, index);
-			} else if (log.has(index) && log.at(index).term == entry.term)
+				log.insert(cpp_entry, index);
+			} else if (log.has(index) && log.at(index).term == cpp_entry.term)
 				continue;  /// add for completeness.
 		}
-#endif
-		if (request.leaderCommit > state_.commitIndex) {
-			state_.commitIndex = std::min(request.leaderCommit, request.entries.back().entryIndex);
+		if (request->leadercommit() > state_.commitIndex) {
+			state_.commitIndex = std::min(request->leadercommit(),
+																		request->entries(request->entries_size() - 1).entryindex());
 		}
-		return response;
+#endif
+
 	}
 
-	CppRequestVoteResponse IdentityBase::RequestVoteResponseGeneration(const CppRequestVoteRequest &request) {
+	void
+	IdentityBase::RequestVoteResponseGeneration(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
 		/**
 		 * Default implementation.
 		 * */
-		CppRequestVoteResponse response;
-
-		response.term = state_.currentTerm;
-
-		response.voteGranted = true;
-
+		response->set_term(state_.currentTerm);
+		response->set_votegranted(true);
 
 #ifdef _NOT_TRIVIAL_VOTE
-		if (request.term < state_.currentTerm)
-			response.voteGranted = false;
+		if (request->term() < state_.currentTerm)
+			response->set_votegranted(false);
 
 		/// "if votedFor is null or candidateId, and candidate's log is at least up-to-date as receiver's log, grant vote."
 		/// if this server has voted for others, refuse to grant vote.
-		if (!state_.votedFor.empty() && state_.votedFor != request.candidateId)
-			response.voteGranted = false;
+		if (!state_.votedFor.empty() && state_.votedFor.toString() != request->candidateid())
+			response->set_votegranted(false);
 
 		/**
 		 * "Raft determines which of two logs is more up-to-date by comparing the index and term of the last entries in the logs.
@@ -80,39 +93,40 @@ namespace SJTU {
 		 * If the logs end with the same term, then whichever log is longer is more up-to-date.
 		 * */
 		/// or candidate's log is out-of-date, reject.
-		if (request.lastLogTerm != state_.log.back().term) {
-			if (state_.log.back().term > request.lastLogTerm)  /// my log is newer.
-				response.voteGranted = false;
-		} else {
-			if (state_.log.back().entryIndex > request.lastLogIndex)  /// my log is longer.
-				response.voteGranted = false;
+		if(request->lastlogterm() != state_.log.back().term) {
+			if(state_.log.back().term > request->lastlogterm()) {		/// my log is newer.
+				response->set_votegranted(false);
+			}
+		}
+		else {
+			if(state_.log.back().entryIndex > request->lastlogindex())		/// my log is longer.
+				response->set_votegranted(false);
 		}
 #else
 		std::cerr << "this voteGranted rule is for demonstration" << std::endl;
-		if (!state_.votedFor.empty() && state_.votedFor != request.candidateId)
-			response.voteGranted = false;
+		if (!state_.votedFor.empty() && state_.votedFor.toString() != request->candidateid())
+			response->set_votegranted(false);
 		else {
-			response.voteGranted = true;
-			state_.votedFor = request.candidateId;
+			response->set_votegranted(true);
+			ServerId vf(request->candidateid());
+			state_.votedFor = vf;
 		}
 #endif
-
-		return response;
 	}
 
-	void IdentityBase::AppendEntriesSelfModification(const CppAppendEntriesRequest &request) {
+	void IdentityBase::AppendEntriesSelfModification(const PbAppendEntriesRequest *request) {
 		/// if commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine.
 		/// oh I suddenly realize that this should be automated by apply_queue!!!
-		if (request.term > state_.currentTerm) {
-			state_.currentTerm = request.term;
+		if (request->term() > state_.currentTerm) {
+			state_.currentTerm = request->term();
 			state_.votedFor.clear();
 			identity_transformer(FollowerNo);
 		}
 	}
 
-	void IdentityBase::RequestVoteSelfModification(const CppRequestVoteRequest &request) {
-		if (request.term > state_.currentTerm) {
-			state_.currentTerm = request.term;
+	void IdentityBase::RequestVoteSelfModification(const PbRequestVoteRequest *request) {
+		if (request->term() > state_.currentTerm) {
+			state_.currentTerm = request->term();
 			state_.votedFor.clear();
 			identity_transformer(FollowerNo);
 		}

@@ -22,12 +22,12 @@ namespace SJTU {
 	 * */
 	class RaftServer {
 
-		using RequestVoteFunc = std::function<CppRequestVoteResponse(CppRequestVoteRequest)>;
-		using AppendEntriesFunc = std::function<CppAppendEntriesResponse(CppAppendEntriesRequest)>;
+		using RequestVoteFunc = std::function<void(const PbRequestVoteRequest *, PbRequestVoteResponse *)>;
+		using AppendEntriesFunc = std::function<void(const PbAppendEntriesRequest *, PbAppendEntriesResponse *)>;
 
 		class RaftPeerServiceImpl final : public RaftPeerService::Service {
 		public:
-			RaftPeerServiceImpl();
+			RaftPeerServiceImpl() = default;
 
 			grpc::Status AppendEntriesRPC(grpc::ServerContext *context, const PbAppendEntriesRequest *request,
 																		PbAppendEntriesResponse *response) override;
@@ -36,8 +36,8 @@ namespace SJTU {
 																	PbRequestVoteResponse *response) override;
 
 		public:
-//			RequestVoteFunc requestVoteFunc;
-//			AppendEntriesFunc appendEntriesFunc;
+			RequestVoteFunc requestVoteFunc;
+			AppendEntriesFunc appendEntriesFunc;
 		};
 
 	public:
