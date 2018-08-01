@@ -14,6 +14,9 @@ namespace SJTU {
 
 		~Follower() override;
 
+		void ProcsAppendEntriesFunc(const PbAppendEntriesRequest *, PbAppendEntriesResponse *) override;
+
+		void ProcsRequestVoteFunc(const PbRequestVoteRequest *, PbRequestVoteResponse *) override;
 //		CppAppendEntriesResponse ProcsAppendEntriesFunc(CppAppendEntriesRequest) override;
 
 //		CppRequestVoteResponse ProcsRequestVoteFunc(CppRequestVoteRequest) override;
@@ -25,9 +28,9 @@ namespace SJTU {
 		void TimeOutFunc() override;
 
 	private:
-//		virtual void AppendEntriesSelfModification(const CppAppendEntriesRequest &) override;
+//		virtual void AppendEntriesSelfModification(const PbAppendEntriesRequest *) override;
 
-//		virtual void RequestVoteSelfModification(const CppRequestVoteRequest &) override;
+//		virtual void RequestVoteSelfModification(const PbRequestVoteRequest *) override;
 	};
 };
 

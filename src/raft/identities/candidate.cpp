@@ -1,4 +1,5 @@
 #include <future>
+//#include <altivec.h>
 #include "../../../include/raft/identities/candidate.h"
 #include "../../../include/raft/raft_proto/raft_server.h"
 
@@ -110,5 +111,23 @@ namespace SJTU {
 		CppRequestVoteRequest request(state_.currentTerm, info.get_local(), state_.log.back().entryIndex,
 																	state_.log.back().term);
 		return request.Convert();
+	}
+
+	void Candidate::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
+		IdentityBase::ProcsAppendEntriesFunc(request, response);
+		if (request->term() > state_.currentTerm) {
+			state_.currentTerm = request->term();
+			state_.votedFor.clear();
+			identity_transformer(FollowerNo);
+		}
+	}
+
+	void Candidate::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
+		IdentityBase::ProcsRequestVoteFunc(request, response);
+		if (request->term() > state_.currentTerm) {
+			state_.currentTerm = request->term();
+			state_.votedFor.clear();
+			identity_transformer(FollowerNo);
+		}
 	}
 };

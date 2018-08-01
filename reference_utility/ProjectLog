@@ -168,3 +168,5 @@ The next thing to do is implementing default server response.
 ApplyQueue is constructed, the next thing is to implement self_modification.
 
 现在所有的term改变都会导致votedFor重制。
+
+当follower收到term不小于它的人发的appendentry的话，它的timer会被重置。

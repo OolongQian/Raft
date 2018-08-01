@@ -21,7 +21,8 @@ namespace SJTU {
 				printf("timer operates a repetitive work\n");
 				while (true) {
 					try {
-						std::this_thread::sleep_for(std::chrono::milliseconds(time_));
+						boost::this_thread::interruption_point();
+						boost::this_thread::sleep_for(boost::chrono::milliseconds(time_));
 						boost::this_thread::interruption_point();
 						printf("%d ms has passed! timer is pushing event...\n", time_);
 						pushEvent_(timeOutAction_);
@@ -33,7 +34,8 @@ namespace SJTU {
 				}
 			} else {
 				try {
-					std::this_thread::sleep_for(std::chrono::milliseconds(time_));
+					boost::this_thread::interruption_point();
+					boost::this_thread::sleep_for(boost::chrono::milliseconds(time_));
 					boost::this_thread::interruption_point();
 					printf("%d ms has passed! timer is pushing event...\n", time_);
 					pushEvent_(timeOutAction_);

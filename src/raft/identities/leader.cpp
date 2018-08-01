@@ -1,4 +1,6 @@
+//#include <altivec.h>
 #include "../../../include/raft/identities/leader.h"
+#include "../../../include/raft/raft_proto/raft_peer.pb.h"
 
 //#define _NOT_TRIVIAL_REQUEST
 
@@ -162,6 +164,24 @@ namespace SJTU {
 		} else {
 			state_.commitIndex = checked_N;
 			printf("useful N check, set commitIndex to be %lld\n", state_.commitIndex);
+		}
+	}
+
+	void Leader::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
+		IdentityBase::ProcsAppendEntriesFunc(request, response);
+		if (request->term() > state_.currentTerm) {
+			state_.currentTerm = request->term();
+			state_.votedFor.clear();
+			identity_transformer(FollowerNo);
+		}
+	}
+
+	void Leader::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
+		IdentityBase::ProcsRequestVoteFunc(request, response);
+		if (request->term() > state_.currentTerm) {
+			state_.currentTerm = request->term();
+			state_.votedFor.clear();
+			identity_transformer(FollowerNo);
 		}
 	}
 };

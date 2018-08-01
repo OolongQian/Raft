@@ -13,9 +13,11 @@ namespace SJTU {
 
 		server_end.BindServiceFunc(
 				[this](const PbRequestVoteRequest *request, PbRequestVoteResponse *response) -> void {
+					printf("current Identity %d\n", currentIdentity);
 					identities[currentIdentity]->ProcsRequestVoteFunc(request, response);
 				},
 				[this](const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) -> void {
+					printf("current Identity %d\n", currentIdentity);
 					identities[currentIdentity]->ProcsAppendEntriesFunc(request, response);
 				});
 
@@ -33,9 +35,13 @@ namespace SJTU {
 	}
 
 	void Raft::IdentityTransform(IdentityNo identityNo) {
+
+		printf("enter identity transformer\n");
 		/// Note this!!!
 		if (currentIdentity == identityNo) {
+			printf("reseting timer\n");
 			timer.Reset();
+			printf("timer reset\n");
 			return;
 		}
 

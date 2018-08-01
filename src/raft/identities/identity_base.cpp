@@ -7,12 +7,12 @@ namespace SJTU {
 
 	void
 	SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
-		AppendEntriesSelfModification(request);
+//		AppendEntriesSelfModification(request);
 		AppendEntriesResponseGeneration(request, response);
 	}
 
 	void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
-		RequestVoteSelfModification(request);
+//		RequestVoteSelfModification(request);
 		RequestVoteResponseGeneration(request, response);
 	}
 

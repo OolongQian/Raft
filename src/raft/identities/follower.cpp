@@ -1,3 +1,4 @@
+//#include <altivec.h>
 #include "../../../include/raft/identities/follower.h"
 
 namespace SJTU {
@@ -22,14 +23,49 @@ namespace SJTU {
 	}
 
 	void Follower::TimeOutFunc() {
-		identity_transformer(CandidateNo);
+		//identity_transformer(CandidateNo);
 	}
 
-//	void Follower::AppendEntriesSelfModification(const CppAppendEntriesRequest &) {
-//		;
-//	}
+	void Follower::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
+		IdentityBase::ProcsAppendEntriesFunc(request, response);
+		/// if commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine.
+		/// oh I suddenly realize that this should be automated by apply_queue!!!
+		if (request->term() > state_.currentTerm) {
+			state_.currentTerm = request->term();
+			state_.votedFor.clear();
+			identity_transformer(FollowerNo);
+		} else {
+			identity_transformer(FollowerNo);
+		}
+	}
 
-//	void Follower::RequestVoteSelfModification(const CppRequestVoteRequest &) {
+	void Follower::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
+		IdentityBase::ProcsRequestVoteFunc(request, response);
+		if (request->term() > state_.currentTerm) {
+			state_.currentTerm = request->term();
+			state_.votedFor.clear();
+			identity_transformer(FollowerNo);
+		} else {
+			identity_transformer(FollowerNo);
+		}
+	}
+
+	/*
+	void Follower::AppendEntriesSelfModification(const PbAppendEntriesRequest *request) {
+		printf("follower receives appendEntry\n");
+		if (request->term() > state_.currentTerm) {
+			state_.currentTerm = request->term();
+			state_.votedFor.clear();
+			identity_transformer(FollowerNo);
+		}
+		else {
+			printf("follower to follower\n");
+			identity_transformer(FollowerNo);
+		}
+	}
+	 */
+
+//	void Follower::RequestVoteSelfModification(const PbRequestVoteRequest *request) {
 //		;
 //	}
 };
