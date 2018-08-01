@@ -10,10 +10,13 @@ namespace SJTU {
 	public:
 		RaftDebugContext() {
 			before_tranform = [](IdentityNo a, IdentityNo b) { fprintf(stderr, "before transform is empty\n"); };
+			after_tranform = [](IdentityNo a, IdentityNo b) { fprintf(stderr, "after transform is empty\n"); };
 			cnt = 0;
 		}
 
 		std::function<void(IdentityNo, IdentityNo & )> before_tranform;
+
+		std::function<void(IdentityNo, IdentityNo & )> after_tranform;
 
 		boost::atomic<std::size_t> cnt{0};
 	};

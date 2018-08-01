@@ -14,9 +14,9 @@ namespace SJTU {
 #ifndef _NOLOG
 		printf("init to be leader...\n");
 #endif
+		++state_.currentTerm;
 		timer_.SetTimeOut(info.get_electionTimeout() / 2);
 		timer_.Start(true);
-		++state_.currentTerm;
 		state_.votedFor.clear();
 
 		for (const ServerId &id : info.get_srvList()) {

@@ -5,7 +5,6 @@
 
 namespace SJTU {
 
-
 	/// 看看能不能变身
 	void Follower_Basic() {
 		printf("Follower_basic test...\n");
@@ -73,7 +72,6 @@ namespace SJTU {
 		printf("create one follower, and send heartbeat to it manually, it remains follower\n");
 	}
 
-
 	void Candidate_Basic() {
 		IdentityTestHelper helper;
 		const std::size_t SrvNum = 1;
@@ -96,17 +94,38 @@ namespace SJTU {
 		auto srvs = helper.makeServers(SrvNum);
 		const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
 		std::atomic<int> candidate2Follower{0}, candidate2Leader{0};
-		auto &ctx = Raft::GetDebug();
+
+		for (auto &srv : srvs) {
+			srv->Init();
+			RaftDebugContext &ctx = srv->GetCtx();
+
+			ctx.before_tranform = ([&](IdentityNo from, IdentityNo &to) mutable {
+				if (from == CandidateNo && to == LeaderNo) {
+					++candidate2Leader;
+				} else if (from == CandidateNo && to == FollowerNo) {
+					++candidate2Follower;
+					to = DownNo;
+				} else if (from == CandidateNo && to == CandidateNo)
+					to = CandidateNo;
+			});
+			srv->StartUp();
+		}
+		std::this_thread::sleep_for(std::chrono::milliseconds(ElectionTimeout * 8));
+		for (auto &srv : srvs)
+			srv->ShutDown();
+
+		printf("%d, %d\n", (int) candidate2Leader, (int) candidate2Follower);
+		printf(
+				"three servers init to be follower, then one leader is elected. No other followers transform to be cnadidate\n");
 	}
-
 };
-
 
 using namespace SJTU;
 
 int main() {
 //	SJTU::Follower_Basic();
 //	SJTU::Follower_AppendEntry();
-	SJTU::Candidate_Basic();
+//	SJTU::Candidate_Basic();
+//	SJTU::CandidateNaive();
 	return 0;
 }

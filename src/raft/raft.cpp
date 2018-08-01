@@ -40,13 +40,18 @@ namespace SJTU {
 		/// Note this!!!
 		if (currentIdentity == identityNo) {
 			printf("reseting timer\n");
-			timer.Reset();
+			/// leader不会reset
+			timer.Stop();
+			timer.SetTimeOut(rand() % info.get_electionTimeout() + info.get_electionTimeout());
+			timer.Start(false);
 			printf("timer reset\n");
 			return;
 		}
 
+		IdentityNo identityNo_orig = identityNo;
 		RaftDebugContext &debugContext = GetDebug();
-		debugContext.before_tranform(currentIdentity, identityNo);
+//		debugContext.before_tranform(currentIdentity, identityNo);
+		ctx.before_tranform(currentIdentity, identityNo);
 
 		eventQueue.addEvent([this, identityNo]() mutable {
 			printf("transform from %d to %d\n", currentIdentity, identityNo);
@@ -63,7 +68,11 @@ namespace SJTU {
 				server_end.Stop();
 			} else
 				identities[currentIdentity]->init();
+			printf("After transform function is carried out. \n");
 		});
+//		debugContext.after_tranform(currentIdentity, identityNo);
+		ctx.after_tranform(currentIdentity, identityNo_orig);
+
 	}
 
 	void Raft::TimeOutActionAdapter() {

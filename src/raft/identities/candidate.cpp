@@ -21,6 +21,7 @@ namespace SJTU {
 		state_.votedFor.clear();
 
 		votesReceived = 1;
+		state_.votedFor = info.get_local();
 		RequestVote();
 	}
 
@@ -83,8 +84,8 @@ namespace SJTU {
 				}
 				if (votesReceived > info.get_srvList().size() / 2 && !transforming) {
 #ifndef _NOLOG
-					printf("There are %lu servers in total. More than half votes received, start to transform to leader...\n",
-								 info.get_srvList().size());
+					printf("There are %lu servers in total. %d votes received, start to transform to leader...\n",
+								 info.get_srvList().size(), (int) votesReceived);
 					printf("transforming to leader\n");
 #endif
 					/**

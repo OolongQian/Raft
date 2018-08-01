@@ -23,7 +23,7 @@ namespace SJTU {
 	}
 
 	void Follower::TimeOutFunc() {
-		//identity_transformer(CandidateNo);
+		identity_transformer(CandidateNo);
 	}
 
 	void Follower::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {

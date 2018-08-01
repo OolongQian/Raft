@@ -23,7 +23,8 @@ namespace SJTU {
 
 //id.toString()
 		~RaftPeerClientImpl() {
-			if (th.joinable()) th.join();
+			th.join();
+//			if (th.joinable()) th.join();
 		}
 
 		std::unique_ptr<RaftPeerService::Stub> stub_;

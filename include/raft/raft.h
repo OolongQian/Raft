@@ -13,6 +13,8 @@
 #include "../../include/raft/synchronous_queue/event_queue.h"
 #include "synchronous_queue/apply_queue.h"
 
+#include "../debug_header.h"
+
 
 namespace SJTU {
 	class Raft {
@@ -43,6 +45,9 @@ namespace SJTU {
 
 
 	private:
+#ifdef _UNIT_TEST
+	public:
+#endif
 		State state;
 		const ServerInfo &info;
 
@@ -57,6 +62,10 @@ namespace SJTU {
 		std::vector<std::unique_ptr<RaftPeerClientImpl> > client_ends;
 
 		boost::thread th;
+
+#ifdef _UNIT_TEST
+		RaftDebugContext ctx;
+#endif
 
 	private:
 		/**

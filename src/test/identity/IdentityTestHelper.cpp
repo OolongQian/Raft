@@ -16,14 +16,18 @@ namespace SJTU {
 	void
 	IdentityTestHelper::sendHeartBeat(const std::vector<ServerId> &srvs, const ServerId &local, long long currentTerm) {
 		static std::vector<std::unique_ptr<RaftPeerClientImpl> > vClient;
+		static int cnt = 0;
 
-		vClient.clear();
-		for (auto &srv : srvs) {
-			if (srv == local) continue;
-			vClient.push_back(std::make_unique<RaftPeerClientImpl>(srv));
+		if (cnt == 0) {
+			for (auto &srv : srvs) {
+				if (srv == local) continue;
+				vClient.push_back(std::make_unique<RaftPeerClientImpl>(srv));
+			}
+			++cnt;
 		}
 
 		for (int i = 0; i < vClient.size(); ++i) {
+			vClient[i]->th.join();
 			vClient[i]->th = boost::thread([this, i, currentTerm]() mutable {
 				PbAppendEntriesRequest request;
 				request.set_term(currentTerm);

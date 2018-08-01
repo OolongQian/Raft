@@ -8,12 +8,18 @@ namespace SJTU {
 	void
 	SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
 //		AppendEntriesSelfModification(request);
+		fprintf(stderr, "server %s get appendEntriesRPC from %s\n", info.get_local().toString().c_str(),
+						request->leaderid().c_str());
 		AppendEntriesResponseGeneration(request, response);
+		fprintf(stderr, "return response: term %lld, success %d\n", response->term(), (int) response->success());
 	}
 
 	void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
 //		RequestVoteSelfModification(request);
+		fprintf(stderr, "server %s get appendEntriesRPC from %s\n", info.get_local().toString().c_str(),
+						request->candidateid().c_str());
 		RequestVoteResponseGeneration(request, response);
+		fprintf(stderr, "return response: term %lld, vote %d\n", response->term(), (int) response->votegranted());
 	}
 
 	void IdentityBase::AppendEntriesResponseGeneration(const PbAppendEntriesRequest *request,
