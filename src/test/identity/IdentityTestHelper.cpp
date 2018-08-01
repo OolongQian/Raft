@@ -24,7 +24,7 @@ namespace SJTU {
 		}
 
 		for (int i = 0; i < vClient.size(); ++i) {
-			vClient[i]->th = boost::thread([this, i]() mutable {
+			vClient[i]->th = boost::thread([this, i, currentTerm]() mutable {
 				PbAppendEntriesRequest request;
 				request.set_term(currentTerm);
 				PbAppendEntriesResponse response;

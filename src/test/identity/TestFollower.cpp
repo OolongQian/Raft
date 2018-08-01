@@ -12,7 +12,7 @@ namespace SJTU {
 		IdentityTestHelper helper;
 		auto &debugContext = Raft::GetDebug();
 		std::atomic<int> follower2Candidate{0};
-		debugContext.before_tranform = [&follower2Candidate](IdentityNo from, IdentityNo to) {
+		debugContext.before_tranform = [&follower2Candidate](IdentityNo from, IdentityNo &to) mutable {
 			if (from == FollowerNo && to == CandidateNo)
 				++follower2Candidate;
 		};
@@ -33,7 +33,7 @@ namespace SJTU {
 		auto &debugContext = Raft::GetDebug();
 		std::atomic<int> F2C{0};
 		std::atomic<int> C2L{0};
-		debugContext.before_tranform = [&](IdentityNo from, IdentityNo to) {
+		debugContext.before_tranform = [&](IdentityNo from, IdentityNo &to) mutable {
 			if (from == FollowerNo && to == CandidateNo)
 				F2C++;
 			else if (from == CandidateNo && to == LeaderNo)
@@ -72,6 +72,33 @@ namespace SJTU {
 		assert(F2C == 0);
 		printf("create one follower, and send heartbeat to it manually, it remains follower\n");
 	}
+
+
+	void Candidate_Basic() {
+		IdentityTestHelper helper;
+		const std::size_t SrvNum = 1;
+		auto srvs = helper.makeServers(SrvNum);
+		auto &ctx = Raft::GetDebug();
+		ctx.before_tranform = [](IdentityNo from, IdentityNo &to) mutable {
+			if (from == FollowerNo) throw std::runtime_error("unexpected identity");
+			if (from != DownNo && to != CandidateNo) throw std::runtime_error("transform not to candidate");
+			to = to == DownNo ? DownNo : CandidateNo;
+		};
+		srvs[0]->Init();
+		srvs[0]->StartUp();
+		sleep(5);
+		srvs[0]->ShutDown();
+	}
+
+	void CandidateNaive() {
+		IdentityTestHelper helper;
+		const std::size_t SrvNum = 3;
+		auto srvs = helper.makeServers(SrvNum);
+		const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
+		std::atomic<int> candidate2Follower{0}, candidate2Leader{0};
+		auto &ctx = Raft::GetDebug();
+	}
+
 };
 
 
@@ -79,61 +106,7 @@ using namespace SJTU;
 
 int main() {
 //	SJTU::Follower_Basic();
-	SJTU::Follower_AppendEntry();
-//	IdentityTestHelper helper;
-
-//	auto p = helper.makeServers(1);
-//	const ServerId &id = p[0]->GetInfo().get_local();
-
-//	myServer server("127.0.0.1:50000");
-
-
-//	myServer::Foo service;
-//	grpc::ServerBuilder builder;
-//	builder.AddListeningPort(id.toString(), grpc::InsecureServerCredentials());
-//	builder.RegisterService(&service);
-//	auto server = builder.BuildAndStart();
-//	boost::thread th([&] {
-//		std::cout << "Server listening on " << id.toString() << std::endl;
-//		server->Wait();
-//		});
-
-//		p[0]->Init();
-//		p[0]->StartUp();
-//
-//		sleep(1);
-//	const auto timeout = p[0]->GetInfo().get_electionTimeout() / 2;
-
-//	std::string config_filename0 = "raft_0.json";
-//	SJTU::Server server0(config_filename0);
-//
-//	server0.Init();
-//	server0.StartUp();
-//	const auto timeout = server0.GetInfo().get_electionTimeout() / 2;
-//	const ServerId &id = server0.GetInfo().get_local();
-//	myServer server(id.toString());
-//	std::cout << "timeout " << timeout << std::endl;
-//
-//	std::vector<std::unique_ptr<RaftPeerClientImpl> > vClient;
-//	for (int i = 0, appendTime = 10; i < appendTime; ++i) {
-//		vClient.push_back(std::make_unique<RaftPeerClientImpl>(id));
-//
-//		vClient.back()->th = boost::thread([&vClient]() mutable {
-//			grpc::ClientContext ctx;
-//			PbAppendEntriesRequest msg;
-//			PbAppendEntriesResponse rsp;
-//			msg.set_term(0);
-//
-//			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(30));
-//			grpc::Status status = vClient.back()->stub_->AppendEntriesRPC(&ctx, msg, &rsp);
-//			printf("rpc sent\n");
-//			printf("%s\n", status.error_details().c_str());
-//			printf("%s\n", status.error_message().c_str());
-//			printf("%d\n", status.error_code());
-//			printf("%lld\n", rsp.term());
-//		});
-//		std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
-//	}
-//	sleep(10);
+//	SJTU::Follower_AppendEntry();
+	SJTU::Candidate_Basic();
 	return 0;
 }

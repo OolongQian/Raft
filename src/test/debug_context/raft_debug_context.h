@@ -2,6 +2,7 @@
 #define RAFT_PROJ_RAFT_DEBUG_CONTEXT_H
 
 #include <functional>
+#include <boost/atomic.hpp>
 #include "../../../include/server_info.h"
 
 namespace SJTU {
@@ -12,7 +13,7 @@ namespace SJTU {
 			cnt = 0;
 		}
 
-		std::function<void(IdentityNo, IdentityNo)> before_tranform;
+		std::function<void(IdentityNo, IdentityNo & )> before_tranform;
 
 		boost::atomic<std::size_t> cnt{0};
 	};

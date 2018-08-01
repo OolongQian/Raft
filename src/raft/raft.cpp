@@ -47,23 +47,22 @@ namespace SJTU {
 
 		RaftDebugContext &debugContext = GetDebug();
 		debugContext.before_tranform(currentIdentity, identityNo);
+
 		eventQueue.addEvent([this, identityNo]() mutable {
 			printf("transform from %d to %d\n", currentIdentity, identityNo);
 
-			if (currentIdentity != DownNo)
-				identities[currentIdentity]->leave();
-			else {
+			if (currentIdentity == DownNo)
 				server_end.Monitor();
-			}
+			else
+				identities[currentIdentity]->leave();
 
 			currentIdentity = identityNo;
 
-			if (currentIdentity != DownNo)
-				identities[currentIdentity]->init();
-			else {
+			if (currentIdentity == DownNo) {
 				timer.Stop();
 				server_end.Stop();
-			}
+			} else
+				identities[currentIdentity]->init();
 		});
 	}
 
