@@ -13,21 +13,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ae9abb6e-d064-437d-a685-86c1734c862a" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/include/debug_header.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/identity/TestCase.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/raft/raft.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/raft/raft.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/raft/raft_proto/raft_client.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/raft/raft_proto/raft_client.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/server.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/server.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/raft/identities/candidate.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/raft/identities/candidate.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/raft/identities/follower.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/raft/identities/follower.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/raft/identities/identity_base.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/raft/identities/identity_base.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/raft/identities/leader.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/raft/identities/leader.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/raft/raft.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/raft/raft.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/debug_context/raft_debug_context.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/debug_context/raft_debug_context.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/identity/IdentityTestHelper.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/identity/IdentityTestHelper.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/identity/TestFollower.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/reference_utility/ProjectLog" beforeDir="false" afterPath="$PROJECT_DIR$/reference_utility/ProjectLog" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -43,23 +30,32 @@
       <file leaf-file-name="IdentityTestHelper.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/identity/IdentityTestHelper.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
-              <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+            <state>
+              <caret lean-forward="true" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestCase.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TestCase.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/identity/TestCase.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="126" column="26" lean-forward="true" selection-start-line="126" selection-start-column="26" selection-end-line="126" selection-end-column="26" />
+            <state relative-caret-position="457">
+              <caret line="131" lean-forward="true" selection-start-line="131" selection-end-line="131" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#189#770#0" />
                 <element signature="e#773#2489#0" />
                 <element signature="e#2493#3027#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProjectLog" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/reference_utility/ProjectLog">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="479">
+              <caret line="178" column="65" selection-start-line="178" selection-start-column="65" selection-end-line="178" selection-end-column="65" />
             </state>
           </provider>
         </entry>
@@ -156,7 +152,6 @@
         <option value="$PROJECT_DIR$/include/raft/identities/identity_base.h" />
         <option value="$PROJECT_DIR$/include/raft/raft_proto/raft_server.h" />
         <option value="$PROJECT_DIR$/src/raft/raft_proto/raft_server.cc" />
-        <option value="$PROJECT_DIR$/reference_utility/ProjectLog" />
         <option value="$PROJECT_DIR$/include/raft/identities/follower.h" />
         <option value="$PROJECT_DIR$/include/raft/identities/candidate.h" />
         <option value="$PROJECT_DIR$/include/raft/identities/leader.h" />
@@ -182,6 +177,7 @@
         <option value="$PROJECT_DIR$/src/raft/identities/candidate.cpp" />
         <option value="$PROJECT_DIR$/src/raft/identities/follower.cpp" />
         <option value="$PROJECT_DIR$/src/test/identity/TestCase.cpp" />
+        <option value="$PROJECT_DIR$/reference_utility/ProjectLog" />
       </list>
     </option>
   </component>
@@ -402,14 +398,7 @@
       <workItem from="1533041095222" duration="4359000" />
       <workItem from="1533089835587" duration="3455000" />
       <workItem from="1533103244274" duration="6152000" />
-      <workItem from="1533112431927" duration="8594000" />
-    </task>
-    <task id="LOCAL-00005" summary="learn gRPC">
-      <created>1532523782578</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1532523782578</updated>
+      <workItem from="1533112431927" duration="9340000" />
     </task>
     <task id="LOCAL-00006" summary="successfully implement Hello World toy RPC">
       <created>1532526298012</created>
@@ -747,11 +736,18 @@
       <option name="project" value="LOCAL" />
       <updated>1533120614115</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="continue testing">
+      <created>1533128648609</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1533128648609</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="190082000" />
+    <option name="totallyTimeSpent" value="190828000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -866,13 +862,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/include/raft/identities/leader.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="19" column="35" lean-forward="true" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include/altivec.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
@@ -1227,21 +1216,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/identity/IdentityTestHelper.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
-          <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+        <state>
+          <caret lean-forward="true" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/identity/TestCase.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="126" column="26" lean-forward="true" selection-start-line="126" selection-start-column="26" selection-end-line="126" selection-end-column="26" />
+        <state relative-caret-position="457">
+          <caret line="131" lean-forward="true" selection-start-line="131" selection-end-line="131" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#189#770#0" />
             <element signature="e#773#2489#0" />
             <element signature="e#2493#3027#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reference_utility/ProjectLog">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="479">
+          <caret line="178" column="65" selection-start-line="178" selection-start-column="65" selection-end-line="178" selection-end-column="65" />
         </state>
       </provider>
     </entry>
