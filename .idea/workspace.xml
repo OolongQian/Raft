@@ -27,20 +27,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="IdentityTestHelper.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/identity/IdentityTestHelper.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="TestCase.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/identity/TestCase.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="457">
-              <caret line="131" lean-forward="true" selection-start-line="131" selection-end-line="131" />
+            <state relative-caret-position="2096">
+              <caret line="131" selection-start-line="131" selection-end-line="131" />
               <folding>
                 <element signature="e#0#31#0" expanded="true" />
                 <element signature="e#189#770#0" />
@@ -51,11 +42,29 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProjectLog" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ProjectLog" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/reference_utility/ProjectLog">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="479">
-              <caret line="178" column="65" selection-start-line="178" selection-start-column="65" selection-end-line="178" selection-end-column="65" />
+            <state relative-caret-position="529">
+              <caret line="183" lean-forward="true" selection-start-line="183" selection-end-line="183" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="candidate.h" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/include/raft/identities/candidate.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="275">
+              <caret line="25" column="25" lean-forward="true" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="candidate.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/raft/identities/candidate.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="125" column="18" selection-start-line="125" selection-start-column="18" selection-end-line="125" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -191,10 +200,10 @@
     <packageJsonPaths />
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
-    <option name="x" value="95" />
-    <option name="width" value="1345" />
-    <option name="height" value="900" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="y" value="23" />
+    <option name="width" value="1440" />
+    <option name="height" value="815" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -202,7 +211,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -307,6 +315,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -398,14 +407,9 @@
       <workItem from="1533041095222" duration="4359000" />
       <workItem from="1533089835587" duration="3455000" />
       <workItem from="1533103244274" duration="6152000" />
-      <workItem from="1533112431927" duration="9340000" />
-    </task>
-    <task id="LOCAL-00006" summary="successfully implement Hello World toy RPC">
-      <created>1532526298012</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1532526298012</updated>
+      <workItem from="1533112431927" duration="9407000" />
+      <workItem from="1533139959098" duration="6000" />
+      <workItem from="1533141256440" duration="1768000" />
     </task>
     <task id="LOCAL-00007" summary="generate raft peer rpc">
       <created>1532587760650</created>
@@ -743,11 +747,18 @@
       <option name="project" value="LOCAL" />
       <updated>1533128648609</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="start to consider master client interface">
+      <created>1533129612247</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1533129612247</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="190828000" />
+    <option name="totallyTimeSpent" value="192669000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -759,17 +770,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="95" y="0" width="1345" height="900" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.81326354" visible="true" weight="0.24244712" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.81326354" visible="true" weight="0.24242425" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.30060607" />
-      <window_info anchor="bottom" id="CMake" order="7" weight="0.42303032" />
+      <window_info anchor="bottom" id="CMake" order="7" visible="true" weight="0.2509091" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50297976" side_tool="true" weight="0.25575757" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3260606" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32969698" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49821216" visible="true" weight="0.35030302" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49821216" weight="0.35030302" />
       <window_info id="Structure" order="1" sideWeight="0.18673648" side_tool="true" weight="0.23396759" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49702027" weight="0.31636363" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -778,8 +787,10 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.30060607" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3260606" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -828,7 +839,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="reconstruct completes, working on identities..." />
     <MESSAGE value="working.........." />
     <MESSAGE value="working............." />
     <MESSAGE value="working................" />
@@ -853,7 +863,8 @@
     <MESSAGE value="chonggou" />
     <MESSAGE value="teset" />
     <MESSAGE value="continue testing" />
-    <option name="LAST_COMMIT_MESSAGE" value="continue testing" />
+    <MESSAGE value="start to consider master client interface" />
+    <option name="LAST_COMMIT_MESSAGE" value="start to consider master client interface" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -862,20 +873,10 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include/altivec.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/include/raft/raft_proto/raft_server.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="334">
           <caret line="31" column="29" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="29" />
-          <folding>
-            <element signature="e#75#105#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -883,9 +884,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="261">
           <caret line="73" column="29" selection-start-line="73" selection-start-column="29" selection-end-line="73" selection-end-column="29" />
-          <folding>
-            <element signature="e#70#91#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -935,9 +933,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="4" lean-forward="true" selection-start-column="4" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#35#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -951,9 +946,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/identity/TestCandidate.cpp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/identity/TestCandidate.cpp" />
     <entry file="file://$PROJECT_DIR$/src/test/identity/IdentityTestHelper.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="256">
@@ -1035,9 +1028,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
           <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="e#79#100#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1059,9 +1049,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="337">
           <caret line="38" column="35" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
-          <folding>
-            <element signature="e#55#72#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1167,9 +1154,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
           <caret line="77" column="18" lean-forward="true" selection-start-line="77" selection-start-column="18" selection-end-line="77" selection-end-column="18" />
-          <folding>
-            <element signature="e#51#68#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1198,33 +1182,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="256">
           <caret line="16" column="25" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
-          <folding>
-            <element signature="e#23#75#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/raft/identities/candidate.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="7" column="16" lean-forward="true" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-          <folding>
-            <element signature="e#41#96#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/identity/IdentityTestHelper.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/identity/TestCase.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="131" lean-forward="true" selection-start-line="131" selection-end-line="131" />
+        <state relative-caret-position="2096">
+          <caret line="131" selection-start-line="131" selection-end-line="131" />
           <folding>
             <element signature="e#0#31#0" expanded="true" />
             <element signature="e#189#770#0" />
@@ -1236,8 +1203,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/reference_utility/ProjectLog">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="178" column="65" selection-start-line="178" selection-start-column="65" selection-end-line="178" selection-end-column="65" />
+        <state relative-caret-position="529">
+          <caret line="183" lean-forward="true" selection-start-line="183" selection-end-line="183" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/raft/identities/candidate.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="125" column="18" selection-start-line="125" selection-start-column="18" selection-end-line="125" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/raft/identities/candidate.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="25" column="25" lean-forward="true" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
         </state>
       </provider>
     </entry>

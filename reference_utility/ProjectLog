@@ -177,3 +177,7 @@ ApplyQueue is constructed, the next thing is to implement self_modification.
 这个接口是server开出来的客户端。
 因此要在一个proto里面写两个函数。一个叫put一个叫get。
 一个请求会被从client端发出，经过直接客户端的cache，转发到leader端口，在这个地方需要一个server之间的rpc。
+
+我感觉我需要在每个server里面开一个queue来存放已经被接收的client请求，然后遇到appendEntries Request的时候对着leader猛发一下rpc，然后
+leader会把接收到的所有queue当中的请求都增加到自己的log里作为当前term的新增entry。
+
