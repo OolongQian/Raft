@@ -20,9 +20,9 @@ namespace SJTU {
 					printf("current Identity %d\n", currentIdentity);
 					identities[currentIdentity]->ProcsAppendEntriesFunc(request, response);
 				},
-				[this](const PbAddLogRequest *request, PbAddLogResponse *response) -> void {
+				[this](const PbPutRequest *request, PbPutResponse *response) -> void {
 					printf("%s receive add log request\n", info.get_local().toString());
-					identities[currentIdentity]->ProcsAddLogFunc(request, response);
+					identities[currentIdentity]->ProcsPutFunc(request, response);
 				});
 
 		/// gRPC client_ends

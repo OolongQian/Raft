@@ -3,18 +3,16 @@ syntax = "proto3";
 service RaftPeerService {
     rpc AppendEntriesRPC (PbAppendEntriesRequest) returns (PbAppendEntriesResponse);
     rpc RequestVoteRPC (PbRequestVoteRequest) returns (PbRequestVoteResponse);
-    rpc AddLogRPC (PbAddLogRequest) returns (PbAddLogResponse);
+    rpc PutRPC (PbPutRequest) returns (PbPutResponse);
 }
 
-message PbAddLogRequest {
-    string op = 1;
-    string key = 2;
-    string val = 3;
+message PbPutRequest {
+    string key = 1;
+    string val = 2;
 }
 
-message PbAddLogResponse {
-    string success = 1;
-    string ans = 2;
+message PbPutResponse {
+    bool success = 1;
 }
 
 message PbAppendEntriesRequest {

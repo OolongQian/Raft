@@ -24,7 +24,7 @@ namespace SJTU {
 
 		using RequestVoteFunc = std::function<void(const PbRequestVoteRequest *, PbRequestVoteResponse *)>;
 		using AppendEntriesFunc = std::function<void(const PbAppendEntriesRequest *, PbAppendEntriesResponse *)>;
-		using AddLogFunc = std::function<void(const PbAddLogRequest *, PbAddLogResponse *)>;
+		using PutFunc = std::function<void(const PbPutRequest *, PbPutResponse *)>;
 
 		class RaftPeerServiceImpl final : public RaftPeerService::Service {
 		public:
@@ -37,18 +37,18 @@ namespace SJTU {
 																	PbRequestVoteResponse *response) override;
 
 			grpc::Status
-			AddLogRPC(grpc::ServerContext *context, const PbAddLogRequest *request, PbAddLogResponse *response) override;
+			PutRPC(grpc::ServerContext *context, const PbPutRequest *request, PbPutResponse *response) override;
 
 		public:
 			RequestVoteFunc requestVoteFunc;
 			AppendEntriesFunc appendEntriesFunc;
-			AddLogFunc addLogFunc;
+			PutFunc putFunc;
 		};
 
 	public:
 		explicit RaftServer(const ServerId &id) : serverId(id) {}
 
-		void BindServiceFunc(RequestVoteFunc f1, AppendEntriesFunc f2, AddLogFunc f3);
+		void BindServiceFunc(RequestVoteFunc f1, AppendEntriesFunc f2, PutFunc f3);
 
 		void PreMonitorInit();
 

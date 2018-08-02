@@ -24,10 +24,10 @@ namespace SJTU {
 	}
 
 	void RaftServer::BindServiceFunc(RaftServer::RequestVoteFunc f1, RaftServer::AppendEntriesFunc f2,
-																	 RaftServer::AddLogFunc f3) {
+																	 RaftServer::PutFunc f3) {
 		service.requestVoteFunc = std::move(f1);
 		service.appendEntriesFunc = std::move(f2);
-		service.addLogFunc = std::move(f3);
+		service.PutFunc = std::move(f3);
 	}
 
 	grpc::Status
@@ -48,9 +48,11 @@ namespace SJTU {
 		return grpc::Status::OK;
 	}
 
-	grpc::Status RaftServer::RaftPeerServiceImpl::AddLogRPC(grpc::ServerContext *context, const PbAddLogRequest *request,
-																													PbAddLogResponse *response) {
-
+	grpc::Status RaftServer::RaftPeerServiceImpl::PutRPC(grpc::ServerContext *context, const PbPutRequest *request,
+																											 PbPutResponse *response) {
+		printf("Put RPC received\n");
+		putFunc(request, response);
+		return grpc::Status::OK;
 	}
 
 };

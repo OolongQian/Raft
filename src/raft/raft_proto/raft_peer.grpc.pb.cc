@@ -17,7 +17,7 @@
 static const char *RaftPeerService_method_names[] = {
 		"/RaftPeerService/AppendEntriesRPC",
 		"/RaftPeerService/RequestVoteRPC",
-		"/RaftPeerService/AddLogRPC",
+		"/RaftPeerService/PutRPC",
 };
 
 std::unique_ptr<RaftPeerService::Stub>
@@ -31,7 +31,7 @@ RaftPeerService::Stub::Stub(const std::shared_ptr<::grpc::ChannelInterface> &cha
 		: channel_(channel),
 			rpcmethod_AppendEntriesRPC_(RaftPeerService_method_names[0], ::grpc::internal::RpcMethod::NORMAL_RPC, channel),
 			rpcmethod_RequestVoteRPC_(RaftPeerService_method_names[1], ::grpc::internal::RpcMethod::NORMAL_RPC, channel),
-			rpcmethod_AddLogRPC_(RaftPeerService_method_names[2], ::grpc::internal::RpcMethod::NORMAL_RPC, channel) {}
+			rpcmethod_PutRPC_(RaftPeerService_method_names[2], ::grpc::internal::RpcMethod::NORMAL_RPC, channel) {}
 
 ::grpc::Status
 RaftPeerService::Stub::AppendEntriesRPC(::grpc::ClientContext *context, const ::PbAppendEntriesRequest &request,
@@ -79,25 +79,25 @@ RaftPeerService::Stub::PrepareAsyncRequestVoteRPCRaw(::grpc::ClientContext *cont
 																																														 context, request, false);
 }
 
-::grpc::Status RaftPeerService::Stub::AddLogRPC(::grpc::ClientContext *context, const ::PbAddLogRequest &request,
-																								::PbAddLogResponse *response) {
-	return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_AddLogRPC_, context, request, response);
+::grpc::Status RaftPeerService::Stub::PutRPC(::grpc::ClientContext *context, const ::PbPutRequest &request,
+																						 ::PbPutResponse *response) {
+	return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_PutRPC_, context, request, response);
 }
 
-::grpc::ClientAsyncResponseReader<::PbAddLogResponse> *
-RaftPeerService::Stub::AsyncAddLogRPCRaw(::grpc::ClientContext *context, const ::PbAddLogRequest &request,
-																				 ::grpc::CompletionQueue *cq) {
-	return ::grpc::internal::ClientAsyncResponseReaderFactory<::PbAddLogResponse>::Create(channel_.get(), cq,
-																																												rpcmethod_AddLogRPC_, context,
-																																												request, true);
+::grpc::ClientAsyncResponseReader<::PbPutResponse> *
+RaftPeerService::Stub::AsyncPutRPCRaw(::grpc::ClientContext *context, const ::PbPutRequest &request,
+																			::grpc::CompletionQueue *cq) {
+	return ::grpc::internal::ClientAsyncResponseReaderFactory<::PbPutResponse>::Create(channel_.get(), cq,
+																																										 rpcmethod_PutRPC_, context,
+																																										 request, true);
 }
 
-::grpc::ClientAsyncResponseReader<::PbAddLogResponse> *
-RaftPeerService::Stub::PrepareAsyncAddLogRPCRaw(::grpc::ClientContext *context, const ::PbAddLogRequest &request,
-																								::grpc::CompletionQueue *cq) {
-	return ::grpc::internal::ClientAsyncResponseReaderFactory<::PbAddLogResponse>::Create(channel_.get(), cq,
-																																												rpcmethod_AddLogRPC_, context,
-																																												request, false);
+::grpc::ClientAsyncResponseReader<::PbPutResponse> *
+RaftPeerService::Stub::PrepareAsyncPutRPCRaw(::grpc::ClientContext *context, const ::PbPutRequest &request,
+																						 ::grpc::CompletionQueue *cq) {
+	return ::grpc::internal::ClientAsyncResponseReaderFactory<::PbPutResponse>::Create(channel_.get(), cq,
+																																										 rpcmethod_PutRPC_, context,
+																																										 request, false);
 }
 
 RaftPeerService::Service::Service() {
@@ -114,8 +114,8 @@ RaftPeerService::Service::Service() {
 	AddMethod(new ::grpc::internal::RpcServiceMethod(
 			RaftPeerService_method_names[2],
 			::grpc::internal::RpcMethod::NORMAL_RPC,
-			new ::grpc::internal::RpcMethodHandler<RaftPeerService::Service, ::PbAddLogRequest, ::PbAddLogResponse>(
-					std::mem_fn(&RaftPeerService::Service::AddLogRPC), this)));
+			new ::grpc::internal::RpcMethodHandler<RaftPeerService::Service, ::PbPutRequest, ::PbPutResponse>(
+					std::mem_fn(&RaftPeerService::Service::PutRPC), this)));
 }
 
 RaftPeerService::Service::~Service() {
@@ -139,8 +139,8 @@ RaftPeerService::Service::RequestVoteRPC(::grpc::ServerContext *context, const :
 	return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status RaftPeerService::Service::AddLogRPC(::grpc::ServerContext *context, const ::PbAddLogRequest *request,
-																									 ::PbAddLogResponse *response) {
+::grpc::Status RaftPeerService::Service::PutRPC(::grpc::ServerContext *context, const ::PbPutRequest *request,
+																								::PbPutResponse *response) {
 	(void) context;
 	(void) request;
 	(void) response;

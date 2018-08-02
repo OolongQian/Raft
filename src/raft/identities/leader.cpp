@@ -73,7 +73,7 @@ namespace SJTU {
 #endif
 
 				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(30));
-				client_ends_[i]->stub_->AppendEntriesRPC(&context, request, &response);      /// this line has serious problems.
+				client_ends_[i]->stub_->AppendEntriesRPC(&context, request, &response);
 
 #ifndef _NOLOG
 				printf("Leader received response from other server...\n");
@@ -186,13 +186,14 @@ namespace SJTU {
 		}
 	}
 
-	void Leader::ProcsAddLogFunc(const PbAddLogRequest *request, PbAddLogResponse *response) {
+	void Leader::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *response) {
 		Entry log;
 		log.term = state_.currentTerm;
-		log.command = request->op();
+		log.command = "Put";
 		log.key = request->key();
 		log.val = request->val();
-
-		state_.log.
+		log.entryIndex = state_.log.back().entryIndex + 1;
+		state_.log.pushBack(log);
+		response->set_success(true);
 	}
 };
