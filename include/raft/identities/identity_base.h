@@ -55,6 +55,8 @@ namespace SJTU {
 		 * */
 		virtual void TimeOutFunc() = 0;
 
+		virtual void ProcsAddLogFunc(const PbAddLogRequest *, PbAddLogResponse *);
+
 	protected:
 		State &state_;
 

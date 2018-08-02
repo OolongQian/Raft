@@ -59,4 +59,8 @@ namespace SJTU {
 		tmp.entryIndex = tmp.term = 0;
 		v.push_back(std::move(tmp));
 	}
+
+	void LogArray::pushBack(Entry entry) {
+		
+	}
 };

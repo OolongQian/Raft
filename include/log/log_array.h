@@ -52,6 +52,8 @@ namespace SJTU {
 		/// delete the existing entry and all that follow it, including the one at pos.
 		void flushToEnd(const long long pos);
 
+		void pushBack(Entry);
+
 	private:
 		std::vector<Entry> v;
 	};

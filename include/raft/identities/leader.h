@@ -45,6 +45,7 @@ namespace SJTU {
 
 		void CheckCommitIndexUpdate();
 
+		void ProcsAddLogFunc(const PbAddLogRequest *, PbAddLogResponse *) override;
 		/**
 		 * Heartbeat serves as appendEntries-RPCs simultaneously. If there are additional entries
 		 * need to be applied, then it just append entry, otherwise it's empty heartbeat.

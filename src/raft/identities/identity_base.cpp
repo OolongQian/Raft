@@ -137,4 +137,8 @@ namespace SJTU {
 			identity_transformer(FollowerNo);
 		}
 	}
+
+	void IdentityBase::ProcsAddLogFunc(const PbAddLogRequest *, PbAddLogResponse *) {
+
+	}
 };

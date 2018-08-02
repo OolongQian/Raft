@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <map>
+#include <boost/thread/mutex.hpp>
 #include "../server_info.h"
 #include "../log/log_array.h"
 
@@ -34,6 +35,8 @@ namespace SJTU {
 
 		/// in order to let the first log index be 1, push a trivial log in the front.
 		void Load();
+
+		boost::mutex entries_mtx;
 	};
 
 };

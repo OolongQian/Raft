@@ -78,6 +78,8 @@ namespace SJTU {
 		void IdentityTransform(IdentityNo);
 
 		void TimeOutActionAdapter();
+
+
 	};
 };
 

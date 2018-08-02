@@ -70,6 +70,22 @@ public:
 					PrepareAsyncRequestVoteRPCRaw(context, request, cq));
 		}
 
+		virtual ::grpc::Status
+		AddLogRPC(::grpc::ClientContext *context, const ::PbAddLogRequest &request, ::PbAddLogResponse *response) = 0;
+
+		std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<::PbAddLogResponse>>
+		AsyncAddLogRPC(::grpc::ClientContext *context, const ::PbAddLogRequest &request, ::grpc::CompletionQueue *cq) {
+			return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<::PbAddLogResponse>>(
+					AsyncAddLogRPCRaw(context, request, cq));
+		}
+
+		std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<::PbAddLogResponse>>
+		PrepareAsyncAddLogRPC(::grpc::ClientContext *context, const ::PbAddLogRequest &request,
+													::grpc::CompletionQueue *cq) {
+			return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<::PbAddLogResponse>>(
+					PrepareAsyncAddLogRPCRaw(context, request, cq));
+		}
+
 	private:
 		virtual ::grpc::ClientAsyncResponseReaderInterface<::PbAppendEntriesResponse> *
 		AsyncAppendEntriesRPCRaw(::grpc::ClientContext *context, const ::PbAppendEntriesRequest &request,
@@ -86,6 +102,14 @@ public:
 		virtual ::grpc::ClientAsyncResponseReaderInterface<::PbRequestVoteResponse> *
 		PrepareAsyncRequestVoteRPCRaw(::grpc::ClientContext *context, const ::PbRequestVoteRequest &request,
 																	::grpc::CompletionQueue *cq) = 0;
+
+		virtual ::grpc::ClientAsyncResponseReaderInterface<::PbAddLogResponse> *
+		AsyncAddLogRPCRaw(::grpc::ClientContext *context, const ::PbAddLogRequest &request,
+											::grpc::CompletionQueue *cq) = 0;
+
+		virtual ::grpc::ClientAsyncResponseReaderInterface<::PbAddLogResponse> *
+		PrepareAsyncAddLogRPCRaw(::grpc::ClientContext *context, const ::PbAddLogRequest &request,
+														 ::grpc::CompletionQueue *cq) = 0;
 	};
 
 	class Stub final : public StubInterface {
@@ -126,6 +150,22 @@ public:
 					PrepareAsyncRequestVoteRPCRaw(context, request, cq));
 		}
 
+		::grpc::Status
+		AddLogRPC(::grpc::ClientContext *context, const ::PbAddLogRequest &request, ::PbAddLogResponse *response) override;
+
+		std::unique_ptr<::grpc::ClientAsyncResponseReader<::PbAddLogResponse>>
+		AsyncAddLogRPC(::grpc::ClientContext *context, const ::PbAddLogRequest &request, ::grpc::CompletionQueue *cq) {
+			return std::unique_ptr<::grpc::ClientAsyncResponseReader<::PbAddLogResponse>>(
+					AsyncAddLogRPCRaw(context, request, cq));
+		}
+
+		std::unique_ptr<::grpc::ClientAsyncResponseReader<::PbAddLogResponse>>
+		PrepareAsyncAddLogRPC(::grpc::ClientContext *context, const ::PbAddLogRequest &request,
+													::grpc::CompletionQueue *cq) {
+			return std::unique_ptr<::grpc::ClientAsyncResponseReader<::PbAddLogResponse>>(
+					PrepareAsyncAddLogRPCRaw(context, request, cq));
+		}
+
 	private:
 		std::shared_ptr<::grpc::ChannelInterface> channel_;
 
@@ -145,8 +185,17 @@ public:
 		PrepareAsyncRequestVoteRPCRaw(::grpc::ClientContext *context, const ::PbRequestVoteRequest &request,
 																	::grpc::CompletionQueue *cq) override;
 
+		::grpc::ClientAsyncResponseReader<::PbAddLogResponse> *
+		AsyncAddLogRPCRaw(::grpc::ClientContext *context, const ::PbAddLogRequest &request,
+											::grpc::CompletionQueue *cq) override;
+
+		::grpc::ClientAsyncResponseReader<::PbAddLogResponse> *
+		PrepareAsyncAddLogRPCRaw(::grpc::ClientContext *context, const ::PbAddLogRequest &request,
+														 ::grpc::CompletionQueue *cq) override;
+
 		const ::grpc::internal::RpcMethod rpcmethod_AppendEntriesRPC_;
 		const ::grpc::internal::RpcMethod rpcmethod_RequestVoteRPC_;
+		const ::grpc::internal::RpcMethod rpcmethod_AddLogRPC_;
 	};
 
 	static std::unique_ptr<Stub> NewStub(const std::shared_ptr<::grpc::ChannelInterface> &channel,
@@ -163,6 +212,9 @@ public:
 
 		virtual ::grpc::Status RequestVoteRPC(::grpc::ServerContext *context, const ::PbRequestVoteRequest *request,
 																					::PbRequestVoteResponse *response);
+
+		virtual ::grpc::Status
+		AddLogRPC(::grpc::ServerContext *context, const ::PbAddLogRequest *request, ::PbAddLogResponse *response);
 	};
 
 	template<class BaseClass>
@@ -223,7 +275,36 @@ public:
 		}
 	};
 
-	typedef WithAsyncMethod_AppendEntriesRPC<WithAsyncMethod_RequestVoteRPC<Service> > AsyncService;
+	template<class BaseClass>
+	class WithAsyncMethod_AddLogRPC : public BaseClass {
+	private:
+		void BaseClassMustBeDerivedFromService(const Service *service) {}
+
+	public:
+		WithAsyncMethod_AddLogRPC() {
+			::grpc::Service::MarkMethodAsync(2);
+		}
+
+		~WithAsyncMethod_AddLogRPC() override {
+			BaseClassMustBeDerivedFromService(this);
+		}
+
+		// disable synchronous version of this method
+		::grpc::Status AddLogRPC(::grpc::ServerContext *context, const ::PbAddLogRequest *request,
+														 ::PbAddLogResponse *response) final override {
+			abort();
+			return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+		}
+
+		void RequestAddLogRPC(::grpc::ServerContext *context, ::PbAddLogRequest *request,
+													::grpc::ServerAsyncResponseWriter<::PbAddLogResponse> *response,
+													::grpc::CompletionQueue *new_call_cq, ::grpc::ServerCompletionQueue *notification_cq,
+													void *tag) {
+			::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+		}
+	};
+
+	typedef WithAsyncMethod_AppendEntriesRPC<WithAsyncMethod_RequestVoteRPC<WithAsyncMethod_AddLogRPC<Service> > > AsyncService;
 
 	template<class BaseClass>
 	class WithGenericMethod_AppendEntriesRPC : public BaseClass {
@@ -264,6 +345,28 @@ public:
 		// disable synchronous version of this method
 		::grpc::Status RequestVoteRPC(::grpc::ServerContext *context, const ::PbRequestVoteRequest *request,
 																	::PbRequestVoteResponse *response) final override {
+			abort();
+			return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+		}
+	};
+
+	template<class BaseClass>
+	class WithGenericMethod_AddLogRPC : public BaseClass {
+	private:
+		void BaseClassMustBeDerivedFromService(const Service *service) {}
+
+	public:
+		WithGenericMethod_AddLogRPC() {
+			::grpc::Service::MarkMethodGeneric(2);
+		}
+
+		~WithGenericMethod_AddLogRPC() override {
+			BaseClassMustBeDerivedFromService(this);
+		}
+
+		// disable synchronous version of this method
+		::grpc::Status AddLogRPC(::grpc::ServerContext *context, const ::PbAddLogRequest *request,
+														 ::PbAddLogResponse *response) final override {
 			abort();
 			return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 		}
@@ -329,9 +432,39 @@ public:
 																									::grpc::ServerUnaryStreamer<::PbRequestVoteRequest, ::PbRequestVoteResponse> *server_unary_streamer) = 0;
 	};
 
-	typedef WithStreamedUnaryMethod_AppendEntriesRPC<WithStreamedUnaryMethod_RequestVoteRPC<Service> > StreamedUnaryService;
+	template<class BaseClass>
+	class WithStreamedUnaryMethod_AddLogRPC : public BaseClass {
+	private:
+		void BaseClassMustBeDerivedFromService(const Service *service) {}
+
+	public:
+		WithStreamedUnaryMethod_AddLogRPC() {
+			::grpc::Service::MarkMethodStreamed(2,
+																					new ::grpc::internal::StreamedUnaryHandler<::PbAddLogRequest, ::PbAddLogResponse>(
+																							std::bind(
+																									&WithStreamedUnaryMethod_AddLogRPC<BaseClass>::StreamedAddLogRPC,
+																									this, std::placeholders::_1, std::placeholders::_2)));
+		}
+
+		~WithStreamedUnaryMethod_AddLogRPC() override {
+			BaseClassMustBeDerivedFromService(this);
+		}
+
+		// disable regular version of this method
+		::grpc::Status AddLogRPC(::grpc::ServerContext *context, const ::PbAddLogRequest *request,
+														 ::PbAddLogResponse *response) final override {
+			abort();
+			return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+		}
+
+		// replace default version of method with streamed unary
+		virtual ::grpc::Status StreamedAddLogRPC(::grpc::ServerContext *context,
+																						 ::grpc::ServerUnaryStreamer<::PbAddLogRequest, ::PbAddLogResponse> *server_unary_streamer) = 0;
+	};
+
+	typedef WithStreamedUnaryMethod_AppendEntriesRPC<WithStreamedUnaryMethod_RequestVoteRPC<WithStreamedUnaryMethod_AddLogRPC<Service> > > StreamedUnaryService;
 	typedef Service SplitStreamedService;
-	typedef WithStreamedUnaryMethod_AppendEntriesRPC<WithStreamedUnaryMethod_RequestVoteRPC<Service> > StreamedService;
+	typedef WithStreamedUnaryMethod_AppendEntriesRPC<WithStreamedUnaryMethod_RequestVoteRPC<WithStreamedUnaryMethod_AddLogRPC<Service> > > StreamedService;
 };
 
 

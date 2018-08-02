@@ -1,4 +1,5 @@
 //#include <altivec.h>
+#include <altivec.h>
 #include "../../../include/raft/identities/leader.h"
 #include "../../../include/raft/raft_proto/raft_peer.pb.h"
 
@@ -183,5 +184,15 @@ namespace SJTU {
 			state_.votedFor.clear();
 			identity_transformer(FollowerNo);
 		}
+	}
+
+	void Leader::ProcsAddLogFunc(const PbAddLogRequest *request, PbAddLogResponse *response) {
+		Entry log;
+		log.term = state_.currentTerm;
+		log.command = request->op();
+		log.key = request->key();
+		log.val = request->val();
+
+		state_.log.
 	}
 };

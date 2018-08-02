@@ -19,6 +19,10 @@ namespace SJTU {
 				[this](const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) -> void {
 					printf("current Identity %d\n", currentIdentity);
 					identities[currentIdentity]->ProcsAppendEntriesFunc(request, response);
+				},
+				[this](const PbAddLogRequest *request, PbAddLogResponse *response) -> void {
+					printf("%s receive add log request\n", info.get_local().toString());
+					identities[currentIdentity]->ProcsAddLogFunc(request, response);
 				});
 
 		/// gRPC client_ends
@@ -47,12 +51,12 @@ namespace SJTU {
 			printf("timer reset\n");
 			return;
 		}
-
+#ifdef _UNIT_TEST
 		IdentityNo identityNo_orig = identityNo;
 		RaftDebugContext &debugContext = GetDebug();
 //		debugContext.before_tranform(currentIdentity, identityNo);
 		ctx.before_tranform(currentIdentity, identityNo);
-
+#endif
 		eventQueue.addEvent([this, identityNo]() mutable {
 			printf("transform from %d to %d\n", currentIdentity, identityNo);
 
@@ -70,9 +74,10 @@ namespace SJTU {
 				identities[currentIdentity]->init();
 			printf("After transform function is carried out. \n");
 		});
-//		debugContext.after_tranform(currentIdentity, identityNo);
+#ifdef _UNIT_TEST
+		//		debugContext.after_tranform(currentIdentity, identityNo);
 		ctx.after_tranform(currentIdentity, identityNo_orig);
-
+#endif
 	}
 
 	void Raft::TimeOutActionAdapter() {
