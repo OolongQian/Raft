@@ -29,6 +29,7 @@ namespace SJTU {
 
 
 	/// a adapted data structure for Entry.
+	/// subIndex is one-based.
 	class LogArray {
 	public:
 		LogArray();
@@ -43,14 +44,14 @@ namespace SJTU {
 
 		bool empty() const;
 
-		size_t size() const;
+		size_t length() const;
 
 		const Entry &back() const;
 
 		void insert(const Entry &, long long pos);
 
 		/// delete the existing entry and all that follow it, including the one at pos.
-		void flushToEnd(const long long pos);
+		void flushToEnd(const long long &pos);
 
 		void pushBack(Entry);
 

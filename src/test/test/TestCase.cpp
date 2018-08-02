@@ -209,9 +209,17 @@ namespace SJTU {
 				}
 			});
 			client->th.join();
+
+			fprintf(stderr, "%d time request, traverse map: ", i);
+			auto data = srv->GetKV();
+			for (auto elem : data) {
+				fprintf(stderr, "%s - %s; ", elem.first.c_str(), elem.second.c_str());
+			}
+			fprintf(stderr, "\n");
 		}
 		srv->ShutDown();
 		printf("Put method success because of one single leader.\n");
+
 	}
 };
 

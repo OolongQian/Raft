@@ -1,4 +1,5 @@
 #include "../../include/log/log_array.h"
+#include <vector>
 
 namespace SJTU {
 
@@ -20,47 +21,59 @@ namespace SJTU {
 		return entry;
 	}
 
+LogArray::LogArray() {
+	Entry tmp;
+	tmp.entryIndex = tmp.term = 0;
+	v.push_back(std::move(tmp));
+}
 
 	void LogArray::clear() {
-
+		v.clear();
+		LogArray();
 	}
 
 	bool LogArray::has(long long pos) {
-		return false;
+		return length() >= pos;
 	}
 
 	const Entry &LogArray::at(long long pos) const {
-		Entry tmp;
-		return tmp;
+		if (pos > length())
+			throw std::runtime_error("try to visit elem at a non-existing position");
+		else
+			return v[pos];
 	}
 
 	bool LogArray::empty() const {
-		return false;
+		return v.size() == 1;
 	}
 
-	size_t LogArray::size() const {
-		return 0;
+size_t LogArray::length() const {
+	return v.size() - 1;
 	}
 
 	const Entry &LogArray::back() const {
-		return Entry();
+		return v.back();
 	}
 
-	void LogArray::insert(const Entry &, long long pos) {
-
+void LogArray::insert(const Entry &entry, long long pos) {
+	if (pos > length() + 1)
+		throw std::runtime_error("try to insert in a floating position");
+	else if (pos == length() + 1)
+		pushBack(entry);
+	else {
+		fprintf(stderr, "LogArray is overwriting an existing entry\n");
+		v[pos] = entry;
 	}
+}
 
-	void LogArray::flushToEnd(const long long pos) {
+void LogArray::flushToEnd(const long long &pos) {
+	if (pos > length() || pos <= 0)
+		throw std::runtime_error("flush to end from a floating position");
 
-	}
-
-	LogArray::LogArray() {
-		Entry tmp;
-		tmp.entryIndex = tmp.term = 0;
-		v.push_back(std::move(tmp));
+	while (length() >= pos) v.pop_back();
 	}
 
 	void LogArray::pushBack(Entry entry) {
-		
+		v.push_back(std::move(entry));
 	}
 };

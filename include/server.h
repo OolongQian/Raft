@@ -40,6 +40,10 @@ namespace SJTU {
 			return pRaft->info.get_local();
 		}
 
+	const std::map<std::string, std::string> &GetKV() {
+		return data;
+	};
+
 #endif
 
 	private:
