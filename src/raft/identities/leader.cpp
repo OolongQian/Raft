@@ -1,5 +1,3 @@
-//#include <altivec.h>
-#include <altivec.h>
 #include "../../../include/raft/identities/leader.h"
 #include "../../../include/raft/raft_proto/raft_peer.pb.h"
 

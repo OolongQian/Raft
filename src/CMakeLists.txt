@@ -16,8 +16,8 @@ target_link_libraries(${PROJECT_NAME}
         ${PROTOBUF_LIBRARIES}
         ${GRPC_LIBRARIES}
         )
-# ./test/identity/TestFollower.cpp
-ADD_EXECUTABLE(hello ./hello_proto/hello_rpc_client.cc)
+# ./test/test/TestFollower.cpp
+ADD_EXECUTABLE(hello ./test/test/TestCase.cpp)
 
 
 target_link_libraries(hello

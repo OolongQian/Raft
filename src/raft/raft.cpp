@@ -20,8 +20,8 @@ namespace SJTU {
 					printf("current Identity %d\n", currentIdentity);
 					identities[currentIdentity]->ProcsAppendEntriesFunc(request, response);
 				},
-				[this](const PbPutRequest *request, PbPutResponse *response) -> void {
-					printf("%s receive add log request\n", info.get_local().toString());
+				[this, id = info.get_local()](const PbPutRequest *request, PbPutResponse *response) -> void {
+					printf("%s receive add log request\n", id.toString().c_str());
 					identities[currentIdentity]->ProcsPutFunc(request, response);
 				});
 
@@ -40,7 +40,7 @@ namespace SJTU {
 
 	void Raft::IdentityTransform(IdentityNo identityNo) {
 
-		printf("enter identity transformer\n");
+		printf("enter test transformer\n");
 		/// Note this!!!
 		if (currentIdentity == identityNo) {
 			printf("reseting timer\n");

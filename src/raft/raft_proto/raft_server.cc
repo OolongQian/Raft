@@ -27,7 +27,7 @@ namespace SJTU {
 																	 RaftServer::PutFunc f3) {
 		service.requestVoteFunc = std::move(f1);
 		service.appendEntriesFunc = std::move(f2);
-		service.PutFunc = std::move(f3);
+		service.putFunc = std::move(f3);
 	}
 
 	grpc::Status

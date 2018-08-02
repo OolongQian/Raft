@@ -44,6 +44,7 @@ namespace SJTU {
 		const auto timeout = srvs.front()->GetInfo().get_electionTimeout() / 2;
 		auto id = srvs.front()->GetInfo().get_local();
 
+		sleep(1);
 		std::vector<std::unique_ptr<RaftPeerClientImpl> > vClient;
 		for (int i = 0, appendTime = 10; i < appendTime; ++i) {
 			vClient.push_back(std::make_unique<RaftPeerClientImpl>(id));
@@ -78,7 +79,7 @@ namespace SJTU {
 		auto srvs = helper.makeServers(SrvNum);
 		auto &ctx = Raft::GetDebug();
 		ctx.before_tranform = [](IdentityNo from, IdentityNo &to) mutable {
-			if (from == FollowerNo) throw std::runtime_error("unexpected identity");
+			if (from == FollowerNo) throw std::runtime_error("unexpected test");
 			if (from != DownNo && to != CandidateNo) throw std::runtime_error("transform not to candidate");
 			to = to == DownNo ? DownNo : CandidateNo;
 		};
@@ -118,11 +119,107 @@ namespace SJTU {
 		printf(
 				"three servers init to be follower, then one leader is elected. No other followers transform to be cnadidate\n");
 	}
+
+	void PutBasic() {
+		IdentityTestHelper helper;
+		const std::size_t SrvNum = 1;
+		auto srvs = helper.makeServers(SrvNum);
+		const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
+
+		auto &srv = srvs.front();
+		auto id = srvs.front()->GetInfo().get_local();
+		srv->Init();
+		srv->StartUp();
+		std::unique_ptr<RaftPeerClientImpl> client;
+		client = std::make_unique<RaftPeerClientImpl>(id);
+
+		for (int i = 0; i < 10; ++i) {
+			client->th = boost::thread([&client, i]() mutable {
+				grpc::ClientContext ctx;
+				PbPutRequest msg;
+				PbPutResponse rsp;
+				std::string str_key = "shit";
+				std::string str_val = "dick";
+				str_key += char('0' + i);
+				str_val += char('0' + i);
+				msg.set_key(str_key);
+				msg.set_val(str_val);
+
+				ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(100));
+				grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+				printf("rpc sent\n");
+				if (status.ok()) printf("msg is OK!\n");
+				else {
+					printf("msg is error\n");
+					printf("msg: %d %s\n", status.error_code(), status.error_message().c_str());
+				}
+			});
+			client->th.join();
+		}
+		srv->ShutDown();
+		printf("put method all fails because of one single follower, this situation is strange.\n");
+	}
+
+	void PutNaive() {
+		IdentityTestHelper helper;
+		const std::size_t SrvNum = 1;
+		auto srvs = helper.makeServers(SrvNum);
+		const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
+
+		auto &srv = srvs.front();
+
+		srv->Init();
+
+		RaftDebugContext &context = srv->GetCtx();
+		std::atomic<int> candidate2Leader{0};
+
+		context.before_tranform = ([&](IdentityNo from, IdentityNo &to) mutable {
+			if (to == CandidateNo) {
+				to = LeaderNo;
+				++candidate2Leader;
+			}
+		});
+
+		srv->StartUp();
+		while (candidate2Leader != 1);
+
+		auto id = srvs.front()->GetInfo().get_local();
+		std::unique_ptr<RaftPeerClientImpl> client;
+		client = std::make_unique<RaftPeerClientImpl>(id);
+
+		for (int i = 0; i < 10; ++i) {
+			client->th = boost::thread([&client, i]() mutable {
+				grpc::ClientContext ctx;
+				PbPutRequest msg;
+				PbPutResponse rsp;
+				std::string str_key = "shit";
+				std::string str_val = "dick";
+				str_key += char('0' + i);
+				str_val += char('0' + i);
+				msg.set_key(str_key);
+				msg.set_val(str_val);
+
+				ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(100));
+				grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+				printf("rpc sent\n");
+				if (status.ok()) printf("msg is OK!\n");
+				else {
+					printf("msg is error\n");
+					printf("msg: %d %s\n", status.error_code(), status.error_message().c_str());
+				}
+			});
+			client->th.join();
+		}
+		srv->ShutDown();
+		printf("Put method success because of one single leader.\n");
+	}
 };
 
 using namespace SJTU;
 
 int main() {
+	SJTU::PutNaive();
+//	SJTU::PutBasic();
 //	SJTU::Follower_Basic();
 //	SJTU::Follower_AppendEntry();
 //	SJTU::Candidate_Basic();

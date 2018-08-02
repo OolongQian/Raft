@@ -1,6 +1,6 @@
 #ifndef RAFT_PROJ_DEBUG_HEADER_H
 #define RAFT_PROJ_DEBUG_HEADER_H
 
-//#define _UNIT_TEST
+#define _UNIT_TEST
 
 #endif //RAFT_PROJ_DEBUG_HEADER_H

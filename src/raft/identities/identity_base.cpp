@@ -145,18 +145,17 @@ namespace SJTU {
 			if (srv_id == info.get_local()) continue;
 			tmp_client_ends.push_back(std::make_unique<RaftPeerClientImpl>(srv_id));
 		}
-
 		boost::atomic<std::size_t> count_success{0};
 		for (int t = 0, retry_time = 5; t < retry_time; ++t) {
 			for (size_t i = 0; i < tmp_client_ends.size(); ++i) {
-				client_ends_[i]->th = boost::thread([this, i, &request, &response, &count_success]() mutable {
+				tmp_client_ends[i]->th = boost::thread([&tmp_client_ends, i, &request, &response, &count_success]() mutable {
 					PbPutRequest request1;
 					request1.set_key(request->key());
 					request1.set_val(request->val());
 					grpc::ClientContext context;
 
 					context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(30));
-					grpc::Status status = client_ends_[i]->stub_->PutRPC(&context, request1, response);
+					grpc::Status status = tmp_client_ends[i]->stub_->PutRPC(&context, request1, response);
 					if (!status.ok()) {
 						fprintf(stderr, "IdentityBase ProcsPutFunc error, error code: %d, error msg: %s\n", status.error_code(),
 										status.error_message().c_str());
@@ -165,7 +164,9 @@ namespace SJTU {
 					}
 				});
 			}
-
+			for (size_t i = 0; i < tmp_client_ends.size(); ++i) {
+				tmp_client_ends[i]->th.join();
+			}
 			if (count_success > 1)
 				throw std::runtime_error("two leaders add log");
 			else if (count_success == 1) {

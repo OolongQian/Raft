@@ -1,5 +1,4 @@
 #include <future>
-//#include <altivec.h>
 #include "../../../include/raft/identities/candidate.h"
 #include "../../../include/raft/raft_proto/raft_server.h"
 

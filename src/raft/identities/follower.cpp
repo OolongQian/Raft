@@ -1,4 +1,3 @@
-//#include <altivec.h>
 #include "../../../include/raft/identities/follower.h"
 
 namespace SJTU {
