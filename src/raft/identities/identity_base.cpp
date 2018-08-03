@@ -1,6 +1,6 @@
 #include "../../../include/raft/identities/identity_base.h"
 
-//#define _NOT_TRIVIAL_VOTE
+#define _NOT_TRIVIAL_VOTE
 #define _NOT_TRIVIAL_APPEND
 
 namespace SJTU {
@@ -55,7 +55,7 @@ void IdentityBase::AppendEntriesResponseGeneration(const PbAppendEntriesRequest 
 
 	if (request->entries_size() == 0) {
 		printf("receive empty entries (heartbeat), return...\n");
-		return;
+//		return;
 	}
 
 	/// if an existing entry conflicts with a new one (same index but different terms), delete the existing entry and all that follow it.
@@ -81,10 +81,10 @@ void IdentityBase::AppendEntriesResponseGeneration(const PbAppendEntriesRequest 
 		} else if (log.has(index) && log.at(index).term == cpp_entry.term)
 			continue;  /// add for completeness.
 	}
-	fprintf(stderr, "current follower %s log length %d\n", info.get_local().toString().c_str(), state_.log.length());
+//	printf("current follower %s log length %d\n", info.get_local().toString().c_str(), state_.log.length());
+//	printf("follower's commit index update %d %d\n", request->leadercommit(), state_.log.back().entryIndex);
 	if (request->leadercommit() > state_.commitIndex) {
-		long long tmp_commit_index = std::min(request->leadercommit(),
-																					request->entries(request->entries_size() - 1).entryindex());
+		long long tmp_commit_index = std::min(request->leadercommit(), state_.log.back().entryIndex);
 		if (state_.commitIndex < tmp_commit_index) {
 			state_.commitIndex = tmp_commit_index;
 			apply_queue.notify();
@@ -191,6 +191,9 @@ void IdentityBase::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *resp
 			break;
 		}
 	}
+
+	/**block until finish*/
+
 	if (count_success == 0) {
 		fprintf(stderr, "Put request not responded\n");
 		response->set_success(false);

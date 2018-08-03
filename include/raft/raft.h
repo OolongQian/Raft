@@ -55,8 +55,6 @@ namespace SJTU {
 		RaftServer server_end;
 		std::vector<std::unique_ptr<RaftPeerClientImpl> > client_ends;
 
-		boost::thread th;
-
 #ifdef _UNIT_TEST
 		RaftDebugContext ctx;
 #endif
@@ -72,8 +70,6 @@ namespace SJTU {
 		void IdentityTransform(IdentityNo);
 
 		void TimeOutActionAdapter();
-
-
 	};
 };
 

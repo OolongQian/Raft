@@ -36,6 +36,9 @@ namespace SJTU {
 			grpc::Status RequestVoteRPC(grpc::ServerContext *context, const PbRequestVoteRequest *request,
 																	PbRequestVoteResponse *response) override;
 
+			/**
+			 * 我现在只能说是，你的请求已经圆满发送出去了。。。而不能给你结果。
+			 * */
 			grpc::Status
 			PutRPC(grpc::ServerContext *context, const PbPutRequest *request, PbPutResponse *response) override;
 

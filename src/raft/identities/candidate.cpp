@@ -79,13 +79,17 @@ namespace SJTU {
 				if (response.votegranted())
 					++votesReceived;
 
-				if (transforming) {
+
+				if (votesReceived > info.get_srvList().size() / 2) {
+					if (transforming) {
 #ifndef _NOLOG
-					printf("There has been one identical transformation task undergoing... returning..\n");
+						printf("There has been one identical transformation task undergoing... returning..\n");
 #endif
-					return;
-				}
-				if (votesReceived > info.get_srvList().size() / 2 && !transforming) {
+						return;
+					}
+					fprintf(stderr, "synchronous problem in candidate to leader transformation\n");
+					transforming = true;
+
 #ifndef _NOLOG
 					printf("There are %lu servers in total. %d votes received, start to transform to leader...\n",
 								 info.get_srvList().size(), (int) votesReceived);

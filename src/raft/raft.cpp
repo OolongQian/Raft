@@ -53,11 +53,11 @@ namespace SJTU {
 		}
 #ifdef _UNIT_TEST
 		IdentityNo identityNo_orig = identityNo;
-		printf("%s\n", info.get_local().toString().c_str());
+		printf("%s transform from %d to %d\n", info.get_local().toString().c_str(), currentIdentity, identityNo);
 		ctx.before_tranform(currentIdentity, identityNo);
 #endif
 		eventQueue.addEvent([this, identityNo]() mutable {
-			printf("transform from %d to %d\n", currentIdentity, identityNo);
+//			printf("transform from %d to %d\n", currentIdentity, identityNo);
 
 			if (currentIdentity == DownNo)
 				server_end.Monitor();

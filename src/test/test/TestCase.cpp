@@ -5,7 +5,9 @@
 
 namespace SJTU {
 
-	/// 看看能不能变身
+/**
+ * This test case initializes 1 server. It can transform from follower to candidate.
+ * */
 	void Follower_Basic() {
 		printf("Follower_basic test...\n");
 		IdentityTestHelper helper;
@@ -89,148 +91,161 @@ namespace SJTU {
 		srvs[0]->ShutDown();
 	}
 
-	void CandidateNaive() {
-		IdentityTestHelper helper;
-		const std::size_t SrvNum = 3;
-		auto srvs = helper.makeServers(SrvNum);
-		const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
-		std::atomic<int> candidate2Follower{0}, candidate2Leader{0};
+/**
+ * This test creates three server instances, it shows they can always pick out one leader.
+ * And the other two remain followers because of the leader's suppressing heartbeats.
+ * */
+void CandidateNaive() {
+	IdentityTestHelper helper;
+	const std::size_t SrvNum = 3;
+	auto srvs = helper.makeServers(SrvNum);
+	const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
+	std::atomic<int> candidate2Follower{0}, candidate2Leader{0};
 
-		for (auto &srv : srvs) {
-			srv->Init();
-			RaftDebugContext &ctx = srv->GetCtx();
-
-			ctx.before_tranform = ([&](IdentityNo from, IdentityNo &to) mutable {
-				if (from == CandidateNo && to == LeaderNo) {
-					++candidate2Leader;
-				} else if (from == CandidateNo && to == FollowerNo) {
-					++candidate2Follower;
-					to = DownNo;
-				} else if (from == CandidateNo && to == CandidateNo)
-					to = CandidateNo;
-			});
-			srv->StartUp();
-		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(ElectionTimeout * 8));
-		for (auto &srv : srvs)
-			srv->ShutDown();
-
-		printf("%d, %d\n", (int) candidate2Leader, (int) candidate2Follower);
-		printf(
-				"three servers init to be follower, then one leader is elected. No other followers transform to be cnadidate\n");
-	}
-
-	void PutBasic() {
-		IdentityTestHelper helper;
-		const std::size_t SrvNum = 1;
-		auto srvs = helper.makeServers(SrvNum);
-		const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
-
-		auto &srv = srvs.front();
-		auto id = srvs.front()->GetInfo().get_local();
+	for (auto &srv : srvs) {
 		srv->Init();
-		srv->StartUp();
-		std::unique_ptr<RaftPeerClientImpl> client;
-		client = std::make_unique<RaftPeerClientImpl>(id);
+		RaftDebugContext &ctx = srv->GetCtx();
 
-		for (int i = 0; i < 10; ++i) {
-			client->th = boost::thread([&client, i]() mutable {
-				grpc::ClientContext ctx;
-				PbPutRequest msg;
-				PbPutResponse rsp;
-				std::string str_key = "shit";
-				std::string str_val = "dick";
-				str_key += char('0' + i);
-				str_val += char('0' + i);
-				msg.set_key(str_key);
-				msg.set_val(str_val);
-
-				ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(100));
-				grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
-				printf("rpc sent\n");
-				if (status.ok()) printf("msg is OK!\n");
-				else {
-					printf("msg is error\n");
-					printf("msg: %d %s\n", status.error_code(), status.error_message().c_str());
-				}
-			});
-			client->th.join();
-		}
-		srv->ShutDown();
-		printf("put method all fails because of one single follower, this situation is strange.\n");
-	}
-
-	void PutNaive() {
-		IdentityTestHelper helper;
-		const std::size_t SrvNum = 2;
-		auto srvs = helper.makeServers(SrvNum);
-		const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
-
-		auto &srv = srvs.front();
-		auto &srv2 = srvs.back();
-
-		srv->Init();
-		srv2->Init();
-		RaftDebugContext &context = srv->GetCtx();
-		std::atomic<int> candidate2Leader{0};
-
-		context.before_tranform = ([&](IdentityNo from, IdentityNo &to) mutable {
-			if (to == FollowerNo) {
-				to = LeaderNo;
+		ctx.before_tranform = ([&](IdentityNo from, IdentityNo &to) mutable {
+			if (from == CandidateNo && to == LeaderNo) {
 				++candidate2Leader;
+			} else if (from == CandidateNo && to == FollowerNo) {
+				++candidate2Follower;
+				to = DownNo;
+			} else if (from == CandidateNo && to == CandidateNo)
+				to = CandidateNo;
+		});
+		srv->StartUp();
+	}
+	std::this_thread::sleep_for(std::chrono::milliseconds(ElectionTimeout * 8));
+	for (auto &srv : srvs)
+		srv->ShutDown();
+
+	printf("%d, %d\n", (int) candidate2Leader, (int) candidate2Follower);
+	printf(
+			"three servers init to be follower, then one leader is elected. No other followers transform to be cnadidate\n");
+}
+
+/**
+ * This test creates one instance of follower, I have no idea what it is about.
+ * */
+void PutBasic() {
+	IdentityTestHelper helper;
+	const std::size_t SrvNum = 1;
+	auto srvs = helper.makeServers(SrvNum);
+	const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
+
+	auto &srv = srvs.front();
+	auto id = srvs.front()->GetInfo().get_local();
+	srv->Init();
+	srv->StartUp();
+	std::unique_ptr<RaftPeerClientImpl> client;
+	client = std::make_unique<RaftPeerClientImpl>(id);
+
+	for (int i = 0; i < 10; ++i) {
+		client->th = boost::thread([&client, i]() mutable {
+			grpc::ClientContext ctx;
+			PbPutRequest msg;
+			PbPutResponse rsp;
+			std::string str_key = "shit";
+			std::string str_val = "dick";
+			str_key += char('0' + i);
+			str_val += char('0' + i);
+			msg.set_key(str_key);
+			msg.set_val(str_val);
+
+			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(100));
+			grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+			printf("rpc sent\n");
+			if (status.ok()) printf("msg is OK!\n");
+			else {
+				printf("msg is error\n");
+				printf("msg: %d %s\n", status.error_code(), status.error_message().c_str());
 			}
 		});
-
-		srv->StartUp();
-		srv2->StartUp();
-		while (candidate2Leader != 1);
-
-		auto id = srvs.front()->GetInfo().get_local();
-		std::unique_ptr<RaftPeerClientImpl> client;
-		client = std::make_unique<RaftPeerClientImpl>(id);
-
-		for (int i = 0; i < 10; ++i) {
-			client->th = boost::thread([&client, i]() mutable {
-				grpc::ClientContext ctx;
-				PbPutRequest msg;
-				PbPutResponse rsp;
-				std::string str_key = "shit";
-				std::string str_val = "dick";
-				str_key += char('0' + i);
-				str_val += char('0' + i);
-				msg.set_key(str_key);
-				msg.set_val(str_val);
-
-				ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(100));
-				grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
-				printf("rpc sent\n");
-				if (status.ok()) printf("msg is OK!\n");
-				else {
-					printf("msg is error\n");
-					printf("msg: %d %s\n", status.error_code(), status.error_message().c_str());
-				}
-			});
-			client->th.join();
-
-			fprintf(stderr, "%d time request, traverse map: ", i);
-			auto data = srv->GetKV();
-			for (auto elem : data) {
-				fprintf(stderr, "%s - %s; ", elem.first.c_str(), elem.second.c_str());
-			}
-			fprintf(stderr, "\n");
-			sleep(1);
-		}
-		sleep(1);
-		printf("after sending put request for ten times, leader and follower's log size: %d %d, leader's commitIndex %lld, "
-					 "follower's commitIndex %lld\n",
-					 srv->GetState().log.length(), srv2->GetState().log.length(), srv->GetState().commitIndex,
-					 srv2->GetState().commitIndex);
-		srv->ShutDown();
-		srv2->ShutDown();
-		printf("Put method success because of one single leader.\n");
-		printf("test whether a follower's log can be updated by heartbeat\n");
-		printf("a follower can add to its log by leader's heartbeat, but synchronization isn't guaranteed\n");
+		client->th.join();
 	}
+	srv->ShutDown();
+	printf("put method all fails because of one single follower, this situation is strange.\n");
+}
+
+/**
+ * This test creates two instances of server. By manually sending put request to the leader server, leader can
+ * help follower server increment its log, and increment commit index. After doing that, it applies committed log
+ * entry to the data map.
+ * */
+void PutNaive() {
+	IdentityTestHelper helper;
+	const std::size_t SrvNum = 2;
+	auto srvs = helper.makeServers(SrvNum);
+	const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
+
+	auto &srv = srvs.front();
+	auto &srv2 = srvs.back();
+
+	srv->Init();
+	srv2->Init();
+	RaftDebugContext &context = srv->GetCtx();
+	std::atomic<int> candidate2Leader{0};
+
+	context.before_tranform = ([&](IdentityNo from, IdentityNo &to) mutable {
+		if (to == FollowerNo) {
+			to = LeaderNo;
+			++candidate2Leader;
+		}
+	});
+
+	srv->StartUp();
+	srv2->StartUp();
+	while (candidate2Leader != 1);
+
+	auto id = srvs.front()->GetInfo().get_local();
+	std::unique_ptr<RaftPeerClientImpl> client;
+	client = std::make_unique<RaftPeerClientImpl>(id);
+
+	for (int i = 0; i < 10; ++i) {
+		client->th = boost::thread([&client, i]() mutable {
+			grpc::ClientContext ctx;
+			PbPutRequest msg;
+			PbPutResponse rsp;
+			std::string str_key = "shit";
+			std::string str_val = "dick";
+			str_key += char('0' + i);
+			str_val += char('0' + i);
+			msg.set_key(str_key);
+			msg.set_val(str_val);
+
+			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(100));
+			grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+			printf("rpc sent\n");
+			if (status.ok()) printf("msg is OK!\n");
+			else {
+				printf("msg is error\n");
+				printf("msg: %d %s\n", status.error_code(), status.error_message().c_str());
+			}
+		});
+		client->th.join();
+
+		fprintf(stderr, "%d time request, traverse map: ", i);
+		auto data = srv->GetKV();
+		for (auto elem : data) {
+			fprintf(stderr, "%s - %s; ", elem.first.c_str(), elem.second.c_str());
+		}
+		fprintf(stderr, "\n");
+		sleep(1);
+	}
+	sleep(5);
+	printf("after sending put request for ten times, leader and follower's log size: %d %d, leader's commitIndex %lld, "
+				 "follower's commitIndex %lld\n",
+				 srv->GetState().log.length(), srv2->GetState().log.length(), srv->GetState().commitIndex,
+				 srv2->GetState().commitIndex);
+	srv->ShutDown();
+	srv2->ShutDown();
+	client->th.join();
+	printf("Put method success because of one single leader.\n");
+	printf("test whether a follower's log can be updated by heartbeat\n");
+	printf("a follower can add to its log by leader's heartbeat, but synchronization isn't guaranteed\n");
+}
 };
 
 using namespace SJTU;
