@@ -11,16 +11,16 @@ namespace SJTU {
 #ifndef _NOLOG
 		printf("init to be candidate...\n");
 #endif
-		timer_.SetTimeOut(rand() % (info.get_electionTimeout()) + info.get_electionTimeout());
-		timer_.Start(false);
+		timer_.SetTimeOut(info.get_electionTimeout(), info.get_electionTimeout() * 2);
+		timer_.Start();
 
 		transforming = false;
 
 		++state_.currentTerm;
 		state_.votedFor.clear();
 
-		votesReceived = 1;
-		state_.votedFor = info.get_local();
+//		votesReceived = 1;
+//		state_.votedFor = info.get_local();
 		RequestVote();
 	}
 

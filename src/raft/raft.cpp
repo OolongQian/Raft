@@ -27,7 +27,7 @@ namespace SJTU {
 
 		/// gRPC client_ends
 		for (const ServerId &srv_id : info.get_srvList()) {
-			if (srv_id == info.get_local()) continue;
+//			if (srv_id == info.get_local()) continue;
 			client_ends.push_back(std::make_unique<RaftPeerClientImpl>(srv_id));
 		}
 
@@ -46,8 +46,8 @@ namespace SJTU {
 			printf("reseting timer\n");
 			/// leader不会reset
 			timer.Stop();
-			timer.SetTimeOut(rand() % info.get_electionTimeout() + info.get_electionTimeout());
-			timer.Start(false);
+			timer.SetTimeOut(info.get_electionTimeout(), info.get_electionTimeout() * 2);
+			timer.Start();
 			printf("timer reset\n");
 			return;
 		}

@@ -162,25 +162,27 @@ namespace SJTU {
 
 	void PutNaive() {
 		IdentityTestHelper helper;
-		const std::size_t SrvNum = 1;
+		const std::size_t SrvNum = 2;
 		auto srvs = helper.makeServers(SrvNum);
 		const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
 
 		auto &srv = srvs.front();
+		auto &srv2 = srvs.back();
 
 		srv->Init();
-
+		srv2->Init();
 		RaftDebugContext &context = srv->GetCtx();
 		std::atomic<int> candidate2Leader{0};
 
 		context.before_tranform = ([&](IdentityNo from, IdentityNo &to) mutable {
-			if (to == CandidateNo) {
+			if (to == FollowerNo) {
 				to = LeaderNo;
 				++candidate2Leader;
 			}
 		});
 
 		srv->StartUp();
+		srv2->StartUp();
 		while (candidate2Leader != 1);
 
 		auto id = srvs.front()->GetInfo().get_local();
@@ -216,10 +218,13 @@ namespace SJTU {
 				fprintf(stderr, "%s - %s; ", elem.first.c_str(), elem.second.c_str());
 			}
 			fprintf(stderr, "\n");
+			sleep(3);
 		}
 		srv->ShutDown();
+		srv2->ShutDown();
 		printf("Put method success because of one single leader.\n");
-
+		printf("test whether a follower's log can be updated by heartbeat\n");
+		printf("a follower can add to its log by leader's heartbeat, but synchronization isn't guaranteed\n");
 	}
 };
 

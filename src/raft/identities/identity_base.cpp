@@ -10,6 +10,7 @@ namespace SJTU {
 //		AppendEntriesSelfModification(request);
 		fprintf(stderr, "server %s get appendEntriesRPC from %s\n", info.get_local().toString().c_str(),
 						request->leaderid().c_str());
+		response->set_inconsist(false);
 		AppendEntriesResponseGeneration(request, response);
 		fprintf(stderr, "return response: term %lld, success %d\n", response->term(), (int) response->success());
 	}
@@ -28,7 +29,9 @@ namespace SJTU {
 		 * Default implementation.
 		 * */
 //		fprintf(stderr, "appendEntriesRequest is received...Always respond success\n");
-
+		fprintf(stderr, "follower or candidate AppendEntries received\n");
+		fprintf(stderr, "term: %lld leader: %s prevLogIndex: %lld prevLogTerm: %lld LeaderCommit: %lld\n", request->term(),
+						request->leaderid().c_str(), request->prevlogindex(), request->prevlogterm(), request->leadercommit());
 		response->set_term(state_.currentTerm);
 		response->set_success(true);
 
@@ -37,9 +40,15 @@ namespace SJTU {
 		if (request->term() < state_.currentTerm)
 			response->set_success(false);
 		/// reply false if log doesn't contain an entry at prevLogIndex whose term matches prevLogTerm.
+		std::cout << request->prevlogterm() << ' ' << request->prevlogindex() << std::endl;
+
 		if (!state_.log.has(request->prevlogindex()) ||
-				state_.log.at(request->prevlogindex()).term != request->prevlogterm())
+				state_.log.at(request->prevlogindex()).term != request->prevlogterm()) {
+			fprintf(stderr, "heartbeat inconsistency\n");
+			response->set_inconsist(true);
 			response->set_success(false);
+			return;
+		}
 
 		if (request->entries_size() == 0) {
 			printf("receive empty entries (heartbeat), return...\n");
@@ -63,6 +72,7 @@ namespace SJTU {
 			if (!log.has(index)) {
 				log.insert(cpp_entry, index);
 			} else if (log.has(index) && log.at(index).term != cpp_entry.term) {
+				response->set_inconsist(true);
 				log.flushToEnd(index);
 				log.insert(cpp_entry, index);
 			} else if (log.has(index) && log.at(index).term == cpp_entry.term)

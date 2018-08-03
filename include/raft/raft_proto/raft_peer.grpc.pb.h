@@ -17,13 +17,13 @@
 #include <grpcpp/impl/codegen/sync_stream.h>
 
 namespace grpc {
-	class CompletionQueue;
+class CompletionQueue;
 
-	class Channel;
+class Channel;
 
-	class ServerCompletionQueue;
+class ServerCompletionQueue;
 
-	class ServerContext;
+class ServerContext;
 }  // namespace grpc
 
 class RaftPeerService final {

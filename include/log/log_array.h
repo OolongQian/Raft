@@ -3,6 +3,7 @@
 
 #include <string>
 #include "../raft/raft_proto/raft_peer.pb.h"
+#include <boost/thread/mutex.hpp>
 
 namespace SJTU {
 
@@ -57,6 +58,7 @@ namespace SJTU {
 
 	private:
 		std::vector<Entry> v;
+		std::mutex mtx;
 	};
 };
 #endif //RAFT_PROJ_LOG_ARRAY_H

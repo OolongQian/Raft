@@ -36,6 +36,7 @@ message PbAppendEntriesRequest {
 message PbAppendEntriesResponse {
     int64 term = 1; /// currentTerm, for leader to update itself.
     bool success = 2; /// true if follower contained entry matching prevLogIndex and prevLogTerm.
+    bool inconsist = 3;
 }
 
 message PbRequestVoteRequest {

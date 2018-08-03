@@ -15,11 +15,11 @@ namespace SJTU {
 		~Timer();
 
 		/// timer starts to count down.
-		void Start(bool);
+		void Start();
 
 		void Stop();
 
-		void SetTimeOut(int);
+		void SetTimeOut(int, int);
 
 		/// leave timeout action and time limit unchanged, just stop and restart, without repeat.
 		void Reset();
@@ -50,7 +50,8 @@ namespace SJTU {
 		void BindPushEvent(std::function<void(std::function<void()>)> f);
 
 	private:
-		int time_;   /// use boost::chrono lib later on.
+		int high_time;   /// use boost::chrono lib later on.
+		int low_time;
 		std::function<void()> timeOutAction_;
 		std::function<void(std::function<void()>)> pushEvent_;
 		boost::thread th;

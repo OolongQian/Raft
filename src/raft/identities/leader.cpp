@@ -1,7 +1,7 @@
 #include "../../../include/raft/identities/leader.h"
 #include "../../../include/raft/raft_proto/raft_peer.pb.h"
 
-//#define _NOT_TRIVIAL_REQUEST
+#define _NOT_TRIVIAL_REQUEST
 
 namespace SJTU {
 
@@ -14,13 +14,13 @@ namespace SJTU {
 		printf("init to be leader...\n");
 #endif
 		++state_.currentTerm;
-		timer_.SetTimeOut(info.get_electionTimeout() / 2);
-		timer_.Start(true);
+		timer_.SetTimeOut(info.get_electionTimeout() / 2, info.get_electionTimeout() / 2);
+		timer_.Start();
 		state_.votedFor.clear();
 
 		for (const ServerId &id : info.get_srvList()) {
-			if (id == info.get_local()) continue;
-			state_.nextIndex[id] = state_.log.back().entryIndex;    /// init to be leader's last log index + 1.
+			int a = state_.log.back().entryIndex + 1;
+			state_.nextIndex[id] = state_.log.back().entryIndex + 1;    /// init to be leader's last log index + 1.
 			state_.matchIndex[id] = 0;                        /// init to be 0, increase monotonically.
 		}
 
@@ -61,7 +61,10 @@ namespace SJTU {
 		}
 		for (size_t i = 0; i < client_ends_.size(); ++i) {
 			client_ends_[i]->th = boost::thread([this, i]() mutable {
-				PbAppendEntriesRequest request = MakeHeartBeat(client_ends_[i]->id);
+				PbAppendEntriesRequest request;
+
+
+				size_t last_entryindex_cache = MakeHeartBeat(client_ends_[i]->id, &request);
 
 				PbAppendEntriesResponse response;
 				grpc::ClientContext context;
@@ -80,16 +83,17 @@ namespace SJTU {
 				if (response.success()) {
 					printf("appendEntries success, update nextIndex and matchIndex\n");
 					std::cerr << "deleted leader response for heartbeat" << std::endl;
-//					long long &matchIndex = state_.matchIndex[client_ends_[i]->id];
-//					long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
-//					long long lastEntryIndex = request.entries(request.entries_size() - 1).entryindex();
-//					matchIndex = lastEntryIndex;
-//					nextIndex = matchIndex + 1;
-				} else {
-					printf("appendEntries fail, decrement nextIndex and retry\n");
+					long long &matchIndex = state_.matchIndex[client_ends_[i]->id];
+					long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
+					matchIndex = (long long) last_entryindex_cache;
+					nextIndex = matchIndex + 1;
+
+					CheckCommitIndexUpdate();
+				} else if (response.inconsist()) {
+					printf("appendEntries fail because of log inconsistency, decrement nextIndex and retry\n");
 					std::cerr << "deleted leader response for heartbeat" << std::endl;
-//					long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
-//					--nextIndex;
+					long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
+					--nextIndex;
 				}
 
 				if (state_.currentTerm < response.term()) {
@@ -103,35 +107,27 @@ namespace SJTU {
 		}
 	}
 
-	PbAppendEntriesRequest Leader::MakeHeartBeat(const ServerId &id) {
-		boost::lock_guard<boost::mutex> lk(mtx_);
-#ifndef _NOLOG
-		printf("current server's log is empty, initialize a trivial request...\n");
-#endif
-
-		/**
-		 * If last log index >= nextIndex for a follower: send AppendEntries RPC with log entries starting at
-		 * nextIndex.
-		 * */
-		std::vector<Entry> append_entries;
-		append_entries.clear();
-#ifdef _NOT_TRIVIAL_REQUEST
-		if (state_.log.back().entryIndex >= state_.nextIndex.at(id)) {
-			for (long long i = state_.nextIndex.at(id); i <= state_.log.back().entryIndex; ++i) {
-				append_entries.push_back(state_.log.at(i));
-			}
-		}
-#endif
-		CppAppendEntriesRequest request(state_.currentTerm, info.get_local().toString(), 0, -1, std::move(append_entries),
-																		state_.commitIndex);
-//		request.set_term(state_.currentTerm);
-//		request.set_leaderid(info.get_local().toString());
-//		request.set_prevlogindex(0);
-//		request.set_prevlogterm(-1);
-//		request.set_entries(-1);	/// this should be optional.
-//		request.set_leadercommit(state_.commitIndex);
-		return request.Convert();
+size_t Leader::MakeHeartBeat(const ServerId &id, PbAppendEntriesRequest *request) {
+	request->set_term(state_.currentTerm);
+	request->set_leaderid(info.get_local().toString());
+	long long nxtIdx = state_.nextIndex.at(id);
+	request->set_prevlogindex(
+			state_.log.at(nxtIdx - 1).entryIndex);  // previous log index is which immediately proceed the new ones.
+	request->set_prevlogterm(state_.log.at(nxtIdx - 1).term);
+	size_t last_index = state_.log.length();
+	for (long long i = nxtIdx; i <= state_.log.length(); ++i) {
+		PbAppendEntriesRequest_Entry *entry = request->add_entries();
+		const Entry &log_entry = state_.log.at(i);
+		entry->set_term(log_entry.term);
+		entry->set_key(log_entry.key);
+		entry->set_val(log_entry.val);
+		entry->set_command(log_entry.command);
+		entry->set_entryindex(i);
 	}
+	request->set_leadercommit(state_.commitIndex);
+	return last_index;
+}
+
 
 	/**
 	 * See the last entry of description for leaders in paper.
@@ -168,10 +164,13 @@ namespace SJTU {
 
 	void Leader::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
 		IdentityBase::ProcsAppendEntriesFunc(request, response);
+		printf("leader hears himself's heartbeat\n");
 		if (request->term() > state_.currentTerm) {
 			state_.currentTerm = request->term();
 			state_.votedFor.clear();
 			identity_transformer(FollowerNo);
+		} else {
+			timer_.Reset();
 		}
 	}
 
@@ -181,6 +180,8 @@ namespace SJTU {
 			state_.currentTerm = request->term();
 			state_.votedFor.clear();
 			identity_transformer(FollowerNo);
+		} else {
+			timer_.Reset();
 		}
 	}
 
@@ -191,7 +192,9 @@ namespace SJTU {
 		log.key = request->key();
 		log.val = request->val();
 		log.entryIndex = state_.log.back().entryIndex + 1;
+		fprintf(stderr, "pushback, log size is %d\n", state_.log.length());
 		state_.log.pushBack(log);
 		response->set_success(true);
 	}
+
 };

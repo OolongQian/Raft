@@ -8,9 +8,7 @@ namespace SJTU {
 	/// implements identity_base abstract class.
 	class Leader : public IdentityBase {
 	public:
-//		explicit Leader(State &state, Timer &timer, std::function<void(int)> transformer) :
-//		state_(state), timer_(timer), identity_transformer(transformer) {}
-//		Leader() : IdentityBase() {}
+
 		explicit Leader(State &state, Timer &timer, std::function<void(int)> transformer,
 										std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends, const ServerInfo &info) :
 				IdentityBase(state, timer, std::move(transformer), client_ends, info) {}
@@ -50,7 +48,8 @@ namespace SJTU {
 		 * Heartbeat serves as appendEntries-RPCs simultaneously. If there are additional entries
 		 * need to be applied, then it just append entry, otherwise it's empty heartbeat.
 		 * */
-		PbAppendEntriesRequest MakeHeartBeat(const ServerId &);
+
+		size_t MakeHeartBeat(const ServerId &id, PbAppendEntriesRequest *request);
 
 	private:
 		boost::mutex mtx_;

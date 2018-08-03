@@ -1,7 +1,7 @@
 #include "../../../include/raft/timer/timer.h"
 
 namespace SJTU {
-	Timer::Timer() : time_(rand() % 150 + 150) {}
+Timer::Timer() : low_time(100), high_time(100) {}
 
 	Timer::~Timer() = default;
 
@@ -13,44 +13,19 @@ namespace SJTU {
 		pushEvent_ = std::move(f);
 	}
 
-	void Timer::Start(const bool repeat) {
-		th = boost::thread([this, repeat] {
-			// sleep(time_);
-//			std::this_thread::sleep_for(std::chrono::duration_cast())
-			if (repeat) {
-				printf("timer operates a repetitive work\n");
-				while (true) {
-					try {
-						boost::this_thread::interruption_point();
-						boost::this_thread::sleep_for(boost::chrono::milliseconds(time_));
-						boost::this_thread::interruption_point();
-						printf("%d ms has passed! timer is pushing event...\n", time_);
-						pushEvent_(timeOutAction_);
-					}
-					catch (boost::thread_interrupted &) {
-						printf("timer's sleep is interrupted... returning\n");
-						return;
-					}
-				}
-			} else {
-				try {
-					boost::this_thread::interruption_point();
-					boost::this_thread::sleep_for(boost::chrono::milliseconds(time_));
-					boost::this_thread::interruption_point();
-					printf("%d ms has passed! timer is pushing event...\n", time_);
-					pushEvent_(timeOutAction_);
-				}
-				catch (boost::thread_interrupted &) {
-					printf("timer's sleep is interrupted... returning\n");
-					return;
-				}
-			}
-
-
-//			timeOutAction_();
-//			pushEvent_(timeOutAction_);
-//			 timeOutAction_();
-			// pushEvent_([] { printf("push event...\n"); });
+void Timer::Start() {
+	th = boost::thread([this] {
+		try {
+			int rand_time = rand() % (high_time - low_time + 1) + low_time;
+			printf("timer sleep for %d milliseconds\n", rand_time);
+			boost::this_thread::sleep_for(boost::chrono::milliseconds(rand_time));
+			printf("%d ms has passed! timer is pushing event...\n", rand_time);
+			pushEvent_(timeOutAction_);
+		}
+		catch (boost::thread_interrupted &) {
+			printf("timer's sleep is interrupted... returning\n");
+			return;
+		}
 		});
 	}
 
@@ -59,12 +34,13 @@ namespace SJTU {
 		th.join();
 	}
 
-	void Timer::SetTimeOut(int time_limit) {
-		time_ = time_limit;
+void Timer::SetTimeOut(int low, int high) {
+	low_time = low;
+	high_time = high;
 	}
 
 	void Timer::Reset() {
 		Stop();
-		Start(false);
+		Start();
 	}
 };

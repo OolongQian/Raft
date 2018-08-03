@@ -35,16 +35,16 @@
 
 namespace protobuf_raft_5fpeer_2eproto {
 // Internal implementation detail -- do not use these members.
-	struct TableStruct {
-		static const ::google::protobuf::internal::ParseTableField entries[];
-		static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
-		static const ::google::protobuf::internal::ParseTable schema[7];
-		static const ::google::protobuf::internal::FieldMetadata field_metadata[];
-		static const ::google::protobuf::internal::SerializationTable serialization_table[];
-		static const ::google::protobuf::uint32 offsets[];
-	};
+struct TableStruct {
+	static const ::google::protobuf::internal::ParseTableField entries[];
+	static const ::google::protobuf::internal::AuxillaryParseTableField aux[];
+	static const ::google::protobuf::internal::ParseTable schema[7];
+	static const ::google::protobuf::internal::FieldMetadata field_metadata[];
+	static const ::google::protobuf::internal::SerializationTable serialization_table[];
+	static const ::google::protobuf::uint32 offsets[];
+};
 
-	void AddDescriptors();
+void AddDescriptors();
 }  // namespace protobuf_raft_5fpeer_2eproto
 class PbAppendEntriesRequest;
 class PbAppendEntriesRequestDefaultTypeInternal;
@@ -55,17 +55,11 @@ extern PbAppendEntriesRequest_EntryDefaultTypeInternal _PbAppendEntriesRequest_E
 class PbAppendEntriesResponse;
 class PbAppendEntriesResponseDefaultTypeInternal;
 extern PbAppendEntriesResponseDefaultTypeInternal _PbAppendEntriesResponse_default_instance_;
-
 class PbPutRequest;
-
 class PbPutRequestDefaultTypeInternal;
-
 extern PbPutRequestDefaultTypeInternal _PbPutRequest_default_instance_;
-
 class PbPutResponse;
-
 class PbPutResponseDefaultTypeInternal;
-
 extern PbPutResponseDefaultTypeInternal _PbPutResponse_default_instance_;
 class PbRequestVoteRequest;
 class PbRequestVoteRequestDefaultTypeInternal;
@@ -74,28 +68,28 @@ class PbRequestVoteResponse;
 class PbRequestVoteResponseDefaultTypeInternal;
 extern PbRequestVoteResponseDefaultTypeInternal _PbRequestVoteResponse_default_instance_;
 namespace google {
-	namespace protobuf {
-		template<>
-		::PbAppendEntriesRequest *Arena::CreateMaybeMessage<::PbAppendEntriesRequest>(Arena *);
+namespace protobuf {
+template<>
+::PbAppendEntriesRequest *Arena::CreateMaybeMessage<::PbAppendEntriesRequest>(Arena *);
 
-		template<>
-		::PbAppendEntriesRequest_Entry *Arena::CreateMaybeMessage<::PbAppendEntriesRequest_Entry>(Arena *);
+template<>
+::PbAppendEntriesRequest_Entry *Arena::CreateMaybeMessage<::PbAppendEntriesRequest_Entry>(Arena *);
 
-		template<>
-		::PbAppendEntriesResponse *Arena::CreateMaybeMessage<::PbAppendEntriesResponse>(Arena *);
+template<>
+::PbAppendEntriesResponse *Arena::CreateMaybeMessage<::PbAppendEntriesResponse>(Arena *);
 
-		template<>
-		::PbPutRequest *Arena::CreateMaybeMessage<::PbPutRequest>(Arena *);
+template<>
+::PbPutRequest *Arena::CreateMaybeMessage<::PbPutRequest>(Arena *);
 
-		template<>
-		::PbPutResponse *Arena::CreateMaybeMessage<::PbPutResponse>(Arena *);
+template<>
+::PbPutResponse *Arena::CreateMaybeMessage<::PbPutResponse>(Arena *);
 
-		template<>
-		::PbRequestVoteRequest *Arena::CreateMaybeMessage<::PbRequestVoteRequest>(Arena *);
+template<>
+::PbRequestVoteRequest *Arena::CreateMaybeMessage<::PbRequestVoteRequest>(Arena *);
 
-		template<>
-		::PbRequestVoteResponse *Arena::CreateMaybeMessage<::PbRequestVoteResponse>(Arena *);
-	}  // namespace protobuf
+template<>
+::PbRequestVoteResponse *Arena::CreateMaybeMessage<::PbRequestVoteResponse>(Arena *);
+}  // namespace protobuf
 }  // namespace google
 
 // ===================================================================
@@ -910,12 +904,22 @@ public:
   bool success() const;
   void set_success(bool value);
 
+	// bool inconsist = 3;
+	void clear_inconsist();
+
+	static const int kInconsistFieldNumber = 3;
+
+	bool inconsist() const;
+
+	void set_inconsist(bool value);
+
   // @@protoc_insertion_point(class_scope:PbAppendEntriesResponse)
 private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::int64 term_;
   bool success_;
+	bool inconsist_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_raft_5fpeer_2eproto::TableStruct;
 };
@@ -1344,12 +1348,10 @@ inline void PbPutRequest::set_allocated_val(::std::string *val) {
 inline void PbPutResponse::clear_success() {
 	success_ = false;
 }
-
 inline bool PbPutResponse::success() const {
 	// @@protoc_insertion_point(field_get:PbPutResponse.success)
 	return success_;
 }
-
 inline void PbPutResponse::set_success(bool value) {
 
 	success_ = value;
@@ -1757,6 +1759,22 @@ inline void PbAppendEntriesResponse::set_success(bool value) {
 
 	success_ = value;
   // @@protoc_insertion_point(field_set:PbAppendEntriesResponse.success)
+}
+
+// bool inconsist = 3;
+inline void PbAppendEntriesResponse::clear_inconsist() {
+	inconsist_ = false;
+}
+
+inline bool PbAppendEntriesResponse::inconsist() const {
+	// @@protoc_insertion_point(field_get:PbAppendEntriesResponse.inconsist)
+	return inconsist_;
+}
+
+inline void PbAppendEntriesResponse::set_inconsist(bool value) {
+
+	inconsist_ = value;
+	// @@protoc_insertion_point(field_set:PbAppendEntriesResponse.inconsist)
 }
 
 // -------------------------------------------------------------------

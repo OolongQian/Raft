@@ -9,15 +9,14 @@ namespace SJTU {
 #ifndef _NOLOG
 		printf("init to be follower...\n");
 #endif
-		timer_.SetTimeOut(rand() % (info.get_electionTimeout()) + info.get_electionTimeout());
-		timer_.Start(false);
+		timer_.SetTimeOut(info.get_electionTimeout(), info.get_electionTimeout() * 2);
+		timer_.Start();
 
 		transforming = false;
 	}
 
 	void Follower::leave() {
 		transforming = true;
-
 		timer_.Stop();
 	}
 
@@ -32,10 +31,8 @@ namespace SJTU {
 		if (request->term() > state_.currentTerm) {
 			state_.currentTerm = request->term();
 			state_.votedFor.clear();
-			identity_transformer(FollowerNo);
-		} else {
-			identity_transformer(FollowerNo);
 		}
+		identity_transformer(FollowerNo);
 	}
 
 	void Follower::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
@@ -43,10 +40,8 @@ namespace SJTU {
 		if (request->term() > state_.currentTerm) {
 			state_.currentTerm = request->term();
 			state_.votedFor.clear();
-			identity_transformer(FollowerNo);
-		} else {
-			identity_transformer(FollowerNo);
 		}
+		identity_transformer(FollowerNo);
 	}
 
 	/*
