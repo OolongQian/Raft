@@ -19,8 +19,8 @@ namespace SJTU {
 		++state_.currentTerm;
 		state_.votedFor.clear();
 
-//		votesReceived = 1;
-//		state_.votedFor = info.get_local();
+		votesReceived = 1;
+		state_.votedFor = info.get_local();
 		RequestVote();
 	}
 
@@ -46,14 +46,17 @@ namespace SJTU {
 	}
 
 	void Candidate::RequestVote() {
+		printf("clientSize %d\n", client_ends_.size());
 		for (size_t i = 0; i < client_ends_.size(); ++i) {
+			if (client_ends_[i]->id == info.get_local())
+				continue;
 			client_ends_[i]->th = boost::thread([this, i]() mutable {
 				PbRequestVoteRequest request = MakeVoteRequest();
 
 				PbRequestVoteResponse response;
 				grpc::ClientContext context;
 
-				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(500));
+				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(50));
 				grpc::Status status = client_ends_[i]->stub_->RequestVoteRPC(&context, request, &response);
 
 				if (!status.ok()) {
@@ -73,7 +76,8 @@ namespace SJTU {
 					identity_transformer(FollowerNo);
 				}
 
-				if (response.votegranted()) ++votesReceived;
+				if (response.votegranted())
+					++votesReceived;
 
 				if (transforming) {
 #ifndef _NOLOG

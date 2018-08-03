@@ -4,6 +4,7 @@
 #include <string>
 #include "../raft/raft_proto/raft_peer.pb.h"
 #include <boost/thread/mutex.hpp>
+#include <boost/thread/pthread/shared_mutex.hpp>
 
 namespace SJTU {
 
@@ -41,13 +42,13 @@ namespace SJTU {
 		bool has(long long pos);
 
 		/// return the reference of the elem inside array.
-		const Entry &at(long long pos) const;
+		const Entry at(long long pos);
 
-		bool empty() const;
+		bool empty();
 
-		size_t length() const;
+		size_t length();
 
-		const Entry &back() const;
+		const Entry back();
 
 		void insert(const Entry &, long long pos);
 
@@ -58,7 +59,7 @@ namespace SJTU {
 
 	private:
 		std::vector<Entry> v;
-		std::mutex mtx;
+		boost::shared_mutex mtx;
 	};
 };
 #endif //RAFT_PROJ_LOG_ARRAY_H

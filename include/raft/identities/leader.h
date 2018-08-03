@@ -10,8 +10,9 @@ namespace SJTU {
 	public:
 
 		explicit Leader(State &state, Timer &timer, std::function<void(int)> transformer,
-										std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends, const ServerInfo &info) :
-				IdentityBase(state, timer, std::move(transformer), client_ends, info) {}
+										std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends, const ServerInfo &info,
+										ApplyQueue &apply_queue) :
+				IdentityBase(state, timer, std::move(transformer), client_ends, info, apply_queue) {}
 
 		~Leader() override;
 

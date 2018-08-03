@@ -9,14 +9,15 @@ namespace SJTU {
 	void Follower_Basic() {
 		printf("Follower_basic test...\n");
 		IdentityTestHelper helper;
-		auto &debugContext = Raft::GetDebug();
+		auto p = helper.makeServers(1);
+		p[0]->Init();
+
+		RaftDebugContext &debugContext = p[0]->GetCtx();
 		std::atomic<int> follower2Candidate{0};
 		debugContext.before_tranform = [&follower2Candidate](IdentityNo from, IdentityNo &to) mutable {
 			if (from == FollowerNo && to == CandidateNo)
 				++follower2Candidate;
 		};
-		auto p = helper.makeServers(1);
-		p[0]->Init();
 		p[0]->StartUp();
 		sleep(10);
 		p[0]->ShutDown();
@@ -28,8 +29,8 @@ namespace SJTU {
 	void Follower_AppendEntry() {
 		IdentityTestHelper helper;
 		auto srvs = helper.makeServers(1);
-
-		auto &debugContext = Raft::GetDebug();
+		srvs.front()->Init();
+		auto &debugContext = srvs[0]->GetCtx();
 		std::atomic<int> F2C{0};
 		std::atomic<int> C2L{0};
 		debugContext.before_tranform = [&](IdentityNo from, IdentityNo &to) mutable {
@@ -39,7 +40,6 @@ namespace SJTU {
 				C2L++;
 		};
 
-		srvs.front()->Init();
 		srvs.front()->StartUp();
 		const auto timeout = srvs.front()->GetInfo().get_electionTimeout() / 2;
 		auto id = srvs.front()->GetInfo().get_local();
@@ -77,13 +77,13 @@ namespace SJTU {
 		IdentityTestHelper helper;
 		const std::size_t SrvNum = 1;
 		auto srvs = helper.makeServers(SrvNum);
-		auto &ctx = Raft::GetDebug();
+		srvs[0]->Init();
+		auto &ctx = srvs[0]->GetCtx();
 		ctx.before_tranform = [](IdentityNo from, IdentityNo &to) mutable {
 			if (from == FollowerNo) throw std::runtime_error("unexpected test");
 			if (from != DownNo && to != CandidateNo) throw std::runtime_error("transform not to candidate");
 			to = to == DownNo ? DownNo : CandidateNo;
 		};
-		srvs[0]->Init();
 		srvs[0]->StartUp();
 		sleep(5);
 		srvs[0]->ShutDown();
@@ -218,8 +218,13 @@ namespace SJTU {
 				fprintf(stderr, "%s - %s; ", elem.first.c_str(), elem.second.c_str());
 			}
 			fprintf(stderr, "\n");
-			sleep(3);
+			sleep(1);
 		}
+		sleep(1);
+		printf("after sending put request for ten times, leader and follower's log size: %d %d, leader's commitIndex %lld, "
+					 "follower's commitIndex %lld\n",
+					 srv->GetState().log.length(), srv2->GetState().log.length(), srv->GetState().commitIndex,
+					 srv2->GetState().commitIndex);
 		srv->ShutDown();
 		srv2->ShutDown();
 		printf("Put method success because of one single leader.\n");

@@ -78,22 +78,31 @@ namespace SJTU {
 
 #ifndef _NOLOG
 				printf("Leader received response from other server...\n");
-				printf("it says: term %lld, success %d\n", response.term(), int(response.success()));
+				printf("id %s, it says: term %lld, success %d\n", client_ends_[i]->id.toString().c_str(), response.term(),
+							 int(response.success()));
 #endif
 				if (response.success()) {
 					printf("appendEntries success, update nextIndex and matchIndex\n");
 					std::cerr << "deleted leader response for heartbeat" << std::endl;
+
+					boost::unique_lock<boost::mutex> lk(state_.map_mtx);
 					long long &matchIndex = state_.matchIndex[client_ends_[i]->id];
 					long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
 					matchIndex = (long long) last_entryindex_cache;
 					nextIndex = matchIndex + 1;
+					lk.unlock();
+					fprintf(stderr, "id: %s, change nextIndex %d\n", client_ends_[i]->id.toString().c_str(),
+									state_.nextIndex[client_ends_[i]->id]);
 
 					CheckCommitIndexUpdate();
+					fprintf(stderr, "leader's commitIndex is %d\n", state_.commitIndex);
 				} else if (response.inconsist()) {
 					printf("appendEntries fail because of log inconsistency, decrement nextIndex and retry\n");
-					std::cerr << "deleted leader response for heartbeat" << std::endl;
+
+					boost::unique_lock<boost::mutex> lk(state_.map_mtx);
 					long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
 					--nextIndex;
+					lk.unlock();
 				}
 
 				if (state_.currentTerm < response.term()) {
@@ -111,13 +120,14 @@ size_t Leader::MakeHeartBeat(const ServerId &id, PbAppendEntriesRequest *request
 	request->set_term(state_.currentTerm);
 	request->set_leaderid(info.get_local().toString());
 	long long nxtIdx = state_.nextIndex.at(id);
+	fprintf(stderr, "id: %s, nextIndex %d\n", id.toString().c_str(), nxtIdx);
 	request->set_prevlogindex(
 			state_.log.at(nxtIdx - 1).entryIndex);  // previous log index is which immediately proceed the new ones.
 	request->set_prevlogterm(state_.log.at(nxtIdx - 1).term);
 	size_t last_index = state_.log.length();
-	for (long long i = nxtIdx; i <= state_.log.length(); ++i) {
+	for (long long i = nxtIdx; i <= last_index; ++i) {
 		PbAppendEntriesRequest_Entry *entry = request->add_entries();
-		const Entry &log_entry = state_.log.at(i);
+		const Entry log_entry = state_.log.at(i);
 		entry->set_term(log_entry.term);
 		entry->set_key(log_entry.key);
 		entry->set_val(log_entry.val);
@@ -158,6 +168,7 @@ size_t Leader::MakeHeartBeat(const ServerId &id, PbAppendEntriesRequest *request
 			printf("useless N check\n");
 		} else {
 			state_.commitIndex = checked_N;
+			apply_queue.notify();
 			printf("useful N check, set commitIndex to be %lld\n", state_.commitIndex);
 		}
 	}

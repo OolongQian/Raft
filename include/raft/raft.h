@@ -38,12 +38,6 @@ namespace SJTU {
 			timer.Stop();
 		}
 
-		static RaftDebugContext &GetDebug() {
-			static RaftDebugContext debugContext;
-			return debugContext;
-		}
-
-
 	private:
 #ifdef _UNIT_TEST
 	public:

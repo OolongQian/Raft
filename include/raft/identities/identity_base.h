@@ -8,16 +8,17 @@
 #include "../raft_proto/raft_client.h"
 #include "../timer/timer.h"
 #include "../../server_info.h"
+#include "../synchronous_queue/apply_queue.h"
 
 namespace SJTU {
 
 	class IdentityBase {
 	public:
 		explicit IdentityBase(State &state, Timer &timer, std::function<void(int)> transformer,
-													std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends, const ServerInfo &info) :
+													std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends, const ServerInfo &info,
+													ApplyQueue &apply_queue) :
 				state_(state), timer_(timer), identity_transformer(std::move(transformer)), client_ends_(client_ends),
-				info(info) {
-		}
+				info(info), apply_queue(apply_queue) {}
 
 		virtual ~IdentityBase() { ; }
 
@@ -79,6 +80,8 @@ namespace SJTU {
 
 		/// if there has been one transformation undergoing, the same transformation shouldn't be applied repeatedly.
 		boost::atomic<bool> transforming{false};
+
+		ApplyQueue &apply_queue;
 
 	protected:
 		virtual void AppendEntriesResponseGeneration(const PbAppendEntriesRequest *, PbAppendEntriesResponse *);

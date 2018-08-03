@@ -6,9 +6,9 @@ namespace SJTU {
 			server_end(info.get_local()), info(info), applyQueue(data, state) {
 		/// identity
 		std::function<void(int)> transformer = std::bind(&Raft::IdentityTransform, this, std::placeholders::_1);
-		identities[FollowerNo] = std::make_unique<Follower>(state, timer, transformer, client_ends, info);
-		identities[CandidateNo] = std::make_unique<Candidate>(state, timer, transformer, client_ends, info);
-		identities[LeaderNo] = std::make_unique<Leader>(state, timer, transformer, client_ends, info);
+		identities[FollowerNo] = std::make_unique<Follower>(state, timer, transformer, client_ends, info, applyQueue);
+		identities[CandidateNo] = std::make_unique<Candidate>(state, timer, transformer, client_ends, info, applyQueue);
+		identities[LeaderNo] = std::make_unique<Leader>(state, timer, transformer, client_ends, info, applyQueue);
 		currentIdentity = DownNo;
 
 		server_end.BindServiceFunc(
@@ -53,8 +53,7 @@ namespace SJTU {
 		}
 #ifdef _UNIT_TEST
 		IdentityNo identityNo_orig = identityNo;
-		RaftDebugContext &debugContext = GetDebug();
-//		debugContext.before_tranform(currentIdentity, identityNo);
+		printf("%s\n", info.get_local().toString().c_str());
 		ctx.before_tranform(currentIdentity, identityNo);
 #endif
 		eventQueue.addEvent([this, identityNo]() mutable {

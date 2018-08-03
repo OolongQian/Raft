@@ -8,52 +8,56 @@
 #include "debug_header.h"
 
 namespace SJTU {
-	class Server {
-	public:
-		Server(const std::string &filename);
+class Server {
+public:
+	Server(const std::string &filename);
 
-		~Server();
+	~Server();
 
-		void Init();
+	void Init();
 
-		void StartUp();
+	void StartUp();
 
-		void ShutDown();
+	void ShutDown();
 
-		const ServerInfo &GetInfo();
+	const ServerInfo &GetInfo();
 
 #ifdef _UNIT_TEST
 
-		const long long GetCurrentTerm() {
-			return pRaft->state.currentTerm;
-		}
+	const long long GetCurrentTerm() {
+		return pRaft->state.currentTerm;
+	}
 
-		const IdentityNo GetIdentity() {
-			return pRaft->currentIdentity;
-		}
+	const IdentityNo GetIdentity() {
+		return pRaft->currentIdentity;
+	}
 
-		RaftDebugContext &GetCtx() {
-			return pRaft->ctx;
-		}
+	RaftDebugContext &GetCtx() {
+		return pRaft->ctx;
+	}
 
-		const ServerId GetServerId() {
-			return pRaft->info.get_local();
-		}
+	const ServerId GetServerId() {
+		return pRaft->info.get_local();
+	}
 
 	const std::map<std::string, std::string> &GetKV() {
 		return data;
-	};
+	}
+
+	State &GetState() {
+		return pRaft->state;
+	}
 
 #endif
 
-	private:
-		std::unique_ptr<Raft> pRaft;
-		ServerInfo info;
-		std::map<std::string, std::string> data;  /// data to be coherent.
+private:
+	std::unique_ptr<Raft> pRaft;
+	ServerInfo info;
+	std::map<std::string, std::string> data;  /// data to be coherent.
 
-	private:
-		void InitData();    /// init state machine inner data. (trivially by now)
-	};
+private:
+	void InitData();    /// init state machine inner data. (trivially by now)
+};
 };
 
 

@@ -37,6 +37,7 @@ namespace SJTU {
 		void Load();
 
 		boost::mutex entries_mtx;
+		boost::mutex map_mtx;
 	};
 
 };
