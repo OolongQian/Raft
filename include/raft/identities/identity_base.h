@@ -84,18 +84,9 @@ namespace SJTU {
 		ApplyQueue &apply_queue;
 
 	protected:
-		virtual void AppendEntriesResponseGeneration(const PbAppendEntriesRequest *, PbAppendEntriesResponse *);
+		virtual void ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *response);
 
-		virtual void RequestVoteResponseGeneration(const PbRequestVoteRequest *, PbRequestVoteResponse *);
-
-		/// the following two functions only need to worry about convert to follower.
-		/// these handle follower converting when receive request from other servers.
-		/// about the case of receiving responses, client_ends_ is the place to fix.
-
-		/// these two functions operate tranform to Follower, which resets timer.
-		virtual void AppendEntriesSelfModification(const PbAppendEntriesRequest *);
-
-		virtual void RequestVoteSelfModification(const PbRequestVoteRequest *);
+		virtual void ProcsPeerPutFunc(const PbPutRequest *request, PbPutResponse *response);
 	};
 };
 

@@ -8,33 +8,19 @@ namespace SJTU {
 void
 SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
 //		AppendEntriesSelfModification(request);
-	if (info.get_local().toString() == "127.0.0.1:50001") {
-		fprintf(stderr, "follower receives request entry size: %d\n", request->entries_size());
-	}
-	fprintf(stderr, "server %s get appendEntriesRPC from %s\n", info.get_local().toString().c_str(),
-					request->leaderid().c_str());
+//	if (info.get_local().toString() == "127.0.0.1:50001") {
+//		fprintf(stderr, "follower receives request entry size: %d\n", request->entries_size());
+//	}
+//	fprintf(stderr, "server %s get appendEntriesRPC from %s\n", info.get_local().toString().c_str(),
+//					request->leaderid().c_str());
 	response->set_inconsist(false);
-	AppendEntriesResponseGeneration(request, response);
-	fprintf(stderr, "return response: term %lld, success %d\n", response->term(), (int) response->success());
-}
-
-void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
-//		RequestVoteSelfModification(request);
-	fprintf(stderr, "server %s get appendEntriesRPC from %s\n", info.get_local().toString().c_str(),
-					request->candidateid().c_str());
-	RequestVoteResponseGeneration(request, response);
-	fprintf(stderr, "return response: term %lld, vote %d\n", response->term(), (int) response->votegranted());
-}
-
-void IdentityBase::AppendEntriesResponseGeneration(const PbAppendEntriesRequest *request,
-																									 PbAppendEntriesResponse *response) {
 	/**
 	 * Default implementation.
 	 * */
 //		fprintf(stderr, "appendEntriesRequest is received...Always respond success\n");
-	fprintf(stderr, "follower or candidate AppendEntries received\n");
-	fprintf(stderr, "term: %lld leader: %s prevLogIndex: %lld prevLogTerm: %lld LeaderCommit: %lld\n", request->term(),
-					request->leaderid().c_str(), request->prevlogindex(), request->prevlogterm(), request->leadercommit());
+//	fprintf(stderr, "follower or candidate AppendEntries received\n");
+//	fprintf(stderr, "term: %lld leader: %s prevLogIndex: %lld prevLogTerm: %lld LeaderCommit: %lld\n", request->term(),
+//					request->leaderid().c_str(), request->prevlogindex(), request->prevlogterm(), request->leadercommit());
 	response->set_term(state_.currentTerm);
 	response->set_success(true);
 
@@ -43,18 +29,18 @@ void IdentityBase::AppendEntriesResponseGeneration(const PbAppendEntriesRequest 
 	if (request->term() < state_.currentTerm)
 		response->set_success(false);
 	/// reply false if log doesn't contain an entry at prevLogIndex whose term matches prevLogTerm.
-	std::cout << request->prevlogterm() << ' ' << request->prevlogindex() << std::endl;
+//	std::cout << request->prevlogterm() << ' ' << request->prevlogindex() << std::endl;
 
 	if (!state_.log.has(request->prevlogindex()) ||
 			state_.log.at(request->prevlogindex()).term != request->prevlogterm()) {
-		fprintf(stderr, "heartbeat inconsistency\n");
+//		fprintf(stderr, "heartbeat inconsistency\n");
 		response->set_inconsist(true);
 		response->set_success(false);
 		return;
 	}
 
 	if (request->entries_size() == 0) {
-		printf("receive empty entries (heartbeat), return...\n");
+//		printf("receive empty entries (heartbeat), return...\n");
 //		return;
 	}
 
@@ -91,10 +77,13 @@ void IdentityBase::AppendEntriesResponseGeneration(const PbAppendEntriesRequest 
 		}
 	}
 #endif
+//	fprintf(stderr, "return response: term %lld, success %d\n", response->term(), (int) response->success());
 }
 
-void
-IdentityBase::RequestVoteResponseGeneration(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
+void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
+//		RequestVoteSelfModification(request);
+//	fprintf(stderr, "server %s get appendEntriesRPC from %s\n", info.get_local().toString().c_str(),
+//					request->candidateid().c_str());
 	/**
 	 * Default implementation.
 	 * */
@@ -116,13 +105,12 @@ IdentityBase::RequestVoteResponseGeneration(const PbRequestVoteRequest *request,
 	 * If the logs end with the same term, then whichever log is longer is more up-to-date.
 	 * */
 	/// or candidate's log is out-of-date, reject.
-	if(request->lastlogterm() != state_.log.back().term) {
-		if(state_.log.back().term > request->lastlogterm()) {		/// my log is newer.
+	if (request->lastlogterm() != state_.log.back().term) {
+		if (state_.log.back().term > request->lastlogterm()) {    /// my log is newer.
 			response->set_votegranted(false);
 		}
-	}
-	else {
-		if(state_.log.back().entryIndex > request->lastlogindex())		/// my log is longer.
+	} else {
+		if (state_.log.back().entryIndex > request->lastlogindex())    /// my log is longer.
 			response->set_votegranted(false);
 	}
 #else
@@ -135,33 +123,29 @@ IdentityBase::RequestVoteResponseGeneration(const PbRequestVoteRequest *request,
 		state_.votedFor = vf;
 	}
 #endif
-}
-
-void IdentityBase::AppendEntriesSelfModification(const PbAppendEntriesRequest *request) {
-	/// if commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine.
-	/// oh I suddenly realize that this should be automated by apply_queue!!!
-	if (request->term() > state_.currentTerm) {
-		state_.currentTerm = request->term();
-		state_.votedFor.clear();
-		identity_transformer(FollowerNo);
-	}
-}
-
-void IdentityBase::RequestVoteSelfModification(const PbRequestVoteRequest *request) {
-	if (request->term() > state_.currentTerm) {
-		state_.currentTerm = request->term();
-		state_.votedFor.clear();
-		identity_transformer(FollowerNo);
-	}
+//	fprintf(stderr, "return response: term %lld, vote %d\n", response->term(), (int) response->votegranted());
 }
 
 /// default implementation is for follower and candidate.
 void IdentityBase::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+	/**
+	 * Receive from client
+	 * */
+	if (request->senderid().empty()) {
+		ProcsClientPutFunc(request, response);
+	} else {
+		ProcsPeerPutFunc(request, response);
+	}
+
+}
+
+void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *response) {
 	std::vector<std::unique_ptr<RaftPeerClientImpl> > tmp_client_ends;
 	for (const ServerId &srv_id : info.get_srvList()) {
 		if (srv_id == info.get_local()) continue;
 		tmp_client_ends.push_back(std::make_unique<RaftPeerClientImpl>(srv_id));
 	}
+
 	boost::atomic<std::size_t> count_success{0};
 	for (int t = 0, retry_time = 5; t < retry_time; ++t) {
 		for (size_t i = 0; i < tmp_client_ends.size(); ++i) {
@@ -200,5 +184,9 @@ void IdentityBase::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *resp
 	} else {
 		response->set_success(true);
 	}
+}
+
+void IdentityBase::ProcsPeerPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+	response->set_success(false);
 }
 };

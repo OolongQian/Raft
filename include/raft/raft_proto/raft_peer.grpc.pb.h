@@ -18,11 +18,8 @@
 
 namespace grpc {
 class CompletionQueue;
-
 class Channel;
-
 class ServerCompletionQueue;
-
 class ServerContext;
 }  // namespace grpc
 

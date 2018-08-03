@@ -43,7 +43,6 @@ struct TableStruct {
 	static const ::google::protobuf::internal::SerializationTable serialization_table[];
 	static const ::google::protobuf::uint32 offsets[];
 };
-
 void AddDescriptors();
 }  // namespace protobuf_raft_5fpeer_2eproto
 class PbAppendEntriesRequest;
@@ -255,12 +254,38 @@ public:
 
 	void set_allocated_val(::std::string *val);
 
+	// string senderId = 3;
+	void clear_senderid();
+
+	static const int kSenderIdFieldNumber = 3;
+
+	const ::std::string &senderid() const;
+
+	void set_senderid(const ::std::string &value);
+
+#if LANG_CXX11
+
+	void set_senderid(::std::string &&value);
+
+#endif
+
+	void set_senderid(const char *value);
+
+	void set_senderid(const char *value, size_t size);
+
+	::std::string *mutable_senderid();
+
+	::std::string *release_senderid();
+
+	void set_allocated_senderid(::std::string *senderid);
+
 	// @@protoc_insertion_point(class_scope:PbPutRequest)
 private:
 
 	::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
 	::google::protobuf::internal::ArenaStringPtr key_;
 	::google::protobuf::internal::ArenaStringPtr val_;
+	::google::protobuf::internal::ArenaStringPtr senderid_;
 	mutable ::google::protobuf::internal::CachedSize _cached_size_;
 	friend struct ::protobuf_raft_5fpeer_2eproto::TableStruct;
 };
@@ -1340,6 +1365,69 @@ inline void PbPutRequest::set_allocated_val(::std::string *val) {
 	// @@protoc_insertion_point(field_set_allocated:PbPutRequest.val)
 }
 
+// string senderId = 3;
+inline void PbPutRequest::clear_senderid() {
+	senderid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+inline const ::std::string &PbPutRequest::senderid() const {
+	// @@protoc_insertion_point(field_get:PbPutRequest.senderId)
+	return senderid_.GetNoArena();
+}
+
+inline void PbPutRequest::set_senderid(const ::std::string &value) {
+
+	senderid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+	// @@protoc_insertion_point(field_set:PbPutRequest.senderId)
+}
+
+#if LANG_CXX11
+
+inline void PbPutRequest::set_senderid(::std::string &&value) {
+
+	senderid_.SetNoArena(
+			&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+	// @@protoc_insertion_point(field_set_rvalue:PbPutRequest.senderId)
+}
+
+#endif
+
+inline void PbPutRequest::set_senderid(const char *value) {
+			GOOGLE_DCHECK(value != NULL);
+
+	senderid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+	// @@protoc_insertion_point(field_set_char:PbPutRequest.senderId)
+}
+
+inline void PbPutRequest::set_senderid(const char *value, size_t size) {
+
+	senderid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+											 ::std::string(reinterpret_cast<const char *>(value), size));
+	// @@protoc_insertion_point(field_set_pointer:PbPutRequest.senderId)
+}
+
+inline ::std::string *PbPutRequest::mutable_senderid() {
+
+	// @@protoc_insertion_point(field_mutable:PbPutRequest.senderId)
+	return senderid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+inline ::std::string *PbPutRequest::release_senderid() {
+	// @@protoc_insertion_point(field_release:PbPutRequest.senderId)
+
+	return senderid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+inline void PbPutRequest::set_allocated_senderid(::std::string *senderid) {
+	if (senderid != NULL) {
+
+	} else {
+
+	}
+	senderid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), senderid);
+	// @@protoc_insertion_point(field_set_allocated:PbPutRequest.senderId)
+}
+
 // -------------------------------------------------------------------
 
 // PbPutResponse
@@ -1765,12 +1853,10 @@ inline void PbAppendEntriesResponse::set_success(bool value) {
 inline void PbAppendEntriesResponse::clear_inconsist() {
 	inconsist_ = false;
 }
-
 inline bool PbAppendEntriesResponse::inconsist() const {
 	// @@protoc_insertion_point(field_get:PbAppendEntriesResponse.inconsist)
 	return inconsist_;
 }
-
 inline void PbAppendEntriesResponse::set_inconsist(bool value) {
 
 	inconsist_ = value;
