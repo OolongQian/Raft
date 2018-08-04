@@ -19,7 +19,6 @@ void Leader::init() {
 	state_.votedFor.clear();
 
 	for (const ServerId &id : info.get_srvList()) {
-		int a = state_.log.back().entryIndex + 1;
 		state_.nextIndex[id] = state_.log.back().entryIndex + 1;    /// init to be leader's last log index + 1.
 		state_.matchIndex[id] = 0;                        /// init to be 0, increase monotonically.
 	}
@@ -91,11 +90,11 @@ void Leader::SendHeartBeat() {
 				matchIndex = (long long) last_entryindex_cache;
 				nextIndex = matchIndex + 1;
 				lk.unlock();
-				fprintf(stderr, "id: %s, change nextIndex %d\n", client_ends_[i]->id.toString().c_str(),
+				fprintf(stderr, "id: %s, change nextIndex %lld\n", client_ends_[i]->id.toString().c_str(),
 								state_.nextIndex[client_ends_[i]->id]);
 
 				CheckCommitIndexUpdate();
-				fprintf(stderr, "leader's commitIndex is %d\n", state_.commitIndex);
+				fprintf(stderr, "leader's commitIndex is %lld\n", state_.commitIndex);
 			} else if (response.inconsist()) {
 				printf("appendEntries fail because of log inconsistency, decrement nextIndex and retry\n");
 
@@ -120,7 +119,7 @@ size_t Leader::MakeHeartBeat(const ServerId &id, PbAppendEntriesRequest *request
 	request->set_term(state_.currentTerm);
 	request->set_leaderid(info.get_local().toString());
 	long long nxtIdx = state_.nextIndex.at(id);
-	fprintf(stderr, "id: %s, nextIndex %d\n", id.toString().c_str(), nxtIdx);
+	fprintf(stderr, "id: %s, nextIndex %lld\n", id.toString().c_str(), nxtIdx);
 	request->set_prevlogindex(
 			state_.log.at(nxtIdx - 1).entryIndex);  // previous log index is which immediately proceed the new ones.
 	request->set_prevlogterm(state_.log.at(nxtIdx - 1).term);
@@ -219,7 +218,7 @@ void Leader::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *resp
 	std::promise<std::string> prm;
 	std::future<std::string> fut = prm.get_future();
 	state_.prmRepo.insert(std::pair<long long, std::promise<std::string> >(log.prmIndex, std::move(prm)));
-	fprintf(stderr, "pushback, log size is %d\n", state_.log.length());
+	fprintf(stderr, "pushback, log size is %zu\n", state_.log.length());
 	state_.log.pushBack(log);
 
 	response->set_replymsg(fut.get());
@@ -227,6 +226,15 @@ void Leader::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *resp
 }
 
 void Leader::ProcsPeerPutFunc(const PbPutRequest *request, PbPutResponse *response) {
-	;
+	Entry log;
+	log.term = state_.currentTerm;
+	log.command = "Put";
+	log.key = request->key();
+	log.val = request->val();
+	log.entryIndex = state_.log.back().entryIndex + 1;
+	log.replyerId = request->senderid();
+	log.prmIndex = request->prmindex();
+	state_.log.pushBack(log);
+	response->set_success(true);
 }
 };

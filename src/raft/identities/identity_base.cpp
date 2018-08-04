@@ -142,6 +142,15 @@ void IdentityBase::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *resp
 }
 
 void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+	/**
+	 * increment promise index, store promise and cache future handle.
+	 * */
+	static int cnt = 0;
+	long long cur_prm_index = state_.prmRepoIdx++;
+	std::promise<std::string> prm;
+	std::future<std::string> fut = prm.get_future();
+	state_.prmRepo.insert(std::pair<long long, std::promise<std::string> >(cur_prm_index, std::move(prm)));
+
 	/// launch server_ends to peers.
 	std::vector<std::unique_ptr<RaftPeerClientImpl> > tmp_client_ends;
 	for (const ServerId &srv_id : info.get_srvList()) {
@@ -152,17 +161,19 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 	boost::atomic<std::size_t> count_success{0};
 	/// broadcast requests, retry for five times if fail.
 	for (int t = 0, retry_time = 5; t < retry_time; ++t) {
+		printf("times %d\n", cnt++);
 		for (size_t i = 0; i < tmp_client_ends.size(); ++i) {
-			tmp_client_ends[i]->th = boost::thread([&]() mutable {
-				PbPutRequest request1;
-				request1.set_key(request->key());
-				request1.set_val(request->val());
+			tmp_client_ends[i]->th = boost::thread([&, i]() mutable {
+				PbPutRequest redirect_rqs;
+				redirect_rqs.set_key(request->key());
+				redirect_rqs.set_val(request->val());
 				/// set senderId this time.
-				request1.set_senderid(info.get_local().toString());
-				grpc::ClientContext context;
+				redirect_rqs.set_senderid(info.get_local().toString());
+				redirect_rqs.set_prmindex(cur_prm_index);
 
-				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(30));
-				grpc::Status status = tmp_client_ends[i]->stub_->PutRPC(&context, request1, response);
+				grpc::ClientContext context;
+				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(50));
+				grpc::Status status = tmp_client_ends[i]->stub_->PutRPC(&context, redirect_rqs, response);
 				if (!status.ok()) {
 					fprintf(stderr, "IdentityBase ProcsPutFunc error, error code: %d, error msg: %s\n", status.error_code(),
 									status.error_message().c_str());
@@ -183,11 +194,14 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 	}
 
 	/**block until finish*/
-	if (count_success == 0) {
-		fprintf(stderr, "Put request not responded\n");
-		response->set_success(false);
-	} else {
+	if(count_success == 1) {
+		response->set_replymsg(fut.get());
 		response->set_success(true);
+	}
+	else {
+		fprintf(stderr, "Put request not responded\n");
+		response->set_replymsg("Put request respond time exceeded");
+		response->set_success(false);
 	}
 }
 

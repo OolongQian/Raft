@@ -3,7 +3,7 @@
 namespace SJTU {
 
 	Raft::Raft(const ServerInfo &info, std::map<std::string, std::string> &data) :
-			server_end(info.get_local()), info(info), applyQueue(data, state, info) {
+			info(info),  applyQueue(data, state, info), server_end(info.get_local()) {
 		/// identity
 		std::function<void(int)> transformer = std::bind(&Raft::IdentityTransform, this, std::placeholders::_1);
 		identities[FollowerNo] = std::make_unique<Follower>(state, timer, transformer, client_ends, info, applyQueue);

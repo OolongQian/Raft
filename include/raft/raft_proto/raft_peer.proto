@@ -10,6 +10,7 @@ message PbPutRequest {
     string key = 1;
     string val = 2;
     string senderId = 3;
+    int64 prmIndex = 4;
 }
 
 message PbPutResponse {

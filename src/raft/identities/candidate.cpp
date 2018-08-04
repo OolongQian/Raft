@@ -46,7 +46,7 @@ namespace SJTU {
 	}
 
 	void Candidate::RequestVote() {
-		printf("clientSize %d\n", client_ends_.size());
+		printf("clientSize %lu\n", client_ends_.size());
 		for (size_t i = 0; i < client_ends_.size(); ++i) {
 			if (client_ends_[i]->id == info.get_local())
 				continue;

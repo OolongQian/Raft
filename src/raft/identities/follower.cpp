@@ -36,10 +36,11 @@ namespace SJTU {
 	}
 
 	void Follower::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
+		if(request->term() > state_.currentTerm)
+			state_.votedFor.clear();
 		IdentityBase::ProcsRequestVoteFunc(request, response);
 		if (request->term() > state_.currentTerm) {
 			state_.currentTerm = request->term();
-			state_.votedFor.clear();
 		}
 		identity_transformer(FollowerNo);
 	}

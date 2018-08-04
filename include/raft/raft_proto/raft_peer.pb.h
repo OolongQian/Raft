@@ -31,7 +31,7 @@
 #include <google/protobuf/extension_set.h>  // IWYU pragma: export
 #include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
-#define PROTOBUF_INTERNAL_EXPORT_protobuf_raft_5fpeer_2eproto
+#define PROTOBUF_INTERNAL_EXPORT_protobuf_raft_5fpeer_2eproto 
 
 namespace protobuf_raft_5fpeer_2eproto {
 // Internal implementation detail -- do not use these members.
@@ -68,52 +68,36 @@ class PbRequestVoteResponseDefaultTypeInternal;
 extern PbRequestVoteResponseDefaultTypeInternal _PbRequestVoteResponse_default_instance_;
 namespace google {
 namespace protobuf {
-template<>
-::PbAppendEntriesRequest *Arena::CreateMaybeMessage<::PbAppendEntriesRequest>(Arena *);
-
-template<>
-::PbAppendEntriesRequest_Entry *Arena::CreateMaybeMessage<::PbAppendEntriesRequest_Entry>(Arena *);
-
-template<>
-::PbAppendEntriesResponse *Arena::CreateMaybeMessage<::PbAppendEntriesResponse>(Arena *);
-
-template<>
-::PbPutRequest *Arena::CreateMaybeMessage<::PbPutRequest>(Arena *);
-
-template<>
-::PbPutResponse *Arena::CreateMaybeMessage<::PbPutResponse>(Arena *);
-
-template<>
-::PbRequestVoteRequest *Arena::CreateMaybeMessage<::PbRequestVoteRequest>(Arena *);
-
-template<>
-::PbRequestVoteResponse *Arena::CreateMaybeMessage<::PbRequestVoteResponse>(Arena *);
+template<> ::PbAppendEntriesRequest* Arena::CreateMaybeMessage<::PbAppendEntriesRequest>(Arena*);
+template<> ::PbAppendEntriesRequest_Entry* Arena::CreateMaybeMessage<::PbAppendEntriesRequest_Entry>(Arena*);
+template<> ::PbAppendEntriesResponse* Arena::CreateMaybeMessage<::PbAppendEntriesResponse>(Arena*);
+template<> ::PbPutRequest* Arena::CreateMaybeMessage<::PbPutRequest>(Arena*);
+template<> ::PbPutResponse* Arena::CreateMaybeMessage<::PbPutResponse>(Arena*);
+template<> ::PbRequestVoteRequest* Arena::CreateMaybeMessage<::PbRequestVoteRequest>(Arena*);
+template<> ::PbRequestVoteResponse* Arena::CreateMaybeMessage<::PbRequestVoteResponse>(Arena*);
 }  // namespace protobuf
 }  // namespace google
 
 // ===================================================================
 
 class PbPutRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PbPutRequest) */ {
-public:
+ public:
   PbPutRequest();
-
   virtual ~PbPutRequest();
 
-  PbPutRequest(const PbPutRequest &from);
+  PbPutRequest(const PbPutRequest& from);
 
-  inline PbPutRequest &operator=(const PbPutRequest &from) {
+  inline PbPutRequest& operator=(const PbPutRequest& from) {
     CopyFrom(from);
     return *this;
   }
-
-#if LANG_CXX11
-
-  PbPutRequest(PbPutRequest &&from) noexcept
-      : PbPutRequest() {
+  #if LANG_CXX11
+  PbPutRequest(PbPutRequest&& from) noexcept
+    : PbPutRequest() {
     *this = ::std::move(from);
   }
 
-  inline PbPutRequest &operator=(PbPutRequest &&from) noexcept {
+  inline PbPutRequest& operator=(PbPutRequest&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -121,82 +105,61 @@ public:
     }
     return *this;
   }
-
-#endif
-
-  static const ::google::protobuf::Descriptor *descriptor();
-
-  static const PbPutRequest &default_instance();
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PbPutRequest& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const PbPutRequest *internal_default_instance() {
-    return reinterpret_cast<const PbPutRequest *>(
-        &_PbPutRequest_default_instance_);
+  static inline const PbPutRequest* internal_default_instance() {
+    return reinterpret_cast<const PbPutRequest*>(
+               &_PbPutRequest_default_instance_);
   }
-
   static constexpr int kIndexInFileMessages =
-      0;
+    0;
 
-  void Swap(PbPutRequest *other);
-
-  friend void swap(PbPutRequest &a, PbPutRequest &b) {
+  void Swap(PbPutRequest* other);
+  friend void swap(PbPutRequest& a, PbPutRequest& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline PbPutRequest *New() const final {
+  inline PbPutRequest* New() const final {
     return CreateMaybeMessage<PbPutRequest>(NULL);
   }
 
-  PbPutRequest *New(::google::protobuf::Arena *arena) const final {
+  PbPutRequest* New(::google::protobuf::Arena* arena) const final {
     return CreateMaybeMessage<PbPutRequest>(arena);
   }
-
-  void CopyFrom(const ::google::protobuf::Message &from) final;
-
-  void MergeFrom(const ::google::protobuf::Message &from) final;
-
-  void CopyFrom(const PbPutRequest &from);
-
-  void MergeFrom(const PbPutRequest &from);
-
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PbPutRequest& from);
+  void MergeFrom(const PbPutRequest& from);
   void Clear() final;
-
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream *input) final;
-
+      ::google::protobuf::io::CodedInputStream* input) final;
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream *output) const final;
-
-  ::google::protobuf::uint8 *InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8 *target) const final;
-
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
-private:
+  private:
   void SharedCtor();
-
   void SharedDtor();
-
   void SetCachedSize(int size) const final;
-
-  void InternalSwap(PbPutRequest *other);
-
-private:
-  inline ::google::protobuf::Arena *GetArenaNoVirtual() const {
+  void InternalSwap(PbPutRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
   }
-
-  inline void *MaybeArenaPtr() const {
+  inline void* MaybeArenaPtr() const {
     return NULL;
   }
-
-public:
+  public:
 
   ::google::protobuf::Metadata GetMetadata() const final;
 
@@ -206,113 +169,83 @@ public:
 
   // string key = 1;
   void clear_key();
-
   static const int kKeyFieldNumber = 1;
-
-  const ::std::string &key() const;
-
-  void set_key(const ::std::string &value);
-
-#if LANG_CXX11
-
-  void set_key(::std::string &&value);
-
-#endif
-
-  void set_key(const char *value);
-
-  void set_key(const char *value, size_t size);
-
-  ::std::string *mutable_key();
-
-  ::std::string *release_key();
-
-  void set_allocated_key(::std::string *key);
+  const ::std::string& key() const;
+  void set_key(const ::std::string& value);
+  #if LANG_CXX11
+  void set_key(::std::string&& value);
+  #endif
+  void set_key(const char* value);
+  void set_key(const char* value, size_t size);
+  ::std::string* mutable_key();
+  ::std::string* release_key();
+  void set_allocated_key(::std::string* key);
 
   // string val = 2;
   void clear_val();
-
   static const int kValFieldNumber = 2;
-
-  const ::std::string &val() const;
-
-  void set_val(const ::std::string &value);
-
-#if LANG_CXX11
-
-  void set_val(::std::string &&value);
-
-#endif
-
-  void set_val(const char *value);
-
-  void set_val(const char *value, size_t size);
-
-  ::std::string *mutable_val();
-
-  ::std::string *release_val();
-
-  void set_allocated_val(::std::string *val);
+  const ::std::string& val() const;
+  void set_val(const ::std::string& value);
+  #if LANG_CXX11
+  void set_val(::std::string&& value);
+  #endif
+  void set_val(const char* value);
+  void set_val(const char* value, size_t size);
+  ::std::string* mutable_val();
+  ::std::string* release_val();
+  void set_allocated_val(::std::string* val);
 
   // string senderId = 3;
   void clear_senderid();
-
   static const int kSenderIdFieldNumber = 3;
+  const ::std::string& senderid() const;
+  void set_senderid(const ::std::string& value);
+  #if LANG_CXX11
+  void set_senderid(::std::string&& value);
+  #endif
+  void set_senderid(const char* value);
+  void set_senderid(const char* value, size_t size);
+  ::std::string* mutable_senderid();
+  ::std::string* release_senderid();
+  void set_allocated_senderid(::std::string* senderid);
 
-  const ::std::string &senderid() const;
-
-  void set_senderid(const ::std::string &value);
-
-#if LANG_CXX11
-
-  void set_senderid(::std::string &&value);
-
-#endif
-
-  void set_senderid(const char *value);
-
-  void set_senderid(const char *value, size_t size);
-
-  ::std::string *mutable_senderid();
-
-  ::std::string *release_senderid();
-
-  void set_allocated_senderid(::std::string *senderid);
+  // int64 prmIndex = 4;
+  void clear_prmindex();
+  static const int kPrmIndexFieldNumber = 4;
+  ::google::protobuf::int64 prmindex() const;
+  void set_prmindex(::google::protobuf::int64 value);
 
   // @@protoc_insertion_point(class_scope:PbPutRequest)
-private:
+ private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr key_;
   ::google::protobuf::internal::ArenaStringPtr val_;
   ::google::protobuf::internal::ArenaStringPtr senderid_;
+  ::google::protobuf::int64 prmindex_;
   mutable ::google::protobuf::internal::CachedSize _cached_size_;
   friend struct ::protobuf_raft_5fpeer_2eproto::TableStruct;
 };
 // -------------------------------------------------------------------
 
-class PbPutResponse
-    : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PbPutResponse) */ {
-public:
+class PbPutResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PbPutResponse) */ {
+ public:
   PbPutResponse();
-
   virtual ~PbPutResponse();
 
-  PbPutResponse(const PbPutResponse &from);
+  PbPutResponse(const PbPutResponse& from);
 
-  inline PbPutResponse &operator=(const PbPutResponse &from) {
+  inline PbPutResponse& operator=(const PbPutResponse& from) {
     CopyFrom(from);
     return *this;
   }
-
-#if LANG_CXX11
-
-  PbPutResponse(PbPutResponse &&from) noexcept
-      : PbPutResponse() {
+  #if LANG_CXX11
+  PbPutResponse(PbPutResponse&& from) noexcept
+    : PbPutResponse() {
     *this = ::std::move(from);
   }
 
-  inline PbPutResponse &operator=(PbPutResponse &&from) noexcept {
+  inline PbPutResponse& operator=(PbPutResponse&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -320,82 +253,61 @@ public:
     }
     return *this;
   }
-
-#endif
-
-  static const ::google::protobuf::Descriptor *descriptor();
-
-  static const PbPutResponse &default_instance();
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PbPutResponse& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const PbPutResponse *internal_default_instance() {
-    return reinterpret_cast<const PbPutResponse *>(
-        &_PbPutResponse_default_instance_);
+  static inline const PbPutResponse* internal_default_instance() {
+    return reinterpret_cast<const PbPutResponse*>(
+               &_PbPutResponse_default_instance_);
   }
-
   static constexpr int kIndexInFileMessages =
-      1;
+    1;
 
-  void Swap(PbPutResponse *other);
-
-  friend void swap(PbPutResponse &a, PbPutResponse &b) {
+  void Swap(PbPutResponse* other);
+  friend void swap(PbPutResponse& a, PbPutResponse& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline PbPutResponse *New() const final {
+  inline PbPutResponse* New() const final {
     return CreateMaybeMessage<PbPutResponse>(NULL);
   }
 
-  PbPutResponse *New(::google::protobuf::Arena *arena) const final {
+  PbPutResponse* New(::google::protobuf::Arena* arena) const final {
     return CreateMaybeMessage<PbPutResponse>(arena);
   }
-
-  void CopyFrom(const ::google::protobuf::Message &from) final;
-
-  void MergeFrom(const ::google::protobuf::Message &from) final;
-
-  void CopyFrom(const PbPutResponse &from);
-
-  void MergeFrom(const PbPutResponse &from);
-
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PbPutResponse& from);
+  void MergeFrom(const PbPutResponse& from);
   void Clear() final;
-
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
-
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream *input) final;
-
+      ::google::protobuf::io::CodedInputStream* input) final;
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream *output) const final;
-
-  ::google::protobuf::uint8 *InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8 *target) const final;
-
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
-private:
+  private:
   void SharedCtor();
-
   void SharedDtor();
-
   void SetCachedSize(int size) const final;
-
-  void InternalSwap(PbPutResponse *other);
-
-private:
-  inline ::google::protobuf::Arena *GetArenaNoVirtual() const {
+  void InternalSwap(PbPutResponse* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
   }
-
-  inline void *MaybeArenaPtr() const {
+  inline void* MaybeArenaPtr() const {
     return NULL;
   }
-
-public:
+  public:
 
   ::google::protobuf::Metadata GetMetadata() const final;
 
@@ -405,40 +317,26 @@ public:
 
   // string replyMsg = 2;
   void clear_replymsg();
-
   static const int kReplyMsgFieldNumber = 2;
-
-  const ::std::string &replymsg() const;
-
-  void set_replymsg(const ::std::string &value);
-
-#if LANG_CXX11
-
-  void set_replymsg(::std::string &&value);
-
-#endif
-
-  void set_replymsg(const char *value);
-
-  void set_replymsg(const char *value, size_t size);
-
-  ::std::string *mutable_replymsg();
-
-  ::std::string *release_replymsg();
-
-  void set_allocated_replymsg(::std::string *replymsg);
+  const ::std::string& replymsg() const;
+  void set_replymsg(const ::std::string& value);
+  #if LANG_CXX11
+  void set_replymsg(::std::string&& value);
+  #endif
+  void set_replymsg(const char* value);
+  void set_replymsg(const char* value, size_t size);
+  ::std::string* mutable_replymsg();
+  ::std::string* release_replymsg();
+  void set_allocated_replymsg(::std::string* replymsg);
 
   // bool success = 1;
   void clear_success();
-
   static const int kSuccessFieldNumber = 1;
-
   bool success() const;
-
   void set_success(bool value);
 
   // @@protoc_insertion_point(class_scope:PbPutResponse)
-private:
+ private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr replymsg_;
@@ -448,27 +346,24 @@ private:
 };
 // -------------------------------------------------------------------
 
-class PbAppendEntriesRequest_Entry
-    : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PbAppendEntriesRequest.Entry) */ {
-public:
+class PbAppendEntriesRequest_Entry : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PbAppendEntriesRequest.Entry) */ {
+ public:
   PbAppendEntriesRequest_Entry();
   virtual ~PbAppendEntriesRequest_Entry();
 
-  PbAppendEntriesRequest_Entry(const PbAppendEntriesRequest_Entry &from);
+  PbAppendEntriesRequest_Entry(const PbAppendEntriesRequest_Entry& from);
 
-  inline PbAppendEntriesRequest_Entry &operator=(const PbAppendEntriesRequest_Entry &from) {
+  inline PbAppendEntriesRequest_Entry& operator=(const PbAppendEntriesRequest_Entry& from) {
     CopyFrom(from);
     return *this;
   }
-
-#if LANG_CXX11
-
-  PbAppendEntriesRequest_Entry(PbAppendEntriesRequest_Entry &&from) noexcept
-      : PbAppendEntriesRequest_Entry() {
+  #if LANG_CXX11
+  PbAppendEntriesRequest_Entry(PbAppendEntriesRequest_Entry&& from) noexcept
+    : PbAppendEntriesRequest_Entry() {
     *this = ::std::move(from);
   }
 
-  inline PbAppendEntriesRequest_Entry &operator=(PbAppendEntriesRequest_Entry &&from) noexcept {
+  inline PbAppendEntriesRequest_Entry& operator=(PbAppendEntriesRequest_Entry&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -476,74 +371,61 @@ public:
     }
     return *this;
   }
-
-#endif
-
-  static const ::google::protobuf::Descriptor *descriptor();
-
-  static const PbAppendEntriesRequest_Entry &default_instance();
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PbAppendEntriesRequest_Entry& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const PbAppendEntriesRequest_Entry *internal_default_instance() {
-    return reinterpret_cast<const PbAppendEntriesRequest_Entry *>(
-        &_PbAppendEntriesRequest_Entry_default_instance_);
+  static inline const PbAppendEntriesRequest_Entry* internal_default_instance() {
+    return reinterpret_cast<const PbAppendEntriesRequest_Entry*>(
+               &_PbAppendEntriesRequest_Entry_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-      2;
+    2;
 
-  void Swap(PbAppendEntriesRequest_Entry *other);
-
-  friend void swap(PbAppendEntriesRequest_Entry &a, PbAppendEntriesRequest_Entry &b) {
+  void Swap(PbAppendEntriesRequest_Entry* other);
+  friend void swap(PbAppendEntriesRequest_Entry& a, PbAppendEntriesRequest_Entry& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline PbAppendEntriesRequest_Entry *New() const final {
+  inline PbAppendEntriesRequest_Entry* New() const final {
     return CreateMaybeMessage<PbAppendEntriesRequest_Entry>(NULL);
   }
 
-  PbAppendEntriesRequest_Entry *New(::google::protobuf::Arena *arena) const final {
+  PbAppendEntriesRequest_Entry* New(::google::protobuf::Arena* arena) const final {
     return CreateMaybeMessage<PbAppendEntriesRequest_Entry>(arena);
   }
-
-  void CopyFrom(const ::google::protobuf::Message &from) final;
-
-  void MergeFrom(const ::google::protobuf::Message &from) final;
-
-  void CopyFrom(const PbAppendEntriesRequest_Entry &from);
-
-  void MergeFrom(const PbAppendEntriesRequest_Entry &from);
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PbAppendEntriesRequest_Entry& from);
+  void MergeFrom(const PbAppendEntriesRequest_Entry& from);
   void Clear() final;
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream *input) final;
+      ::google::protobuf::io::CodedInputStream* input) final;
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream *output) const final;
-
-  ::google::protobuf::uint8 *InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8 *target) const final;
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
-private:
+  private:
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-
-  void InternalSwap(PbAppendEntriesRequest_Entry *other);
-
-private:
-  inline ::google::protobuf::Arena *GetArenaNoVirtual() const {
+  void InternalSwap(PbAppendEntriesRequest_Entry* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
   }
-
-  inline void *MaybeArenaPtr() const {
+  inline void* MaybeArenaPtr() const {
     return NULL;
   }
-
-public:
+  public:
 
   ::google::protobuf::Metadata GetMetadata() const final;
 
@@ -554,129 +436,79 @@ public:
   // string command = 1;
   void clear_command();
   static const int kCommandFieldNumber = 1;
-
-  const ::std::string &command() const;
-
-  void set_command(const ::std::string &value);
-
-#if LANG_CXX11
-
-  void set_command(::std::string &&value);
-
-#endif
-
-  void set_command(const char *value);
-
-  void set_command(const char *value, size_t size);
-
-  ::std::string *mutable_command();
-
-  ::std::string *release_command();
-
-  void set_allocated_command(::std::string *command);
+  const ::std::string& command() const;
+  void set_command(const ::std::string& value);
+  #if LANG_CXX11
+  void set_command(::std::string&& value);
+  #endif
+  void set_command(const char* value);
+  void set_command(const char* value, size_t size);
+  ::std::string* mutable_command();
+  ::std::string* release_command();
+  void set_allocated_command(::std::string* command);
 
   // string key = 2;
   void clear_key();
   static const int kKeyFieldNumber = 2;
-
-  const ::std::string &key() const;
-
-  void set_key(const ::std::string &value);
-
-#if LANG_CXX11
-
-  void set_key(::std::string &&value);
-
-#endif
-
-  void set_key(const char *value);
-
-  void set_key(const char *value, size_t size);
-
-  ::std::string *mutable_key();
-
-  ::std::string *release_key();
-
-  void set_allocated_key(::std::string *key);
+  const ::std::string& key() const;
+  void set_key(const ::std::string& value);
+  #if LANG_CXX11
+  void set_key(::std::string&& value);
+  #endif
+  void set_key(const char* value);
+  void set_key(const char* value, size_t size);
+  ::std::string* mutable_key();
+  ::std::string* release_key();
+  void set_allocated_key(::std::string* key);
 
   // string val = 3;
   void clear_val();
   static const int kValFieldNumber = 3;
-
-  const ::std::string &val() const;
-
-  void set_val(const ::std::string &value);
-
-#if LANG_CXX11
-
-  void set_val(::std::string &&value);
-
-#endif
-
-  void set_val(const char *value);
-
-  void set_val(const char *value, size_t size);
-
-  ::std::string *mutable_val();
-
-  ::std::string *release_val();
-
-  void set_allocated_val(::std::string *val);
+  const ::std::string& val() const;
+  void set_val(const ::std::string& value);
+  #if LANG_CXX11
+  void set_val(::std::string&& value);
+  #endif
+  void set_val(const char* value);
+  void set_val(const char* value, size_t size);
+  ::std::string* mutable_val();
+  ::std::string* release_val();
+  void set_allocated_val(::std::string* val);
 
   // string replyerId = 6;
   void clear_replyerid();
-
   static const int kReplyerIdFieldNumber = 6;
-
-  const ::std::string &replyerid() const;
-
-  void set_replyerid(const ::std::string &value);
-
-#if LANG_CXX11
-
-  void set_replyerid(::std::string &&value);
-
-#endif
-
-  void set_replyerid(const char *value);
-
-  void set_replyerid(const char *value, size_t size);
-
-  ::std::string *mutable_replyerid();
-
-  ::std::string *release_replyerid();
-
-  void set_allocated_replyerid(::std::string *replyerid);
+  const ::std::string& replyerid() const;
+  void set_replyerid(const ::std::string& value);
+  #if LANG_CXX11
+  void set_replyerid(::std::string&& value);
+  #endif
+  void set_replyerid(const char* value);
+  void set_replyerid(const char* value, size_t size);
+  ::std::string* mutable_replyerid();
+  ::std::string* release_replyerid();
+  void set_allocated_replyerid(::std::string* replyerid);
 
   // int64 term = 4;
   void clear_term();
-
   static const int kTermFieldNumber = 4;
-
   ::google::protobuf::int64 term() const;
-
   void set_term(::google::protobuf::int64 value);
 
   // int64 entryIndex = 5;
   void clear_entryindex();
-
   static const int kEntryIndexFieldNumber = 5;
-
   ::google::protobuf::int64 entryindex() const;
-
   void set_entryindex(::google::protobuf::int64 value);
 
   // int64 prmIndex = 7;
   void clear_prmindex();
-
   static const int kPrmIndexFieldNumber = 7;
-
   ::google::protobuf::int64 prmindex() const;
-
   void set_prmindex(::google::protobuf::int64 value);
 
   // @@protoc_insertion_point(class_scope:PbAppendEntriesRequest.Entry)
-private:
+ private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr command_;
@@ -691,27 +523,24 @@ private:
 };
 // -------------------------------------------------------------------
 
-class PbAppendEntriesRequest
-    : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PbAppendEntriesRequest) */ {
-public:
+class PbAppendEntriesRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PbAppendEntriesRequest) */ {
+ public:
   PbAppendEntriesRequest();
   virtual ~PbAppendEntriesRequest();
 
-  PbAppendEntriesRequest(const PbAppendEntriesRequest &from);
+  PbAppendEntriesRequest(const PbAppendEntriesRequest& from);
 
-  inline PbAppendEntriesRequest &operator=(const PbAppendEntriesRequest &from) {
+  inline PbAppendEntriesRequest& operator=(const PbAppendEntriesRequest& from) {
     CopyFrom(from);
     return *this;
   }
-
-#if LANG_CXX11
-
-  PbAppendEntriesRequest(PbAppendEntriesRequest &&from) noexcept
-      : PbAppendEntriesRequest() {
+  #if LANG_CXX11
+  PbAppendEntriesRequest(PbAppendEntriesRequest&& from) noexcept
+    : PbAppendEntriesRequest() {
     *this = ::std::move(from);
   }
 
-  inline PbAppendEntriesRequest &operator=(PbAppendEntriesRequest &&from) noexcept {
+  inline PbAppendEntriesRequest& operator=(PbAppendEntriesRequest&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -719,74 +548,61 @@ public:
     }
     return *this;
   }
-
-#endif
-
-  static const ::google::protobuf::Descriptor *descriptor();
-
-  static const PbAppendEntriesRequest &default_instance();
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PbAppendEntriesRequest& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const PbAppendEntriesRequest *internal_default_instance() {
-    return reinterpret_cast<const PbAppendEntriesRequest *>(
-        &_PbAppendEntriesRequest_default_instance_);
+  static inline const PbAppendEntriesRequest* internal_default_instance() {
+    return reinterpret_cast<const PbAppendEntriesRequest*>(
+               &_PbAppendEntriesRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-      3;
+    3;
 
-  void Swap(PbAppendEntriesRequest *other);
-
-  friend void swap(PbAppendEntriesRequest &a, PbAppendEntriesRequest &b) {
+  void Swap(PbAppendEntriesRequest* other);
+  friend void swap(PbAppendEntriesRequest& a, PbAppendEntriesRequest& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline PbAppendEntriesRequest *New() const final {
+  inline PbAppendEntriesRequest* New() const final {
     return CreateMaybeMessage<PbAppendEntriesRequest>(NULL);
   }
 
-  PbAppendEntriesRequest *New(::google::protobuf::Arena *arena) const final {
+  PbAppendEntriesRequest* New(::google::protobuf::Arena* arena) const final {
     return CreateMaybeMessage<PbAppendEntriesRequest>(arena);
   }
-
-  void CopyFrom(const ::google::protobuf::Message &from) final;
-
-  void MergeFrom(const ::google::protobuf::Message &from) final;
-
-  void CopyFrom(const PbAppendEntriesRequest &from);
-
-  void MergeFrom(const PbAppendEntriesRequest &from);
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PbAppendEntriesRequest& from);
+  void MergeFrom(const PbAppendEntriesRequest& from);
   void Clear() final;
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream *input) final;
+      ::google::protobuf::io::CodedInputStream* input) final;
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream *output) const final;
-
-  ::google::protobuf::uint8 *InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8 *target) const final;
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
-private:
+  private:
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-
-  void InternalSwap(PbAppendEntriesRequest *other);
-
-private:
-  inline ::google::protobuf::Arena *GetArenaNoVirtual() const {
+  void InternalSwap(PbAppendEntriesRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
   }
-
-  inline void *MaybeArenaPtr() const {
+  inline void* MaybeArenaPtr() const {
     return NULL;
   }
-
-public:
+  public:
 
   ::google::protobuf::Metadata GetMetadata() const final;
 
@@ -800,42 +616,27 @@ public:
   int entries_size() const;
   void clear_entries();
   static const int kEntriesFieldNumber = 5;
-
-  ::PbAppendEntriesRequest_Entry *mutable_entries(int index);
-
-  ::google::protobuf::RepeatedPtrField<::PbAppendEntriesRequest_Entry> *
-  mutable_entries();
-
-  const ::PbAppendEntriesRequest_Entry &entries(int index) const;
-
-  ::PbAppendEntriesRequest_Entry *add_entries();
-
-  const ::google::protobuf::RepeatedPtrField<::PbAppendEntriesRequest_Entry> &
-  entries() const;
+  ::PbAppendEntriesRequest_Entry* mutable_entries(int index);
+  ::google::protobuf::RepeatedPtrField< ::PbAppendEntriesRequest_Entry >*
+      mutable_entries();
+  const ::PbAppendEntriesRequest_Entry& entries(int index) const;
+  ::PbAppendEntriesRequest_Entry* add_entries();
+  const ::google::protobuf::RepeatedPtrField< ::PbAppendEntriesRequest_Entry >&
+      entries() const;
 
   // string leaderId = 2;
   void clear_leaderid();
   static const int kLeaderIdFieldNumber = 2;
-
-  const ::std::string &leaderid() const;
-
-  void set_leaderid(const ::std::string &value);
-
-#if LANG_CXX11
-
-  void set_leaderid(::std::string &&value);
-
-#endif
-
-  void set_leaderid(const char *value);
-
-  void set_leaderid(const char *value, size_t size);
-
-  ::std::string *mutable_leaderid();
-
-  ::std::string *release_leaderid();
-
-  void set_allocated_leaderid(::std::string *leaderid);
+  const ::std::string& leaderid() const;
+  void set_leaderid(const ::std::string& value);
+  #if LANG_CXX11
+  void set_leaderid(::std::string&& value);
+  #endif
+  void set_leaderid(const char* value);
+  void set_leaderid(const char* value, size_t size);
+  ::std::string* mutable_leaderid();
+  ::std::string* release_leaderid();
+  void set_allocated_leaderid(::std::string* leaderid);
 
   // int64 term = 1;
   void clear_term();
@@ -862,10 +663,10 @@ public:
   void set_leadercommit(::google::protobuf::int64 value);
 
   // @@protoc_insertion_point(class_scope:PbAppendEntriesRequest)
-private:
+ private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
-  ::google::protobuf::RepeatedPtrField<::PbAppendEntriesRequest_Entry> entries_;
+  ::google::protobuf::RepeatedPtrField< ::PbAppendEntriesRequest_Entry > entries_;
   ::google::protobuf::internal::ArenaStringPtr leaderid_;
   ::google::protobuf::int64 term_;
   ::google::protobuf::int64 prevlogindex_;
@@ -876,27 +677,24 @@ private:
 };
 // -------------------------------------------------------------------
 
-class PbAppendEntriesResponse
-    : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PbAppendEntriesResponse) */ {
-public:
+class PbAppendEntriesResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PbAppendEntriesResponse) */ {
+ public:
   PbAppendEntriesResponse();
   virtual ~PbAppendEntriesResponse();
 
-  PbAppendEntriesResponse(const PbAppendEntriesResponse &from);
+  PbAppendEntriesResponse(const PbAppendEntriesResponse& from);
 
-  inline PbAppendEntriesResponse &operator=(const PbAppendEntriesResponse &from) {
+  inline PbAppendEntriesResponse& operator=(const PbAppendEntriesResponse& from) {
     CopyFrom(from);
     return *this;
   }
-
-#if LANG_CXX11
-
-  PbAppendEntriesResponse(PbAppendEntriesResponse &&from) noexcept
-      : PbAppendEntriesResponse() {
+  #if LANG_CXX11
+  PbAppendEntriesResponse(PbAppendEntriesResponse&& from) noexcept
+    : PbAppendEntriesResponse() {
     *this = ::std::move(from);
   }
 
-  inline PbAppendEntriesResponse &operator=(PbAppendEntriesResponse &&from) noexcept {
+  inline PbAppendEntriesResponse& operator=(PbAppendEntriesResponse&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -904,74 +702,61 @@ public:
     }
     return *this;
   }
-
-#endif
-
-  static const ::google::protobuf::Descriptor *descriptor();
-
-  static const PbAppendEntriesResponse &default_instance();
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PbAppendEntriesResponse& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const PbAppendEntriesResponse *internal_default_instance() {
-    return reinterpret_cast<const PbAppendEntriesResponse *>(
-        &_PbAppendEntriesResponse_default_instance_);
+  static inline const PbAppendEntriesResponse* internal_default_instance() {
+    return reinterpret_cast<const PbAppendEntriesResponse*>(
+               &_PbAppendEntriesResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-      4;
+    4;
 
-  void Swap(PbAppendEntriesResponse *other);
-
-  friend void swap(PbAppendEntriesResponse &a, PbAppendEntriesResponse &b) {
+  void Swap(PbAppendEntriesResponse* other);
+  friend void swap(PbAppendEntriesResponse& a, PbAppendEntriesResponse& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline PbAppendEntriesResponse *New() const final {
+  inline PbAppendEntriesResponse* New() const final {
     return CreateMaybeMessage<PbAppendEntriesResponse>(NULL);
   }
 
-  PbAppendEntriesResponse *New(::google::protobuf::Arena *arena) const final {
+  PbAppendEntriesResponse* New(::google::protobuf::Arena* arena) const final {
     return CreateMaybeMessage<PbAppendEntriesResponse>(arena);
   }
-
-  void CopyFrom(const ::google::protobuf::Message &from) final;
-
-  void MergeFrom(const ::google::protobuf::Message &from) final;
-
-  void CopyFrom(const PbAppendEntriesResponse &from);
-
-  void MergeFrom(const PbAppendEntriesResponse &from);
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PbAppendEntriesResponse& from);
+  void MergeFrom(const PbAppendEntriesResponse& from);
   void Clear() final;
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream *input) final;
+      ::google::protobuf::io::CodedInputStream* input) final;
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream *output) const final;
-
-  ::google::protobuf::uint8 *InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8 *target) const final;
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
-private:
+  private:
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-
-  void InternalSwap(PbAppendEntriesResponse *other);
-
-private:
-  inline ::google::protobuf::Arena *GetArenaNoVirtual() const {
+  void InternalSwap(PbAppendEntriesResponse* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
   }
-
-  inline void *MaybeArenaPtr() const {
+  inline void* MaybeArenaPtr() const {
     return NULL;
   }
-
-public:
+  public:
 
   ::google::protobuf::Metadata GetMetadata() const final;
 
@@ -993,15 +778,12 @@ public:
 
   // bool inconsist = 3;
   void clear_inconsist();
-
   static const int kInconsistFieldNumber = 3;
-
   bool inconsist() const;
-
   void set_inconsist(bool value);
 
   // @@protoc_insertion_point(class_scope:PbAppendEntriesResponse)
-private:
+ private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::int64 term_;
@@ -1012,27 +794,24 @@ private:
 };
 // -------------------------------------------------------------------
 
-class PbRequestVoteRequest
-    : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PbRequestVoteRequest) */ {
-public:
+class PbRequestVoteRequest : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PbRequestVoteRequest) */ {
+ public:
   PbRequestVoteRequest();
   virtual ~PbRequestVoteRequest();
 
-  PbRequestVoteRequest(const PbRequestVoteRequest &from);
+  PbRequestVoteRequest(const PbRequestVoteRequest& from);
 
-  inline PbRequestVoteRequest &operator=(const PbRequestVoteRequest &from) {
+  inline PbRequestVoteRequest& operator=(const PbRequestVoteRequest& from) {
     CopyFrom(from);
     return *this;
   }
-
-#if LANG_CXX11
-
-  PbRequestVoteRequest(PbRequestVoteRequest &&from) noexcept
-      : PbRequestVoteRequest() {
+  #if LANG_CXX11
+  PbRequestVoteRequest(PbRequestVoteRequest&& from) noexcept
+    : PbRequestVoteRequest() {
     *this = ::std::move(from);
   }
 
-  inline PbRequestVoteRequest &operator=(PbRequestVoteRequest &&from) noexcept {
+  inline PbRequestVoteRequest& operator=(PbRequestVoteRequest&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -1040,74 +819,61 @@ public:
     }
     return *this;
   }
-
-#endif
-
-  static const ::google::protobuf::Descriptor *descriptor();
-
-  static const PbRequestVoteRequest &default_instance();
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PbRequestVoteRequest& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const PbRequestVoteRequest *internal_default_instance() {
-    return reinterpret_cast<const PbRequestVoteRequest *>(
-        &_PbRequestVoteRequest_default_instance_);
+  static inline const PbRequestVoteRequest* internal_default_instance() {
+    return reinterpret_cast<const PbRequestVoteRequest*>(
+               &_PbRequestVoteRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-      5;
+    5;
 
-  void Swap(PbRequestVoteRequest *other);
-
-  friend void swap(PbRequestVoteRequest &a, PbRequestVoteRequest &b) {
+  void Swap(PbRequestVoteRequest* other);
+  friend void swap(PbRequestVoteRequest& a, PbRequestVoteRequest& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline PbRequestVoteRequest *New() const final {
+  inline PbRequestVoteRequest* New() const final {
     return CreateMaybeMessage<PbRequestVoteRequest>(NULL);
   }
 
-  PbRequestVoteRequest *New(::google::protobuf::Arena *arena) const final {
+  PbRequestVoteRequest* New(::google::protobuf::Arena* arena) const final {
     return CreateMaybeMessage<PbRequestVoteRequest>(arena);
   }
-
-  void CopyFrom(const ::google::protobuf::Message &from) final;
-
-  void MergeFrom(const ::google::protobuf::Message &from) final;
-
-  void CopyFrom(const PbRequestVoteRequest &from);
-
-  void MergeFrom(const PbRequestVoteRequest &from);
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PbRequestVoteRequest& from);
+  void MergeFrom(const PbRequestVoteRequest& from);
   void Clear() final;
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream *input) final;
+      ::google::protobuf::io::CodedInputStream* input) final;
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream *output) const final;
-
-  ::google::protobuf::uint8 *InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8 *target) const final;
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
-private:
+  private:
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-
-  void InternalSwap(PbRequestVoteRequest *other);
-
-private:
-  inline ::google::protobuf::Arena *GetArenaNoVirtual() const {
+  void InternalSwap(PbRequestVoteRequest* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
   }
-
-  inline void *MaybeArenaPtr() const {
+  inline void* MaybeArenaPtr() const {
     return NULL;
   }
-
-public:
+  public:
 
   ::google::protobuf::Metadata GetMetadata() const final;
 
@@ -1118,26 +884,16 @@ public:
   // string candidateId = 2;
   void clear_candidateid();
   static const int kCandidateIdFieldNumber = 2;
-
-  const ::std::string &candidateid() const;
-
-  void set_candidateid(const ::std::string &value);
-
-#if LANG_CXX11
-
-  void set_candidateid(::std::string &&value);
-
-#endif
-
-  void set_candidateid(const char *value);
-
-  void set_candidateid(const char *value, size_t size);
-
-  ::std::string *mutable_candidateid();
-
-  ::std::string *release_candidateid();
-
-  void set_allocated_candidateid(::std::string *candidateid);
+  const ::std::string& candidateid() const;
+  void set_candidateid(const ::std::string& value);
+  #if LANG_CXX11
+  void set_candidateid(::std::string&& value);
+  #endif
+  void set_candidateid(const char* value);
+  void set_candidateid(const char* value, size_t size);
+  ::std::string* mutable_candidateid();
+  ::std::string* release_candidateid();
+  void set_allocated_candidateid(::std::string* candidateid);
 
   // int64 term = 1;
   void clear_term();
@@ -1158,7 +914,7 @@ public:
   void set_lastlogterm(::google::protobuf::int64 value);
 
   // @@protoc_insertion_point(class_scope:PbRequestVoteRequest)
-private:
+ private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::internal::ArenaStringPtr candidateid_;
@@ -1170,27 +926,24 @@ private:
 };
 // -------------------------------------------------------------------
 
-class PbRequestVoteResponse
-    : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PbRequestVoteResponse) */ {
-public:
+class PbRequestVoteResponse : public ::google::protobuf::Message /* @@protoc_insertion_point(class_definition:PbRequestVoteResponse) */ {
+ public:
   PbRequestVoteResponse();
   virtual ~PbRequestVoteResponse();
 
-  PbRequestVoteResponse(const PbRequestVoteResponse &from);
+  PbRequestVoteResponse(const PbRequestVoteResponse& from);
 
-  inline PbRequestVoteResponse &operator=(const PbRequestVoteResponse &from) {
+  inline PbRequestVoteResponse& operator=(const PbRequestVoteResponse& from) {
     CopyFrom(from);
     return *this;
   }
-
-#if LANG_CXX11
-
-  PbRequestVoteResponse(PbRequestVoteResponse &&from) noexcept
-      : PbRequestVoteResponse() {
+  #if LANG_CXX11
+  PbRequestVoteResponse(PbRequestVoteResponse&& from) noexcept
+    : PbRequestVoteResponse() {
     *this = ::std::move(from);
   }
 
-  inline PbRequestVoteResponse &operator=(PbRequestVoteResponse &&from) noexcept {
+  inline PbRequestVoteResponse& operator=(PbRequestVoteResponse&& from) noexcept {
     if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
       if (this != &from) InternalSwap(&from);
     } else {
@@ -1198,74 +951,61 @@ public:
     }
     return *this;
   }
-
-#endif
-
-  static const ::google::protobuf::Descriptor *descriptor();
-
-  static const PbRequestVoteResponse &default_instance();
+  #endif
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PbRequestVoteResponse& default_instance();
 
   static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const PbRequestVoteResponse *internal_default_instance() {
-    return reinterpret_cast<const PbRequestVoteResponse *>(
-        &_PbRequestVoteResponse_default_instance_);
+  static inline const PbRequestVoteResponse* internal_default_instance() {
+    return reinterpret_cast<const PbRequestVoteResponse*>(
+               &_PbRequestVoteResponse_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-      6;
+    6;
 
-  void Swap(PbRequestVoteResponse *other);
-
-  friend void swap(PbRequestVoteResponse &a, PbRequestVoteResponse &b) {
+  void Swap(PbRequestVoteResponse* other);
+  friend void swap(PbRequestVoteResponse& a, PbRequestVoteResponse& b) {
     a.Swap(&b);
   }
 
   // implements Message ----------------------------------------------
 
-  inline PbRequestVoteResponse *New() const final {
+  inline PbRequestVoteResponse* New() const final {
     return CreateMaybeMessage<PbRequestVoteResponse>(NULL);
   }
 
-  PbRequestVoteResponse *New(::google::protobuf::Arena *arena) const final {
+  PbRequestVoteResponse* New(::google::protobuf::Arena* arena) const final {
     return CreateMaybeMessage<PbRequestVoteResponse>(arena);
   }
-
-  void CopyFrom(const ::google::protobuf::Message &from) final;
-
-  void MergeFrom(const ::google::protobuf::Message &from) final;
-
-  void CopyFrom(const PbRequestVoteResponse &from);
-
-  void MergeFrom(const PbRequestVoteResponse &from);
+  void CopyFrom(const ::google::protobuf::Message& from) final;
+  void MergeFrom(const ::google::protobuf::Message& from) final;
+  void CopyFrom(const PbRequestVoteResponse& from);
+  void MergeFrom(const PbRequestVoteResponse& from);
   void Clear() final;
   bool IsInitialized() const final;
 
   size_t ByteSizeLong() const final;
   bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream *input) final;
+      ::google::protobuf::io::CodedInputStream* input) final;
   void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream *output) const final;
-
-  ::google::protobuf::uint8 *InternalSerializeWithCachedSizesToArray(
-      bool deterministic, ::google::protobuf::uint8 *target) const final;
+      ::google::protobuf::io::CodedOutputStream* output) const final;
+  ::google::protobuf::uint8* InternalSerializeWithCachedSizesToArray(
+      bool deterministic, ::google::protobuf::uint8* target) const final;
   int GetCachedSize() const final { return _cached_size_.Get(); }
 
-private:
+  private:
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-
-  void InternalSwap(PbRequestVoteResponse *other);
-
-private:
-  inline ::google::protobuf::Arena *GetArenaNoVirtual() const {
+  void InternalSwap(PbRequestVoteResponse* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return NULL;
   }
-
-  inline void *MaybeArenaPtr() const {
+  inline void* MaybeArenaPtr() const {
     return NULL;
   }
-
-public:
+  public:
 
   ::google::protobuf::Metadata GetMetadata() const final;
 
@@ -1286,7 +1026,7 @@ public:
   void set_votegranted(bool value);
 
   // @@protoc_insertion_point(class_scope:PbRequestVoteResponse)
-private:
+ private:
 
   ::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
   ::google::protobuf::int64 term_;
@@ -1300,8 +1040,8 @@ private:
 // ===================================================================
 
 #ifdef __GNUC__
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wstrict-aliasing"
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
 // PbPutRequest
 
@@ -1309,58 +1049,50 @@ private:
 inline void PbPutRequest::clear_key() {
   key_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline const ::std::string &PbPutRequest::key() const {
+inline const ::std::string& PbPutRequest::key() const {
   // @@protoc_insertion_point(field_get:PbPutRequest.key)
   return key_.GetNoArena();
 }
-
-inline void PbPutRequest::set_key(const ::std::string &value) {
-
+inline void PbPutRequest::set_key(const ::std::string& value) {
+  
   key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:PbPutRequest.key)
 }
 #if LANG_CXX11
-
-inline void PbPutRequest::set_key(::std::string &&value) {
-
+inline void PbPutRequest::set_key(::std::string&& value) {
+  
   key_.SetNoArena(
-      &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:PbPutRequest.key)
 }
 #endif
-
-inline void PbPutRequest::set_key(const char *value) {
-      GOOGLE_DCHECK(value != NULL);
-
+inline void PbPutRequest::set_key(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
   key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:PbPutRequest.key)
 }
-
-inline void PbPutRequest::set_key(const char *value, size_t size) {
-
+inline void PbPutRequest::set_key(const char* value, size_t size) {
+  
   key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-                  ::std::string(reinterpret_cast<const char *>(value), size));
+      ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:PbPutRequest.key)
 }
-
-inline ::std::string *PbPutRequest::mutable_key() {
-
+inline ::std::string* PbPutRequest::mutable_key() {
+  
   // @@protoc_insertion_point(field_mutable:PbPutRequest.key)
   return key_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline ::std::string *PbPutRequest::release_key() {
+inline ::std::string* PbPutRequest::release_key() {
   // @@protoc_insertion_point(field_release:PbPutRequest.key)
-
+  
   return key_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline void PbPutRequest::set_allocated_key(::std::string *key) {
+inline void PbPutRequest::set_allocated_key(::std::string* key) {
   if (key != NULL) {
-
+    
   } else {
-
+    
   }
   key_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), key);
   // @@protoc_insertion_point(field_set_allocated:PbPutRequest.key)
@@ -1370,58 +1102,50 @@ inline void PbPutRequest::set_allocated_key(::std::string *key) {
 inline void PbPutRequest::clear_val() {
   val_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline const ::std::string &PbPutRequest::val() const {
+inline const ::std::string& PbPutRequest::val() const {
   // @@protoc_insertion_point(field_get:PbPutRequest.val)
   return val_.GetNoArena();
 }
-
-inline void PbPutRequest::set_val(const ::std::string &value) {
-
+inline void PbPutRequest::set_val(const ::std::string& value) {
+  
   val_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:PbPutRequest.val)
 }
 #if LANG_CXX11
-
-inline void PbPutRequest::set_val(::std::string &&value) {
-
+inline void PbPutRequest::set_val(::std::string&& value) {
+  
   val_.SetNoArena(
-      &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:PbPutRequest.val)
 }
 #endif
-
-inline void PbPutRequest::set_val(const char *value) {
-      GOOGLE_DCHECK(value != NULL);
-
+inline void PbPutRequest::set_val(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
   val_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:PbPutRequest.val)
 }
-
-inline void PbPutRequest::set_val(const char *value, size_t size) {
-
+inline void PbPutRequest::set_val(const char* value, size_t size) {
+  
   val_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-                  ::std::string(reinterpret_cast<const char *>(value), size));
+      ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:PbPutRequest.val)
 }
-
-inline ::std::string *PbPutRequest::mutable_val() {
-
+inline ::std::string* PbPutRequest::mutable_val() {
+  
   // @@protoc_insertion_point(field_mutable:PbPutRequest.val)
   return val_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline ::std::string *PbPutRequest::release_val() {
+inline ::std::string* PbPutRequest::release_val() {
   // @@protoc_insertion_point(field_release:PbPutRequest.val)
-
+  
   return val_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline void PbPutRequest::set_allocated_val(::std::string *val) {
+inline void PbPutRequest::set_allocated_val(::std::string* val) {
   if (val != NULL) {
-
+    
   } else {
-
+    
   }
   val_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), val);
   // @@protoc_insertion_point(field_set_allocated:PbPutRequest.val)
@@ -1431,61 +1155,67 @@ inline void PbPutRequest::set_allocated_val(::std::string *val) {
 inline void PbPutRequest::clear_senderid() {
   senderid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline const ::std::string &PbPutRequest::senderid() const {
+inline const ::std::string& PbPutRequest::senderid() const {
   // @@protoc_insertion_point(field_get:PbPutRequest.senderId)
   return senderid_.GetNoArena();
 }
-
-inline void PbPutRequest::set_senderid(const ::std::string &value) {
-
+inline void PbPutRequest::set_senderid(const ::std::string& value) {
+  
   senderid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:PbPutRequest.senderId)
 }
 #if LANG_CXX11
-
-inline void PbPutRequest::set_senderid(::std::string &&value) {
-
+inline void PbPutRequest::set_senderid(::std::string&& value) {
+  
   senderid_.SetNoArena(
-      &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:PbPutRequest.senderId)
 }
 #endif
-
-inline void PbPutRequest::set_senderid(const char *value) {
-      GOOGLE_DCHECK(value != NULL);
-
+inline void PbPutRequest::set_senderid(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
   senderid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:PbPutRequest.senderId)
 }
-
-inline void PbPutRequest::set_senderid(const char *value, size_t size) {
-
+inline void PbPutRequest::set_senderid(const char* value, size_t size) {
+  
   senderid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-                       ::std::string(reinterpret_cast<const char *>(value), size));
+      ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:PbPutRequest.senderId)
 }
-
-inline ::std::string *PbPutRequest::mutable_senderid() {
-
+inline ::std::string* PbPutRequest::mutable_senderid() {
+  
   // @@protoc_insertion_point(field_mutable:PbPutRequest.senderId)
   return senderid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline ::std::string *PbPutRequest::release_senderid() {
+inline ::std::string* PbPutRequest::release_senderid() {
   // @@protoc_insertion_point(field_release:PbPutRequest.senderId)
-
+  
   return senderid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline void PbPutRequest::set_allocated_senderid(::std::string *senderid) {
+inline void PbPutRequest::set_allocated_senderid(::std::string* senderid) {
   if (senderid != NULL) {
-
+    
   } else {
-
+    
   }
   senderid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), senderid);
   // @@protoc_insertion_point(field_set_allocated:PbPutRequest.senderId)
+}
+
+// int64 prmIndex = 4;
+inline void PbPutRequest::clear_prmindex() {
+  prmindex_ = GOOGLE_LONGLONG(0);
+}
+inline ::google::protobuf::int64 PbPutRequest::prmindex() const {
+  // @@protoc_insertion_point(field_get:PbPutRequest.prmIndex)
+  return prmindex_;
+}
+inline void PbPutRequest::set_prmindex(::google::protobuf::int64 value) {
+  
+  prmindex_ = value;
+  // @@protoc_insertion_point(field_set:PbPutRequest.prmIndex)
 }
 
 // -------------------------------------------------------------------
@@ -1501,7 +1231,7 @@ inline bool PbPutResponse::success() const {
   return success_;
 }
 inline void PbPutResponse::set_success(bool value) {
-
+  
   success_ = value;
   // @@protoc_insertion_point(field_set:PbPutResponse.success)
 }
@@ -1510,58 +1240,50 @@ inline void PbPutResponse::set_success(bool value) {
 inline void PbPutResponse::clear_replymsg() {
   replymsg_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline const ::std::string &PbPutResponse::replymsg() const {
+inline const ::std::string& PbPutResponse::replymsg() const {
   // @@protoc_insertion_point(field_get:PbPutResponse.replyMsg)
   return replymsg_.GetNoArena();
 }
-
-inline void PbPutResponse::set_replymsg(const ::std::string &value) {
-
+inline void PbPutResponse::set_replymsg(const ::std::string& value) {
+  
   replymsg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:PbPutResponse.replyMsg)
 }
 #if LANG_CXX11
-
-inline void PbPutResponse::set_replymsg(::std::string &&value) {
-
+inline void PbPutResponse::set_replymsg(::std::string&& value) {
+  
   replymsg_.SetNoArena(
-      &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:PbPutResponse.replyMsg)
 }
 #endif
-
-inline void PbPutResponse::set_replymsg(const char *value) {
-      GOOGLE_DCHECK(value != NULL);
-
+inline void PbPutResponse::set_replymsg(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
   replymsg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:PbPutResponse.replyMsg)
 }
-
-inline void PbPutResponse::set_replymsg(const char *value, size_t size) {
-
+inline void PbPutResponse::set_replymsg(const char* value, size_t size) {
+  
   replymsg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-                       ::std::string(reinterpret_cast<const char *>(value), size));
+      ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:PbPutResponse.replyMsg)
 }
-
-inline ::std::string *PbPutResponse::mutable_replymsg() {
-
+inline ::std::string* PbPutResponse::mutable_replymsg() {
+  
   // @@protoc_insertion_point(field_mutable:PbPutResponse.replyMsg)
   return replymsg_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline ::std::string *PbPutResponse::release_replymsg() {
+inline ::std::string* PbPutResponse::release_replymsg() {
   // @@protoc_insertion_point(field_release:PbPutResponse.replyMsg)
-
+  
   return replymsg_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline void PbPutResponse::set_allocated_replymsg(::std::string *replymsg) {
+inline void PbPutResponse::set_allocated_replymsg(::std::string* replymsg) {
   if (replymsg != NULL) {
-
+    
   } else {
-
+    
   }
   replymsg_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), replymsg);
   // @@protoc_insertion_point(field_set_allocated:PbPutResponse.replyMsg)
@@ -1575,58 +1297,50 @@ inline void PbPutResponse::set_allocated_replymsg(::std::string *replymsg) {
 inline void PbAppendEntriesRequest_Entry::clear_command() {
   command_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline const ::std::string &PbAppendEntriesRequest_Entry::command() const {
+inline const ::std::string& PbAppendEntriesRequest_Entry::command() const {
   // @@protoc_insertion_point(field_get:PbAppendEntriesRequest.Entry.command)
   return command_.GetNoArena();
 }
-
-inline void PbAppendEntriesRequest_Entry::set_command(const ::std::string &value) {
+inline void PbAppendEntriesRequest_Entry::set_command(const ::std::string& value) {
   
   command_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:PbAppendEntriesRequest.Entry.command)
 }
 #if LANG_CXX11
-
-inline void PbAppendEntriesRequest_Entry::set_command(::std::string &&value) {
+inline void PbAppendEntriesRequest_Entry::set_command(::std::string&& value) {
   
   command_.SetNoArena(
-      &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:PbAppendEntriesRequest.Entry.command)
 }
 #endif
-
-inline void PbAppendEntriesRequest_Entry::set_command(const char *value) {
-      GOOGLE_DCHECK(value != NULL);
+inline void PbAppendEntriesRequest_Entry::set_command(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
   
   command_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:PbAppendEntriesRequest.Entry.command)
 }
-
-inline void PbAppendEntriesRequest_Entry::set_command(const char *value, size_t size) {
+inline void PbAppendEntriesRequest_Entry::set_command(const char* value, size_t size) {
   
   command_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-                      ::std::string(reinterpret_cast<const char *>(value), size));
+      ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:PbAppendEntriesRequest.Entry.command)
 }
-
-inline ::std::string *PbAppendEntriesRequest_Entry::mutable_command() {
+inline ::std::string* PbAppendEntriesRequest_Entry::mutable_command() {
   
   // @@protoc_insertion_point(field_mutable:PbAppendEntriesRequest.Entry.command)
   return command_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline ::std::string *PbAppendEntriesRequest_Entry::release_command() {
+inline ::std::string* PbAppendEntriesRequest_Entry::release_command() {
   // @@protoc_insertion_point(field_release:PbAppendEntriesRequest.Entry.command)
-
+  
   return command_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline void PbAppendEntriesRequest_Entry::set_allocated_command(::std::string *command) {
+inline void PbAppendEntriesRequest_Entry::set_allocated_command(::std::string* command) {
   if (command != NULL) {
-
+    
   } else {
-
+    
   }
   command_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), command);
   // @@protoc_insertion_point(field_set_allocated:PbAppendEntriesRequest.Entry.command)
@@ -1636,58 +1350,50 @@ inline void PbAppendEntriesRequest_Entry::set_allocated_command(::std::string *c
 inline void PbAppendEntriesRequest_Entry::clear_key() {
   key_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline const ::std::string &PbAppendEntriesRequest_Entry::key() const {
+inline const ::std::string& PbAppendEntriesRequest_Entry::key() const {
   // @@protoc_insertion_point(field_get:PbAppendEntriesRequest.Entry.key)
   return key_.GetNoArena();
 }
-
-inline void PbAppendEntriesRequest_Entry::set_key(const ::std::string &value) {
+inline void PbAppendEntriesRequest_Entry::set_key(const ::std::string& value) {
   
   key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:PbAppendEntriesRequest.Entry.key)
 }
 #if LANG_CXX11
-
-inline void PbAppendEntriesRequest_Entry::set_key(::std::string &&value) {
+inline void PbAppendEntriesRequest_Entry::set_key(::std::string&& value) {
   
   key_.SetNoArena(
-      &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:PbAppendEntriesRequest.Entry.key)
 }
 #endif
-
-inline void PbAppendEntriesRequest_Entry::set_key(const char *value) {
-      GOOGLE_DCHECK(value != NULL);
+inline void PbAppendEntriesRequest_Entry::set_key(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
   
   key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:PbAppendEntriesRequest.Entry.key)
 }
-
-inline void PbAppendEntriesRequest_Entry::set_key(const char *value, size_t size) {
+inline void PbAppendEntriesRequest_Entry::set_key(const char* value, size_t size) {
   
   key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-                  ::std::string(reinterpret_cast<const char *>(value), size));
+      ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:PbAppendEntriesRequest.Entry.key)
 }
-
-inline ::std::string *PbAppendEntriesRequest_Entry::mutable_key() {
+inline ::std::string* PbAppendEntriesRequest_Entry::mutable_key() {
   
   // @@protoc_insertion_point(field_mutable:PbAppendEntriesRequest.Entry.key)
   return key_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline ::std::string *PbAppendEntriesRequest_Entry::release_key() {
+inline ::std::string* PbAppendEntriesRequest_Entry::release_key() {
   // @@protoc_insertion_point(field_release:PbAppendEntriesRequest.Entry.key)
-
+  
   return key_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline void PbAppendEntriesRequest_Entry::set_allocated_key(::std::string *key) {
+inline void PbAppendEntriesRequest_Entry::set_allocated_key(::std::string* key) {
   if (key != NULL) {
-
+    
   } else {
-
+    
   }
   key_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), key);
   // @@protoc_insertion_point(field_set_allocated:PbAppendEntriesRequest.Entry.key)
@@ -1697,58 +1403,50 @@ inline void PbAppendEntriesRequest_Entry::set_allocated_key(::std::string *key) 
 inline void PbAppendEntriesRequest_Entry::clear_val() {
   val_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline const ::std::string &PbAppendEntriesRequest_Entry::val() const {
+inline const ::std::string& PbAppendEntriesRequest_Entry::val() const {
   // @@protoc_insertion_point(field_get:PbAppendEntriesRequest.Entry.val)
   return val_.GetNoArena();
 }
-
-inline void PbAppendEntriesRequest_Entry::set_val(const ::std::string &value) {
+inline void PbAppendEntriesRequest_Entry::set_val(const ::std::string& value) {
   
   val_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:PbAppendEntriesRequest.Entry.val)
 }
 #if LANG_CXX11
-
-inline void PbAppendEntriesRequest_Entry::set_val(::std::string &&value) {
+inline void PbAppendEntriesRequest_Entry::set_val(::std::string&& value) {
   
   val_.SetNoArena(
-      &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:PbAppendEntriesRequest.Entry.val)
 }
 #endif
-
-inline void PbAppendEntriesRequest_Entry::set_val(const char *value) {
-      GOOGLE_DCHECK(value != NULL);
+inline void PbAppendEntriesRequest_Entry::set_val(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
   
   val_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:PbAppendEntriesRequest.Entry.val)
 }
-
-inline void PbAppendEntriesRequest_Entry::set_val(const char *value, size_t size) {
+inline void PbAppendEntriesRequest_Entry::set_val(const char* value, size_t size) {
   
   val_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-                  ::std::string(reinterpret_cast<const char *>(value), size));
+      ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:PbAppendEntriesRequest.Entry.val)
 }
-
-inline ::std::string *PbAppendEntriesRequest_Entry::mutable_val() {
+inline ::std::string* PbAppendEntriesRequest_Entry::mutable_val() {
   
   // @@protoc_insertion_point(field_mutable:PbAppendEntriesRequest.Entry.val)
   return val_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline ::std::string *PbAppendEntriesRequest_Entry::release_val() {
+inline ::std::string* PbAppendEntriesRequest_Entry::release_val() {
   // @@protoc_insertion_point(field_release:PbAppendEntriesRequest.Entry.val)
-
+  
   return val_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline void PbAppendEntriesRequest_Entry::set_allocated_val(::std::string *val) {
+inline void PbAppendEntriesRequest_Entry::set_allocated_val(::std::string* val) {
   if (val != NULL) {
-
+    
   } else {
-
+    
   }
   val_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), val);
   // @@protoc_insertion_point(field_set_allocated:PbAppendEntriesRequest.Entry.val)
@@ -1763,7 +1461,7 @@ inline ::google::protobuf::int64 PbAppendEntriesRequest_Entry::term() const {
   return term_;
 }
 inline void PbAppendEntriesRequest_Entry::set_term(::google::protobuf::int64 value) {
-
+  
   term_ = value;
   // @@protoc_insertion_point(field_set:PbAppendEntriesRequest.Entry.term)
 }
@@ -1777,7 +1475,7 @@ inline ::google::protobuf::int64 PbAppendEntriesRequest_Entry::entryindex() cons
   return entryindex_;
 }
 inline void PbAppendEntriesRequest_Entry::set_entryindex(::google::protobuf::int64 value) {
-
+  
   entryindex_ = value;
   // @@protoc_insertion_point(field_set:PbAppendEntriesRequest.Entry.entryIndex)
 }
@@ -1786,60 +1484,50 @@ inline void PbAppendEntriesRequest_Entry::set_entryindex(::google::protobuf::int
 inline void PbAppendEntriesRequest_Entry::clear_replyerid() {
   replyerid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline const ::std::string &PbAppendEntriesRequest_Entry::replyerid() const {
+inline const ::std::string& PbAppendEntriesRequest_Entry::replyerid() const {
   // @@protoc_insertion_point(field_get:PbAppendEntriesRequest.Entry.replyerId)
   return replyerid_.GetNoArena();
 }
-
-inline void PbAppendEntriesRequest_Entry::set_replyerid(const ::std::string &value) {
-
+inline void PbAppendEntriesRequest_Entry::set_replyerid(const ::std::string& value) {
+  
   replyerid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:PbAppendEntriesRequest.Entry.replyerId)
 }
-
 #if LANG_CXX11
-
-inline void PbAppendEntriesRequest_Entry::set_replyerid(::std::string &&value) {
-
+inline void PbAppendEntriesRequest_Entry::set_replyerid(::std::string&& value) {
+  
   replyerid_.SetNoArena(
-      &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:PbAppendEntriesRequest.Entry.replyerId)
 }
-
 #endif
-
-inline void PbAppendEntriesRequest_Entry::set_replyerid(const char *value) {
-      GOOGLE_DCHECK(value != NULL);
-
+inline void PbAppendEntriesRequest_Entry::set_replyerid(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
+  
   replyerid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:PbAppendEntriesRequest.Entry.replyerId)
 }
-
-inline void PbAppendEntriesRequest_Entry::set_replyerid(const char *value, size_t size) {
-
+inline void PbAppendEntriesRequest_Entry::set_replyerid(const char* value, size_t size) {
+  
   replyerid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-                        ::std::string(reinterpret_cast<const char *>(value), size));
+      ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:PbAppendEntriesRequest.Entry.replyerId)
 }
-
-inline ::std::string *PbAppendEntriesRequest_Entry::mutable_replyerid() {
-
+inline ::std::string* PbAppendEntriesRequest_Entry::mutable_replyerid() {
+  
   // @@protoc_insertion_point(field_mutable:PbAppendEntriesRequest.Entry.replyerId)
   return replyerid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline ::std::string *PbAppendEntriesRequest_Entry::release_replyerid() {
+inline ::std::string* PbAppendEntriesRequest_Entry::release_replyerid() {
   // @@protoc_insertion_point(field_release:PbAppendEntriesRequest.Entry.replyerId)
-
+  
   return replyerid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline void PbAppendEntriesRequest_Entry::set_allocated_replyerid(::std::string *replyerid) {
+inline void PbAppendEntriesRequest_Entry::set_allocated_replyerid(::std::string* replyerid) {
   if (replyerid != NULL) {
-
+    
   } else {
-
+    
   }
   replyerid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), replyerid);
   // @@protoc_insertion_point(field_set_allocated:PbAppendEntriesRequest.Entry.replyerId)
@@ -1849,14 +1537,12 @@ inline void PbAppendEntriesRequest_Entry::set_allocated_replyerid(::std::string 
 inline void PbAppendEntriesRequest_Entry::clear_prmindex() {
   prmindex_ = GOOGLE_LONGLONG(0);
 }
-
 inline ::google::protobuf::int64 PbAppendEntriesRequest_Entry::prmindex() const {
   // @@protoc_insertion_point(field_get:PbAppendEntriesRequest.Entry.prmIndex)
   return prmindex_;
 }
-
 inline void PbAppendEntriesRequest_Entry::set_prmindex(::google::protobuf::int64 value) {
-
+  
   prmindex_ = value;
   // @@protoc_insertion_point(field_set:PbAppendEntriesRequest.Entry.prmIndex)
 }
@@ -1874,7 +1560,7 @@ inline ::google::protobuf::int64 PbAppendEntriesRequest::term() const {
   return term_;
 }
 inline void PbAppendEntriesRequest::set_term(::google::protobuf::int64 value) {
-
+  
   term_ = value;
   // @@protoc_insertion_point(field_set:PbAppendEntriesRequest.term)
 }
@@ -1883,58 +1569,50 @@ inline void PbAppendEntriesRequest::set_term(::google::protobuf::int64 value) {
 inline void PbAppendEntriesRequest::clear_leaderid() {
   leaderid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline const ::std::string &PbAppendEntriesRequest::leaderid() const {
+inline const ::std::string& PbAppendEntriesRequest::leaderid() const {
   // @@protoc_insertion_point(field_get:PbAppendEntriesRequest.leaderId)
   return leaderid_.GetNoArena();
 }
-
-inline void PbAppendEntriesRequest::set_leaderid(const ::std::string &value) {
+inline void PbAppendEntriesRequest::set_leaderid(const ::std::string& value) {
   
   leaderid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:PbAppendEntriesRequest.leaderId)
 }
 #if LANG_CXX11
-
-inline void PbAppendEntriesRequest::set_leaderid(::std::string &&value) {
+inline void PbAppendEntriesRequest::set_leaderid(::std::string&& value) {
   
   leaderid_.SetNoArena(
-      &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:PbAppendEntriesRequest.leaderId)
 }
 #endif
-
-inline void PbAppendEntriesRequest::set_leaderid(const char *value) {
-      GOOGLE_DCHECK(value != NULL);
+inline void PbAppendEntriesRequest::set_leaderid(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
   
   leaderid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:PbAppendEntriesRequest.leaderId)
 }
-
-inline void PbAppendEntriesRequest::set_leaderid(const char *value, size_t size) {
+inline void PbAppendEntriesRequest::set_leaderid(const char* value, size_t size) {
   
   leaderid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-                       ::std::string(reinterpret_cast<const char *>(value), size));
+      ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:PbAppendEntriesRequest.leaderId)
 }
-
-inline ::std::string *PbAppendEntriesRequest::mutable_leaderid() {
+inline ::std::string* PbAppendEntriesRequest::mutable_leaderid() {
   
   // @@protoc_insertion_point(field_mutable:PbAppendEntriesRequest.leaderId)
   return leaderid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline ::std::string *PbAppendEntriesRequest::release_leaderid() {
+inline ::std::string* PbAppendEntriesRequest::release_leaderid() {
   // @@protoc_insertion_point(field_release:PbAppendEntriesRequest.leaderId)
-
+  
   return leaderid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline void PbAppendEntriesRequest::set_allocated_leaderid(::std::string *leaderid) {
+inline void PbAppendEntriesRequest::set_allocated_leaderid(::std::string* leaderid) {
   if (leaderid != NULL) {
-
+    
   } else {
-
+    
   }
   leaderid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), leaderid);
   // @@protoc_insertion_point(field_set_allocated:PbAppendEntriesRequest.leaderId)
@@ -1949,7 +1627,7 @@ inline ::google::protobuf::int64 PbAppendEntriesRequest::prevlogindex() const {
   return prevlogindex_;
 }
 inline void PbAppendEntriesRequest::set_prevlogindex(::google::protobuf::int64 value) {
-
+  
   prevlogindex_ = value;
   // @@protoc_insertion_point(field_set:PbAppendEntriesRequest.prevLogIndex)
 }
@@ -1963,7 +1641,7 @@ inline ::google::protobuf::int64 PbAppendEntriesRequest::prevlogterm() const {
   return prevlogterm_;
 }
 inline void PbAppendEntriesRequest::set_prevlogterm(::google::protobuf::int64 value) {
-
+  
   prevlogterm_ = value;
   // @@protoc_insertion_point(field_set:PbAppendEntriesRequest.prevLogTerm)
 }
@@ -1975,29 +1653,24 @@ inline int PbAppendEntriesRequest::entries_size() const {
 inline void PbAppendEntriesRequest::clear_entries() {
   entries_.Clear();
 }
-
-inline ::PbAppendEntriesRequest_Entry *PbAppendEntriesRequest::mutable_entries(int index) {
+inline ::PbAppendEntriesRequest_Entry* PbAppendEntriesRequest::mutable_entries(int index) {
   // @@protoc_insertion_point(field_mutable:PbAppendEntriesRequest.entries)
   return entries_.Mutable(index);
 }
-
-inline ::google::protobuf::RepeatedPtrField<::PbAppendEntriesRequest_Entry> *
+inline ::google::protobuf::RepeatedPtrField< ::PbAppendEntriesRequest_Entry >*
 PbAppendEntriesRequest::mutable_entries() {
   // @@protoc_insertion_point(field_mutable_list:PbAppendEntriesRequest.entries)
   return &entries_;
 }
-
-inline const ::PbAppendEntriesRequest_Entry &PbAppendEntriesRequest::entries(int index) const {
+inline const ::PbAppendEntriesRequest_Entry& PbAppendEntriesRequest::entries(int index) const {
   // @@protoc_insertion_point(field_get:PbAppendEntriesRequest.entries)
   return entries_.Get(index);
 }
-
-inline ::PbAppendEntriesRequest_Entry *PbAppendEntriesRequest::add_entries() {
+inline ::PbAppendEntriesRequest_Entry* PbAppendEntriesRequest::add_entries() {
   // @@protoc_insertion_point(field_add:PbAppendEntriesRequest.entries)
   return entries_.Add();
 }
-
-inline const ::google::protobuf::RepeatedPtrField<::PbAppendEntriesRequest_Entry> &
+inline const ::google::protobuf::RepeatedPtrField< ::PbAppendEntriesRequest_Entry >&
 PbAppendEntriesRequest::entries() const {
   // @@protoc_insertion_point(field_list:PbAppendEntriesRequest.entries)
   return entries_;
@@ -2012,7 +1685,7 @@ inline ::google::protobuf::int64 PbAppendEntriesRequest::leadercommit() const {
   return leadercommit_;
 }
 inline void PbAppendEntriesRequest::set_leadercommit(::google::protobuf::int64 value) {
-
+  
   leadercommit_ = value;
   // @@protoc_insertion_point(field_set:PbAppendEntriesRequest.leaderCommit)
 }
@@ -2030,7 +1703,7 @@ inline ::google::protobuf::int64 PbAppendEntriesResponse::term() const {
   return term_;
 }
 inline void PbAppendEntriesResponse::set_term(::google::protobuf::int64 value) {
-
+  
   term_ = value;
   // @@protoc_insertion_point(field_set:PbAppendEntriesResponse.term)
 }
@@ -2044,7 +1717,7 @@ inline bool PbAppendEntriesResponse::success() const {
   return success_;
 }
 inline void PbAppendEntriesResponse::set_success(bool value) {
-
+  
   success_ = value;
   // @@protoc_insertion_point(field_set:PbAppendEntriesResponse.success)
 }
@@ -2058,7 +1731,7 @@ inline bool PbAppendEntriesResponse::inconsist() const {
   return inconsist_;
 }
 inline void PbAppendEntriesResponse::set_inconsist(bool value) {
-
+  
   inconsist_ = value;
   // @@protoc_insertion_point(field_set:PbAppendEntriesResponse.inconsist)
 }
@@ -2076,7 +1749,7 @@ inline ::google::protobuf::int64 PbRequestVoteRequest::term() const {
   return term_;
 }
 inline void PbRequestVoteRequest::set_term(::google::protobuf::int64 value) {
-
+  
   term_ = value;
   // @@protoc_insertion_point(field_set:PbRequestVoteRequest.term)
 }
@@ -2085,58 +1758,50 @@ inline void PbRequestVoteRequest::set_term(::google::protobuf::int64 value) {
 inline void PbRequestVoteRequest::clear_candidateid() {
   candidateid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline const ::std::string &PbRequestVoteRequest::candidateid() const {
+inline const ::std::string& PbRequestVoteRequest::candidateid() const {
   // @@protoc_insertion_point(field_get:PbRequestVoteRequest.candidateId)
   return candidateid_.GetNoArena();
 }
-
-inline void PbRequestVoteRequest::set_candidateid(const ::std::string &value) {
+inline void PbRequestVoteRequest::set_candidateid(const ::std::string& value) {
   
   candidateid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
   // @@protoc_insertion_point(field_set:PbRequestVoteRequest.candidateId)
 }
 #if LANG_CXX11
-
-inline void PbRequestVoteRequest::set_candidateid(::std::string &&value) {
+inline void PbRequestVoteRequest::set_candidateid(::std::string&& value) {
   
   candidateid_.SetNoArena(
-      &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:PbRequestVoteRequest.candidateId)
 }
 #endif
-
-inline void PbRequestVoteRequest::set_candidateid(const char *value) {
-      GOOGLE_DCHECK(value != NULL);
+inline void PbRequestVoteRequest::set_candidateid(const char* value) {
+  GOOGLE_DCHECK(value != NULL);
   
   candidateid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:PbRequestVoteRequest.candidateId)
 }
-
-inline void PbRequestVoteRequest::set_candidateid(const char *value, size_t size) {
+inline void PbRequestVoteRequest::set_candidateid(const char* value, size_t size) {
   
   candidateid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-                          ::std::string(reinterpret_cast<const char *>(value), size));
+      ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:PbRequestVoteRequest.candidateId)
 }
-
-inline ::std::string *PbRequestVoteRequest::mutable_candidateid() {
+inline ::std::string* PbRequestVoteRequest::mutable_candidateid() {
   
   // @@protoc_insertion_point(field_mutable:PbRequestVoteRequest.candidateId)
   return candidateid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline ::std::string *PbRequestVoteRequest::release_candidateid() {
+inline ::std::string* PbRequestVoteRequest::release_candidateid() {
   // @@protoc_insertion_point(field_release:PbRequestVoteRequest.candidateId)
-
+  
   return candidateid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-
-inline void PbRequestVoteRequest::set_allocated_candidateid(::std::string *candidateid) {
+inline void PbRequestVoteRequest::set_allocated_candidateid(::std::string* candidateid) {
   if (candidateid != NULL) {
-
+    
   } else {
-
+    
   }
   candidateid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), candidateid);
   // @@protoc_insertion_point(field_set_allocated:PbRequestVoteRequest.candidateId)
@@ -2151,7 +1816,7 @@ inline ::google::protobuf::int64 PbRequestVoteRequest::lastlogindex() const {
   return lastlogindex_;
 }
 inline void PbRequestVoteRequest::set_lastlogindex(::google::protobuf::int64 value) {
-
+  
   lastlogindex_ = value;
   // @@protoc_insertion_point(field_set:PbRequestVoteRequest.lastLogIndex)
 }
@@ -2165,7 +1830,7 @@ inline ::google::protobuf::int64 PbRequestVoteRequest::lastlogterm() const {
   return lastlogterm_;
 }
 inline void PbRequestVoteRequest::set_lastlogterm(::google::protobuf::int64 value) {
-
+  
   lastlogterm_ = value;
   // @@protoc_insertion_point(field_set:PbRequestVoteRequest.lastLogTerm)
 }
@@ -2183,7 +1848,7 @@ inline ::google::protobuf::int64 PbRequestVoteResponse::term() const {
   return term_;
 }
 inline void PbRequestVoteResponse::set_term(::google::protobuf::int64 value) {
-
+  
   term_ = value;
   // @@protoc_insertion_point(field_set:PbRequestVoteResponse.term)
 }
@@ -2197,13 +1862,13 @@ inline bool PbRequestVoteResponse::votegranted() const {
   return votegranted_;
 }
 inline void PbRequestVoteResponse::set_votegranted(bool value) {
-
+  
   votegranted_ = value;
   // @@protoc_insertion_point(field_set:PbRequestVoteResponse.voteGranted)
 }
 
 #ifdef __GNUC__
-#pragma GCC diagnostic pop
+  #pragma GCC diagnostic pop
 #endif  // __GNUC__
 // -------------------------------------------------------------------
 

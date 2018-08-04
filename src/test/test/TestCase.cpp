@@ -133,7 +133,7 @@ void PutBasic() {
 	IdentityTestHelper helper;
 	const std::size_t SrvNum = 1;
 	auto srvs = helper.makeServers(SrvNum);
-	const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
+//	const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
 
 	auto &srv = srvs.front();
 	auto id = srvs.front()->GetInfo().get_local();
@@ -181,7 +181,7 @@ void PutLeaderDirectly() {
 	IdentityTestHelper helper;
 	const std::size_t SrvNum = 2;
 	auto srvs = helper.makeServers(SrvNum);
-	const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
+//	const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
 
 	auto &srv = srvs.front();
 	auto &srv2 = srvs.back();
@@ -246,7 +246,7 @@ void PutLeaderDirectly() {
 	for (auto elem : m) {
 		std::cout << elem.first << ' ' << elem.second << std::endl;
 	}
-	printf("after sending put request for ten times, leader and follower's log size: %d %d, leader's commitIndex %lld, "
+	printf("after sending put request for ten times, leader and follower's log size: %zu %zu, leader's commitIndex %lld, "
 				 "follower's commitIndex %lld\n",
 				 srv->GetState().log.length(), srv2->GetState().log.length(), srv->GetState().commitIndex,
 				 srv2->GetState().commitIndex);
@@ -263,7 +263,7 @@ void PutBroadcastFromFollower() {
 	IdentityTestHelper helper;
 	const std::size_t SrvNum = 2;
 	auto srvs = helper.makeServers(SrvNum);
-	const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
+//	const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
 
 	auto &srv = srvs.front();
 	auto &srv2 = srvs.back();
@@ -330,7 +330,7 @@ void PutBroadcastFromFollower() {
 	for (auto elem : m) {
 		std::cout << elem.first << ' ' << elem.second << std::endl;
 	}
-	printf("after sending put request for ten times, leader and follower's log size: %d %d, leader's commitIndex %lld, "
+	printf("after sending put request for ten times, leader and follower's log size: %zu %zu, leader's commitIndex %lld, "
 				 "follower's commitIndex %lld\n",
 				 srv->GetState().log.length(), srv2->GetState().log.length(), srv->GetState().commitIndex,
 				 srv2->GetState().commitIndex);
@@ -349,7 +349,7 @@ void PutLeaderAsync() {
 	IdentityTestHelper helper;
 	const std::size_t SrvNum = 2;
 	auto srvs = helper.makeServers(SrvNum);
-	const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
+//	const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
 
 	auto &srv = srvs.front();
 	auto &srv2 = srvs.back();
@@ -414,23 +414,202 @@ void PutLeaderAsync() {
 	for (auto elem : m) {
 		std::cout << elem.first << ' ' << elem.second << std::endl;
 	}
-	printf("after sending put request for ten times, leader and follower's log size: %d %d, leader's commitIndex %lld, "
+	printf("after sending put request for ten times, leader and follower's log size: %zu %zu, leader's commitIndex %lld, "
 				 "follower's commitIndex %lld\n",
 				 srv->GetState().log.length(), srv2->GetState().log.length(), srv->GetState().commitIndex,
 				 srv2->GetState().commitIndex);
 	srv->ShutDown();
 	srv2->ShutDown();
 	client->th.join();
-	printf("Put method success because of one single leader.\n");
-	printf("test whether a follower's log can be updated by heartbeat\n");
-	printf("a follower can add to its log by leader's heartbeat, but synchronization isn't guaranteed\n");
-	printf("all put KV pairs are safely applied. \n");
+	printf("put method is OK, all put msg sends to the leader is safely returned.\n");
+}
+
+/**
+ * This test send put method to follower.
+ * */
+void PutFollowerAsync() {
+	IdentityTestHelper helper;
+	const std::size_t SrvNum = 3;
+	auto srvs = helper.makeServers(SrvNum);
+//	const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
+
+	for(auto &per_srv : srvs) {
+		per_srv->Init();
+	}
+
+	auto &srv = srvs.front();
+	auto &srv2 = srvs.back();
+
+
+	RaftDebugContext &context = srv->GetCtx();
+	std::atomic<int> candidate2Leader{0};
+
+	context.before_tranform = ([&](IdentityNo from, IdentityNo &to) mutable {
+		if (to == FollowerNo) {
+			to = LeaderNo;
+			++candidate2Leader;
+		}
+	});
+
+	for(auto &per_srv : srvs) {
+		per_srv->StartUp();
+	}
+	while (candidate2Leader != 1);
+
+	auto id = srvs.back()->GetInfo().get_local();
+	std::unique_ptr<RaftPeerClientImpl> client;
+	client = std::make_unique<RaftPeerClientImpl>(id);
+
+	for (int i = 0; i < 10; ++i) {
+		client->th = boost::thread([&client, i]() mutable {
+			grpc::ClientContext ctx;
+			PbPutRequest msg;
+			PbPutResponse rsp;
+			std::string str_key = "shit";
+			std::string str_val = "dick";
+			str_key += char('0' + i);
+			str_val += char('0' + i);
+			msg.set_key(str_key);
+			msg.set_val(str_val);
+
+			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(1000));
+			grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+			printf("rpc sent\n");
+			if (status.ok()) printf("msg is OK! %s\n", rsp.replymsg().c_str());
+			else {
+				printf("msg is error\n");
+				printf("msg: %d %s\n", status.error_code(), status.error_message().c_str());
+			}
+		});
+		client->th.join();
+
+//		fprintf(stderr, "%d time request, traverse map: ", i);
+//		auto data = srv->GetKV();
+//		for (auto elem : data) {
+//			fprintf(stderr, "%s - %s; ", elem.first.c_str(), elem.second.c_str());
+//		}
+//		fprintf(stderr, "\n");
+		boost::this_thread::sleep_for(boost::chrono::milliseconds(500));
+	}
+	boost::this_thread::sleep_for(boost::chrono::milliseconds(500));
+
+	for(auto &per_srv : srvs) {
+		auto m = per_srv->GetKV();
+		for (auto elem : m) {
+			std::cout << elem.first << ' ' << elem.second << std::endl;
+		}
+	}
+
+	printf("after sending put request for ten times, leader and follower's log size: %zu %zu, leader's commitIndex %lld, "
+				 "follower's commitIndex %lld\n",
+				 srv->GetState().log.length(), srv2->GetState().log.length(), srv->GetState().commitIndex,
+				 srv2->GetState().commitIndex);
+	for(auto &per_srv : srvs) {
+		printf("log size: %zu commit index: %lld\n", per_srv->GetState().log.length(), per_srv->GetState().commitIndex);
+		per_srv->ShutDown();
+	}
+	client->th.join();
+	printf("put method is OK, all put msg sends to the leader is safely returned.\n");
+}
+
+/**
+ * This test send put request randomly to each server in the whole cluster.
+ * */
+void PutComprehensiveAsync() {
+	IdentityTestHelper helper;
+	const std::size_t SrvNum = 3;
+	auto srvs = helper.makeServers(SrvNum);
+//	const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
+
+	for (auto &per_srv : srvs) {
+		per_srv->Init();
+	}
+
+	auto &srv = srvs.front();
+	auto &srv2 = srvs.back();
+
+
+	RaftDebugContext &context = srv->GetCtx();
+	std::atomic<int> candidate2Leader{0};
+
+	context.before_tranform = ([&](IdentityNo from, IdentityNo &to) mutable {
+		if (to == FollowerNo) {
+			to = LeaderNo;
+			++candidate2Leader;
+		}
+	});
+
+	for (auto &per_srv : srvs) {
+		per_srv->StartUp();
+	}
+	while (candidate2Leader != 1);
+
+	std::vector<std::unique_ptr<RaftPeerClientImpl> > clients;
+	for (auto &per_srv : srvs) {
+		clients.push_back(std::make_unique<RaftPeerClientImpl> (per_srv->GetInfo().get_local()));
+	}
+
+	for (int i = 0; i < 10; ++i) {
+		/// randomly choose one client to send.
+		int send_to = rand() % clients.size();
+		auto &client = clients[send_to];
+		client->th = boost::thread([&client, i]() mutable {
+			grpc::ClientContext ctx;
+			PbPutRequest msg;
+			PbPutResponse rsp;
+			std::string str_key = "shit";
+			std::string str_val = "dick";
+			str_key += char('0' + i);
+			str_val += char('0' + i);
+			msg.set_key(str_key);
+			msg.set_val(str_val);
+
+			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(1000));
+			grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+			printf("rpc sent\n");
+			if (status.ok()) printf("msg is OK! %s\n", rsp.replymsg().c_str());
+			else {
+				printf("msg is error\n");
+				printf("msg: %d %s\n", status.error_code(), status.error_message().c_str());
+			}
+		});
+		client->th.join();
+
+//		fprintf(stderr, "%d time request, traverse map: ", i);
+//		auto data = srv->GetKV();
+//		for (auto elem : data) {
+//			fprintf(stderr, "%s - %s; ", elem.first.c_str(), elem.second.c_str());
+//		}
+//		fprintf(stderr, "\n");
+		boost::this_thread::sleep_for(boost::chrono::milliseconds(500));
+	}
+	boost::this_thread::sleep_for(boost::chrono::milliseconds(500));
+
+	for (auto &per_srv : srvs) {
+		auto m = per_srv->GetKV();
+		for (auto elem : m) {
+			std::cout << elem.first << ' ' << elem.second << std::endl;
+		}
+	}
+
+	printf("after sending put request for ten times, leader and follower's log size: %zu %zu, leader's commitIndex %lld, "
+				 "follower's commitIndex %lld\n",
+				 srv->GetState().log.length(), srv2->GetState().log.length(), srv->GetState().commitIndex,
+				 srv2->GetState().commitIndex);
+	for (auto &per_srv : srvs) {
+		printf("log size: %zu commit index: %lld\n", per_srv->GetState().log.length(), per_srv->GetState().commitIndex);
+		per_srv->ShutDown();
+	}
+//	client->th.join();
+	printf("put method is OK, all put msg sends to the leader is safely returned.\n");
 }
 };
 
 using namespace SJTU;
 
 int main() {
+//	SJTU::PutComprehensiveAsync();
+//	SJTU::PutFollowerAsync();
 //	SJTU::PutLeaderAsync();
 //	SJTU::PutBroadcastFromFollower();
 //	SJTU::PutLeaderDirectly();
