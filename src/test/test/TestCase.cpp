@@ -95,7 +95,7 @@ void Candidate_Basic() {
  * */
 void CandidateNaive() {
 	IdentityTestHelper helper;
-	const std::size_t SrvNum = 3;
+	const std::size_t SrvNum = 2;
 	auto srvs = helper.makeServers(SrvNum);
 	const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
 	std::atomic<int> candidate2Follower{0}, candidate2Leader{0};

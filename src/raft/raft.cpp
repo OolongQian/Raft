@@ -13,15 +13,15 @@ namespace SJTU {
 
 		server_end.BindServiceFunc(
 				[this](const PbRequestVoteRequest *request, PbRequestVoteResponse *response) -> void {
-					printf("current Identity %d\n", state.currentIdentity);
+//					printf("current Identity %d\n", state.currentIdentity);
 					identities[state.currentIdentity]->ProcsRequestVoteFunc(request, response);
 				},
 				[this](const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) -> void {
-					printf("current Identity %d\n", state.currentIdentity);
+//					printf("current Identity %d\n", state.currentIdentity);
 					identities[state.currentIdentity]->ProcsAppendEntriesFunc(request, response);
 				},
 				[this, id = info.get_local()](const PbPutRequest *request, PbPutResponse *response) -> void {
-					printf("%s receive add log request\n", id.toString().c_str());
+//					printf("%s receive add log request\n", id.toString().c_str());
 					identities[state.currentIdentity]->ProcsPutFunc(request, response);
 				});
 
@@ -40,25 +40,27 @@ namespace SJTU {
 
 	void Raft::IdentityTransform(IdentityNo identityNo) {
 
-		printf("enter test transformer\n");
+//		printf("enter test transformer\n");
 		/// Note this!!!
 		if (state.currentIdentity == identityNo) {
-			printf("reseting timer\n");
+//			printf("reseting timer\n");
 			/// leader不会reset
+			fprintf(stderr, "timer reset for follower\n");
 			timer.Stop();
 			timer.SetTimeOut(info.get_electionTimeout(), info.get_electionTimeout() * 2);
 			timer.Start();
-			printf("timer reset\n");
+//			printf("timer reset\n");
 			return;
 		}
 #ifdef _UNIT_TEST
 		IdentityNo identityNo_orig = identityNo;
-		printf("%s transform from %d to %d\n", info.get_local().toString().c_str(), state.currentIdentity, identityNo);
+//		printf("%s transform from %d to %d\n", info.get_local().toString().c_str(), state.currentIdentity, identityNo);
 		ctx.before_tranform(state.currentIdentity, identityNo);
 #endif
 		eventQueue.addEvent([this, identityNo]() mutable {
 //			printf("transform from %d to %d\n", state.currentIdentity, identityNo);
-
+			fprintf(stderr, "server: %s transform from %d to %d\n", info.get_local().toString().c_str(),
+							state.currentIdentity, identityNo);
 			if (state.currentIdentity == DownNo)
 				server_end.Monitor();
 			else
@@ -71,8 +73,8 @@ namespace SJTU {
 				server_end.Stop();
 			} else
 				identities[state.currentIdentity]->init();
-			printf("After transform function is carried out. \n");
-			printf("have transformed to %d\n", state.currentIdentity);
+//			printf("After transform function is carried out. \n");
+//			printf("have transformed to %d\n", state.currentIdentity);
 		});
 #ifdef _UNIT_TEST
 		//		debugContext.after_tranform(state.currentIdentity, identityNo);

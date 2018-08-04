@@ -65,16 +65,25 @@ namespace SJTU {
 				}
 
 #ifndef _NOLOG
-				printf("Candidate received response from other server...\n");
-				printf("it says: term %lld, requestVote %d\n", response.term(), int(response.votegranted()));
+//				printf("Candidate received response from other server...\n");
+//				printf("it says: term %lld, requestVote %d\n", response.term(), int(response.votegranted()));
 #endif
+				boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
+				boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);
+				boost::lock(lk1, lk2);
+
 				if (state_.currentTerm < response.term()) {
-					printf("candidate term smaller than other server's term, transform to follower...\n");
-					fprintf(stderr, "candidate transform to follower, asynchronous disaster may happen.\n");
+//					printf("candidate term smaller than other server's term, transform to follower...\n");
+//					fprintf(stderr, "candidate transform to follower, asynchronous disaster may happen.\n");
 					state_.currentTerm = response.term();
 					state_.votedFor.clear();
+					lk1.unlock();
+					lk2.unlock();
 					identity_transformer(FollowerNo);
+					return;
 				}
+				lk1.unlock();
+				lk2.unlock();
 
 				if (response.votegranted())
 					++votesReceived;
@@ -83,17 +92,17 @@ namespace SJTU {
 				if (votesReceived > info.get_srvList().size() / 2) {
 					if (transforming) {
 #ifndef _NOLOG
-						printf("There has been one identical transformation task undergoing... returning..\n");
+//						printf("There has been one identical transformation task undergoing... returning..\n");
 #endif
 						return;
 					}
-					fprintf(stderr, "synchronous problem in candidate to leader transformation\n");
+//					fprintf(stderr, "synchronous problem in candidate to leader transformation\n");
 					transforming = true;
 
 #ifndef _NOLOG
-					printf("There are %lu servers in total. %d votes received, start to transform to leader...\n",
-								 info.get_srvList().size(), (int) votesReceived);
-					printf("transforming to leader\n");
+//					printf("There are %lu servers in total. %d votes received, start to transform to leader...\n",
+//								 info.get_srvList().size(), (int) votesReceived);
+//					printf("transforming to leader\n");
 #endif
 					/**
 					 * Because transformation invokes .interruption(), after it there cannot be any call to transform identity.
@@ -103,7 +112,7 @@ namespace SJTU {
 						identity_transformer(LeaderNo);
 					}
 					catch (boost::thread_interrupted &) {
-						printf("candidate requestVotes thread being interrupted, returning...\n");
+//						printf("candidate requestVotes thread being interrupted, returning...\n");
 						return;
 					}
 				}
@@ -115,49 +124,54 @@ namespace SJTU {
 	 * access inner data member, synchronize it.
 	 * */
 	PbRequestVoteRequest Candidate::MakeVoteRequest() {
-		boost::lock_guard<boost::mutex> lk(mtx_);
+		boost::shared_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
+		boost::shared_lock<boost::shared_mutex> lk2(state_.logMasterMtx, boost::defer_lock);
+		boost::lock(lk1, lk2);
+
 		CppRequestVoteRequest request(state_.currentTerm, info.get_local(), state_.log.back().entryIndex,
 																	state_.log.back().term);
 		return request.Convert();
 	}
 
-	void Candidate::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
-		IdentityBase::ProcsAppendEntriesFunc(request, response);
+/*
+void Candidate::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
+	IdentityBase::ProcsAppendEntriesFunc(request, response);
 
-		boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
-		boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);
-		boost::lock(lk1, lk2);
-		if (request->term() > state_.currentTerm) {
-			state_.currentTerm = request->term();
-			state_.votedFor.clear();
-			lk1.unlock();
-			lk2.unlock();
+	boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
+	boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);
+	boost::lock(lk1, lk2);
+	if (request->term() > state_.currentTerm) {
+		state_.currentTerm = request->term();
+		state_.votedFor.clear();
+		lk1.unlock();
+		lk2.unlock();
 
-			identity_transformer(FollowerNo);
-		}
+		identity_transformer(FollowerNo);
+	}
+}
+*/
+
+void Candidate::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
+	boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
+	boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);
+	boost::lock(lk1, lk2);
+
+	if (request->term() > state_.currentTerm) {
+		state_.votedFor.clear();
 	}
 
-	void Candidate::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
-		boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
-		boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);
-		boost::lock(lk1, lk2);
+	IdentityBase::ProcsRequestVoteFunc(request, response);
 
-		if (request->term() > state_.currentTerm) {
-			state_.votedFor.clear();
-		}
-
-		IdentityBase::ProcsRequestVoteFunc(request, response);
-
-		if (response->votegranted()) {
-			state_.votedFor = ServerId(request->candidateid());
-		}
-
-		if (request->term() > state_.currentTerm) {
-			state_.currentTerm = request->term();
-			lk1.unlock();
-			lk2.unlock();
-
-			identity_transformer(FollowerNo);
-		}
+	if (response->votegranted()) {
+		state_.votedFor = ServerId(request->candidateid());
 	}
+
+	if (request->term() > state_.currentTerm) {
+		state_.currentTerm = request->term();
+		lk1.unlock();
+		lk2.unlock();
+
+		identity_transformer(FollowerNo);
+	}
+}
 };

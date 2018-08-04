@@ -13,16 +13,25 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 //	}
 //	fprintf(stderr, "server %s get appendEntriesRPC from %s\n", info.get_local().toString().c_str(),
 //					request->leaderid().c_str());
+
 	response->set_inconsist(false);
+
+	boost::shared_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
+	boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);
+	boost::lock(lk1, lk2);
+
+	if (request->term() > state_.currentTerm) {
+		state_.votedFor.clear();
+	}
+
 	/**
 	 * Default implementation.
 	 * */
 //		fprintf(stderr, "appendEntriesRequest is received...Always respond success\n");
 //	fprintf(stderr, "follower or candidate AppendEntries received\n");
-	boost::shared_lock<boost::shared_mutex> curTermLk(state_.curTermMtx);
 
-	fprintf(stderr, "term: %lld leader: %s prevLogIndex: %lld prevLogTerm: %lld LeaderCommit: %lld\n", request->term(),
-					request->leaderid().c_str(), request->prevlogindex(), request->prevlogterm(), request->leadercommit());
+//	fprintf(stderr, "term: %lld leader: %s prevLogIndex: %lld prevLogTerm: %lld LeaderCommit: %lld\n", request->term(),
+//					request->leaderid().c_str(), request->prevlogindex(), request->prevlogterm(), request->leadercommit());
 	response->set_term(state_.currentTerm);
 	response->set_success(true);
 
@@ -31,9 +40,10 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 	if (request->term() < state_.currentTerm)
 		response->set_success(false);
 	/// reply false if log doesn't contain an entry at prevLogIndex whose term matches prevLogTerm.
-	std::cout << request->prevlogterm() << ' ' << request->prevlogindex() << std::endl;
+//	std::cout << request->prevlogterm() << ' ' << request->prevlogindex() << std::endl;
 
-	curTermLk.unlock();
+	lk1.unlock();
+	lk2.unlock();
 
 	boost::unique_lock<boost::shared_mutex> logMasterLk(state_.logMasterMtx);
 
@@ -88,6 +98,24 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 			cmtIdxLk.unlock();
 			apply_queue.notify();
 		}
+	}
+
+	boost::unique_lock<boost::shared_mutex> lk3(state_.curTermMtx);
+
+	if (state_.currentIdentity == LeaderNo) {
+		if (request->term() > state_.currentTerm) {
+			state_.currentTerm = request->term();
+			lk3.unlock();
+			identity_transformer(FollowerNo);
+		} else {
+			timer_.Reset();
+		}
+	} else {
+		if (request->term() > state_.currentTerm) {
+			state_.currentTerm = request->term();
+			lk3.unlock();
+		}
+		identity_transformer(FollowerNo);
 	}
 #endif
 //	fprintf(stderr, "return response: term %lld, success %d\n", response->term(), (int) response->success());
@@ -207,7 +235,7 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 		if (count_success > 1)
 			throw std::runtime_error("two leaders add log");
 		else if (count_success == 1) {
-			printf("new log safely accepted by leader\n");
+//			printf("new log safely accepted by leader\n");
 			break;
 		}
 	}
@@ -220,7 +248,7 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 		response->set_success(true);
 	}
 	else {
-		fprintf(stderr, "Put request not responded\n");
+//		fprintf(stderr, "Put request not responded\n");
 		response->set_replymsg("Put request respond time exceeded");
 		response->set_success(false);
 	}

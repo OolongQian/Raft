@@ -21,8 +21,8 @@ void ApplyQueue::Start() {
 			}
 			/// state.lastApplied is only updated by applyQueue, need no lock.
 			++state.lastApplied;
-			printf("server id: %s, apply index %lld, senderId %s, entryPrmIndex %lld\n", info.get_local().toString().c_str(), state.lastApplied,
-						 state.log.at(state.lastApplied).replyerId.c_str(), state.log.at(state.lastApplied).prmIndex);
+//			printf("server id: %s, apply index %lld, senderId %s, entryPrmIndex %lld\n", info.get_local().toString().c_str(), state.lastApplied,
+//						 state.log.at(state.lastApplied).replyerId.c_str(), state.log.at(state.lastApplied).prmIndex);
 			applyCommand(state.log.at(state.lastApplied));
 		}
 	});
@@ -46,19 +46,19 @@ void ApplyQueue::applyCommand(Entry entry) {
 		sprintf(msg, "Unknown command");
 	}
 
-	if (info.get_local().toString() == "127.0.0.1:50000") {
-		printf("localId %s, replyerId: %s, key %s, val %s\n", info.get_local().toString().c_str(),
-					 entry.replyerId.c_str(), entry.key.c_str(), entry.val.c_str());
-	}
+//	if (info.get_local().toString() == "127.0.0.1:50000") {
+//		printf("localId %s, replyerId: %s, key %s, val %s\n", info.get_local().toString().c_str(),
+//					 entry.replyerId.c_str(), entry.key.c_str(), entry.val.c_str());
+//	}
 
 	if (entry.replyerId == info.get_local().toString()) {
 		/// it is me that is to reply.
 		boost::shared_lock<boost::shared_mutex> lk(state.prmRepoMtx);
-		printf("serverId %s, entryPrmIndex %lld\n", info.get_local().toString().c_str(), entry.prmIndex);
+//		printf("serverId %s, entryPrmIndex %lld\n", info.get_local().toString().c_str(), entry.prmIndex);
 		state.prmRepo.at(entry.prmIndex).set_value(std::string(msg));
 	} else {
 		/// I'm not the one responsible for replying.
-		printf("applyCommand %s\n", msg);
+//		printf("applyCommand %s\n", msg);
 	}
 }
 

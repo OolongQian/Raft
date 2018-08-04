@@ -13,15 +13,12 @@ namespace SJTU {
 	 * have to be synchronized by Impl.
 	 * */
 	void EventQueue::addEvent(std::function<void()> f) {
-		printf("try to addEvent but blocked\n");
 		boost::unique_lock<boost::mutex> lk(mtx_);
-		printf("block is released\n");
 		events_.push(std::move(f));
 		cond_.notify_all();
 	}
 
 	void EventQueue::Start() {
-		printf("event queue thread is sent out...\n");
 		th_ = boost::thread([this] {
 			execute();
 		});
@@ -45,9 +42,7 @@ namespace SJTU {
 	void EventQueue::execute() {
 		while (true) {
 			boost::unique_lock<boost::mutex> lk(mtx_);
-			printf("synchronous_queue is waiting...\n");
 			cond_.wait(lk, [this] { return !events_.empty(); });
-			printf("synchronous_queue keeps going...\n");
 			auto event = events_.front();
 			events_.pop();
 			lk.unlock();

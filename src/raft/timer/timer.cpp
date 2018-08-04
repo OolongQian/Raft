@@ -17,13 +17,13 @@ void Timer::Start() {
 	th = boost::thread([this] {
 		try {
 			int rand_time = rand() % (high_time - low_time + 1) + low_time;
-			printf("timer sleep for %d milliseconds\n", rand_time);
+//			printf("timer sleep for %d milliseconds\n", rand_time);
 			boost::this_thread::sleep_for(boost::chrono::milliseconds(rand_time));
-			printf("%d ms has passed! timer is pushing event...\n", rand_time);
+//			printf("%d ms has passed! timer is pushing event...\n", rand_time);
 			pushEvent_(timeOutAction_);
 		}
 		catch (boost::thread_interrupted &) {
-			printf("timer's sleep is interrupted... returning\n");
+//			printf("timer's sleep is interrupted... returning\n");
 			return;
 		}
 		});
