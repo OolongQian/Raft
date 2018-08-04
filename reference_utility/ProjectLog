@@ -185,3 +185,9 @@ Some log entry needs to be associated with promise and future while others don't
 commands can be divided into two parts, one is for client requests, the other part is just for raft consistency.
 former needs to be notified while the things left needn't.
 Hence we do it in this way, use a special value in prmIndex to help us distinguish between these two conditions.
+
+No no no, above is wrong.
+I bind a namespace for each prmIndex. if an entry is under current server's namespace, it means that it's current server
+to reply to client. Thus the apply_queue has to notify the future. Otherwise, it just passes away.
+Each time a server creates an entry with its own namespace, it has to increment prmIndex, which means prmIndex under each
+namespace is strictly monotonic.

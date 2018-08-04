@@ -84,6 +84,10 @@ namespace SJTU {
 		ApplyQueue &apply_queue;
 
 	protected:
+		/**
+		 * When client applies Put to a non-leader server, it needs to broadcast this request so that leader can hear.
+		 * But meanwhile, other servers have to ignore it. 
+		 * */
 		virtual void ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *response);
 
 		virtual void ProcsPeerPutFunc(const PbPutRequest *request, PbPutResponse *response);

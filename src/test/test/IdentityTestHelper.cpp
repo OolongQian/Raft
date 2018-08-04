@@ -28,7 +28,7 @@ IdentityTestHelper::sendHeartBeat(const std::vector<ServerId> &srvs, const Serve
 
 	for (int i = 0; i < vClient.size(); ++i) {
 		vClient[i]->th.join();
-		vClient[i]->th = boost::thread([this, i, currentTerm]() mutable {
+		vClient[i]->th = boost::thread([i, currentTerm]() mutable {
 			PbAppendEntriesRequest request;
 			request.set_term(currentTerm);
 			PbAppendEntriesResponse response;

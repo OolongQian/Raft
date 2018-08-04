@@ -205,6 +205,8 @@ const ::google::protobuf::uint32 TableStruct::offsets[] GOOGLE_PROTOBUF_ATTRIBUT
 		GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::PbAppendEntriesRequest_Entry, val_),
 		GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::PbAppendEntriesRequest_Entry, term_),
 		GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::PbAppendEntriesRequest_Entry, entryindex_),
+		GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::PbAppendEntriesRequest_Entry, replyerid_),
+		GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::PbAppendEntriesRequest_Entry, prmindex_),
 		~0u,  // no _has_bits_
 		GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(::PbAppendEntriesRequest, _internal_metadata_),
 		~0u,  // no _extensions_
@@ -246,10 +248,10 @@ static const ::google::protobuf::internal::MigrationSchema schemas[] GOOGLE_PROT
 		{0,  -1, sizeof(::PbPutRequest)},
 		{8,  -1, sizeof(::PbPutResponse)},
 		{15, -1, sizeof(::PbAppendEntriesRequest_Entry)},
-		{25, -1, sizeof(::PbAppendEntriesRequest)},
-		{36, -1, sizeof(::PbAppendEntriesResponse)},
-		{44, -1, sizeof(::PbRequestVoteRequest)},
-		{53, -1, sizeof(::PbRequestVoteResponse)},
+		{27, -1, sizeof(::PbAppendEntriesRequest)},
+		{38, -1, sizeof(::PbAppendEntriesResponse)},
+		{46, -1, sizeof(::PbRequestVoteRequest)},
+		{55, -1, sizeof(::PbRequestVoteResponse)},
 };
 
 static ::google::protobuf::Message const *const file_default_instances[] = {
@@ -287,27 +289,28 @@ void AddDescriptorsImpl() {
 			"\n\017raft_peer.proto\":\n\014PbPutRequest\022\013\n\003key"
 			"\030\001 \001(\t\022\013\n\003val\030\002 \001(\t\022\020\n\010senderId\030\003 \001(\t\"2\n"
 			"\rPbPutResponse\022\017\n\007success\030\001 \001(\010\022\020\n\010reply"
-			"Msg\030\002 \001(\t\"\377\001\n\026PbAppendEntriesRequest\022\014\n\004"
+			"Msg\030\002 \001(\t\"\244\002\n\026PbAppendEntriesRequest\022\014\n\004"
 			"term\030\001 \001(\003\022\020\n\010leaderId\030\002 \001(\t\022\024\n\014prevLogI"
 			"ndex\030\003 \001(\003\022\023\n\013prevLogTerm\030\004 \001(\003\022.\n\007entri"
 			"es\030\005 \003(\0132\035.PbAppendEntriesRequest.Entry\022"
-			"\024\n\014leaderCommit\030\006 \001(\003\032T\n\005Entry\022\017\n\007comman"
+			"\024\n\014leaderCommit\030\006 \001(\003\032y\n\005Entry\022\017\n\007comman"
 			"d\030\001 \001(\t\022\013\n\003key\030\002 \001(\t\022\013\n\003val\030\003 \001(\t\022\014\n\004ter"
-			"m\030\004 \001(\003\022\022\n\nentryIndex\030\005 \001(\003\"K\n\027PbAppendE"
-			"ntriesResponse\022\014\n\004term\030\001 \001(\003\022\017\n\007success\030"
-			"\002 \001(\010\022\021\n\tinconsist\030\003 \001(\010\"d\n\024PbRequestVot"
-			"eRequest\022\014\n\004term\030\001 \001(\003\022\023\n\013candidateId\030\002 "
-			"\001(\t\022\024\n\014lastLogIndex\030\003 \001(\003\022\023\n\013lastLogTerm"
-			"\030\004 \001(\003\":\n\025PbRequestVoteResponse\022\014\n\004term\030"
-			"\001 \001(\003\022\023\n\013voteGranted\030\002 \001(\0102\302\001\n\017RaftPeerS"
-			"ervice\022E\n\020AppendEntriesRPC\022\027.PbAppendEnt"
-			"riesRequest\032\030.PbAppendEntriesResponse\022\?\n"
-			"\016RequestVoteRPC\022\025.PbRequestVoteRequest\032\026"
-			".PbRequestVoteResponse\022\'\n\006PutRPC\022\r.PbPut"
-			"Request\032\016.PbPutResponseb\006proto3"
+			"m\030\004 \001(\003\022\022\n\nentryIndex\030\005 \001(\003\022\021\n\treplyerId"
+			"\030\006 \001(\t\022\020\n\010prmIndex\030\007 \001(\003\"K\n\027PbAppendEntr"
+			"iesResponse\022\014\n\004term\030\001 \001(\003\022\017\n\007success\030\002 \001"
+			"(\010\022\021\n\tinconsist\030\003 \001(\010\"d\n\024PbRequestVoteRe"
+			"quest\022\014\n\004term\030\001 \001(\003\022\023\n\013candidateId\030\002 \001(\t"
+			"\022\024\n\014lastLogIndex\030\003 \001(\003\022\023\n\013lastLogTerm\030\004 "
+			"\001(\003\":\n\025PbRequestVoteResponse\022\014\n\004term\030\001 \001"
+			"(\003\022\023\n\013voteGranted\030\002 \001(\0102\302\001\n\017RaftPeerServ"
+			"ice\022E\n\020AppendEntriesRPC\022\027.PbAppendEntrie"
+			"sRequest\032\030.PbAppendEntriesResponse\022\?\n\016Re"
+			"questVoteRPC\022\025.PbRequestVoteRequest\032\026.Pb"
+			"RequestVoteResponse\022\'\n\006PutRPC\022\r.PbPutReq"
+			"uest\032\016.PbPutResponseb\006proto3"
 	};
 	::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-			descriptor, 831);
+			descriptor, 868);
 	::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
 			"raft_peer.proto", &protobuf_RegisterTypes);
 }
@@ -987,6 +990,8 @@ const int PbAppendEntriesRequest_Entry::kKeyFieldNumber;
 const int PbAppendEntriesRequest_Entry::kValFieldNumber;
 const int PbAppendEntriesRequest_Entry::kTermFieldNumber;
 const int PbAppendEntriesRequest_Entry::kEntryIndexFieldNumber;
+const int PbAppendEntriesRequest_Entry::kReplyerIdFieldNumber;
+const int PbAppendEntriesRequest_Entry::kPrmIndexFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 PbAppendEntriesRequest_Entry::PbAppendEntriesRequest_Entry()
@@ -1013,9 +1018,13 @@ PbAppendEntriesRequest_Entry::PbAppendEntriesRequest_Entry(const PbAppendEntries
 	if (from.val().size() > 0) {
 		val_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.val_);
 	}
+	replyerid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+	if (from.replyerid().size() > 0) {
+		replyerid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.replyerid_);
+	}
 	::memcpy(&term_, &from.term_,
-					 static_cast<size_t>(reinterpret_cast<char *>(&entryindex_) -
-															 reinterpret_cast<char *>(&term_)) + sizeof(entryindex_));
+					 static_cast<size_t>(reinterpret_cast<char *>(&prmindex_) -
+															 reinterpret_cast<char *>(&term_)) + sizeof(prmindex_));
 	// @@protoc_insertion_point(copy_constructor:PbAppendEntriesRequest.Entry)
 }
 
@@ -1023,9 +1032,10 @@ void PbAppendEntriesRequest_Entry::SharedCtor() {
 	command_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 	key_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 	val_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+	replyerid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 	::memset(&term_, 0, static_cast<size_t>(
-													reinterpret_cast<char *>(&entryindex_) -
-													reinterpret_cast<char *>(&term_)) + sizeof(entryindex_));
+													reinterpret_cast<char *>(&prmindex_) -
+													reinterpret_cast<char *>(&term_)) + sizeof(prmindex_));
 }
 
 PbAppendEntriesRequest_Entry::~PbAppendEntriesRequest_Entry() {
@@ -1037,6 +1047,7 @@ void PbAppendEntriesRequest_Entry::SharedDtor() {
 	command_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 	key_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 	val_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+	replyerid_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void PbAppendEntriesRequest_Entry::SetCachedSize(int size) const {
@@ -1063,9 +1074,10 @@ void PbAppendEntriesRequest_Entry::Clear() {
 	command_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 	key_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 	val_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+	replyerid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 	::memset(&term_, 0, static_cast<size_t>(
-													reinterpret_cast<char *>(&entryindex_) -
-													reinterpret_cast<char *>(&term_)) + sizeof(entryindex_));
+													reinterpret_cast<char *>(&prmindex_) -
+													reinterpret_cast<char *>(&term_)) + sizeof(prmindex_));
 	_internal_metadata_.Clear();
 }
 
@@ -1155,6 +1167,36 @@ bool PbAppendEntriesRequest_Entry::MergePartialFromCodedStream(
 				break;
 			}
 
+				// string replyerId = 6;
+			case 6: {
+				if (static_cast< ::google::protobuf::uint8>(tag) ==
+						static_cast< ::google::protobuf::uint8>(50u /* 50 & 0xFF */)) {
+					DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+							input, this->mutable_replyerid()));
+					DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+							this->replyerid().data(), static_cast<int>(this->replyerid().length()),
+							::google::protobuf::internal::WireFormatLite::PARSE,
+							"PbAppendEntriesRequest.Entry.replyerId"));
+				} else {
+					goto handle_unusual;
+				}
+				break;
+			}
+
+				// int64 prmIndex = 7;
+			case 7: {
+				if (static_cast< ::google::protobuf::uint8>(tag) ==
+						static_cast< ::google::protobuf::uint8>(56u /* 56 & 0xFF */)) {
+
+					DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+							::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+							input, &prmindex_)));
+				} else {
+					goto handle_unusual;
+				}
+				break;
+			}
+
 			default: {
 				handle_unusual:
 				if (tag == 0) {
@@ -1221,6 +1263,21 @@ void PbAppendEntriesRequest_Entry::SerializeWithCachedSizes(
 		::google::protobuf::internal::WireFormatLite::WriteInt64(5, this->entryindex(), output);
 	}
 
+	// string replyerId = 6;
+	if (this->replyerid().size() > 0) {
+		::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+				this->replyerid().data(), static_cast<int>(this->replyerid().length()),
+				::google::protobuf::internal::WireFormatLite::SERIALIZE,
+				"PbAppendEntriesRequest.Entry.replyerId");
+		::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+				6, this->replyerid(), output);
+	}
+
+	// int64 prmIndex = 7;
+	if (this->prmindex() != 0) {
+		::google::protobuf::internal::WireFormatLite::WriteInt64(7, this->prmindex(), output);
+	}
+
 	if ((_internal_metadata_.have_unknown_fields() && ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
 		::google::protobuf::internal::WireFormat::SerializeUnknownFields(
 				(::google::protobuf::internal::GetProto3PreserveUnknownsDefault() ? _internal_metadata_.unknown_fields()
@@ -1280,6 +1337,22 @@ void PbAppendEntriesRequest_Entry::SerializeWithCachedSizes(
 		target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(5, this->entryindex(), target);
 	}
 
+	// string replyerId = 6;
+	if (this->replyerid().size() > 0) {
+		::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+				this->replyerid().data(), static_cast<int>(this->replyerid().length()),
+				::google::protobuf::internal::WireFormatLite::SERIALIZE,
+				"PbAppendEntriesRequest.Entry.replyerId");
+		target =
+				::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+						6, this->replyerid(), target);
+	}
+
+	// int64 prmIndex = 7;
+	if (this->prmindex() != 0) {
+		target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(7, this->prmindex(), target);
+	}
+
 	if ((_internal_metadata_.have_unknown_fields() && ::google::protobuf::internal::GetProto3PreserveUnknownsDefault())) {
 		target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
 				(::google::protobuf::internal::GetProto3PreserveUnknownsDefault() ? _internal_metadata_.unknown_fields()
@@ -1321,6 +1394,13 @@ size_t PbAppendEntriesRequest_Entry::ByteSizeLong() const {
 											this->val());
 	}
 
+	// string replyerId = 6;
+	if (this->replyerid().size() > 0) {
+		total_size += 1 +
+									::google::protobuf::internal::WireFormatLite::StringSize(
+											this->replyerid());
+	}
+
 	// int64 term = 4;
 	if (this->term() != 0) {
 		total_size += 1 +
@@ -1333,6 +1413,13 @@ size_t PbAppendEntriesRequest_Entry::ByteSizeLong() const {
 		total_size += 1 +
 									::google::protobuf::internal::WireFormatLite::Int64Size(
 											this->entryindex());
+	}
+
+	// int64 prmIndex = 7;
+	if (this->prmindex() != 0) {
+		total_size += 1 +
+									::google::protobuf::internal::WireFormatLite::Int64Size(
+											this->prmindex());
 	}
 
 	int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
@@ -1374,11 +1461,18 @@ void PbAppendEntriesRequest_Entry::MergeFrom(const PbAppendEntriesRequest_Entry 
 
 		val_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.val_);
 	}
+	if (from.replyerid().size() > 0) {
+
+		replyerid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.replyerid_);
+	}
 	if (from.term() != 0) {
 		set_term(from.term());
 	}
 	if (from.entryindex() != 0) {
 		set_entryindex(from.entryindex());
+	}
+	if (from.prmindex() != 0) {
+		set_prmindex(from.prmindex());
 	}
 }
 
@@ -1413,8 +1507,11 @@ void PbAppendEntriesRequest_Entry::InternalSwap(PbAppendEntriesRequest_Entry *ot
 						GetArenaNoVirtual());
 	val_.Swap(&other->val_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
 						GetArenaNoVirtual());
+	replyerid_.Swap(&other->replyerid_, &::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+									GetArenaNoVirtual());
 	swap(term_, other->term_);
 	swap(entryindex_, other->entryindex_);
+	swap(prmindex_, other->prmindex_);
 	_internal_metadata_.Swap(&other->_internal_metadata_);
 }
 

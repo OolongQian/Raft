@@ -3,6 +3,7 @@
 
 #include <string>
 #include "../raft/raft_proto/raft_peer.pb.h"
+#include "../server_info.h"
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/pthread/shared_mutex.hpp>
 
@@ -14,7 +15,9 @@ namespace SJTU {
 		std::string val;
 		long long term;
 		long long entryIndex;
-		long long prmIndex;
+
+		std::string replyerId;    /// acts like a namespace
+		long long prmIndex;        /// monotonic index under its namespace
 
 		Entry() = default;
 //		{

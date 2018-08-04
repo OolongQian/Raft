@@ -2,7 +2,8 @@
 
 namespace SJTU {
 
-	ApplyQueue::ApplyQueue(std::map<std::string, std::string> &data, State &state) : data(data), state(state) {}
+ApplyQueue::ApplyQueue(std::map<std::string, std::string> &data, State &state, const ServerInfo &info) :
+		data(data), state(state), info(info) {}
 
 	ApplyQueue::~ApplyQueue() {
 		Stop();
@@ -42,10 +43,19 @@ namespace SJTU {
 			sprintf(msg, "Unknown command");
 		}
 
-		if (entry.prmIndex != -1)
-			state.prmRepo.at(entry.prmIndex).set_value(str);
-		else
-			printf("%s\n", str);
+		if (info.get_local().toString() == "127.0.0.1:50000") {
+			printf("localId %s, replyerId: %s, key %s, val %s\n", info.get_local().toString().c_str(),
+						 entry.replyerId.c_str(), entry.key.c_str(), entry.val.c_str());
+		}
+
+		if (entry.replyerId == info.get_local().toString()) {
+			/// it is me that is to reply.
+			boost::unique_lock<boost::mutex> lk(state.prmRepo_mtx);
+			state.prmRepo.at(entry.prmIndex).set_value(std::string(msg));
+		} else {
+			/// I'm not the one responsible for replying.
+			printf("applyCommand %s\n", msg);
+		}
 	}
 
 	void ApplyQueue::notify() {

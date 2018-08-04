@@ -133,6 +133,8 @@ size_t Leader::MakeHeartBeat(const ServerId &id, PbAppendEntriesRequest *request
 		entry->set_val(log_entry.val);
 		entry->set_command(log_entry.command);
 		entry->set_entryindex(i);
+		entry->set_replyerid(log_entry.replyerId);
+		entry->set_prmindex(log_entry.prmIndex);
 	}
 	request->set_leadercommit(state_.commitIndex);
 	return last_index;
@@ -146,7 +148,7 @@ size_t Leader::MakeHeartBeat(const ServerId &id, PbAppendEntriesRequest *request
 void Leader::CheckCommitIndexUpdate() {
 	long long checked_N = -1;
 	long long cur_N = state_.commitIndex + 1;
-	int cnt = 0;
+	int cnt = 1;
 
 	while (cur_N <= state_.log.back().entryIndex) {
 		if (state_.log.at(cur_N).term < state_.currentTerm) {
@@ -161,7 +163,7 @@ void Leader::CheckCommitIndexUpdate() {
 			if (state_.matchIndex.at(id) >= cur_N)
 				++cnt;
 		}
-		if (cnt > (info.get_srvList().size() - 1) / 2) checked_N = cur_N;
+		if (cnt > (info.get_srvList().size()) / 2) checked_N = cur_N;
 		++cur_N;
 	}
 	if (checked_N == -1) {
@@ -197,13 +199,23 @@ void Leader::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequest
 }
 
 void Leader::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+	if (request->senderid().empty()) {
+		ProcsClientPutFunc(request, response);
+	} else {
+		ProcsPeerPutFunc(request, response);
+	}
+}
+
+void Leader::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *response) {
 	Entry log;
 	log.term = state_.currentTerm;
 	log.command = "Put";
 	log.key = request->key();
 	log.val = request->val();
 	log.entryIndex = state_.log.back().entryIndex + 1;
+	log.replyerId = info.get_local().toString();
 	log.prmIndex = state_.prmRepoIdx++;
+
 	std::promise<std::string> prm;
 	std::future<std::string> fut = prm.get_future();
 	state_.prmRepo.insert(std::pair<long long, std::promise<std::string> >(log.prmIndex, std::move(prm)));
@@ -212,5 +224,9 @@ void Leader::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *response) 
 
 	response->set_replymsg(fut.get());
 	response->set_success(true);
+}
+
+void Leader::ProcsPeerPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+	;
 }
 };

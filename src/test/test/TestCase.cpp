@@ -386,7 +386,7 @@ void PutLeaderAsync() {
 			msg.set_key(str_key);
 			msg.set_val(str_val);
 
-			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(5000));
+			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(1000));
 			grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
 			printf("rpc sent\n");
 			if (status.ok()) printf("msg is OK! %s\n", rsp.replymsg().c_str());
@@ -433,7 +433,7 @@ using namespace SJTU;
 int main() {
 //	SJTU::PutLeaderAsync();
 //	SJTU::PutBroadcastFromFollower();
-	SJTU::PutLeaderDirectly();
+//	SJTU::PutLeaderDirectly();
 //	SJTU::PutBasic();
 //	SJTU::Follower_Basic();
 //	SJTU::Follower_AppendEntry();

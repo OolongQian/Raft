@@ -44,6 +44,14 @@ public:
 
 	void CheckCommitIndexUpdate();
 
+	/**
+	 * There are two situations, one is leader receives request from a client,
+	 * second is leader receives broadcast from a follower.
+	 * In former case, leader has to create promise and future,
+	 * in the second one otherwise.
+	 *
+	 * But in both case it has to carefully handle namespace and prmIndex.
+	 * */
 	void ProcsPutFunc(const PbPutRequest *, PbPutResponse *) override;
 
 	/**
@@ -55,6 +63,10 @@ public:
 
 private:
 	boost::mutex mtx_;
+
+	void ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *response) override;
+
+	void ProcsPeerPutFunc(const PbPutRequest *request, PbPutResponse *response) override;
 };
 };
 

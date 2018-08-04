@@ -9,7 +9,6 @@ service RaftPeerService {
 message PbPutRequest {
     string key = 1;
     string val = 2;
-
     string senderId = 3;
 }
 
@@ -26,6 +25,8 @@ message PbAppendEntriesRequest {
         string val = 3;
         int64 term = 4;
         int64 entryIndex = 5;
+        string replyerId = 6;
+        int64 prmIndex = 7;
     }
     int64 term = 1; /// leader's term.
     string leaderId = 2; /// so follower can redirect clients.

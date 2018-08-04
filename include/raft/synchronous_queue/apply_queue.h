@@ -18,7 +18,7 @@ namespace SJTU {
  * */
 class ApplyQueue {
 public:
-	explicit ApplyQueue(std::map<std::string, std::string> &data, State &state);
+	explicit ApplyQueue(std::map<std::string, std::string> &data, State &state, const ServerInfo &info);
 
 	~ApplyQueue();
 
@@ -36,10 +36,12 @@ public:
 private:
 	State &state;
 	std::map<std::string, std::string> &data;
+	const ServerInfo &info;
 
 	boost::mutex mtx;
 	boost::thread th;
 	boost::condition_variable cond;
+
 
 private:
 	void applyCommand(Entry entry);

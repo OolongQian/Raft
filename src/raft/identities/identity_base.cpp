@@ -57,7 +57,8 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 		cpp_entry.command = request->entries(i).command();
 		cpp_entry.key = request->entries(i).key();
 		cpp_entry.val = request->entries(i).val();
-		cpp_entry.prmIndex = -1;
+		cpp_entry.replyerId = request->entries(i).replyerid();
+		cpp_entry.prmIndex = request->entries(i).prmindex();
 
 		if (!log.has(index)) {
 			log.insert(cpp_entry, index);
@@ -141,6 +142,7 @@ void IdentityBase::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *resp
 }
 
 void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+	/// launch server_ends to peers.
 	std::vector<std::unique_ptr<RaftPeerClientImpl> > tmp_client_ends;
 	for (const ServerId &srv_id : info.get_srvList()) {
 		if (srv_id == info.get_local()) continue;
@@ -148,12 +150,15 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 	}
 
 	boost::atomic<std::size_t> count_success{0};
+	/// broadcast requests, retry for five times if fail.
 	for (int t = 0, retry_time = 5; t < retry_time; ++t) {
 		for (size_t i = 0; i < tmp_client_ends.size(); ++i) {
-			tmp_client_ends[i]->th = boost::thread([&tmp_client_ends, i, &request, &response, &count_success]() mutable {
+			tmp_client_ends[i]->th = boost::thread([&]() mutable {
 				PbPutRequest request1;
 				request1.set_key(request->key());
 				request1.set_val(request->val());
+				/// set senderId this time.
+				request1.set_senderid(info.get_local().toString());
 				grpc::ClientContext context;
 
 				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(30));
@@ -178,7 +183,6 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 	}
 
 	/**block until finish*/
-
 	if (count_success == 0) {
 		fprintf(stderr, "Put request not responded\n");
 		response->set_success(false);
