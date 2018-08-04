@@ -46,7 +46,6 @@ void Follower_AppendEntry() {
 	const auto timeout = srvs.front()->GetInfo().get_electionTimeout() / 2;
 	auto id = srvs.front()->GetInfo().get_local();
 
-	sleep(1);
 	std::vector<std::unique_ptr<RaftPeerClientImpl> > vClient;
 	for (int i = 0, appendTime = 10; i < appendTime; ++i) {
 		vClient.push_back(std::make_unique<RaftPeerClientImpl>(id));
@@ -57,7 +56,7 @@ void Follower_AppendEntry() {
 			PbAppendEntriesResponse rsp;
 			msg.set_term(100);
 
-			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(30));
+			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(100));
 			grpc::Status status = vClient.back()->stub_->AppendEntriesRPC(&ctx, msg, &rsp);
 			printf("rpc sent\n");
 			printf("%lld\n", rsp.term());
@@ -69,7 +68,6 @@ void Follower_AppendEntry() {
 		});
 		std::this_thread::sleep_for(std::chrono::milliseconds(timeout));
 	}
-	sleep(1);
 	srvs.front()->ShutDown();
 	assert(F2C == 0);
 	printf("create one follower, and send heartbeat to it manually, it remains follower\n");
@@ -108,6 +106,7 @@ void CandidateNaive() {
 
 		ctx.before_tranform = ([&](IdentityNo from, IdentityNo &to) mutable {
 			if (from == CandidateNo && to == LeaderNo) {
+				printf("server %s transform from candidate to leader\n", srv->GetInfo().get_local().toString().c_str());
 				++candidate2Leader;
 			} else if (from == CandidateNo && to == FollowerNo) {
 				++candidate2Follower;
@@ -608,7 +607,7 @@ void PutComprehensiveAsync() {
 using namespace SJTU;
 
 int main() {
-	SJTU::PutComprehensiveAsync();
+//	SJTU::PutComprehensiveAsync();
 //	SJTU::PutFollowerAsync();
 //	SJTU::PutLeaderAsync();
 //	SJTU::PutBroadcastFromFollower();
@@ -617,6 +616,6 @@ int main() {
 //	SJTU::Follower_Basic();
 //	SJTU::Follower_AppendEntry();
 //	SJTU::Candidate_Basic();
-//	SJTU::CandidateNaive();
+	SJTU::CandidateNaive();
 	return 0;
 }

@@ -25,25 +25,43 @@ namespace SJTU {
 	}
 
 	void Follower::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
+		printf("1\n");
 		IdentityBase::ProcsAppendEntriesFunc(request, response);
 		/// if commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine.
 		/// oh I suddenly realize that this should be automated by apply_queue!!!
-		boost::unique_lock<boost::shared_mutex> lk(state_.curIdentityMtx);
+//		boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx);
+//		boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx);
+//		boost::lock(lk1, lk2);
+
 		if (request->term() > state_.currentTerm) {
 			state_.currentTerm = request->term();
 			state_.votedFor.clear();
 		}
+		printf("2\n");
 		identity_transformer(FollowerNo);
 	}
 
 	void Follower::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
-		boost::unique_lock<boost::shared_mutex> lk(state_.curTermMtx);
+		boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
+		boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);
+		boost::lock(lk1, lk2);
+
 		if(request->term() > state_.currentTerm)
 			state_.votedFor.clear();
+
 		IdentityBase::ProcsRequestVoteFunc(request, response);
+
+		if (response->votegranted()) {
+			state_.votedFor = ServerId(request->candidateid());
+		}
+
 		if (request->term() > state_.currentTerm) {
 			state_.currentTerm = request->term();
 		}
+
+		lk1.unlock();
+		lk2.unlock();
+
 		identity_transformer(FollowerNo);
 	}
 

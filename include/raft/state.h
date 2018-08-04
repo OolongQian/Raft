@@ -43,7 +43,7 @@ struct State {
 	void Load();
 
 	boost::shared_mutex curIdentityMtx, curTermMtx, votedForMtx, cmtIdxMtx, lastAplMtx,
-			nxtIdxMtx, mtchIdxMtx, prmRepoMtx, prmRepoIdxMtx;
+			nxtIdxMtx, mtchIdxMtx, prmRepoMtx, prmRepoIdxMtx, logMasterMtx;
 
 };
 };

@@ -51,7 +51,7 @@ void Leader::leave() {
 
 void Leader::TimeOutFunc() {
 	SendHeartBeat();
-	CheckCommitIndexUpdate();
+//	CheckCommitIndexUpdate();
 }
 
 void Leader::SendHeartBeat() {
@@ -88,24 +88,17 @@ void Leader::SendHeartBeat() {
 				printf("appendEntries success, update nextIndex and matchIndex\n");
 				std::cerr << "deleted leader response for heartbeat" << std::endl;
 
-				boost::unique_lock<boost::shared_mutex> matchLk(state_.mtchIdxMtx, boost::defer_lock);
-				boost::unique_lock<boost::shared_mutex> nxtLk(state_.nxtIdxMtx, boost::defer_lock);
-				boost::lock(matchLk, nxtLk);
 				state_.matchIndex[client_ends_[i]->id] = (long long) last_entryindex_cache;
 				state_.nextIndex[client_ends_[i]->id] = (long long) last_entryindex_cache + 1;
-				matchLk.unlock();
-				nxtLk.unlock();
 
 				fprintf(stderr, "id: %s, change nextIndex %lld\n", client_ends_[i]->id.toString().c_str(),
 								state_.nextIndex[client_ends_[i]->id]);
 
-				boost::lock_guard<boost::shared_mutex> lk(state_.cmtIdxMtx);
 				CheckCommitIndexUpdate();
 				fprintf(stderr, "leader's commitIndex is %lld\n", state_.commitIndex);
 			} else if (response.inconsist()) {
 				printf("appendEntries fail because of log inconsistency, decrement nextIndex and retry\n");
 
-				boost::lock_guard<boost::shared_mutex> lk(state_.nxtIdxMtx);
 				--state_.nextIndex[client_ends_[i]->id];
 			}
 
@@ -121,6 +114,12 @@ void Leader::SendHeartBeat() {
 }
 
 size_t Leader::MakeHeartBeat(const ServerId &id, PbAppendEntriesRequest *request) {
+	boost::shared_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
+	boost::shared_lock<boost::shared_mutex> lk2(state_.nxtIdxMtx, boost::defer_lock);
+	boost::shared_lock<boost::shared_mutex> lk3(state_.logMasterMtx, boost::defer_lock);
+	boost::shared_lock<boost::shared_mutex> lk4(state_.cmtIdxMtx, boost::defer_lock);
+	boost::lock(lk1, lk2, lk3, lk4);
+
 	request->set_term(state_.currentTerm);
 	request->set_leaderid(info.get_local().toString());
 	long long nxtIdx = state_.nextIndex.at(id);
@@ -150,6 +149,12 @@ size_t Leader::MakeHeartBeat(const ServerId &id, PbAppendEntriesRequest *request
  * */
 
 void Leader::CheckCommitIndexUpdate() {
+	boost::unique_lock<boost::shared_mutex> lk1(state_.cmtIdxMtx, boost::defer_lock);
+	boost::shared_lock<boost::shared_mutex> lk2(state_.logMasterMtx, boost::defer_lock);
+	boost::shared_lock<boost::shared_mutex> lk3(state_.curTermMtx, boost::defer_lock);
+	boost::shared_lock<boost::shared_mutex> lk4(state_.mtchIdxMtx, boost::defer_lock);
+	boost::lock(lk1, lk2, lk3, lk4);
+
 	long long checked_N = -1;
 	long long cur_N = state_.commitIndex + 1;
 	int cnt = 1;
@@ -180,24 +185,57 @@ void Leader::CheckCommitIndexUpdate() {
 }
 
 void Leader::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
+
+	boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
+	boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);
+	boost::lock(lk1, lk2);
+
+	if (request->term() > state_.currentTerm)
+		state_.votedFor.clear();
+
+	lk1.unlock();
+	lk2.unlock();
+
 	IdentityBase::ProcsAppendEntriesFunc(request, response);
 	printf("leader hears himself's heartbeat\n");
+
 	if (request->term() > state_.currentTerm) {
 		state_.currentTerm = request->term();
-		state_.votedFor.clear();
+		lk1.unlock();
+		lk2.unlock();
+
 		identity_transformer(FollowerNo);
 	} else {
+		lk1.unlock();
+		lk2.unlock();
+
 		timer_.Reset();
 	}
 }
 
 void Leader::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
+	boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
+	boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);
+	boost::lock(lk1, lk2);
+
+	if (request->term() > state_.currentTerm) {
+		state_.votedFor.clear();
+	}
+
 	IdentityBase::ProcsRequestVoteFunc(request, response);
+
+	if (response->votegranted()) {
+		state_.votedFor = ServerId(request->candidateid());
+	}
+
 	if (request->term() > state_.currentTerm) {
 		state_.currentTerm = request->term();
-		state_.votedFor.clear();
+		lk1.unlock();
+		lk2.unlock();
 		identity_transformer(FollowerNo);
 	} else {
+		lk1.unlock();
+		lk2.unlock();
 		timer_.Reset();
 	}
 }
@@ -230,7 +268,10 @@ void Leader::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *resp
 	std::future<std::string> fut = prm.get_future();
 	state_.prmRepo.insert(std::pair<long long, std::promise<std::string> >(log.prmIndex, std::move(prm)));
 	fprintf(stderr, "pushback, log size is %zu\n", state_.log.length());
+
+	boost::unique_lock<boost::shared_mutex> lk3(state_.logMasterMtx);
 	state_.log.pushBack(log);
+	lk3.unlock();
 
 	response->set_replymsg(fut.get());
 	response->set_success(true);
@@ -242,10 +283,12 @@ void Leader::ProcsPeerPutFunc(const PbPutRequest *request, PbPutResponse *respon
 	log.command = "Put";
 	log.key = request->key();
 	log.val = request->val();
-	log.entryIndex = state_.log.back().entryIndex + 1;
 	log.replyerId = request->senderid();
 	log.prmIndex = request->prmindex();
+	boost::unique_lock<boost::shared_mutex> lk(state_.logMasterMtx);
+	log.entryIndex = state_.log.back().entryIndex + 1;
 	state_.log.pushBack(log);
+	lk.unlock();
 	response->set_success(true);
 }
 };

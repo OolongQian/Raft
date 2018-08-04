@@ -72,11 +72,13 @@ namespace SJTU {
 			} else
 				identities[state.currentIdentity]->init();
 			printf("After transform function is carried out. \n");
+			printf("have transformed to %d\n", state.currentIdentity);
 		});
 #ifdef _UNIT_TEST
 		//		debugContext.after_tranform(state.currentIdentity, identityNo);
 		ctx.after_tranform(state.currentIdentity, identityNo_orig);
 #endif
+		printf("3\n");
 	}
 
 	void Raft::TimeOutActionAdapter() {

@@ -19,6 +19,8 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 	 * */
 //		fprintf(stderr, "appendEntriesRequest is received...Always respond success\n");
 //	fprintf(stderr, "follower or candidate AppendEntries received\n");
+	boost::shared_lock<boost::shared_mutex> curTermLk(state_.curTermMtx);
+
 	fprintf(stderr, "term: %lld leader: %s prevLogIndex: %lld prevLogTerm: %lld LeaderCommit: %lld\n", request->term(),
 					request->leaderid().c_str(), request->prevlogindex(), request->prevlogterm(), request->leadercommit());
 	response->set_term(state_.currentTerm);
@@ -30,6 +32,10 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 		response->set_success(false);
 	/// reply false if log doesn't contain an entry at prevLogIndex whose term matches prevLogTerm.
 	std::cout << request->prevlogterm() << ' ' << request->prevlogindex() << std::endl;
+
+	curTermLk.unlock();
+
+	boost::unique_lock<boost::shared_mutex> logMasterLk(state_.logMasterMtx);
 
 	if (!state_.log.has(request->prevlogindex()) ||
 			state_.log.at(request->prevlogindex()).term != request->prevlogterm()) {
@@ -69,12 +75,17 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 		} else if (log.has(index) && log.at(index).term == cpp_entry.term)
 			continue;  /// add for completeness.
 	}
+	logMasterLk.unlock();
+
 //	printf("current follower %s log length %d\n", info.get_local().toString().c_str(), state_.log.length());
 //	printf("follower's commit index update %d %d\n", request->leadercommit(), state_.log.back().entryIndex);
+
+	boost::unique_lock<boost::shared_mutex> cmtIdxLk(state_.cmtIdxMtx);
 	if (request->leadercommit() > state_.commitIndex) {
 		long long tmp_commit_index = std::min(request->leadercommit(), state_.log.back().entryIndex);
 		if (state_.commitIndex < tmp_commit_index) {
 			state_.commitIndex = tmp_commit_index;
+			cmtIdxLk.unlock();
 			apply_queue.notify();
 		}
 	}
@@ -89,6 +100,7 @@ void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *reques
 	/**
 	 * Default implementation.
 	 * */
+
 	response->set_term(state_.currentTerm);
 	response->set_votegranted(true);
 
@@ -107,6 +119,8 @@ void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *reques
 	 * If the logs end with the same term, then whichever log is longer is more up-to-date.
 	 * */
 	/// or candidate's log is out-of-date, reject.
+	boost::shared_lock<boost::shared_mutex> lk(state_.logMasterMtx);
+
 	if (request->lastlogterm() != state_.log.back().term) {
 		if (state_.log.back().term > request->lastlogterm()) {    /// my log is newer.
 			response->set_votegranted(false);
@@ -146,13 +160,15 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 	 * increment promise index, store promise and cache future handle.
 	 * */
 	static int cnt = 0;
-	boost::unique_lock<boost::shared_mutex> lk(state_.prmRepoIdxMtx);
+	boost::unique_lock<boost::shared_mutex> repoIdxLk(state_.prmRepoIdxMtx);
 	long long cur_prm_index = state_.prmRepoIdx++;
-	lk.unlock();
+	repoIdxLk.unlock();
 
 	std::promise<std::string> prm;
 	std::future<std::string> fut = prm.get_future();
+	boost::unique_lock<boost::shared_mutex> repoLk(state_.prmRepoMtx);
 	state_.prmRepo.insert(std::pair<long long, std::promise<std::string> >(cur_prm_index, std::move(prm)));
+	repoLk.unlock();
 
 	/// launch server_ends to peers.
 	std::vector<std::unique_ptr<RaftPeerClientImpl> > tmp_client_ends;
