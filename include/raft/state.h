@@ -5,6 +5,7 @@
 #include <iostream>
 #include <map>
 #include <boost/thread/mutex.hpp>
+#include <future>
 #include "../server_info.h"
 #include "../log/log_array.h"
 
@@ -12,34 +13,41 @@
  * State is a class of container that stores raft common information inside of it.
  * */
 namespace SJTU {
-	struct State {
-		/// persistent state on all servers.
-		long long currentTerm;
-		ServerId votedFor;
-		LogArray log;
 
-		/// volatile state on all servers.
-		long long commitIndex;
-		long long lastApplied;
+struct State {
+	/// persistent state on all servers.
+	long long currentTerm;
+	ServerId votedFor;
+	LogArray log;
 
-		/// volatile state on leaders.
-		std::map<ServerId, long long> nextIndex;
-		std::map<ServerId, long long> matchIndex;
+	/// volatile state on all servers.
+	long long commitIndex;
+	long long lastApplied;
 
-		/// find whether one entry exists in current log.
+	/// volatile state on leaders.
+	std::map<ServerId, long long> nextIndex;
+	std::map<ServerId, long long> matchIndex;
+
+	std::map<long long, std::promise<std::string> > prmRepo;
+
+	/// find whether one entry exists in current log.
 //		bool IfLogContains(const Log &entry);
-		/// the initialization of state consists of init persistent states and volatile states.
-		State() = default;
+	/// the initialization of state consists of init persistent states and volatile states.
+	State() : prmRepoIdx(0) {}
 
-		void Init();
+	void Init();
 
-		/// in order to let the first log index be 1, push a trivial log in the front.
-		void Load();
+	/// in order to let the first log index be 1, push a trivial log in the front.
+	void Load();
 
-		boost::mutex entries_mtx;
-		boost::mutex map_mtx;
-	};
+	boost::mutex entries_mtx;
+	boost::mutex nextIndex_mtx;
+	boost::mutex matchIndex_mtx;
+	boost::mutex map_mtx;
+	boost::mutex prmRepo_mtx;
 
+	int prmRepoIdx;
+};
 };
 
 #endif //RAFT_PROJ_STATE_H

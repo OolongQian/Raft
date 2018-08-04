@@ -19,8 +19,8 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 	 * */
 //		fprintf(stderr, "appendEntriesRequest is received...Always respond success\n");
 //	fprintf(stderr, "follower or candidate AppendEntries received\n");
-//	fprintf(stderr, "term: %lld leader: %s prevLogIndex: %lld prevLogTerm: %lld LeaderCommit: %lld\n", request->term(),
-//					request->leaderid().c_str(), request->prevlogindex(), request->prevlogterm(), request->leadercommit());
+	fprintf(stderr, "term: %lld leader: %s prevLogIndex: %lld prevLogTerm: %lld LeaderCommit: %lld\n", request->term(),
+					request->leaderid().c_str(), request->prevlogindex(), request->prevlogterm(), request->leadercommit());
 	response->set_term(state_.currentTerm);
 	response->set_success(true);
 
@@ -29,7 +29,7 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 	if (request->term() < state_.currentTerm)
 		response->set_success(false);
 	/// reply false if log doesn't contain an entry at prevLogIndex whose term matches prevLogTerm.
-//	std::cout << request->prevlogterm() << ' ' << request->prevlogindex() << std::endl;
+	std::cout << request->prevlogterm() << ' ' << request->prevlogindex() << std::endl;
 
 	if (!state_.log.has(request->prevlogindex()) ||
 			state_.log.at(request->prevlogindex()).term != request->prevlogterm()) {
@@ -57,6 +57,7 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 		cpp_entry.command = request->entries(i).command();
 		cpp_entry.key = request->entries(i).key();
 		cpp_entry.val = request->entries(i).val();
+		cpp_entry.prmIndex = -1;
 
 		if (!log.has(index)) {
 			log.insert(cpp_entry, index);

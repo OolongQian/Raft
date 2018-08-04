@@ -181,3 +181,7 @@ ApplyQueue is constructed, the next thing is to implement self_modification.
 我感觉我需要在每个server里面开一个queue来存放已经被接收的client请求，然后遇到appendEntries Request的时候对着leader猛发一下rpc，然后
 leader会把接收到的所有queue当中的请求都增加到自己的log里作为当前term的新增entry。
 
+Some log entry needs to be associated with promise and future while others don't.
+commands can be divided into two parts, one is for client requests, the other part is just for raft consistency.
+former needs to be notified while the things left needn't.
+Hence we do it in this way, use a special value in prmIndex to help us distinguish between these two conditions.

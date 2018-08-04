@@ -5,116 +5,116 @@
 
 namespace SJTU {
 
-	Leader::~Leader() {
+Leader::~Leader() {
 
+}
+
+void Leader::init() {
+#ifndef _NOLOG
+	printf("init to be leader...\n");
+#endif
+	++state_.currentTerm;
+	timer_.SetTimeOut(info.get_electionTimeout() / 2, info.get_electionTimeout() / 2);
+	timer_.Start();
+	state_.votedFor.clear();
+
+	for (const ServerId &id : info.get_srvList()) {
+		int a = state_.log.back().entryIndex + 1;
+		state_.nextIndex[id] = state_.log.back().entryIndex + 1;    /// init to be leader's last log index + 1.
+		state_.matchIndex[id] = 0;                        /// init to be 0, increase monotonically.
 	}
 
-	void Leader::init() {
-#ifndef _NOLOG
-		printf("init to be leader...\n");
-#endif
-		++state_.currentTerm;
-		timer_.SetTimeOut(info.get_electionTimeout() / 2, info.get_electionTimeout() / 2);
-		timer_.Start();
-		state_.votedFor.clear();
+	transforming = false;
+}
 
-		for (const ServerId &id : info.get_srvList()) {
-			int a = state_.log.back().entryIndex + 1;
-			state_.nextIndex[id] = state_.log.back().entryIndex + 1;    /// init to be leader's last log index + 1.
-			state_.matchIndex[id] = 0;                        /// init to be 0, increase monotonically.
+void Leader::leave() {
+	transforming = true;
+
+	std::cerr << "clear votedFor record" << std::endl;
+	state_.votedFor.clear();
+#ifndef _NOLOG
+	printf("leaving leader...shutting down all threads and client ends\n");
+	printf("leaving leader...stop leader heartbeat\n");
+#endif
+	for (size_t i = 0; i < client_ends_.size(); ++i) {
+		if (client_ends_[i]->th.joinable()) {
+			client_ends_[i]->th.interrupt();
+			client_ends_[i]->th.join();
 		}
-
-		transforming = false;
 	}
+	timer_.Stop();
+}
 
-	void Leader::leave() {
-		transforming = true;
+void Leader::TimeOutFunc() {
+	SendHeartBeat();
+	CheckCommitIndexUpdate();
+}
 
-		std::cerr << "clear votedFor record" << std::endl;
-		state_.votedFor.clear();
+void Leader::SendHeartBeat() {
+
+	/**
+	 * Join by bruteforce.
+	 * */
+	for (size_t i = 0; i < client_ends_.size(); ++i) {
+		if (client_ends_[i]->th.joinable())
+			client_ends_[i]->th.join();
+	}
+	for (size_t i = 0; i < client_ends_.size(); ++i) {
+		client_ends_[i]->th = boost::thread([this, i]() mutable {
+			PbAppendEntriesRequest request;
+
+
+			size_t last_entryindex_cache = MakeHeartBeat(client_ends_[i]->id, &request);
+
+			PbAppendEntriesResponse response;
+			grpc::ClientContext context;
+
 #ifndef _NOLOG
-		printf("leaving leader...shutting down all threads and client ends\n");
-		printf("leaving leader...stop leader heartbeat\n");
+			printf("Leader sends out request to other server...\n");
 #endif
-		for (size_t i = 0; i < client_ends_.size(); ++i) {
-			if (client_ends_[i]->th.joinable()) {
-				client_ends_[i]->th.interrupt();
-				client_ends_[i]->th.join();
+
+			context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(30));
+			client_ends_[i]->stub_->AppendEntriesRPC(&context, request, &response);
+
+#ifndef _NOLOG
+			printf("Leader received response from other server...\n");
+			printf("id %s, it says: term %lld, success %d\n", client_ends_[i]->id.toString().c_str(), response.term(),
+						 int(response.success()));
+#endif
+			if (response.success()) {
+				printf("appendEntries success, update nextIndex and matchIndex\n");
+				std::cerr << "deleted leader response for heartbeat" << std::endl;
+
+				boost::unique_lock<boost::mutex> lk(state_.map_mtx);
+				long long &matchIndex = state_.matchIndex[client_ends_[i]->id];
+				long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
+				matchIndex = (long long) last_entryindex_cache;
+				nextIndex = matchIndex + 1;
+				lk.unlock();
+				fprintf(stderr, "id: %s, change nextIndex %d\n", client_ends_[i]->id.toString().c_str(),
+								state_.nextIndex[client_ends_[i]->id]);
+
+				CheckCommitIndexUpdate();
+				fprintf(stderr, "leader's commitIndex is %d\n", state_.commitIndex);
+			} else if (response.inconsist()) {
+				printf("appendEntries fail because of log inconsistency, decrement nextIndex and retry\n");
+
+				boost::unique_lock<boost::mutex> lk(state_.map_mtx);
+				long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
+				--nextIndex;
+				lk.unlock();
 			}
-		}
-		timer_.Stop();
+
+			if (state_.currentTerm < response.term()) {
+				printf("leader term smaller than other server, transform to follower...\n");
+				fprintf(stderr, "leader transform to follower, asynchronous disaster may happen.\n");
+				state_.currentTerm = response.term();
+				state_.votedFor.clear();
+				identity_transformer(FollowerNo);
+			}
+		});
 	}
-
-	void Leader::TimeOutFunc() {
-		SendHeartBeat();
-		CheckCommitIndexUpdate();
-	}
-
-	void Leader::SendHeartBeat() {
-
-		/**
-		 * Join by bruteforce.
-		 * */
-		for (size_t i = 0; i < client_ends_.size(); ++i) {
-			if (client_ends_[i]->th.joinable())
-				client_ends_[i]->th.join();
-		}
-		for (size_t i = 0; i < client_ends_.size(); ++i) {
-			client_ends_[i]->th = boost::thread([this, i]() mutable {
-				PbAppendEntriesRequest request;
-
-
-				size_t last_entryindex_cache = MakeHeartBeat(client_ends_[i]->id, &request);
-
-				PbAppendEntriesResponse response;
-				grpc::ClientContext context;
-
-#ifndef _NOLOG
-				printf("Leader sends out request to other server...\n");
-#endif
-
-				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(30));
-				client_ends_[i]->stub_->AppendEntriesRPC(&context, request, &response);
-
-#ifndef _NOLOG
-				printf("Leader received response from other server...\n");
-				printf("id %s, it says: term %lld, success %d\n", client_ends_[i]->id.toString().c_str(), response.term(),
-							 int(response.success()));
-#endif
-				if (response.success()) {
-					printf("appendEntries success, update nextIndex and matchIndex\n");
-					std::cerr << "deleted leader response for heartbeat" << std::endl;
-
-					boost::unique_lock<boost::mutex> lk(state_.map_mtx);
-					long long &matchIndex = state_.matchIndex[client_ends_[i]->id];
-					long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
-					matchIndex = (long long) last_entryindex_cache;
-					nextIndex = matchIndex + 1;
-					lk.unlock();
-					fprintf(stderr, "id: %s, change nextIndex %d\n", client_ends_[i]->id.toString().c_str(),
-									state_.nextIndex[client_ends_[i]->id]);
-
-					CheckCommitIndexUpdate();
-					fprintf(stderr, "leader's commitIndex is %d\n", state_.commitIndex);
-				} else if (response.inconsist()) {
-					printf("appendEntries fail because of log inconsistency, decrement nextIndex and retry\n");
-
-					boost::unique_lock<boost::mutex> lk(state_.map_mtx);
-					long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
-					--nextIndex;
-					lk.unlock();
-				}
-
-				if (state_.currentTerm < response.term()) {
-					printf("leader term smaller than other server, transform to follower...\n");
-					fprintf(stderr, "leader transform to follower, asynchronous disaster may happen.\n");
-					state_.currentTerm = response.term();
-					state_.votedFor.clear();
-					identity_transformer(FollowerNo);
-				}
-			});
-		}
-	}
+}
 
 size_t Leader::MakeHeartBeat(const ServerId &id, PbAppendEntriesRequest *request) {
 	request->set_term(state_.currentTerm);
@@ -139,73 +139,78 @@ size_t Leader::MakeHeartBeat(const ServerId &id, PbAppendEntriesRequest *request
 }
 
 
-	/**
-	 * See the last entry of description for leaders in paper.
-	 * */
+/**
+ * See the last entry of description for leaders in paper.
+ * */
 
-	void Leader::CheckCommitIndexUpdate() {
-		long long checked_N = -1;
-		long long cur_N = state_.commitIndex + 1;
-		int cnt = 0;
+void Leader::CheckCommitIndexUpdate() {
+	long long checked_N = -1;
+	long long cur_N = state_.commitIndex + 1;
+	int cnt = 0;
 
-		while (cur_N <= state_.log.back().entryIndex) {
-			if (state_.log.at(cur_N).term < state_.currentTerm) {
-				++cur_N;
-				continue;
-			} else if (state_.log.at(cur_N).term > state_.currentTerm) {
-				break;
-			}
-
-			for (const ServerId &id : info.get_srvList()) {
-				if (id == info.get_local()) continue;
-				if (state_.matchIndex.at(id) >= cur_N)
-					++cnt;
-			}
-			if (cnt > (info.get_srvList().size() - 1) / 2) checked_N = cur_N;
+	while (cur_N <= state_.log.back().entryIndex) {
+		if (state_.log.at(cur_N).term < state_.currentTerm) {
 			++cur_N;
+			continue;
+		} else if (state_.log.at(cur_N).term > state_.currentTerm) {
+			break;
 		}
-		if (checked_N == -1) {
-			printf("useless N check\n");
-		} else {
-			state_.commitIndex = checked_N;
-			apply_queue.notify();
-			printf("useful N check, set commitIndex to be %lld\n", state_.commitIndex);
+
+		for (const ServerId &id : info.get_srvList()) {
+			if (id == info.get_local()) continue;
+			if (state_.matchIndex.at(id) >= cur_N)
+				++cnt;
 		}
+		if (cnt > (info.get_srvList().size() - 1) / 2) checked_N = cur_N;
+		++cur_N;
 	}
-
-	void Leader::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
-		IdentityBase::ProcsAppendEntriesFunc(request, response);
-		printf("leader hears himself's heartbeat\n");
-		if (request->term() > state_.currentTerm) {
-			state_.currentTerm = request->term();
-			state_.votedFor.clear();
-			identity_transformer(FollowerNo);
-		} else {
-			timer_.Reset();
-		}
+	if (checked_N == -1) {
+		printf("useless N check\n");
+	} else {
+		state_.commitIndex = checked_N;
+		apply_queue.notify();
+		printf("useful N check, set commitIndex to be %lld\n", state_.commitIndex);
 	}
+}
 
-	void Leader::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
-		IdentityBase::ProcsRequestVoteFunc(request, response);
-		if (request->term() > state_.currentTerm) {
-			state_.currentTerm = request->term();
-			state_.votedFor.clear();
-			identity_transformer(FollowerNo);
-		} else {
-			timer_.Reset();
-		}
+void Leader::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
+	IdentityBase::ProcsAppendEntriesFunc(request, response);
+	printf("leader hears himself's heartbeat\n");
+	if (request->term() > state_.currentTerm) {
+		state_.currentTerm = request->term();
+		state_.votedFor.clear();
+		identity_transformer(FollowerNo);
+	} else {
+		timer_.Reset();
 	}
+}
 
-	void Leader::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *response) {
-		Entry log;
-		log.term = state_.currentTerm;
-		log.command = "Put";
-		log.key = request->key();
-		log.val = request->val();
-		log.entryIndex = state_.log.back().entryIndex + 1;
-		fprintf(stderr, "pushback, log size is %d\n", state_.log.length());
-		state_.log.pushBack(log);
-		response->set_success(true);
+void Leader::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
+	IdentityBase::ProcsRequestVoteFunc(request, response);
+	if (request->term() > state_.currentTerm) {
+		state_.currentTerm = request->term();
+		state_.votedFor.clear();
+		identity_transformer(FollowerNo);
+	} else {
+		timer_.Reset();
 	}
+}
 
+void Leader::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+	Entry log;
+	log.term = state_.currentTerm;
+	log.command = "Put";
+	log.key = request->key();
+	log.val = request->val();
+	log.entryIndex = state_.log.back().entryIndex + 1;
+	log.prmIndex = state_.prmRepoIdx++;
+	std::promise<std::string> prm;
+	std::future<std::string> fut = prm.get_future();
+	state_.prmRepo.insert(std::pair<long long, std::promise<std::string> >(log.prmIndex, std::move(prm)));
+	fprintf(stderr, "pushback, log size is %d\n", state_.log.length());
+	state_.log.pushBack(log);
+
+	response->set_replymsg(fut.get());
+	response->set_success(true);
+}
 };

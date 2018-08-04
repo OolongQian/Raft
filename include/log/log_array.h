@@ -14,6 +14,7 @@ namespace SJTU {
 		std::string val;
 		long long term;
 		long long entryIndex;
+		long long prmIndex;
 
 		Entry() = default;
 //		{

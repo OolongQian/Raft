@@ -403,6 +403,31 @@ public:
 
 	// accessors -------------------------------------------------------
 
+	// string replyMsg = 2;
+	void clear_replymsg();
+
+	static const int kReplyMsgFieldNumber = 2;
+
+	const ::std::string &replymsg() const;
+
+	void set_replymsg(const ::std::string &value);
+
+#if LANG_CXX11
+
+	void set_replymsg(::std::string &&value);
+
+#endif
+
+	void set_replymsg(const char *value);
+
+	void set_replymsg(const char *value, size_t size);
+
+	::std::string *mutable_replymsg();
+
+	::std::string *release_replymsg();
+
+	void set_allocated_replymsg(::std::string *replymsg);
+
 	// bool success = 1;
 	void clear_success();
 
@@ -416,6 +441,7 @@ public:
 private:
 
 	::google::protobuf::internal::InternalMetadataWithArena _internal_metadata_;
+	::google::protobuf::internal::ArenaStringPtr replymsg_;
 	bool success_;
 	mutable ::google::protobuf::internal::CachedSize _cached_size_;
 	friend struct ::protobuf_raft_5fpeer_2eproto::TableStruct;
@@ -1380,7 +1406,6 @@ inline void PbPutRequest::set_senderid(const ::std::string &value) {
 	senderid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
 	// @@protoc_insertion_point(field_set:PbPutRequest.senderId)
 }
-
 #if LANG_CXX11
 
 inline void PbPutRequest::set_senderid(::std::string &&value) {
@@ -1389,7 +1414,6 @@ inline void PbPutRequest::set_senderid(::std::string &&value) {
 			&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
 	// @@protoc_insertion_point(field_set_rvalue:PbPutRequest.senderId)
 }
-
 #endif
 
 inline void PbPutRequest::set_senderid(const char *value) {
@@ -1444,6 +1468,69 @@ inline void PbPutResponse::set_success(bool value) {
 
 	success_ = value;
 	// @@protoc_insertion_point(field_set:PbPutResponse.success)
+}
+
+// string replyMsg = 2;
+inline void PbPutResponse::clear_replymsg() {
+	replymsg_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+inline const ::std::string &PbPutResponse::replymsg() const {
+	// @@protoc_insertion_point(field_get:PbPutResponse.replyMsg)
+	return replymsg_.GetNoArena();
+}
+
+inline void PbPutResponse::set_replymsg(const ::std::string &value) {
+
+	replymsg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+	// @@protoc_insertion_point(field_set:PbPutResponse.replyMsg)
+}
+
+#if LANG_CXX11
+
+inline void PbPutResponse::set_replymsg(::std::string &&value) {
+
+	replymsg_.SetNoArena(
+			&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+	// @@protoc_insertion_point(field_set_rvalue:PbPutResponse.replyMsg)
+}
+
+#endif
+
+inline void PbPutResponse::set_replymsg(const char *value) {
+			GOOGLE_DCHECK(value != NULL);
+
+	replymsg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+	// @@protoc_insertion_point(field_set_char:PbPutResponse.replyMsg)
+}
+
+inline void PbPutResponse::set_replymsg(const char *value, size_t size) {
+
+	replymsg_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+											 ::std::string(reinterpret_cast<const char *>(value), size));
+	// @@protoc_insertion_point(field_set_pointer:PbPutResponse.replyMsg)
+}
+
+inline ::std::string *PbPutResponse::mutable_replymsg() {
+
+	// @@protoc_insertion_point(field_mutable:PbPutResponse.replyMsg)
+	return replymsg_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+inline ::std::string *PbPutResponse::release_replymsg() {
+	// @@protoc_insertion_point(field_release:PbPutResponse.replyMsg)
+
+	return replymsg_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+
+inline void PbPutResponse::set_allocated_replymsg(::std::string *replymsg) {
+	if (replymsg != NULL) {
+
+	} else {
+
+	}
+	replymsg_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), replymsg);
+	// @@protoc_insertion_point(field_set_allocated:PbPutResponse.replyMsg)
 }
 
 // -------------------------------------------------------------------

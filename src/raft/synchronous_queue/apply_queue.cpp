@@ -30,13 +30,22 @@ namespace SJTU {
 	}
 
 	void ApplyQueue::applyCommand(Entry entry) {
+		char msg[100];
 		if (entry.command == "Put") {
 			data[entry.key] = entry.val;
+			sprintf(msg, "Client has associated key %s with value %s", entry.key.c_str(), entry.val.c_str());
 		} else if (entry.command == "Get") {
 			fprintf(stderr, "I don't know who to apply Get\n");
+			sprintf(msg, "Client has got value %s from key %s", entry.val.c_str(), entry.key.c_str());
 		} else {
 			fprintf(stderr, "Unknown command in applyQueue\n");
+			sprintf(msg, "Unknown command");
 		}
+
+		if (entry.prmIndex != -1)
+			state.prmRepo.at(entry.prmIndex).set_value(str);
+		else
+			printf("%s\n", str);
 	}
 
 	void ApplyQueue::notify() {
