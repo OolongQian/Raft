@@ -191,3 +191,12 @@ I bind a namespace for each prmIndex. if an entry is under current server's name
 to reply to client. Thus the apply_queue has to notify the future. Otherwise, it just passes away.
 Each time a server creates an entry with its own namespace, it has to increment prmIndex, which means prmIndex under each
 namespace is strictly monotonic.
+
+Now, I'm ready to handle synchronization problems. How could I do that? First I have to figure out which data member I have.
+because the subjects in synchronization are data members.
+
+The data members I've got are "state", "info", "currentIdentity". Then, info needn't synchronizing because it's const member.
+So start from the easy one ---- currentIdentity.
+
+No currentIdentity is actually hard to synchronize because it has something to do with identity transformation, where big bread brother
+warns me to turn off whatever I can to prevent crash.

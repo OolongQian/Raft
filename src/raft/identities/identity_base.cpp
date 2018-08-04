@@ -146,7 +146,10 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 	 * increment promise index, store promise and cache future handle.
 	 * */
 	static int cnt = 0;
+	boost::unique_lock<boost::shared_mutex> lk(state_.prmRepoIdxMtx);
 	long long cur_prm_index = state_.prmRepoIdx++;
+	lk.unlock();
+
 	std::promise<std::string> prm;
 	std::future<std::string> fut = prm.get_future();
 	state_.prmRepo.insert(std::pair<long long, std::promise<std::string> >(cur_prm_index, std::move(prm)));
@@ -193,7 +196,9 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 		}
 	}
 
-	/**block until finish*/
+	/**
+	 * block until finish
+	 * */
 	if(count_success == 1) {
 		response->set_replymsg(fut.get());
 		response->set_success(true);

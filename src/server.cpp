@@ -21,7 +21,7 @@ void Server::StartUp() {
 }
 
 void Server::ShutDown() {
-	printf("server is shuting down...current Identity is %d\n", pRaft->currentIdentity);
+	printf("server is shuting down...current Identity is %d\n", pRaft->state.currentIdentity);
 	pRaft->Stop();
 }
 

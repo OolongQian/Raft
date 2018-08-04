@@ -9,20 +9,20 @@ namespace SJTU {
 		identities[FollowerNo] = std::make_unique<Follower>(state, timer, transformer, client_ends, info, applyQueue);
 		identities[CandidateNo] = std::make_unique<Candidate>(state, timer, transformer, client_ends, info, applyQueue);
 		identities[LeaderNo] = std::make_unique<Leader>(state, timer, transformer, client_ends, info, applyQueue);
-		currentIdentity = DownNo;
+		state.currentIdentity = DownNo;
 
 		server_end.BindServiceFunc(
 				[this](const PbRequestVoteRequest *request, PbRequestVoteResponse *response) -> void {
-					printf("current Identity %d\n", currentIdentity);
-					identities[currentIdentity]->ProcsRequestVoteFunc(request, response);
+					printf("current Identity %d\n", state.currentIdentity);
+					identities[state.currentIdentity]->ProcsRequestVoteFunc(request, response);
 				},
 				[this](const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) -> void {
-					printf("current Identity %d\n", currentIdentity);
-					identities[currentIdentity]->ProcsAppendEntriesFunc(request, response);
+					printf("current Identity %d\n", state.currentIdentity);
+					identities[state.currentIdentity]->ProcsAppendEntriesFunc(request, response);
 				},
 				[this, id = info.get_local()](const PbPutRequest *request, PbPutResponse *response) -> void {
 					printf("%s receive add log request\n", id.toString().c_str());
-					identities[currentIdentity]->ProcsPutFunc(request, response);
+					identities[state.currentIdentity]->ProcsPutFunc(request, response);
 				});
 
 		/// gRPC client_ends
@@ -42,7 +42,7 @@ namespace SJTU {
 
 		printf("enter test transformer\n");
 		/// Note this!!!
-		if (currentIdentity == identityNo) {
+		if (state.currentIdentity == identityNo) {
 			printf("reseting timer\n");
 			/// leader不会reset
 			timer.Stop();
@@ -53,33 +53,33 @@ namespace SJTU {
 		}
 #ifdef _UNIT_TEST
 		IdentityNo identityNo_orig = identityNo;
-		printf("%s transform from %d to %d\n", info.get_local().toString().c_str(), currentIdentity, identityNo);
-		ctx.before_tranform(currentIdentity, identityNo);
+		printf("%s transform from %d to %d\n", info.get_local().toString().c_str(), state.currentIdentity, identityNo);
+		ctx.before_tranform(state.currentIdentity, identityNo);
 #endif
 		eventQueue.addEvent([this, identityNo]() mutable {
-//			printf("transform from %d to %d\n", currentIdentity, identityNo);
+//			printf("transform from %d to %d\n", state.currentIdentity, identityNo);
 
-			if (currentIdentity == DownNo)
+			if (state.currentIdentity == DownNo)
 				server_end.Monitor();
 			else
-				identities[currentIdentity]->leave();
+				identities[state.currentIdentity]->leave();
 
-			currentIdentity = identityNo;
+			state.currentIdentity = identityNo;
 
-			if (currentIdentity == DownNo) {
+			if (state.currentIdentity == DownNo) {
 				timer.Stop();
 				server_end.Stop();
 			} else
-				identities[currentIdentity]->init();
+				identities[state.currentIdentity]->init();
 			printf("After transform function is carried out. \n");
 		});
 #ifdef _UNIT_TEST
-		//		debugContext.after_tranform(currentIdentity, identityNo);
-		ctx.after_tranform(currentIdentity, identityNo_orig);
+		//		debugContext.after_tranform(state.currentIdentity, identityNo);
+		ctx.after_tranform(state.currentIdentity, identityNo_orig);
 #endif
 	}
 
 	void Raft::TimeOutActionAdapter() {
-		identities[currentIdentity]->TimeOutFunc();
+		identities[state.currentIdentity]->TimeOutFunc();
 	}
 };

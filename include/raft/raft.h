@@ -15,7 +15,6 @@
 
 #include "../debug_header.h"
 
-
 namespace SJTU {
 	class Raft {
 	public:
@@ -49,7 +48,6 @@ namespace SJTU {
 		EventQueue eventQueue;
 		ApplyQueue applyQueue;
 
-		int currentIdentity;
 		std::unique_ptr<IdentityBase> identities[IdentityNum];
 
 		RaftServer server_end;

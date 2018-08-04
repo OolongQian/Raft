@@ -608,7 +608,7 @@ void PutComprehensiveAsync() {
 using namespace SJTU;
 
 int main() {
-//	SJTU::PutComprehensiveAsync();
+	SJTU::PutComprehensiveAsync();
 //	SJTU::PutFollowerAsync();
 //	SJTU::PutLeaderAsync();
 //	SJTU::PutBroadcastFromFollower();

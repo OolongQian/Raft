@@ -16,9 +16,10 @@ namespace SJTU {
 
 struct State {
 	/// persistent state on all servers.
+	int currentIdentity;
 	long long currentTerm;
 	ServerId votedFor;
-	LogArray log;
+	LogArray log;						/// log is already a synchronized class
 
 	/// volatile state on all servers.
 	long long commitIndex;
@@ -29,6 +30,7 @@ struct State {
 	std::map<ServerId, long long> matchIndex;
 
 	std::map<long long, std::promise<std::string> > prmRepo;
+	int prmRepoIdx;
 
 	/// find whether one entry exists in current log.
 //		bool IfLogContains(const Log &entry);
@@ -40,13 +42,9 @@ struct State {
 	/// in order to let the first log index be 1, push a trivial log in the front.
 	void Load();
 
-	boost::mutex entries_mtx;
-	boost::mutex nextIndex_mtx;
-	boost::mutex matchIndex_mtx;
-	boost::mutex map_mtx;
-	boost::mutex prmRepo_mtx;
+	boost::shared_mutex curIdentityMtx, curTermMtx, votedForMtx, cmtIdxMtx, lastAplMtx,
+			nxtIdxMtx, mtchIdxMtx, prmRepoMtx, prmRepoIdxMtx;
 
-	int prmRepoIdx;
 };
 };
 

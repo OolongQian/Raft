@@ -29,7 +29,7 @@ public:
 	}
 
 	const IdentityNo GetIdentity() {
-		return pRaft->currentIdentity;
+		return pRaft->state.currentIdentity;
 	}
 
 	RaftDebugContext &GetCtx() {

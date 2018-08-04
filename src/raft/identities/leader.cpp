@@ -13,24 +13,25 @@ void Leader::init() {
 #ifndef _NOLOG
 	printf("init to be leader...\n");
 #endif
-	++state_.currentTerm;
-	timer_.SetTimeOut(info.get_electionTimeout() / 2, info.get_electionTimeout() / 2);
-	timer_.Start();
-	state_.votedFor.clear();
 
+	/**
+	 * other threads are dead, no need to add mutex.
+	 * */
+	++state_.currentTerm;
+	state_.votedFor.clear();
 	for (const ServerId &id : info.get_srvList()) {
 		state_.nextIndex[id] = state_.log.back().entryIndex + 1;    /// init to be leader's last log index + 1.
 		state_.matchIndex[id] = 0;                        /// init to be 0, increase monotonically.
 	}
-
+	timer_.SetTimeOut(info.get_electionTimeout() / 2, info.get_electionTimeout() / 2);
+	timer_.Start();
 	transforming = false;
 }
 
 void Leader::leave() {
 	transforming = true;
 
-	std::cerr << "clear votedFor record" << std::endl;
-	state_.votedFor.clear();
+	timer_.Stop();
 #ifndef _NOLOG
 	printf("leaving leader...shutting down all threads and client ends\n");
 	printf("leaving leader...stop leader heartbeat\n");
@@ -41,7 +42,11 @@ void Leader::leave() {
 			client_ends_[i]->th.join();
 		}
 	}
-	timer_.Stop();
+	/**
+	 * Other threads are dead, no need to add mutex.
+	 * */
+	std::cerr << "clear votedFor record" << std::endl;
+	state_.votedFor.clear();
 }
 
 void Leader::TimeOutFunc() {
@@ -61,7 +66,6 @@ void Leader::SendHeartBeat() {
 	for (size_t i = 0; i < client_ends_.size(); ++i) {
 		client_ends_[i]->th = boost::thread([this, i]() mutable {
 			PbAppendEntriesRequest request;
-
 
 			size_t last_entryindex_cache = MakeHeartBeat(client_ends_[i]->id, &request);
 
@@ -84,24 +88,25 @@ void Leader::SendHeartBeat() {
 				printf("appendEntries success, update nextIndex and matchIndex\n");
 				std::cerr << "deleted leader response for heartbeat" << std::endl;
 
-				boost::unique_lock<boost::mutex> lk(state_.map_mtx);
-				long long &matchIndex = state_.matchIndex[client_ends_[i]->id];
-				long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
-				matchIndex = (long long) last_entryindex_cache;
-				nextIndex = matchIndex + 1;
-				lk.unlock();
+				boost::unique_lock<boost::shared_mutex> matchLk(state_.mtchIdxMtx, boost::defer_lock);
+				boost::unique_lock<boost::shared_mutex> nxtLk(state_.nxtIdxMtx, boost::defer_lock);
+				boost::lock(matchLk, nxtLk);
+				state_.matchIndex[client_ends_[i]->id] = (long long) last_entryindex_cache;
+				state_.nextIndex[client_ends_[i]->id] = (long long) last_entryindex_cache + 1;
+				matchLk.unlock();
+				nxtLk.unlock();
+
 				fprintf(stderr, "id: %s, change nextIndex %lld\n", client_ends_[i]->id.toString().c_str(),
 								state_.nextIndex[client_ends_[i]->id]);
 
+				boost::lock_guard<boost::shared_mutex> lk(state_.cmtIdxMtx);
 				CheckCommitIndexUpdate();
 				fprintf(stderr, "leader's commitIndex is %lld\n", state_.commitIndex);
 			} else if (response.inconsist()) {
 				printf("appendEntries fail because of log inconsistency, decrement nextIndex and retry\n");
 
-				boost::unique_lock<boost::mutex> lk(state_.map_mtx);
-				long long &nextIndex = state_.nextIndex[client_ends_[i]->id];
-				--nextIndex;
-				lk.unlock();
+				boost::lock_guard<boost::shared_mutex> lk(state_.nxtIdxMtx);
+				--state_.nextIndex[client_ends_[i]->id];
 			}
 
 			if (state_.currentTerm < response.term()) {
@@ -206,6 +211,10 @@ void Leader::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *response) 
 }
 
 void Leader::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+	boost::shared_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
+	boost::unique_lock<boost::shared_mutex> lk2(state_.prmRepoIdxMtx, boost::defer_lock);
+	boost::lock(lk1, lk2);
+
 	Entry log;
 	log.term = state_.currentTerm;
 	log.command = "Put";
@@ -214,6 +223,8 @@ void Leader::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *resp
 	log.entryIndex = state_.log.back().entryIndex + 1;
 	log.replyerId = info.get_local().toString();
 	log.prmIndex = state_.prmRepoIdx++;
+	lk1.unlock();
+	lk2.unlock();
 
 	std::promise<std::string> prm;
 	std::future<std::string> fut = prm.get_future();

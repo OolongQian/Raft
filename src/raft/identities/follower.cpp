@@ -28,6 +28,7 @@ namespace SJTU {
 		IdentityBase::ProcsAppendEntriesFunc(request, response);
 		/// if commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine.
 		/// oh I suddenly realize that this should be automated by apply_queue!!!
+		boost::unique_lock<boost::shared_mutex> lk(state_.curIdentityMtx);
 		if (request->term() > state_.currentTerm) {
 			state_.currentTerm = request->term();
 			state_.votedFor.clear();
@@ -36,6 +37,7 @@ namespace SJTU {
 	}
 
 	void Follower::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
+		boost::unique_lock<boost::shared_mutex> lk(state_.curTermMtx);
 		if(request->term() > state_.currentTerm)
 			state_.votedFor.clear();
 		IdentityBase::ProcsRequestVoteFunc(request, response);
