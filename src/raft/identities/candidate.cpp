@@ -18,9 +18,13 @@ namespace SJTU {
 
 		++state_.currentTerm;
 		state_.votedFor.clear();
-
 		votesReceived = 1;
 		state_.votedFor = info.get_local();
+
+		if (votesReceived > info.get_srvList().size() / 2) {
+			identity_transformer(LeaderNo);
+			return;
+		}
 		RequestVote();
 	}
 
@@ -133,23 +137,6 @@ namespace SJTU {
 		return request.Convert();
 	}
 
-/*
-void Candidate::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
-	IdentityBase::ProcsAppendEntriesFunc(request, response);
-
-	boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
-	boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);
-	boost::lock(lk1, lk2);
-	if (request->term() > state_.currentTerm) {
-		state_.currentTerm = request->term();
-		state_.votedFor.clear();
-		lk1.unlock();
-		lk2.unlock();
-
-		identity_transformer(FollowerNo);
-	}
-}
-*/
 
 void Candidate::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
 	boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);

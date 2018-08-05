@@ -16,59 +16,64 @@
 #include "../debug_header.h"
 
 namespace SJTU {
-	class Raft {
-	public:
-		explicit Raft(const ServerInfo &info, std::map<std::string, std::string> &data);
+class Raft {
+public:
+	explicit Raft(const ServerInfo &info, std::map<std::string, std::string> &data);
 
-		~Raft() {}
+	~Raft() {}
 
-		void Start() {
-			eventQueue.Start();
-			applyQueue.Start();
-			server_end.PreMonitorInit();
-			IdentityTransform(FollowerNo);
+	void Start() {
+		std::string filename = (info.get_local().toString() + "_persistent");
+		state.Load(filename);
+
+		eventQueue.Start();
+		applyQueue.Start();
+		server_end.PreMonitorInit();
+		IdentityTransform(FollowerNo);
 //			server_end.Monitor();		when get out of down, server_end starts to monitor.
-		}
+	}
 
-		void Stop() {
-			eventQueue.Stop();
-			applyQueue.Stop();
-			server_end.Stop();
-			timer.Stop();
-		}
+	void Stop() {
+		eventQueue.Stop();
+		applyQueue.Stop();
+		server_end.Stop();
+		timer.Stop();
+		std::string filename = (info.get_local().toString() + "_persistent");
+		state.Store(filename);
+	}
 
-	private:
+private:
 #ifdef _UNIT_TEST
-	public:
+public:
 #endif
-		State state;
-		const ServerInfo &info;
+	State state;
+	const ServerInfo &info;
 
-		Timer timer;
-		EventQueue eventQueue;
-		ApplyQueue applyQueue;
+	Timer timer;
+	EventQueue eventQueue;
+	ApplyQueue applyQueue;
 
-		std::unique_ptr<IdentityBase> identities[IdentityNum];
+	std::unique_ptr<IdentityBase> identities[IdentityNum];
 
-		RaftServer server_end;
-		std::vector<std::unique_ptr<RaftPeerClientImpl> > client_ends;
+	RaftServer server_end;
+	std::vector<std::unique_ptr<RaftPeerClientImpl> > client_ends;
 
 #ifdef _UNIT_TEST
-		RaftDebugContext ctx;
+	RaftDebugContext ctx;
 #endif
 
-	private:
-		/**
-		 * This function simply invokes identity classes' leave and init function.
-		 * But during identity transformation, server state changes (pass by reference).
-		 * timer is reset (pass by reference. rpc is set out.
-		 * Many heavy work is done, I wanna distribute these works to specialized classes,
-		 * thus leaving detailed implementation inside identities.
-		 * */
-		void IdentityTransform(IdentityNo);
+private:
+	/**
+	 * This function simply invokes identity classes' leave and init function.
+	 * But during identity transformation, server state changes (pass by reference).
+	 * timer is reset (pass by reference. rpc is set out.
+	 * Many heavy work is done, I wanna distribute these works to specialized classes,
+	 * thus leaving detailed implementation inside identities.
+	 * */
+	void IdentityTransform(IdentityNo);
 
-		void TimeOutActionAdapter();
-	};
+	void TimeOutActionAdapter();
+};
 };
 
 #endif //RAFT_PROJ_RAFT_H

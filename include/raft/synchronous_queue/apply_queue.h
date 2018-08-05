@@ -42,7 +42,6 @@ private:
 	boost::thread th;
 	boost::condition_variable cond;
 
-
 private:
 	void applyCommand(Entry entry);
 };

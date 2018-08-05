@@ -194,36 +194,6 @@ void Leader::CheckCommitIndexUpdate() {
 	}
 }
 
-/*
-void Leader::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
-	printf("leader hears its own heartbeat\n");
-	boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
-	boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);
-	boost::lock(lk1, lk2);
-	printf("leader hears its own heartbeat 1\n");
-
-	if (request->term() > state_.currentTerm)
-		state_.votedFor.clear();
-
-	IdentityBase::ProcsAppendEntriesFunc(request, response);
-//	printf("leader hears himself's heartbeat\n");
-	printf("leader hears its own heartbeat 2\n");
-
-	if (request->term() > state_.currentTerm) {
-		state_.currentTerm = request->term();
-		lk1.unlock();
-		lk2.unlock();
-//		fprintf(stderr, "222\n");
-		identity_transformer(FollowerNo);
-	} else {
-		lk1.unlock();
-		lk2.unlock();
-
-		timer_.Reset();
-	}
-}
-*/
-
 void Leader::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
 	boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
 	boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);

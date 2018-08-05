@@ -33,14 +33,12 @@ struct State {
 	int prmRepoIdx;
 
 	/// find whether one entry exists in current log.
-//		bool IfLogContains(const Log &entry);
 	/// the initialization of state consists of init persistent states and volatile states.
 	State() : prmRepoIdx(0) {}
 
-	void Init();
+	void Load(std::string filename);
 
-	/// in order to let the first log index be 1, push a trivial log in the front.
-	void Load();
+	void Store(std::string filename);
 
 	boost::shared_mutex curIdentityMtx, curTermMtx, votedForMtx, cmtIdxMtx, lastAplMtx,
 			nxtIdxMtx, mtchIdxMtx, prmRepoMtx, prmRepoIdxMtx, logMasterMtx;

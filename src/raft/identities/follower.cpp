@@ -25,36 +25,6 @@ namespace SJTU {
 		identity_transformer(CandidateNo);
 	}
 
-/*
-void Follower::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
-	boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
-	boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);
-	boost::lock(lk1, lk2);
-	if (request->term() > state_.currentTerm) {
-		state_.votedFor.clear();
-	}
-//		printf("1\n");
-//		fprintf(stderr, "server %s receives appendEntry RPC", info.get_local().toString().c_str());
-	IdentityBase::ProcsAppendEntriesFunc(request, response);
-	/// if commitIndex > lastApplied: increment lastApplied, apply log[lastApplied] to state machine.
-	/// oh I suddenly realize that this should be automated by apply_queue!!!
-//		boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx);
-//		boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx);
-//		boost::lock(lk1, lk2);
-
-//		printf("current identity %d accept %d\n", state_.currentIdentity, (int) response->success());
-
-	if (request->term() > state_.currentTerm) {
-		state_.currentTerm = request->term();
-	}
-//		printf("2\n");
-//		fprintf(stderr, "server %s try to transform to follower", info.get_local().toString().c_str());
-	lk1.unlock();
-	lk2.unlock();
-
-	identity_transformer(FollowerNo);
-}*/
-
 void Follower::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
 	boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
 	boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);

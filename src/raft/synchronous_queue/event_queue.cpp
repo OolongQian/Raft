@@ -19,6 +19,7 @@ namespace SJTU {
 	}
 
 	void EventQueue::Start() {
+		if(th_.joinable()) return;
 		th_ = boost::thread([this] {
 			execute();
 		});
@@ -26,8 +27,7 @@ namespace SJTU {
 
 	void EventQueue::Stop() {
 		th_.interrupt();
-		if (th_.joinable())
-			th_.join();
+		th_.join();
 	}
 
 	/**

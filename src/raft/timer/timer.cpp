@@ -1,7 +1,7 @@
 #include "../../../include/raft/timer/timer.h"
 
 namespace SJTU {
-Timer::Timer() : low_time(100), high_time(100) {}
+Timer::Timer() : high_time(0), low_time(0) {}
 
 	Timer::~Timer() = default;
 
@@ -14,6 +14,8 @@ Timer::Timer() : low_time(100), high_time(100) {}
 	}
 
 void Timer::Start() {
+	if(high_time == low_time == 0) throw std::runtime_error("uninitialized timer");
+	if(th.joinable()) return;
 	th = boost::thread([this] {
 		try {
 			int rand_time = rand() % (high_time - low_time + 1) + low_time;

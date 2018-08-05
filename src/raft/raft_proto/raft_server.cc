@@ -11,6 +11,7 @@ namespace SJTU {
 	}
 
 	void RaftServer::Monitor() {
+		if(th.joinable()) return;
 		th = boost::thread([this]() {
 			std::cout << "Server listening on " << serverId.toString() << std::endl;
 			server->Wait();

@@ -602,12 +602,16 @@ void PutComprehensiveAsync() {
 //	client->th.join();
 	printf("put method is OK, all put msg sends to the leader is safely returned.\n");
 }
+
+/**
+ *
+ * */
 };
 
 using namespace SJTU;
 
 int main() {
-//	SJTU::PutComprehensiveAsync();
+	SJTU::PutComprehensiveAsync();
 //	SJTU::PutFollowerAsync();
 //	SJTU::PutLeaderAsync();
 //	SJTU::PutBroadcastFromFollower();
@@ -616,6 +620,6 @@ int main() {
 //	SJTU::Follower_Basic();
 //	SJTU::Follower_AppendEntry();
 //	SJTU::Candidate_Basic();
-	SJTU::CandidateNaive();
+//	SJTU::CandidateNaive();
 	return 0;
 }
