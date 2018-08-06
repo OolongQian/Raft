@@ -33,6 +33,20 @@ public:
 //			server_end.Monitor();		when get out of down, server_end starts to monitor.
 	}
 
+	void Pause() {
+		eventQueue.Stop();
+		applyQueue.Stop();
+		server_end.Stop();
+		timer.Stop();
+		state.currentIdentity = DownNo;
+	}
+
+	void Resume() {
+		eventQueue.Start();
+		applyQueue.Start();
+		IdentityTransform(FollowerNo);
+	}
+
 	void Stop() {
 		eventQueue.Stop();
 		applyQueue.Stop();

@@ -9,8 +9,10 @@ namespace SJTU {
 	class RaftDebugContext {
 	public:
 		RaftDebugContext() {
-			before_tranform = [](IdentityNo a, IdentityNo b) { fprintf(stderr, "before transform is empty\n"); };
-			after_tranform = [](IdentityNo a, IdentityNo b) { fprintf(stderr, "after transform is empty\n"); };
+			before_tranform = [](IdentityNo a, IdentityNo b) { ; };
+			after_tranform = [](IdentityNo a, IdentityNo b) { ; };
+//			before_tranform = [](IdentityNo a, IdentityNo b) { fprintf(stderr, "before transform is empty\n"); };
+//			after_tranform = [](IdentityNo a, IdentityNo b) { fprintf(stderr, "after transform is empty\n"); };
 			cnt = 0;
 		}
 

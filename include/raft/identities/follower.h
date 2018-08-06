@@ -17,7 +17,8 @@ namespace SJTU {
 
 //		void ProcsAppendEntriesFunc(const PbAppendEntriesRequest *, PbAppendEntriesResponse *) override;
 
-		void ProcsRequestVoteFunc(const PbRequestVoteRequest *, PbRequestVoteResponse *) override;
+//		void ProcsRequestVoteFunc(const PbRequestVoteRequest *, PbRequestVoteResponse *) override;
+
 //		CppAppendEntriesResponse ProcsAppendEntriesFunc(CppAppendEntriesRequest) override;
 
 //		CppRequestVoteResponse ProcsRequestVoteFunc(CppRequestVoteRequest) override;

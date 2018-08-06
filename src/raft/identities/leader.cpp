@@ -10,9 +10,6 @@ Leader::~Leader() {
 }
 
 void Leader::init() {
-#ifndef _NOLOG
-//	printf("init to be leader...\n");
-#endif
 
 	/**
 	 * other threads are dead, no need to add mutex.
@@ -32,10 +29,6 @@ void Leader::leave() {
 	transforming = true;
 
 	timer_.Stop();
-#ifndef _NOLOG
-//	printf("leaving leader...shutting down all threads and client ends\n");
-//	printf("leaving leader...stop leader heartbeat\n");
-#endif
 	for (size_t i = 0; i < client_ends_.size(); ++i) {
 		if (client_ends_[i]->th.joinable()) {
 			client_ends_[i]->th.interrupt();
@@ -45,17 +38,15 @@ void Leader::leave() {
 	/**
 	 * Other threads are dead, no need to add mutex.
 	 * */
-//	std::cerr << "clear votedFor record" << std::endl;
 	state_.votedFor.clear();
 }
 
 void Leader::TimeOutFunc() {
 	SendHeartBeat();
-//	CheckCommitIndexUpdate();
-//	timer_.Reset();
 }
 
 void Leader::SendHeartBeat() {
+	fprintf(stderr, "server %s is issuing sending heartbeat\n", info.get_local().toString().c_str());
 
 	/**
 	 * Join by bruteforce.
@@ -73,32 +64,16 @@ void Leader::SendHeartBeat() {
 			PbAppendEntriesResponse response;
 			grpc::ClientContext context;
 
-#ifndef _NOLOG
-//			printf("Leader sends out request to other server...\n");
-#endif
-
-			context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(30));
+			context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(50));
 			client_ends_[i]->stub_->AppendEntriesRPC(&context, request, &response);
 
-#ifndef _NOLOG
-//			printf("Leader received response from other server...\n");
-//			printf("id %s, it says: term %lld, success %d\n", client_ends_[i]->id.toString().c_str(), response.term(),
-//						 int(response.success()));
-#endif
 			if (response.success()) {
-//				printf("appendEntries success, update nextIndex and matchIndex\n");
-//				std::cerr << "deleted leader response for heartbeat" << std::endl;
 
 				state_.matchIndex[client_ends_[i]->id] = (long long) last_entryindex_cache;
 				state_.nextIndex[client_ends_[i]->id] = (long long) last_entryindex_cache + 1;
 
-//				fprintf(stderr, "id: %s, change nextIndex %lld\n", client_ends_[i]->id.toString().c_str(),
-//								state_.nextIndex[client_ends_[i]->id]);
-
 				CheckCommitIndexUpdate();
-//				fprintf(stderr, "leader's commitIndex is %lld\n", state_.commitIndex);
 			} else if (response.inconsist()) {
-//				printf("appendEntries fail because of log inconsistency, decrement nextIndex and retry\n");
 
 				--state_.nextIndex[client_ends_[i]->id];
 			}
@@ -108,15 +83,12 @@ void Leader::SendHeartBeat() {
 			boost::lock(lk1, lk2);
 
 			if (state_.currentTerm < response.term()) {
-//				printf("leader term smaller than other server, transform to follower...\n");
-//				fprintf(stderr, "leader transform to follower, asynchronous disaster may happen.\n");
 				state_.currentTerm = response.term();
 				state_.votedFor.clear();
 
 				lk1.unlock();
 				lk2.unlock();
 
-//				fprintf(stderr, "1111\n");
 				identity_transformer(FollowerNo);
 			}
 		});
@@ -133,7 +105,6 @@ size_t Leader::MakeHeartBeat(const ServerId &id, PbAppendEntriesRequest *request
 	request->set_term(state_.currentTerm);
 	request->set_leaderid(info.get_local().toString());
 	long long nxtIdx = state_.nextIndex.at(id);
-//	fprintf(stderr, "id: %s, nextIndex %lld\n", id.toString().c_str(), nxtIdx);
 	request->set_prevlogindex(
 			state_.log.at(nxtIdx - 1).entryIndex);  // previous log index is which immediately proceed the new ones.
 	request->set_prevlogterm(state_.log.at(nxtIdx - 1).term);
@@ -186,42 +157,12 @@ void Leader::CheckCommitIndexUpdate() {
 		++cur_N;
 	}
 	if (checked_N == -1) {
-//		printf("useless N check\n");
 	} else {
 		state_.commitIndex = checked_N;
 		apply_queue.notify();
-//		printf("useful N check, set commitIndex to be %lld\n", state_.commitIndex);
 	}
 }
 
-void Leader::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
-	boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
-	boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);
-	boost::lock(lk1, lk2);
-
-	if (request->term() > state_.currentTerm) {
-		state_.votedFor.clear();
-	}
-
-	IdentityBase::ProcsRequestVoteFunc(request, response);
-
-	if (response->votegranted()) {
-		state_.votedFor = ServerId(request->candidateid());
-	}
-
-	if (request->term() > state_.currentTerm) {
-//		fprintf(stderr, "leader receives request vote from candidate, leader's term %d, candidate's term %d\n", state_.currentTerm, request->term());
-		state_.currentTerm = request->term();
-		lk1.unlock();
-		lk2.unlock();
-
-		identity_transformer(FollowerNo);
-	} else {
-		lk1.unlock();
-		lk2.unlock();
-		timer_.Reset();
-	}
-}
 
 void Leader::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *response) {
 	if (request->senderid().empty()) {
@@ -232,6 +173,7 @@ void Leader::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *response) 
 }
 
 void Leader::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+	fprintf(stderr, "server %s is processing client put function\n", info.get_local().toString().c_str());
 	boost::shared_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
 	boost::unique_lock<boost::shared_mutex> lk2(state_.prmRepoIdxMtx, boost::defer_lock);
 	boost::lock(lk1, lk2);
@@ -250,7 +192,6 @@ void Leader::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *resp
 	std::promise<std::string> prm;
 	std::future<std::string> fut = prm.get_future();
 	state_.prmRepo.insert(std::pair<long long, std::promise<std::string> >(log.prmIndex, std::move(prm)));
-//	fprintf(stderr, "pushback, log size is %zu\n", state_.log.length());
 
 	boost::unique_lock<boost::shared_mutex> lk3(state_.logMasterMtx);
 	state_.log.pushBack(log);
@@ -261,6 +202,8 @@ void Leader::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *resp
 }
 
 void Leader::ProcsPeerPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+	fprintf(stderr, "server %s is processing peer put function from %s\n", info.get_local().toString().c_str(),
+					request->senderid().c_str());
 	Entry log;
 	log.term = state_.currentTerm;
 	log.command = "Put";

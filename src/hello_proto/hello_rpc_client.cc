@@ -91,6 +91,22 @@ int main() {
 		server->Wait();
 	});
 
+	boost::thread th1([&]() mutable {
+		sleep(2);
+		server->Shutdown();
+		th.interrupt();
+		th.join();
+	});
+
+	boost::thread th2([&]() mutable {
+		sleep(4);
+		grpc::ServerBuilder builder;
+		builder.AddListeningPort(addr, grpc::InsecureServerCredentials());
+		builder.RegisterService(&service);
+		server = builder.BuildAndStart();
+		server->Wait();
+	});
+
 //	auto channel = grpc::CreateChannel("localhost:5000", grpc::InsecureChannelCredentials());
 //	HelloClient client(channel);
 //
@@ -102,7 +118,8 @@ int main() {
 
 	boost::thread thread_ = boost::thread(&HelloClient::AsyncCompleteRpc, &greeter);
 
-	for (int i = 0; i < 100; i++) {
+	for (int i = 0; i < 10; i++) {
+		sleep(1);
 		auto user = std::string("hello-world-") + std::to_string(i);
 		greeter.SayHello(user);
 	}

@@ -7,12 +7,8 @@ namespace SJTU {
 
 void
 SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
-//		AppendEntriesSelfModification(request);
-//	if (info.get_local().toString() == "127.0.0.1:50001") {
-//		fprintf(stderr, "follower receives request entry size: %d\n", request->entries_size());
-//	}
-//	fprintf(stderr, "server %s get appendEntriesRPC from %s\n", info.get_local().toString().c_str(),
-//					request->leaderid().c_str());
+	fprintf(stderr, "serverId %s is processing appendEntries RPC, Identity %d\n", info.get_local().toString().c_str(),
+					state_.currentIdentity);
 
 	response->set_inconsist(false);
 
@@ -27,11 +23,6 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 	/**
 	 * Default implementation.
 	 * */
-//		fprintf(stderr, "appendEntriesRequest is received...Always respond success\n");
-//	fprintf(stderr, "follower or candidate AppendEntries received\n");
-
-//	fprintf(stderr, "term: %lld leader: %s prevLogIndex: %lld prevLogTerm: %lld LeaderCommit: %lld\n", request->term(),
-//					request->leaderid().c_str(), request->prevlogindex(), request->prevlogterm(), request->leadercommit());
 	response->set_term(state_.currentTerm);
 	response->set_success(true);
 
@@ -40,7 +31,6 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 	if (request->term() < state_.currentTerm)
 		response->set_success(false);
 	/// reply false if log doesn't contain an entry at prevLogIndex whose term matches prevLogTerm.
-//	std::cout << request->prevlogterm() << ' ' << request->prevlogindex() << std::endl;
 
 	lk1.unlock();
 	lk2.unlock();
@@ -49,15 +39,9 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 
 	if (!state_.log.has(request->prevlogindex()) ||
 			state_.log.at(request->prevlogindex()).term != request->prevlogterm()) {
-//		fprintf(stderr, "heartbeat inconsistency\n");
 		response->set_inconsist(true);
 		response->set_success(false);
 		return;
-	}
-
-	if (request->entries_size() == 0) {
-//		printf("receive empty entries (heartbeat), return...\n");
-//		return;
 	}
 
 	/// if an existing entry conflicts with a new one (same index but different terms), delete the existing entry and all that follow it.
@@ -87,9 +71,6 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 	}
 	logMasterLk.unlock();
 
-//	printf("current follower %s log length %d\n", info.get_local().toString().c_str(), state_.log.length());
-//	printf("follower's commit index update %d %d\n", request->leadercommit(), state_.log.back().entryIndex);
-
 	boost::unique_lock<boost::shared_mutex> cmtIdxLk(state_.cmtIdxMtx);
 	if (request->leadercommit() > state_.commitIndex) {
 		long long tmp_commit_index = std::min(request->leadercommit(), state_.log.back().entryIndex);
@@ -102,29 +83,31 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 
 	boost::unique_lock<boost::shared_mutex> lk3(state_.curTermMtx);
 
-	if (state_.currentIdentity == LeaderNo) {
-		if (request->term() > state_.currentTerm) {
-			state_.currentTerm = request->term();
-			lk3.unlock();
-			identity_transformer(FollowerNo);
-		} else {
-			timer_.Reset();
-		}
-	} else {
-		if (request->term() > state_.currentTerm) {
-			state_.currentTerm = request->term();
-			lk3.unlock();
-		}
+	if (request->term() > state_.currentTerm) {
+		state_.currentTerm = request->term();
+		lk3.unlock();
 		identity_transformer(FollowerNo);
+	} else {
+		lk3.unlock();
+		if (state_.currentIdentity == CandidateNo) identity_transformer(FollowerNo);
+		else timer_.Reset();
 	}
 #endif
-//	fprintf(stderr, "return response: term %lld, success %d\n", response->term(), (int) response->success());
 }
 
 void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
-//		RequestVoteSelfModification(request);
-//	fprintf(stderr, "server %s get appendEntriesRPC from %s\n", info.get_local().toString().c_str(),
-//					request->candidateid().c_str());
+	fprintf(stderr, "server %s is processing request vote function\n", info.get_local().toString().c_str());
+
+	boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
+	boost::unique_lock<boost::shared_mutex> lk2(state_.votedForMtx, boost::defer_lock);
+	boost::lock(lk1, lk2);
+
+	if (request->term() > state_.currentTerm) {
+		state_.votedFor.clear();
+	}
+
+	fprintf(stderr, "serverId %s is processing requestVote RPC, Identity %d\n", info.get_local().toString().c_str(),
+					state_.currentIdentity);
 	/**
 	 * Default implementation.
 	 * */
@@ -157,6 +140,22 @@ void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *reques
 		if (state_.log.back().entryIndex > request->lastlogindex())    /// my log is longer.
 			response->set_votegranted(false);
 	}
+	lk.unlock();
+
+	if (response->votegranted()) {
+		state_.votedFor = ServerId(request->candidateid());
+	}
+
+	if (request->term() > state_.currentTerm) {
+		state_.currentTerm = request->term();
+		lk1.unlock();
+		lk2.unlock();
+		identity_transformer(FollowerNo);
+	} else {
+		lk1.unlock();
+		lk2.unlock();
+		if (response->votegranted()) timer_.Reset();
+	}
 #else
 	std::cerr << "this voteGranted rule is for demonstration" << std::endl;
 	if (!state_.votedFor.empty() && state_.votedFor.toString() != request->candidateid())
@@ -167,7 +166,6 @@ void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *reques
 		state_.votedFor = vf;
 	}
 #endif
-//	fprintf(stderr, "return response: term %lld, vote %d\n", response->term(), (int) response->votegranted());
 }
 
 /// default implementation is for follower and candidate.
@@ -184,6 +182,7 @@ void IdentityBase::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *resp
 }
 
 void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+	fprintf(stderr, "server %s is processing client put function\n", info.get_local().toString().c_str());
 	/**
 	 * increment promise index, store promise and cache future handle.
 	 * */
@@ -248,7 +247,6 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 		response->set_success(true);
 	}
 	else {
-//		fprintf(stderr, "Put request not responded\n");
 		response->set_replymsg("Put request respond time exceeded");
 		response->set_success(false);
 	}

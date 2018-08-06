@@ -18,6 +18,10 @@ public:
 
 	void StartUp();
 
+	void Pause();
+
+	void Resume();
+
 	void ShutDown();
 
 	const ServerInfo &GetInfo();
@@ -56,7 +60,8 @@ private:
 	std::map<std::string, std::string> data;  /// data to be coherent.
 
 private:
-	void InitData();    /// init state machine inner data. (trivially by now)
+	void LoadData(std::string filename);    /// init state machine inner data. (trivially by now)
+	void StoreData(std::string filename);
 };
 };
 

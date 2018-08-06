@@ -42,7 +42,14 @@ namespace SJTU {
 	void EventQueue::execute() {
 		while (true) {
 			boost::unique_lock<boost::mutex> lk(mtx_);
-			cond_.wait(lk, [this] { return !events_.empty(); });
+			try {
+				cond_.wait(lk, [this] { return !events_.empty(); });
+			}
+			catch (boost::thread_interrupted &) {
+				fprintf(stderr, "event Queue is interrupted\n");
+				lk.unlock();
+				return;
+			}
 			auto event = events_.front();
 			events_.pop();
 			lk.unlock();

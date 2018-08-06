@@ -38,7 +38,7 @@ namespace SJTU {
 		/// Note this!!!
 		if (state.currentIdentity == identityNo) {
 			/// leader不会reset
-			fprintf(stderr, "timer reset for follower\n");
+//			fprintf(stderr, "timer reset for follower\n");
 			timer.Stop();
 			timer.SetTimeOut(info.get_electionTimeout(), info.get_electionTimeout() * 2);
 			timer.Start();
@@ -73,7 +73,6 @@ namespace SJTU {
 #ifdef _UNIT_TEST
 		ctx.after_tranform(state.currentIdentity, identityNo_orig);
 #endif
-		printf("3\n");
 	}
 
 	void Raft::TimeOutActionAdapter() {

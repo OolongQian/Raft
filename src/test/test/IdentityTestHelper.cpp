@@ -33,7 +33,7 @@ IdentityTestHelper::sendHeartBeat(const std::vector<ServerId> &srvs, const Serve
 			request.set_term(currentTerm);
 			PbAppendEntriesResponse response;
 			grpc::ClientContext context;
-			context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(30));
+			context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(50));
 			grpc::Status status = vClient[i]->stub_->AppendEntriesRPC(&context, request, &response);
 			if (!status.ok()) {
 				printf("client number: %d ", i);

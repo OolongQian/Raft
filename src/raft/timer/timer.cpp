@@ -14,7 +14,7 @@ Timer::Timer() : high_time(0), low_time(0) {}
 	}
 
 void Timer::Start() {
-	if(high_time == low_time == 0) throw std::runtime_error("uninitialized timer");
+	if (high_time == 0 && low_time == 0) throw std::runtime_error("uninitialized timer");
 	if(th.joinable()) return;
 	th = boost::thread([this] {
 		try {

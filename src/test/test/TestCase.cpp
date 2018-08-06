@@ -21,6 +21,10 @@ void Follower_Basic() {
 			++follower2Candidate;
 	};
 	p[0]->StartUp();
+//	sleep(1);
+//	p[0]->Pause();
+//	sleep(2);
+//	p[0]->Resume();
 	sleep(10);
 	p[0]->ShutDown();
 	printf("initialize one server, transform from follower to candidate for %d time\n", (int) follower2Candidate);
@@ -47,7 +51,14 @@ void Follower_AppendEntry() {
 	auto id = srvs.front()->GetInfo().get_local();
 
 	std::vector<std::unique_ptr<RaftPeerClientImpl> > vClient;
-	for (int i = 0, appendTime = 10; i < appendTime; ++i) {
+
+	boost::thread th1([&]() mutable {
+		sleep(1);
+		srvs.front()->Pause();
+		sleep(2);
+		srvs.front()->Resume();
+	});
+	for (int i = 0, appendTime = 100; i < appendTime; ++i) {
 		vClient.push_back(std::make_unique<RaftPeerClientImpl>(id));
 
 		vClient.back()->th = boost::thread([&vClient]() mutable {
@@ -55,8 +66,10 @@ void Follower_AppendEntry() {
 			PbAppendEntriesRequest msg;
 			PbAppendEntriesResponse rsp;
 			msg.set_term(100);
+			msg.set_prevlogterm(-1);
+			msg.set_prevlogindex(0);
 
-			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(100));
+			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(30));
 			grpc::Status status = vClient.back()->stub_->AppendEntriesRPC(&ctx, msg, &rsp);
 			printf("rpc sent\n");
 			printf("%lld\n", rsp.term());
@@ -604,6 +617,118 @@ void PutComprehensiveAsync() {
 }
 
 /**
+ * This test send put request randomly to each server in the whole cluster.
+ * And it shuts down one server at a time randomly.
+ * */
+void ShutDownComprehensiveAsync() {
+	IdentityTestHelper helper;
+	const std::size_t SrvNum = 3;
+	auto srvs = helper.makeServers(SrvNum);
+//	const auto ElectionTimeout = srvs.front()->GetInfo().get_electionTimeout();
+
+	for (auto &per_srv : srvs) {
+		per_srv->Init();
+	}
+
+	auto &srv = srvs.front();
+
+	RaftDebugContext &context = srv->GetCtx();
+	std::atomic<int> candidate2Leader{0};
+
+	context.before_tranform = ([&](IdentityNo from, IdentityNo &to) mutable {
+		if (to == FollowerNo) {
+			to = LeaderNo;
+			++candidate2Leader;
+		}
+	});
+
+	for (auto &per_srv : srvs) {
+		per_srv->StartUp();
+	}
+	while (candidate2Leader != 1);
+
+	std::vector<std::unique_ptr<RaftPeerClientImpl> > clients;
+	for (auto &per_srv : srvs) {
+		clients.push_back(std::make_unique<RaftPeerClientImpl>(per_srv->GetInfo().get_local()));
+	}
+
+	boost::atomic<bool> down[SrvNum];
+	boost::thread th_down([&]() mutable {
+		sleep(1);
+		boost::this_thread::interruption_point();
+		int d = rand() % 2 + 1;
+		down[d] = true;
+		srvs[d]->Pause();
+		sleep(2);
+		down[d] = false;
+		srvs[d]->Resume();
+	});
+
+	for (int i = 0; i < 10; ++i) {
+		/// randomly choose one client to send.
+		int send_to;
+		while (true) {
+			send_to = rand() % clients.size();
+			if (down[send_to]) continue;
+			break;
+		}
+		auto &client = clients[send_to];
+		client->th = boost::thread([&client, i]() mutable {
+			grpc::ClientContext ctx;
+			PbPutRequest msg;
+			PbPutResponse rsp;
+			std::string str_key = "shit";
+			std::string str_val = "dick";
+			str_key += char('0' + i);
+			str_val += char('0' + i);
+			msg.set_key(str_key);
+			msg.set_val(str_val);
+
+			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(500));
+			fprintf(stderr, "message sent to server %s\n", client->id.toString().c_str());
+			grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+			printf("rpc sent\n");
+			if (status.ok()) printf("msg is OK! %s\n", rsp.replymsg().c_str());
+			else {
+				printf("msg is error\n");
+				printf("msg: %d %s\n", status.error_code(), status.error_message().c_str());
+			}
+		});
+		client->th.join();
+
+//		fprintf(stderr, "%d time request, traverse map: ", i);
+//		auto data = srv->GetKV();
+//		for (auto elem : data) {
+//			fprintf(stderr, "%s - %s; ", elem.first.c_str(), elem.second.c_str());
+//		}
+//		fprintf(stderr, "\n");
+		boost::this_thread::sleep_for(boost::chrono::milliseconds(500));
+	}
+	th_down.interrupt();
+	th_down.join();
+
+	boost::this_thread::sleep_for(boost::chrono::milliseconds(5000));
+
+	for (auto &per_srv : srvs) {
+		auto m = per_srv->GetKV();
+		for (auto elem : m) {
+			std::cout << elem.first << ' ' << elem.second << std::endl;
+		}
+	}
+
+//	printf("after sending put request for ten times, leader and follower's log size: %zu %zu, leader's commitIndex %lld, "
+//				 "follower's commitIndex %lld\n",
+//				 srv->GetState().log.length(), srv2->GetState().log.length(), srv->GetState().commitIndex,
+//				 srv2->GetState().commitIndex);
+	for (auto &per_srv : srvs) {
+		printf("log size: %zu commit index: %lld\n", per_srv->GetState().log.length(), per_srv->GetState().commitIndex);
+		per_srv->ShutDown();
+	}
+//	client->th.join();
+	printf("put method is OK, all put msg sends to the leader is safely returned.\n");
+}
+
+/**
  *
  * */
 };
@@ -611,14 +736,15 @@ void PutComprehensiveAsync() {
 using namespace SJTU;
 
 int main() {
-	SJTU::PutComprehensiveAsync();
+//	SJTU::ShutDownComprehensiveAsync();
+//	SJTU::PutComprehensiveAsync();
 //	SJTU::PutFollowerAsync();
 //	SJTU::PutLeaderAsync();
 //	SJTU::PutBroadcastFromFollower();
 //	SJTU::PutLeaderDirectly();
 //	SJTU::PutBasic();
 //	SJTU::Follower_Basic();
-//	SJTU::Follower_AppendEntry();
+	SJTU::Follower_AppendEntry();
 //	SJTU::Candidate_Basic();
 //	SJTU::CandidateNaive();
 	return 0;
