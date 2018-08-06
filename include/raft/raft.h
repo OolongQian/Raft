@@ -28,22 +28,22 @@ public:
 
 		eventQueue.Start();
 		applyQueue.Start();
-		server_end.PreMonitorInit();
+		server_end.Monitor();
 		IdentityTransform(FollowerNo);
-//			server_end.Monitor();		when get out of down, server_end starts to monitor.
 	}
 
 	void Pause() {
 		eventQueue.Stop();
 		applyQueue.Stop();
-		server_end.Stop();
+		server_end.paused = true;
 		timer.Stop();
-		state.currentIdentity = DownNo;
+		state.currentIdentity = FollowerNo;    /// if change to be DownNo, it will invoke undesirable function.
 	}
 
 	void Resume() {
 		eventQueue.Start();
 		applyQueue.Start();
+		server_end.paused = false;
 		IdentityTransform(FollowerNo);
 	}
 

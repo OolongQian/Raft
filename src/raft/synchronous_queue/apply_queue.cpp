@@ -23,12 +23,27 @@ void ApplyQueue::Start() {
 			}
 			/// state.lastApplied is only updated by applyQueue, need no lock.
 			++state.lastApplied;
+//			assert(state.log.at(state.lastApplied - 1) != state.log.at(state.lastApplied));
+//			fprintf(stderr, "serverId %s, lastApplied: %lld, ", info.get_local().toString().c_str(), state.lastApplied);
+			Entry entry = state.log.at(state.lastApplied);
+			Entry entryp = state.log.at(state.lastApplied - 1);
+			if (entry.prmIndex == entryp.prmIndex && entry.replyerId == entryp.replyerId) {
+				fprintf(stderr, "serverId %s, identity %d\n", info.get_local().toString().c_str(), state.currentIdentity);
+				fprintf(stderr, "\tserverId %s, previous: %s %s %s %lld %lld %s %lld\n", info.get_local().toString().c_str(),
+								entryp.command.c_str(), entryp.key.c_str(), entryp.val.c_str(), entryp.term, entryp.entryIndex,
+								entryp.replyerId.c_str(), entryp.prmIndex);
+				fprintf(stderr, "\tserverId %s, current: %s %s %s %lld %lld %s %lld\n", info.get_local().toString().c_str(),
+								entry.command.c_str(), entry.key.c_str(), entry.val.c_str(), entry.term, entry.entryIndex,
+								entry.replyerId.c_str(), entry.prmIndex);
+			}
 			applyCommand(state.log.at(state.lastApplied));
 		}
 	});
 }
 
 void ApplyQueue::Stop() {
+	if (!th.joinable())
+		return;
 	th.interrupt();
 	th.join();
 }

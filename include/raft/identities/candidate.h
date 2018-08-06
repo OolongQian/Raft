@@ -10,9 +10,9 @@ namespace SJTU {
 	class Candidate : public IdentityBase {
 	public:
 		explicit Candidate(State &state, Timer &timer, std::function<void(int)> transformer,
-											 std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends, const ServerInfo &info,
-											 ApplyQueue &apply_queue) :
-				IdentityBase(state, timer, std::move(transformer), client_ends, info, apply_queue), votesReceived(0) {}
+											 std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends, boost::atomic<bool> &paused,
+											 const ServerInfo &info, ApplyQueue &apply_queue) :
+				IdentityBase(state, timer, std::move(transformer), client_ends, paused, info, apply_queue), votesReceived(0) {}
 
 		~Candidate() override;
 

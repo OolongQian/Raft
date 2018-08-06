@@ -1,3 +1,4 @@
+#include <boost/timer.hpp>
 #include "../../../include/raft/identities/leader.h"
 #include "../../../include/raft/raft_proto/raft_peer.pb.h"
 
@@ -165,6 +166,15 @@ void Leader::CheckCommitIndexUpdate() {
 
 
 void Leader::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+	boost::timer t;
+	while (paused) {
+		if (t.elapsed() > YIELD_TIMEOUT)
+			return;
+		std::this_thread::yield();
+	}
+	printf("%lf\n", t.elapsed());
+
+
 	if (request->senderid().empty()) {
 		ProcsClientPutFunc(request, response);
 	} else {
@@ -173,7 +183,8 @@ void Leader::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *response) 
 }
 
 void Leader::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *response) {
-	fprintf(stderr, "server %s is processing client put function\n", info.get_local().toString().c_str());
+	fprintf(stderr, "server %s is processing client put function, identity %d\n", info.get_local().toString().c_str(),
+					state_.currentIdentity);
 	boost::shared_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
 	boost::unique_lock<boost::shared_mutex> lk2(state_.prmRepoIdxMtx, boost::defer_lock);
 	boost::lock(lk1, lk2);
@@ -191,7 +202,8 @@ void Leader::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *resp
 
 	std::promise<std::string> prm;
 	std::future<std::string> fut = prm.get_future();
-	state_.prmRepo.insert(std::pair<long long, std::promise<std::string> >(log.prmIndex, std::move(prm)));
+	state_.prmRepo[log.prmIndex] = std::move(prm);
+//	state_.prmRepo.insert(std::pair<long long, std::promise<std::string> >(log.prmIndex, std::move(prm)));
 
 	boost::unique_lock<boost::shared_mutex> lk3(state_.logMasterMtx);
 	state_.log.pushBack(log);

@@ -74,6 +74,9 @@ namespace SJTU {
 		 *
 		 * */
 		boost::thread th;
+
+	public:
+		boost::atomic<bool> paused{false};
 	};
 };
 

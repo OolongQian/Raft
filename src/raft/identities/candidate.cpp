@@ -54,6 +54,7 @@ namespace SJTU {
 		for (size_t i = 0; i < client_ends_.size(); ++i) {
 			if (client_ends_[i]->id == info.get_local())
 				continue;
+			if (client_ends_[i]->th.joinable()) client_ends_[i]->th.join();
 			client_ends_[i]->th = boost::thread([this, i]() mutable {
 				PbRequestVoteRequest request = MakeVoteRequest();
 

@@ -15,10 +15,10 @@ namespace SJTU {
 	class IdentityBase {
 	public:
 		explicit IdentityBase(State &state, Timer &timer, std::function<void(int)> transformer,
-													std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends, const ServerInfo &info,
-													ApplyQueue &apply_queue) :
+													std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends, boost::atomic<bool> &paused,
+													const ServerInfo &info, ApplyQueue &apply_queue) :
 				state_(state), timer_(timer), identity_transformer(std::move(transformer)), client_ends_(client_ends),
-				info(info), apply_queue(apply_queue) {}
+				paused(paused), info(info), apply_queue(apply_queue) {}
 
 		virtual ~IdentityBase() { ; }
 
@@ -50,13 +50,14 @@ namespace SJTU {
 		 * */
 		virtual void ProcsRequestVoteFunc(const PbRequestVoteRequest *, PbRequestVoteResponse *);
 
+		virtual void ProcsPutFunc(const PbPutRequest *, PbPutResponse *);
+
 		/**
 		 * Timeout functions don't need to be bound to timer,
 		 * define a timeoutFuncAdapter in raft or just use a lambda expression.
 		 * */
 		virtual void TimeOutFunc() = 0;
 
-		virtual void ProcsPutFunc(const PbPutRequest *, PbPutResponse *);
 
 	protected:
 		State &state_;
@@ -76,12 +77,14 @@ namespace SJTU {
 		 * */
 		std::function<void(int)> identity_transformer;
 		std::vector<std::unique_ptr<RaftPeerClientImpl> > &client_ends_;
+		boost::atomic<bool> &paused;
 		const ServerInfo &info;
 
 		/// if there has been one transformation undergoing, the same transformation shouldn't be applied repeatedly.
 		boost::atomic<bool> transforming{false};
 
 		ApplyQueue &apply_queue;
+
 
 	protected:
 		/**

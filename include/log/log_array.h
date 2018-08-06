@@ -20,15 +20,14 @@ namespace SJTU {
 		long long prmIndex;        /// monotonic index under its namespace
 
 		Entry() = default;
-//		{
-//			command.clear();
-//			key.clear();
-//			val.clear();
-//		}
 
 		Entry(std::string command, std::string key, std::string val, long long term, long long entryIndex);
 
 		explicit Entry(const PbAppendEntriesRequest::Entry &entry);
+
+		bool operator==(const Entry other) const;
+
+		bool operator!=(const Entry other) const;
 
 		PbAppendEntriesRequest_Entry Convert() const;
 	};

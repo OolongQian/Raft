@@ -25,6 +25,16 @@ PbAppendEntriesRequest_Entry Entry::Convert() const {
 	return entry;
 }
 
+bool Entry::operator!=(const Entry other) const {
+	return !(*this == other);
+}
+
+bool Entry::operator==(const Entry other) const {
+	return command == other.command && key == other.key && val == other.val &&
+				 term == other.term && entryIndex == other.entryIndex &&
+				 replyerId == other.replyerId && prmIndex == other.prmIndex;
+}
+
 LogArray::LogArray() {
 	Entry tmp;
 	tmp.entryIndex = 0;

@@ -26,6 +26,8 @@ namespace SJTU {
 	}
 
 	void EventQueue::Stop() {
+		if (!th_.joinable())
+			return;
 		th_.interrupt();
 		th_.join();
 	}

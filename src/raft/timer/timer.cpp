@@ -32,6 +32,8 @@ void Timer::Start() {
 	}
 
 	void Timer::Stop() {
+		if (!th.joinable())
+			return;
 		th.interrupt();
 		th.join();
 	}

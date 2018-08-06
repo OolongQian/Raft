@@ -1,4 +1,5 @@
 #include "../../../include/raft/identities/identity_base.h"
+#include <boost/timer.hpp>
 
 #define _NOT_TRIVIAL_VOTE
 #define _NOT_TRIVIAL_APPEND
@@ -7,6 +8,14 @@ namespace SJTU {
 
 void
 SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
+	boost::timer t;
+	while (paused) {
+		if (t.elapsed() > YIELD_TIMEOUT)
+			return;
+		std::this_thread::yield();
+	}
+	printf("%lf\n", t.elapsed());
+
 	fprintf(stderr, "serverId %s is processing appendEntries RPC, Identity %d\n", info.get_local().toString().c_str(),
 					state_.currentIdentity);
 
@@ -62,10 +71,34 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 
 		if (!log.has(index)) {
 			log.insert(cpp_entry, index);
+			if (log.at(index).prmIndex == log.at(index - 1).prmIndex) {
+				fprintf(stderr, "\t 1. %dth element in appendEntry: ", i);
+				Entry entry = log.at(index);
+				Entry entryp = log.at(index - 1);
+				fprintf(stderr, "serverId %s, identity %d\n", info.get_local().toString().c_str(), state_.currentIdentity);
+				fprintf(stderr, "\tserverId %s, previous: %s %s %s %lld %lld %s %lld\n", info.get_local().toString().c_str(),
+								entryp.command.c_str(), entryp.key.c_str(), entryp.val.c_str(), entryp.term, entryp.entryIndex,
+								entryp.replyerId.c_str(), entryp.prmIndex);
+				fprintf(stderr, "\tserverId %s, current: %s %s %s %lld %lld %s %lld\n", info.get_local().toString().c_str(),
+								entry.command.c_str(), entry.key.c_str(), entry.val.c_str(), entry.term, entry.entryIndex,
+								entry.replyerId.c_str(), entry.prmIndex);
+			}
 		} else if (log.has(index) && log.at(index).term != cpp_entry.term) {
-			response->set_inconsist(true);
+//			response->set_inconsist(true);
 			log.flushToEnd(index);
 			log.insert(cpp_entry, index);
+			if (log.at(index).prmIndex == log.at(index - 1).prmIndex) {
+				fprintf(stderr, "\t 2. %dth element in appendEntry: ", i);
+				Entry entry = log.at(index);
+				Entry entryp = log.at(index - 1);
+				fprintf(stderr, "serverId %s, identity %d\n", info.get_local().toString().c_str(), state_.currentIdentity);
+				fprintf(stderr, "\tserverId %s, previous: %s %s %s %lld %lld %s %lld\n", info.get_local().toString().c_str(),
+								entryp.command.c_str(), entryp.key.c_str(), entryp.val.c_str(), entryp.term, entryp.entryIndex,
+								entryp.replyerId.c_str(), entryp.prmIndex);
+				fprintf(stderr, "\tserverId %s, current: %s %s %s %lld %lld %s %lld\n", info.get_local().toString().c_str(),
+								entry.command.c_str(), entry.key.c_str(), entry.val.c_str(), entry.term, entry.entryIndex,
+								entry.replyerId.c_str(), entry.prmIndex);
+			}
 		} else if (log.has(index) && log.at(index).term == cpp_entry.term)
 			continue;  /// add for completeness.
 	}
@@ -96,6 +129,15 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 }
 
 void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
+	boost::timer t;
+	while (paused) {
+		if (t.elapsed() > YIELD_TIMEOUT)
+			return;
+		std::this_thread::yield();
+	}
+	printf("%lf\n", t.elapsed());
+
+
 	fprintf(stderr, "server %s is processing request vote function\n", info.get_local().toString().c_str());
 
 	boost::unique_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
@@ -170,6 +212,15 @@ void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *reques
 
 /// default implementation is for follower and candidate.
 void IdentityBase::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+	boost::timer t;
+	while (paused) {
+		if (t.elapsed() > YIELD_TIMEOUT)
+			return;
+		std::this_thread::yield();
+	}
+	printf("%lf\n", t.elapsed());
+
+
 	/**
 	 * Receive from client
 	 * */
@@ -190,11 +241,14 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 	boost::unique_lock<boost::shared_mutex> repoIdxLk(state_.prmRepoIdxMtx);
 	long long cur_prm_index = state_.prmRepoIdx++;
 	repoIdxLk.unlock();
+	/// things are ok here.
+//	printf("server id %s, current promise index: %lld\n", info.get_local().toString().c_str(), cur_prm_index);
 
 	std::promise<std::string> prm;
 	std::future<std::string> fut = prm.get_future();
 	boost::unique_lock<boost::shared_mutex> repoLk(state_.prmRepoMtx);
-	state_.prmRepo.insert(std::pair<long long, std::promise<std::string> >(cur_prm_index, std::move(prm)));
+	state_.prmRepo[cur_prm_index] = std::move(prm);
+//	state_.prmRepo.insert(std::pair<long long, std::promise<std::string> >(cur_prm_index, std::move(prm)));
 	repoLk.unlock();
 
 	/// launch server_ends to peers.
@@ -206,7 +260,10 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 
 	boost::atomic<std::size_t> count_success{0};
 	/// broadcast requests, retry for five times if fail.
-	for (int t = 0, retry_time = 5; t < retry_time; ++t) {
+	/**
+	 * This kind of retry may cause replicated element inside our map, it's horrible.
+	 * */
+	for (int t = 0, retry_time = 1; t < retry_time; ++t) {
 		printf("times %d\n", cnt++);
 		for (size_t i = 0; i < tmp_client_ends.size(); ++i) {
 			tmp_client_ends[i]->th = boost::thread([&, i]() mutable {
@@ -237,6 +294,7 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 //			printf("new log safely accepted by leader\n");
 			break;
 		}
+//		boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
 	}
 
 	/**
