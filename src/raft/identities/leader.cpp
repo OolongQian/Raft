@@ -164,8 +164,7 @@ void Leader::CheckCommitIndexUpdate() {
 	}
 }
 
-
-void Leader::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+void Leader::ProcsClientFunc(const PbClientRequest *request, PbClientResponse *response) {
 	boost::timer t;
 	while (paused) {
 		if (t.elapsed() > YIELD_TIMEOUT)
@@ -176,13 +175,13 @@ void Leader::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *response) 
 
 
 	if (request->senderid().empty()) {
-		ProcsClientPutFunc(request, response);
+		ProcsClientFromClient(request, response);
 	} else {
-		ProcsPeerPutFunc(request, response);
+		ProcsClientFromPeer(request, response);
 	}
 }
 
-void Leader::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+void Leader::ProcsClientFromClient(const PbClientRequest *request, PbClientResponse *response) {
 	fprintf(stderr, "server %s is processing client put function, identity %d\n", info.get_local().toString().c_str(),
 					state_.currentIdentity);
 	boost::shared_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
@@ -191,7 +190,7 @@ void Leader::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *resp
 
 	Entry log;
 	log.term = state_.currentTerm;
-	log.command = "Put";
+	log.command = request->command();
 	log.key = request->key();
 	log.val = request->val();
 	log.entryIndex = state_.log.back().entryIndex + 1;
@@ -213,12 +212,12 @@ void Leader::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *resp
 	response->set_success(true);
 }
 
-void Leader::ProcsPeerPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+void Leader::ProcsClientFromPeer(const PbClientRequest *request, PbClientResponse *response) {
 	fprintf(stderr, "server %s is processing peer put function from %s\n", info.get_local().toString().c_str(),
 					request->senderid().c_str());
 	Entry log;
 	log.term = state_.currentTerm;
-	log.command = "Put";
+	log.command = request->command();
 	log.key = request->key();
 	log.val = request->val();
 	log.replyerId = request->senderid();

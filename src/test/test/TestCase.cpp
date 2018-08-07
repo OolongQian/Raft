@@ -157,17 +157,17 @@ void PutBasic() {
 	for (int i = 0; i < 10; ++i) {
 		client->th = boost::thread([&client, i]() mutable {
 			grpc::ClientContext ctx;
-			PbPutRequest msg;
-			PbPutResponse rsp;
+			PbClientRequest msg;
+			PbClientResponse rsp;
 			std::string str_key = "shit";
 			std::string str_val = "dick";
 			str_key += char('0' + i);
 			str_val += char('0' + i);
 			msg.set_key(str_key);
 			msg.set_val(str_val);
-
+			msg.set_command("Put");
 			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(100));
-			grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+			grpc::Status status = client->stub_->ClientRPC(&ctx, msg, &rsp);
 			printf("rpc sent\n");
 			if (status.ok()) printf("msg is OK!\n");
 			else {
@@ -221,17 +221,18 @@ void PutLeaderDirectly() {
 	for (int i = 0; i < 10; ++i) {
 		client->th = boost::thread([&client, i]() mutable {
 			grpc::ClientContext ctx;
-			PbPutRequest msg;
-			PbPutResponse rsp;
+			PbClientRequest msg;
+			PbClientResponse rsp;
 			std::string str_key = "shit";
 			std::string str_val = "dick";
 			str_key += char('0' + i);
 			str_val += char('0' + i);
 			msg.set_key(str_key);
 			msg.set_val(str_val);
+			msg.set_command("Put");
 
 			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(100));
-			grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+			grpc::Status status = client->stub_->ClientRPC(&ctx, msg, &rsp);
 			printf("rpc sent\n");
 			if (status.ok()) printf("msg is OK!\n");
 			else {
@@ -303,17 +304,18 @@ void PutBroadcastFromFollower() {
 	for (int i = 0; i < 10; ++i) {
 		client->th = boost::thread([&client, i]() mutable {
 			grpc::ClientContext ctx;
-			PbPutRequest msg;
-			PbPutResponse rsp;
+			PbClientRequest msg;
+			PbClientResponse rsp;
 			std::string str_key = "shit";
 			std::string str_val = "dick";
 			str_key += char('0' + i);
 			str_val += char('0' + i);
 			msg.set_key(str_key);
 			msg.set_val(str_val);
+			msg.set_command("Put");
 
 			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(100));
-			grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+			grpc::Status status = client->stub_->ClientRPC(&ctx, msg, &rsp);
 			printf("rpc sent\n");
 			if (status.ok()) printf("msg is OK!\n");
 			else {
@@ -389,17 +391,18 @@ void PutLeaderAsync() {
 	for (int i = 0; i < 10; ++i) {
 		client->th = boost::thread([&client, i]() mutable {
 			grpc::ClientContext ctx;
-			PbPutRequest msg;
-			PbPutResponse rsp;
+			PbClientRequest msg;
+			PbClientResponse rsp;
 			std::string str_key = "shit";
 			std::string str_val = "dick";
 			str_key += char('0' + i);
 			str_val += char('0' + i);
 			msg.set_key(str_key);
 			msg.set_val(str_val);
+			msg.set_command("Put");
 
 			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(1000));
-			grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+			grpc::Status status = client->stub_->ClientRPC(&ctx, msg, &rsp);
 			printf("rpc sent\n");
 			if (status.ok()) printf("msg is OK! %s\n", rsp.replymsg().c_str());
 			else {
@@ -475,17 +478,18 @@ void PutFollowerAsync() {
 	for (int i = 0; i < 10; ++i) {
 		client->th = boost::thread([&client, i]() mutable {
 			grpc::ClientContext ctx;
-			PbPutRequest msg;
-			PbPutResponse rsp;
+			PbClientRequest msg;
+			PbClientResponse rsp;
 			std::string str_key = "shit";
 			std::string str_val = "dick";
 			str_key += char('0' + i);
 			str_val += char('0' + i);
 			msg.set_key(str_key);
 			msg.set_val(str_val);
+			msg.set_command("Put");
 
 			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(1000));
-			grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+			grpc::Status status = client->stub_->ClientRPC(&ctx, msg, &rsp);
 			printf("rpc sent\n");
 			if (status.ok()) printf("msg is OK! %s\n", rsp.replymsg().c_str());
 			else {
@@ -567,17 +571,18 @@ void PutComprehensiveAsync() {
 		auto &client = clients[send_to];
 		client->th = boost::thread([&client, i]() mutable {
 			grpc::ClientContext ctx;
-			PbPutRequest msg;
-			PbPutResponse rsp;
+			PbClientRequest msg;
+			PbClientResponse rsp;
 			std::string str_key = "shit";
 			std::string str_val = "dick";
 			str_key += char('0' + i);
 			str_val += char('0' + i);
 			msg.set_key(str_key);
 			msg.set_val(str_val);
+			msg.set_command("Put");
 
 			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(1000));
-			grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+			grpc::Status status = client->stub_->ClientRPC(&ctx, msg, &rsp);
 			printf("rpc sent\n");
 			if (status.ok()) printf("msg is OK! %s\n", rsp.replymsg().c_str());
 			else {
@@ -678,18 +683,19 @@ void ShutDownNonLeaderComprehensiveAsync() {
 		auto &client = clients[send_to];
 		client->th = boost::thread([&client, i]() mutable {
 			grpc::ClientContext ctx;
-			PbPutRequest msg;
-			PbPutResponse rsp;
+			PbClientRequest msg;
+			PbClientResponse rsp;
 			std::string str_key = "shit";
 			std::string str_val = "dick";
 			str_key += char('0' + i);
 			str_val += char('0' + i);
 			msg.set_key(str_key);
 			msg.set_val(str_val);
+			msg.set_command("Put");
 
 			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(500));
 			fprintf(stderr, "message sent to server %s\n", client->id.toString().c_str());
-			grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+			grpc::Status status = client->stub_->ClientRPC(&ctx, msg, &rsp);
 			printf("rpc sent\n");
 			if (status.ok()) printf("msg is OK! %s\n", rsp.replymsg().c_str());
 			else {
@@ -778,18 +784,19 @@ void ShutDownComprehensiveAsync() {
 		auto &client = clients[send_to];
 		client->th = boost::thread([&client, i]() mutable {
 			grpc::ClientContext ctx;
-			PbPutRequest msg;
-			PbPutResponse rsp;
+			PbClientRequest msg;
+			PbClientResponse rsp;
 			std::string str_key = "shit";
 			std::string str_val = "dick";
 			str_key += char('0' + i);
 			str_val += char('0' + i);
 			msg.set_key(str_key);
 			msg.set_val(str_val);
+			msg.set_command("Put");
 
 			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(500));
 			fprintf(stderr, "message sent to server %s\n", client->id.toString().c_str());
-			grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+			grpc::Status status = client->stub_->ClientRPC(&ctx, msg, &rsp);
 			printf("rpc sent\n");
 			if (status.ok()) printf("msg is OK! %s\n", rsp.replymsg().c_str());
 			else {
@@ -883,21 +890,24 @@ void finalTest() {
 		auto &client = clients[send_to];
 		client->th = boost::thread([&client, i]() mutable {
 			grpc::ClientContext ctx;
-			PbPutRequest msg;
-			PbPutResponse rsp;
+			PbClientRequest msg;
+			PbClientResponse rsp;
 			std::string str_key = "shit";
 			std::string str_val = "dick";
+			std::string number = "";
+			msg.set_command("Put");
 			while (i) {
-				str_key += char('0' + i % 10);
-				str_val += char('0' + i % 10);
+				number.insert(number.begin(), char('0' + i % 10));
 				i /= 10;
 			}
+			str_key += number;
+			str_val += number;
 			msg.set_key(str_key);
 			msg.set_val(str_val);
 
 			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(500));
 			fprintf(stderr, "message sent to server %s\n", client->id.toString().c_str());
-			grpc::Status status = client->stub_->PutRPC(&ctx, msg, &rsp);
+			grpc::Status status = client->stub_->ClientRPC(&ctx, msg, &rsp);
 			printf("rpc sent\n");
 			if (status.ok()) printf("msg is OK! %s\n", rsp.replymsg().c_str());
 			else {
@@ -938,32 +948,39 @@ void finalTest() {
 //	client->th.join();
 	printf("put method is OK, all put msg sends to the leader is safely returned.\n");
 }
+
+void Test1() {
+	IdentityTestHelper helper;
+	auto p = helper.makeServers(3);
+
+	for (auto &srv : p) {
+		srv->Init();
+	}
+
+	RaftDebugContext &debugContext = p.front()->GetCtx();
+	std::atomic<int> follower2Candidate{0}, candidate2Leader;
+	debugContext.before_tranform = [&follower2Candidate](IdentityNo from, IdentityNo &to) mutable {
+		if (from == FollowerNo && to == CandidateNo)
+			++follower2Candidate;
+		if (from == CandidateNo && to == LeaderNo)
+			++candidate2Leader;
+	};
+	p[0]->StartUp();
+//	sleep(1);
+//	p[0]->Pause();
+//	sleep(2);
+//	p[0]->Resume();
+	sleep(10);
+	p[0]->ShutDown();
+	printf("initialize one server, transform from follower to candidate for %d time\n", (int) follower2Candidate);
+}
 };
 
 using namespace SJTU;
 
 int main() {
-//	std::vector<boost::thread> v;
-//	for(int i = 0; i < 10; ++i) {
-//		boost::thread th([i] () {
-//			while(true) {
-//				int a = 0;
-//				for(int j = 0; j < 10000000; ++j) {
-//					++a;
-//				}
-//				printf("print by thread %d\n", i);
-//			}
-//		});
-//		v.push_back(std::move(th));
-//	}
-//	boost::thread th([] () {
-//		while(true) {
-//			printf("yield thread check\n");
-//			std::this_thread::yield();
-//		}
-//	});
-//	sleep(10);
-	SJTU::finalTest();
+
+//	SJTU::finalTest();
 //	SJTU::ShutDownComprehensiveAsync();
 //	SJTU::ShutDownNonLeaderComprehensiveAsync();
 //	SJTU::PutComprehensiveAsync();
@@ -972,7 +989,7 @@ int main() {
 //	SJTU::PutBroadcastFromFollower();
 //	SJTU::PutLeaderDirectly();
 //	SJTU::PutBasic();
-//	SJTU::Follower_Basic();
+	SJTU::Follower_Basic();
 //	SJTU::Follower_AppendEntry();
 //	SJTU::Candidate_Basic();
 //	SJTU::CandidateNaive();

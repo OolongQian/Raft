@@ -52,7 +52,7 @@ public:
 	 *
 	 * But in both case it has to carefully handle namespace and prmIndex.
 	 * */
-	void ProcsPutFunc(const PbPutRequest *, PbPutResponse *) override;
+	void ProcsClientFunc(const PbClientRequest *, PbClientResponse *) override;
 
 	/**
 	 * Heartbeat serves as appendEntries-RPCs simultaneously. If there are additional entries
@@ -64,9 +64,9 @@ public:
 private:
 	boost::mutex mtx_;
 
-	void ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *response) override;
+	void ProcsClientFromClient(const PbClientRequest *request, PbClientResponse *response) override;
 
-	void ProcsPeerPutFunc(const PbPutRequest *request, PbPutResponse *response) override;
+	void ProcsClientFromPeer(const PbClientRequest *request, PbClientResponse *response) override;
 };
 };
 

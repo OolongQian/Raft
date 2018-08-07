@@ -26,10 +26,10 @@ void RaftServer::Monitor() {
 	}
 
 	void RaftServer::BindServiceFunc(RaftServer::RequestVoteFunc f1, RaftServer::AppendEntriesFunc f2,
-																	 RaftServer::PutFunc f3) {
+																	 RaftServer::ClientFunc f3) {
 		service.requestVoteFunc = std::move(f1);
 		service.appendEntriesFunc = std::move(f2);
-		service.putFunc = std::move(f3);
+		service.clientFunc = std::move(f3);
 	}
 
 	grpc::Status
@@ -50,11 +50,10 @@ void RaftServer::Monitor() {
 		return grpc::Status::OK;
 	}
 
-	grpc::Status RaftServer::RaftPeerServiceImpl::PutRPC(grpc::ServerContext *context, const PbPutRequest *request,
-																											 PbPutResponse *response) {
-		printf("Put RPC received\n");
-		putFunc(request, response);
-		return grpc::Status::OK;
-	}
-
+grpc::Status RaftServer::RaftPeerServiceImpl::ClientRPC(grpc::ServerContext *context, const PbClientRequest *request,
+																												PbClientResponse *response) {
+	printf("Put RPC received\n");
+	clientFunc(request, response);
+	return grpc::Status::OK;
+}
 };

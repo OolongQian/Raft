@@ -24,7 +24,7 @@ namespace SJTU {
 
 		using RequestVoteFunc = std::function<void(const PbRequestVoteRequest *, PbRequestVoteResponse *)>;
 		using AppendEntriesFunc = std::function<void(const PbAppendEntriesRequest *, PbAppendEntriesResponse *)>;
-		using PutFunc = std::function<void(const PbPutRequest *, PbPutResponse *)>;
+		using ClientFunc = std::function<void(const PbClientRequest *, PbClientResponse *)>;
 
 		class RaftPeerServiceImpl final : public RaftPeerService::Service {
 		public:
@@ -40,18 +40,18 @@ namespace SJTU {
 			 * 我现在只能说是，你的请求已经圆满发送出去了。。。而不能给你结果。
 			 * */
 			grpc::Status
-			PutRPC(grpc::ServerContext *context, const PbPutRequest *request, PbPutResponse *response) override;
+			ClientRPC(grpc::ServerContext *context, const PbClientRequest *request, PbClientResponse *response) override;
 
 		public:
 			RequestVoteFunc requestVoteFunc;
 			AppendEntriesFunc appendEntriesFunc;
-			PutFunc putFunc;
+			ClientFunc clientFunc;
 		};
 
 	public:
 		explicit RaftServer(const ServerId &id) : serverId(id) {}
 
-		void BindServiceFunc(RequestVoteFunc f1, AppendEntriesFunc f2, PutFunc f3);
+		void BindServiceFunc(RequestVoteFunc f1, AppendEntriesFunc f2, ClientFunc f3);
 
 		void PreMonitorInit();
 

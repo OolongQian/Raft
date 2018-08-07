@@ -211,7 +211,7 @@ void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *reques
 }
 
 /// default implementation is for follower and candidate.
-void IdentityBase::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+void IdentityBase::ProcsClientFunc(const PbClientRequest *request, PbClientResponse *response) {
 	boost::timer t;
 	while (paused) {
 		if (t.elapsed() > YIELD_TIMEOUT)
@@ -220,19 +220,18 @@ void IdentityBase::ProcsPutFunc(const PbPutRequest *request, PbPutResponse *resp
 	}
 	printf("%lf\n", t.elapsed());
 
-
 	/**
 	 * Receive from client
 	 * */
 	if (request->senderid().empty()) {
-		ProcsClientPutFunc(request, response);
+		ProcsClientFromClient(request, response);
 	} else {
-		ProcsPeerPutFunc(request, response);
+		ProcsClientFromPeer(request, response);
 	}
 
 }
 
-void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+void IdentityBase::ProcsClientFromClient(const PbClientRequest *request, PbClientResponse *response) {
 	fprintf(stderr, "server %s is processing client put function\n", info.get_local().toString().c_str());
 	/**
 	 * increment promise index, store promise and cache future handle.
@@ -267,7 +266,8 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 		printf("times %d\n", cnt++);
 		for (size_t i = 0; i < tmp_client_ends.size(); ++i) {
 			tmp_client_ends[i]->th = boost::thread([&, i]() mutable {
-				PbPutRequest redirect_rqs;
+				PbClientRequest redirect_rqs;
+				redirect_rqs.set_command(request->command());
 				redirect_rqs.set_key(request->key());
 				redirect_rqs.set_val(request->val());
 				/// set senderId this time.
@@ -276,7 +276,7 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 
 				grpc::ClientContext context;
 				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(50));
-				grpc::Status status = tmp_client_ends[i]->stub_->PutRPC(&context, redirect_rqs, response);
+				grpc::Status status = tmp_client_ends[i]->stub_->ClientRPC(&context, redirect_rqs, response);
 				if (!status.ok()) {
 					fprintf(stderr, "IdentityBase ProcsPutFunc error, error code: %d, error msg: %s\n", status.error_code(),
 									status.error_message().c_str());
@@ -291,10 +291,8 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 		if (count_success > 1)
 			throw std::runtime_error("two leaders add log");
 		else if (count_success == 1) {
-//			printf("new log safely accepted by leader\n");
 			break;
 		}
-//		boost::this_thread::sleep_for(boost::chrono::milliseconds(100));
 	}
 
 	/**
@@ -310,7 +308,7 @@ void IdentityBase::ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse
 	}
 }
 
-void IdentityBase::ProcsPeerPutFunc(const PbPutRequest *request, PbPutResponse *response) {
+void IdentityBase::ProcsClientFromPeer(const PbClientRequest *request, PbClientResponse *response) {
 	response->set_success(false);
 }
 };

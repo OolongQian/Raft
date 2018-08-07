@@ -22,8 +22,8 @@ namespace SJTU {
 //					printf("%d\n", state.currentIdentity);
 					identities[state.currentIdentity]->ProcsAppendEntriesFunc(request, response);
 				},
-				[this, id = info.get_local()](const PbPutRequest *request, PbPutResponse *response) -> void {
-					identities[state.currentIdentity]->ProcsPutFunc(request, response);
+				[this, id = info.get_local()](const PbClientRequest *request, PbClientResponse *response) -> void {
+					identities[state.currentIdentity]->ProcsClientFunc(request, response);
 				});
 
 		/// gRPC client_ends

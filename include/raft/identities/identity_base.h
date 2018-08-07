@@ -50,7 +50,7 @@ namespace SJTU {
 		 * */
 		virtual void ProcsRequestVoteFunc(const PbRequestVoteRequest *, PbRequestVoteResponse *);
 
-		virtual void ProcsPutFunc(const PbPutRequest *, PbPutResponse *);
+		virtual void ProcsClientFunc(const PbClientRequest *, PbClientResponse *);
 
 		/**
 		 * Timeout functions don't need to be bound to timer,
@@ -91,9 +91,9 @@ namespace SJTU {
 		 * When client applies Put to a non-leader server, it needs to broadcast this request so that leader can hear.
 		 * But meanwhile, other servers have to ignore it. 
 		 * */
-		virtual void ProcsClientPutFunc(const PbPutRequest *request, PbPutResponse *response);
+		virtual void ProcsClientFromClient(const PbClientRequest *request, PbClientResponse *response);
 
-		virtual void ProcsPeerPutFunc(const PbPutRequest *request, PbPutResponse *response);
+		virtual void ProcsClientFromPeer(const PbClientRequest *request, PbClientResponse *response);
 	};
 };
 

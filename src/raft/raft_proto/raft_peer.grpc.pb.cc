@@ -15,9 +15,9 @@
 #include <grpcpp/impl/codegen/sync_stream.h>
 
 static const char* RaftPeerService_method_names[] = {
-  "/RaftPeerService/AppendEntriesRPC",
-  "/RaftPeerService/RequestVoteRPC",
-  "/RaftPeerService/PutRPC",
+		"/RaftPeerService/AppendEntriesRPC",
+		"/RaftPeerService/RequestVoteRPC",
+		"/RaftPeerService/ClientRPC",
 };
 
 std::unique_ptr< RaftPeerService::Stub> RaftPeerService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -28,8 +28,8 @@ std::unique_ptr< RaftPeerService::Stub> RaftPeerService::NewStub(const std::shar
 
 RaftPeerService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel)
   : channel_(channel), rpcmethod_AppendEntriesRPC_(RaftPeerService_method_names[0], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_RequestVoteRPC_(RaftPeerService_method_names[1], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_PutRPC_(RaftPeerService_method_names[2], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_RequestVoteRPC_(RaftPeerService_method_names[1], ::grpc::internal::RpcMethod::NORMAL_RPC, channel),
+		rpcmethod_ClientRPC_(RaftPeerService_method_names[2], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status RaftPeerService::Stub::AppendEntriesRPC(::grpc::ClientContext* context, const ::PbAppendEntriesRequest& request, ::PbAppendEntriesResponse* response) {
@@ -56,16 +56,25 @@ RaftPeerService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& ch
   return ::grpc::internal::ClientAsyncResponseReaderFactory< ::PbRequestVoteResponse>::Create(channel_.get(), cq, rpcmethod_RequestVoteRPC_, context, request, false);
 }
 
-::grpc::Status RaftPeerService::Stub::PutRPC(::grpc::ClientContext* context, const ::PbPutRequest& request, ::PbPutResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_PutRPC_, context, request, response);
+::grpc::Status RaftPeerService::Stub::ClientRPC(::grpc::ClientContext *context, const ::PbClientRequest &request,
+																								::PbClientResponse *response) {
+	return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_ClientRPC_, context, request, response);
 }
 
-::grpc::ClientAsyncResponseReader< ::PbPutResponse>* RaftPeerService::Stub::AsyncPutRPCRaw(::grpc::ClientContext* context, const ::PbPutRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderFactory< ::PbPutResponse>::Create(channel_.get(), cq, rpcmethod_PutRPC_, context, request, true);
+::grpc::ClientAsyncResponseReader<::PbClientResponse> *
+RaftPeerService::Stub::AsyncClientRPCRaw(::grpc::ClientContext *context, const ::PbClientRequest &request,
+																				 ::grpc::CompletionQueue *cq) {
+	return ::grpc::internal::ClientAsyncResponseReaderFactory<::PbClientResponse>::Create(channel_.get(), cq,
+																																												rpcmethod_ClientRPC_, context,
+																																												request, true);
 }
 
-::grpc::ClientAsyncResponseReader< ::PbPutResponse>* RaftPeerService::Stub::PrepareAsyncPutRPCRaw(::grpc::ClientContext* context, const ::PbPutRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderFactory< ::PbPutResponse>::Create(channel_.get(), cq, rpcmethod_PutRPC_, context, request, false);
+::grpc::ClientAsyncResponseReader<::PbClientResponse> *
+RaftPeerService::Stub::PrepareAsyncClientRPCRaw(::grpc::ClientContext *context, const ::PbClientRequest &request,
+																								::grpc::CompletionQueue *cq) {
+	return ::grpc::internal::ClientAsyncResponseReaderFactory<::PbClientResponse>::Create(channel_.get(), cq,
+																																												rpcmethod_ClientRPC_, context,
+																																												request, false);
 }
 
 RaftPeerService::Service::Service() {
@@ -80,10 +89,10 @@ RaftPeerService::Service::Service() {
       new ::grpc::internal::RpcMethodHandler< RaftPeerService::Service, ::PbRequestVoteRequest, ::PbRequestVoteResponse>(
           std::mem_fn(&RaftPeerService::Service::RequestVoteRPC), this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      RaftPeerService_method_names[2],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< RaftPeerService::Service, ::PbPutRequest, ::PbPutResponse>(
-          std::mem_fn(&RaftPeerService::Service::PutRPC), this)));
+			RaftPeerService_method_names[2],
+			::grpc::internal::RpcMethod::NORMAL_RPC,
+			new ::grpc::internal::RpcMethodHandler<RaftPeerService::Service, ::PbClientRequest, ::PbClientResponse>(
+					std::mem_fn(&RaftPeerService::Service::ClientRPC), this)));
 }
 
 RaftPeerService::Service::~Service() {
@@ -103,7 +112,8 @@ RaftPeerService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status RaftPeerService::Service::PutRPC(::grpc::ServerContext* context, const ::PbPutRequest* request, ::PbPutResponse* response) {
+::grpc::Status RaftPeerService::Service::ClientRPC(::grpc::ServerContext *context, const ::PbClientRequest *request,
+																									 ::PbClientResponse *response) {
   (void) context;
   (void) request;
   (void) response;

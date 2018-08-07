@@ -45,20 +45,35 @@ class RaftPeerService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PbRequestVoteResponse>> PrepareAsyncRequestVoteRPC(::grpc::ClientContext* context, const ::PbRequestVoteRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PbRequestVoteResponse>>(PrepareAsyncRequestVoteRPCRaw(context, request, cq));
     }
-    virtual ::grpc::Status PutRPC(::grpc::ClientContext* context, const ::PbPutRequest& request, ::PbPutResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PbPutResponse>> AsyncPutRPC(::grpc::ClientContext* context, const ::PbPutRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PbPutResponse>>(AsyncPutRPCRaw(context, request, cq));
+
+		virtual ::grpc::Status
+		ClientRPC(::grpc::ClientContext *context, const ::PbClientRequest &request, ::PbClientResponse *response) = 0;
+
+		std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<::PbClientResponse>>
+		AsyncClientRPC(::grpc::ClientContext *context, const ::PbClientRequest &request, ::grpc::CompletionQueue *cq) {
+			return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<::PbClientResponse>>(
+					AsyncClientRPCRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PbPutResponse>> PrepareAsyncPutRPC(::grpc::ClientContext* context, const ::PbPutRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::PbPutResponse>>(PrepareAsyncPutRPCRaw(context, request, cq));
+
+		std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<::PbClientResponse>>
+		PrepareAsyncClientRPC(::grpc::ClientContext *context, const ::PbClientRequest &request,
+													::grpc::CompletionQueue *cq) {
+			return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<::PbClientResponse>>(
+					PrepareAsyncClientRPCRaw(context, request, cq));
     }
   private:
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::PbAppendEntriesResponse>* AsyncAppendEntriesRPCRaw(::grpc::ClientContext* context, const ::PbAppendEntriesRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::PbAppendEntriesResponse>* PrepareAsyncAppendEntriesRPCRaw(::grpc::ClientContext* context, const ::PbAppendEntriesRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::PbRequestVoteResponse>* AsyncRequestVoteRPCRaw(::grpc::ClientContext* context, const ::PbRequestVoteRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::PbRequestVoteResponse>* PrepareAsyncRequestVoteRPCRaw(::grpc::ClientContext* context, const ::PbRequestVoteRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PbPutResponse>* AsyncPutRPCRaw(::grpc::ClientContext* context, const ::PbPutRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::PbPutResponse>* PrepareAsyncPutRPCRaw(::grpc::ClientContext* context, const ::PbPutRequest& request, ::grpc::CompletionQueue* cq) = 0;
+
+		virtual ::grpc::ClientAsyncResponseReaderInterface<::PbClientResponse> *
+		AsyncClientRPCRaw(::grpc::ClientContext *context, const ::PbClientRequest &request,
+											::grpc::CompletionQueue *cq) = 0;
+
+		virtual ::grpc::ClientAsyncResponseReaderInterface<::PbClientResponse> *
+		PrepareAsyncClientRPCRaw(::grpc::ClientContext *context, const ::PbClientRequest &request,
+														 ::grpc::CompletionQueue *cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -77,12 +92,21 @@ class RaftPeerService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PbRequestVoteResponse>> PrepareAsyncRequestVoteRPC(::grpc::ClientContext* context, const ::PbRequestVoteRequest& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PbRequestVoteResponse>>(PrepareAsyncRequestVoteRPCRaw(context, request, cq));
     }
-    ::grpc::Status PutRPC(::grpc::ClientContext* context, const ::PbPutRequest& request, ::PbPutResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PbPutResponse>> AsyncPutRPC(::grpc::ClientContext* context, const ::PbPutRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PbPutResponse>>(AsyncPutRPCRaw(context, request, cq));
+
+		::grpc::Status
+		ClientRPC(::grpc::ClientContext *context, const ::PbClientRequest &request, ::PbClientResponse *response) override;
+
+		std::unique_ptr<::grpc::ClientAsyncResponseReader<::PbClientResponse>>
+		AsyncClientRPC(::grpc::ClientContext *context, const ::PbClientRequest &request, ::grpc::CompletionQueue *cq) {
+			return std::unique_ptr<::grpc::ClientAsyncResponseReader<::PbClientResponse>>(
+					AsyncClientRPCRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PbPutResponse>> PrepareAsyncPutRPC(::grpc::ClientContext* context, const ::PbPutRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::PbPutResponse>>(PrepareAsyncPutRPCRaw(context, request, cq));
+
+		std::unique_ptr<::grpc::ClientAsyncResponseReader<::PbClientResponse>>
+		PrepareAsyncClientRPC(::grpc::ClientContext *context, const ::PbClientRequest &request,
+													::grpc::CompletionQueue *cq) {
+			return std::unique_ptr<::grpc::ClientAsyncResponseReader<::PbClientResponse>>(
+					PrepareAsyncClientRPCRaw(context, request, cq));
     }
 
    private:
@@ -91,11 +115,17 @@ class RaftPeerService final {
     ::grpc::ClientAsyncResponseReader< ::PbAppendEntriesResponse>* PrepareAsyncAppendEntriesRPCRaw(::grpc::ClientContext* context, const ::PbAppendEntriesRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::PbRequestVoteResponse>* AsyncRequestVoteRPCRaw(::grpc::ClientContext* context, const ::PbRequestVoteRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::PbRequestVoteResponse>* PrepareAsyncRequestVoteRPCRaw(::grpc::ClientContext* context, const ::PbRequestVoteRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::PbPutResponse>* AsyncPutRPCRaw(::grpc::ClientContext* context, const ::PbPutRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::PbPutResponse>* PrepareAsyncPutRPCRaw(::grpc::ClientContext* context, const ::PbPutRequest& request, ::grpc::CompletionQueue* cq) override;
+
+		::grpc::ClientAsyncResponseReader<::PbClientResponse> *
+		AsyncClientRPCRaw(::grpc::ClientContext *context, const ::PbClientRequest &request,
+											::grpc::CompletionQueue *cq) override;
+
+		::grpc::ClientAsyncResponseReader<::PbClientResponse> *
+		PrepareAsyncClientRPCRaw(::grpc::ClientContext *context, const ::PbClientRequest &request,
+														 ::grpc::CompletionQueue *cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_AppendEntriesRPC_;
     const ::grpc::internal::RpcMethod rpcmethod_RequestVoteRPC_;
-    const ::grpc::internal::RpcMethod rpcmethod_PutRPC_;
+		const ::grpc::internal::RpcMethod rpcmethod_ClientRPC_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -105,7 +135,9 @@ class RaftPeerService final {
     virtual ~Service();
     virtual ::grpc::Status AppendEntriesRPC(::grpc::ServerContext* context, const ::PbAppendEntriesRequest* request, ::PbAppendEntriesResponse* response);
     virtual ::grpc::Status RequestVoteRPC(::grpc::ServerContext* context, const ::PbRequestVoteRequest* request, ::PbRequestVoteResponse* response);
-    virtual ::grpc::Status PutRPC(::grpc::ServerContext* context, const ::PbPutRequest* request, ::PbPutResponse* response);
+
+		virtual ::grpc::Status
+		ClientRPC(::grpc::ServerContext *context, const ::PbClientRequest *request, ::PbClientResponse *response);
   };
   template <class BaseClass>
   class WithAsyncMethod_AppendEntriesRPC : public BaseClass {
@@ -148,26 +180,33 @@ class RaftPeerService final {
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_PutRPC : public BaseClass {
+	class WithAsyncMethod_ClientRPC : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
-    WithAsyncMethod_PutRPC() {
+		WithAsyncMethod_ClientRPC() {
       ::grpc::Service::MarkMethodAsync(2);
     }
-    ~WithAsyncMethod_PutRPC() override {
+
+		~WithAsyncMethod_ClientRPC() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PutRPC(::grpc::ServerContext* context, const ::PbPutRequest* request, ::PbPutResponse* response) final override {
+		::grpc::Status ClientRPC(::grpc::ServerContext *context, const ::PbClientRequest *request,
+														 ::PbClientResponse *response) final override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestPutRPC(::grpc::ServerContext* context, ::PbPutRequest* request, ::grpc::ServerAsyncResponseWriter< ::PbPutResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+
+		void RequestClientRPC(::grpc::ServerContext *context, ::PbClientRequest *request,
+													::grpc::ServerAsyncResponseWriter<::PbClientResponse> *response,
+													::grpc::CompletionQueue *new_call_cq, ::grpc::ServerCompletionQueue *notification_cq,
+													void *tag) {
       ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_AppendEntriesRPC<WithAsyncMethod_RequestVoteRPC<WithAsyncMethod_PutRPC<Service > > > AsyncService;
+
+	typedef WithAsyncMethod_AppendEntriesRPC<WithAsyncMethod_RequestVoteRPC<WithAsyncMethod_ClientRPC<Service> > > AsyncService;
   template <class BaseClass>
   class WithGenericMethod_AppendEntriesRPC : public BaseClass {
    private:
@@ -203,18 +242,20 @@ class RaftPeerService final {
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_PutRPC : public BaseClass {
+	class WithGenericMethod_ClientRPC : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
-    WithGenericMethod_PutRPC() {
+		WithGenericMethod_ClientRPC() {
       ::grpc::Service::MarkMethodGeneric(2);
     }
-    ~WithGenericMethod_PutRPC() override {
+
+		~WithGenericMethod_ClientRPC() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status PutRPC(::grpc::ServerContext* context, const ::PbPutRequest* request, ::PbPutResponse* response) final override {
+		::grpc::Status ClientRPC(::grpc::ServerContext *context, const ::PbClientRequest *request,
+														 ::PbClientResponse *response) final override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -260,28 +301,35 @@ class RaftPeerService final {
     virtual ::grpc::Status StreamedRequestVoteRPC(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::PbRequestVoteRequest,::PbRequestVoteResponse>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_PutRPC : public BaseClass {
+	class WithStreamedUnaryMethod_ClientRPC : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service *service) {}
    public:
-    WithStreamedUnaryMethod_PutRPC() {
+		WithStreamedUnaryMethod_ClientRPC() {
       ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::StreamedUnaryHandler< ::PbPutRequest, ::PbPutResponse>(std::bind(&WithStreamedUnaryMethod_PutRPC<BaseClass>::StreamedPutRPC, this, std::placeholders::_1, std::placeholders::_2)));
+																					new ::grpc::internal::StreamedUnaryHandler<::PbClientRequest, ::PbClientResponse>(
+																							std::bind(
+																									&WithStreamedUnaryMethod_ClientRPC<BaseClass>::StreamedClientRPC,
+																									this, std::placeholders::_1, std::placeholders::_2)));
     }
-    ~WithStreamedUnaryMethod_PutRPC() override {
+
+		~WithStreamedUnaryMethod_ClientRPC() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status PutRPC(::grpc::ServerContext* context, const ::PbPutRequest* request, ::PbPutResponse* response) final override {
+		::grpc::Status ClientRPC(::grpc::ServerContext *context, const ::PbClientRequest *request,
+														 ::PbClientResponse *response) final override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedPutRPC(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::PbPutRequest,::PbPutResponse>* server_unary_streamer) = 0;
+		virtual ::grpc::Status StreamedClientRPC(::grpc::ServerContext *context,
+																						 ::grpc::ServerUnaryStreamer<::PbClientRequest, ::PbClientResponse> *server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_AppendEntriesRPC<WithStreamedUnaryMethod_RequestVoteRPC<WithStreamedUnaryMethod_PutRPC<Service > > > StreamedUnaryService;
+
+	typedef WithStreamedUnaryMethod_AppendEntriesRPC<WithStreamedUnaryMethod_RequestVoteRPC<WithStreamedUnaryMethod_ClientRPC<Service> > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_AppendEntriesRPC<WithStreamedUnaryMethod_RequestVoteRPC<WithStreamedUnaryMethod_PutRPC<Service > > > StreamedService;
+	typedef WithStreamedUnaryMethod_AppendEntriesRPC<WithStreamedUnaryMethod_RequestVoteRPC<WithStreamedUnaryMethod_ClientRPC<Service> > > StreamedService;
 };
 
 
