@@ -11,3 +11,6 @@ In our implementation, user interface is defined as a KV map which supports "Put
 2. Server cluster is fully functional as long as majority of the servers are operational and can communicate with each other and with clients. 
 3. They don't depend on consistent timing. 
 4. A command can complete as soon as a majority of the cluster has responded to a single round of remote procedure calls; a minority of slow servers needn't impacting overall system performance. 
+
+## Implementation
+Use c++ boost library to for multi-thread, and gRPC for remote procedure call.
