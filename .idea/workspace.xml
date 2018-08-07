@@ -14,13 +14,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ae9abb6e-d064-437d-a685-86c1734c862a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/raft/raft.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/raft/raft.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/raft/raft_proto/raft_server.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/raft/raft_proto/raft_server.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hello_proto/hello_rpc_client.cc" beforeDir="false" afterPath="$PROJECT_DIR$/src/hello_proto/hello_rpc_client.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/raft/identities/identity_base.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/raft/identities/identity_base.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/raft/raft_proto/raft_server.cc" beforeDir="false" afterPath="$PROJECT_DIR$/src/raft/raft_proto/raft_server.cc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/test/TestCase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/test/TestCase.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -466,14 +459,7 @@
       <workItem from="1533475924982" duration="16627000" />
       <workItem from="1533598068060" duration="11983000" />
       <workItem from="1533618216713" duration="372000" />
-      <workItem from="1533624837183" duration="2546000" />
-    </task>
-    <task id="LOCAL-00022" summary="working......">
-      <created>1532679887510</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1532679887510</updated>
+      <workItem from="1533624837183" duration="2604000" />
     </task>
     <task id="LOCAL-00023" summary="reconstruct completes, working on identities...">
       <created>1532680161699</created>
@@ -811,11 +797,18 @@
       <option name="project" value="LOCAL" />
       <updated>1533624925449</updated>
     </task>
-    <option name="localTasksCounter" value="71" />
+    <task id="LOCAL-00071" summary="raft algorithm is finished">
+      <created>1533628535651</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1533628535651</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="288277000" />
+    <option name="totallyTimeSpent" value="288335000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -837,7 +830,7 @@
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50297976" side_tool="true" weight="0.25575757" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3260606" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32969698" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49821216" visible="true" weight="0.32729805" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49821216" weight="0.32729805" />
       <window_info id="Structure" order="1" sideWeight="0.21072088" side_tool="true" weight="0.23819591" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49702027" weight="0.12674095" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -896,7 +889,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="data structure" />
     <MESSAGE value="then, take the paper and algorithm seriously..." />
     <MESSAGE value="remove" />
     <MESSAGE value="working" />
@@ -921,7 +913,8 @@
     <MESSAGE value="finished" />
     <MESSAGE value="begin to release" />
     <MESSAGE value="all finish" />
-    <option name="LAST_COMMIT_MESSAGE" value="all finish" />
+    <MESSAGE value="raft algorithm is finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="raft algorithm is finished" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
