@@ -14,3 +14,5 @@ In our implementation, user interface is defined as a KV map which supports "Put
 
 ## Implementation
 Use c++ boost library to for multi-thread, and gRPC for remote procedure call.
+
+### Structure

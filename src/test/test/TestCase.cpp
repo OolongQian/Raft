@@ -955,15 +955,15 @@ void Test1() {
 	auto p = helper.makeServers(3);
 
 	std::atomic<int> follower2Candidate{0}, candidate2Leader{0};
-
 	for (auto &srv : p) {
 		srv->Init();
 		RaftDebugContext &debugContext = srv->GetCtx();
 		debugContext.before_tranform = [&follower2Candidate, &candidate2Leader](IdentityNo from, IdentityNo &to) mutable {
 			if (from == FollowerNo && to == CandidateNo)
 				++follower2Candidate;
-			if (from == CandidateNo && to == LeaderNo)
+			if (from == CandidateNo && to == LeaderNo) {
 				++candidate2Leader;
+			}
 		};
 	}
 
@@ -1134,8 +1134,8 @@ int main() {
 //		std::cout << t.elapsed() * 1000 << std::endl;
 //		if(t.elapsed() * 1000 > 100) break;
 //	}
-//	SJTU::Test1();
-	SJTU::Test2();
+	SJTU::Test1();
+//	SJTU::Test2();
 
 //	SJTU::finalTest();
 //	SJTU::ShutDownComprehensiveAsync();
