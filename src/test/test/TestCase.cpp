@@ -1,3 +1,4 @@
+#include <boost/timer.hpp>
 #include "IdentityTestHelper.h"
 #include "../../../include/raft/raft_proto/raft_server.h"
 #include "../../../src/raft/raft.cpp"
@@ -1056,7 +1057,7 @@ void Test2() {
 			grpc::Status status = client->stub_->ClientRPC(&ctx, msg, &rsp);
 			if (status.ok()) {
 				std::cout << "request message " << i << ": " + msg.key() + " " + msg.val() + ", reply: " << rsp.replymsg()
-									<< std::endl;
+						<< std::endl;
 			} else {
 				std::cout << status.error_code() << " " << status.error_message() << std::endl;
 			}
@@ -1128,8 +1129,13 @@ void Test2() {
 using namespace SJTU;
 
 int main() {
+//	boost::timer t;
+//	while(true) {
+//		std::cout << t.elapsed() * 1000 << std::endl;
+//		if(t.elapsed() * 1000 > 100) break;
+//	}
 //	SJTU::Test1();
-//	SJTU::Test2();
+	SJTU::Test2();
 
 //	SJTU::finalTest();
 //	SJTU::ShutDownComprehensiveAsync();

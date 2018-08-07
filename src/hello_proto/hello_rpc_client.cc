@@ -27,7 +27,13 @@ public:
 
 	grpc::Status SayHello(grpc::ServerContext *context, const HelloRequest *request,
 												HelloResponse *response) override {
-		response->set_reply("hello0 client, your msg is " + request->greeting());
+		if (request->greeting() == "fuck") {
+			std::cout << "server say that you are fucked" << std::endl;
+			sleep(2);
+			response->set_reply("hello0 client, your msg " + request->greeting() + " is blocked");
+		} else {
+			response->set_reply("hello0 client, your msg is " + request->greeting());
+		}
 		return grpc::Status::OK;
 	}
 };
@@ -72,7 +78,6 @@ public:
 			delete call;
 		}
 	}
-private:
 	std::unique_ptr<HelloService::Stub> stub_;
 	grpc::CompletionQueue cq_;
 };
@@ -91,36 +96,60 @@ int main() {
 		server->Wait();
 	});
 
-	boost::thread th1([&]() mutable {
-		sleep(2);
-		server->Shutdown();
-		th.interrupt();
-		th.join();
-	});
-
-	boost::thread th2([&]() mutable {
-		sleep(4);
-		grpc::ServerBuilder builder;
-		builder.AddListeningPort(addr, grpc::InsecureServerCredentials());
-		builder.RegisterService(&service);
-		server = builder.BuildAndStart();
-		server->Wait();
-	});
+//	boost::thread th1([&]() mutable {
+//		sleep(2);
+//		server->Shutdown();
+//		th.interrupt();
+//		th.join();
+//	});
+//
+//	boost::thread th2([&]() mutable {
+//		sleep(4);
+//		grpc::ServerBuilder builder;
+//		builder.AddListeningPort(addr, grpc::InsecureServerCredentials());
+//		builder.RegisterService(&service);
+//		server = builder.BuildAndStart();
+//		server->Wait();
+//	});
 
 	auto channel = grpc::CreateChannel("0.0.0.0:5000", grpc::InsecureChannelCredentials());
 	HelloClient greeter(channel);
 
-	boost::thread thread_ = boost::thread(&HelloClient::AsyncCompleteRpc, &greeter);
+	boost::thread th1([&]() mutable {
+		for (int i = 0; i < 10; i++) {
+			sleep(1);
+			grpc::ClientContext context;
+			HelloRequest request;
+			HelloResponse response;
+			request.set_greeting("fuck");
+			auto status = greeter.stub_->SayHello(&context, request, &response);
+			if (status.ok()) {
+				std::cout << response.reply() << std::endl;
+			} else {
+				std::cout << status.error_code() << ' ' << status.error_message() << std::endl;
+			}
+		}
+	});
 
-	for (int i = 0; i < 10; i++) {
-		sleep(1);
-		auto user = std::string("hello-world-") + std::to_string(i);
-		greeter.SayHello(user);
-	}
-
+	boost::thread th_([&]() mutable {
+		for (int i = 0; i < 10; i++) {
+			sleep(1);
+			grpc::ClientContext context;
+			HelloRequest request;
+			HelloResponse response;
+			request.set_greeting("not fuck");
+			auto status = greeter.stub_->SayHello(&context, request, &response);
+			if (status.ok()) {
+				std::cout << response.reply() << std::endl;
+			} else {
+				std::cout << status.error_code() << ' ' << status.error_message() << std::endl;
+			}
+		}
+	});
+	th1.join();
+	th_.join();
 	sleep(10);
 	server->Shutdown();
 	th.join();
-	thread_.join();
 	return 0;
 }

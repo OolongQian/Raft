@@ -35,7 +35,7 @@ public:
 	void Pause() {
 		eventQueue.Stop();
 		applyQueue.Stop();
-		server_end.paused = true;
+		server_end.Pause();
 		timer.Stop();
 		state.currentIdentity = FollowerNo;    /// if change to be DownNo, it will invoke undesirable function.
 	}
@@ -43,7 +43,7 @@ public:
 	void Resume() {
 		eventQueue.Start();
 		applyQueue.Start();
-		server_end.paused = false;
+		server_end.Resume();
 		IdentityTransform(FollowerNo);
 	}
 

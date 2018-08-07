@@ -228,7 +228,7 @@ void IdentityBase::ProcsClientFromClient(const PbClientRequest *request, PbClien
 	/// launch server_ends to peers.
 	std::vector<std::unique_ptr<RaftPeerClientImpl> > tmp_client_ends;
 	for (const ServerId &srv_id : info.get_srvList()) {
-		if (srv_id == info.get_local()) continue;
+//		if (srv_id == info.get_local()) continue;
 		tmp_client_ends.push_back(std::make_unique<RaftPeerClientImpl>(srv_id));
 	}
 

@@ -19,6 +19,7 @@ void RaftServer::Monitor() {
 	});
 }
 
+
 	void RaftServer::Stop() {
 //		printf("gracefully shutting down, and join monitoring thread...\n");
 		server->Shutdown();
@@ -32,7 +33,15 @@ void RaftServer::Monitor() {
 		service.clientFunc = std::move(f3);
 	}
 
-	grpc::Status
+void RaftServer::Pause() {
+	paused = true;
+}
+
+void RaftServer::Resume() {
+	paused = false;
+}
+
+grpc::Status
 	RaftServer::RaftPeerServiceImpl::AppendEntriesRPC(grpc::ServerContext *context, const PbAppendEntriesRequest *request,
 																										PbAppendEntriesResponse *response) {
 //		response->set_term(100);

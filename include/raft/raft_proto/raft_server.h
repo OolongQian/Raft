@@ -57,6 +57,10 @@ namespace SJTU {
 
 		void Monitor();
 
+		void Pause();
+
+		void Resume();
+
 		void Stop();
 
 	private:
