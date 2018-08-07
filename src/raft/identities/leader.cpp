@@ -47,7 +47,7 @@ void Leader::TimeOutFunc() {
 }
 
 void Leader::SendHeartBeat() {
-	fprintf(stderr, "server %s is issuing sending heartbeat\n", info.get_local().toString().c_str());
+//	fprintf(stderr, "server %s is issuing sending heartbeat\n", info.get_local().toString().c_str());
 
 	/**
 	 * Join by bruteforce.
@@ -65,7 +65,7 @@ void Leader::SendHeartBeat() {
 			PbAppendEntriesResponse response;
 			grpc::ClientContext context;
 
-			context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(50));
+			context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(PEER_TIMEOUT_MILLISECOND));
 			client_ends_[i]->stub_->AppendEntriesRPC(&context, request, &response);
 
 			if (response.success()) {
@@ -167,11 +167,11 @@ void Leader::CheckCommitIndexUpdate() {
 void Leader::ProcsClientFunc(const PbClientRequest *request, PbClientResponse *response) {
 	boost::timer t;
 	while (paused) {
-		if (t.elapsed() > YIELD_TIMEOUT)
+		if (t.elapsed() * 1000 > PEER_TIMEOUT_MILLISECOND)
 			return;
 		std::this_thread::yield();
 	}
-	printf("%lf\n", t.elapsed());
+//	printf("%lf\n", t.elapsed());
 
 
 	if (request->senderid().empty()) {
@@ -182,8 +182,8 @@ void Leader::ProcsClientFunc(const PbClientRequest *request, PbClientResponse *r
 }
 
 void Leader::ProcsClientFromClient(const PbClientRequest *request, PbClientResponse *response) {
-	fprintf(stderr, "server %s is processing client put function, identity %d\n", info.get_local().toString().c_str(),
-					state_.currentIdentity);
+//	fprintf(stderr, "server %s is processing client put function, identity %d\n", info.get_local().toString().c_str(),
+//					state_.currentIdentity);
 	boost::shared_lock<boost::shared_mutex> lk1(state_.curTermMtx, boost::defer_lock);
 	boost::unique_lock<boost::shared_mutex> lk2(state_.prmRepoIdxMtx, boost::defer_lock);
 	boost::lock(lk1, lk2);
@@ -213,8 +213,8 @@ void Leader::ProcsClientFromClient(const PbClientRequest *request, PbClientRespo
 }
 
 void Leader::ProcsClientFromPeer(const PbClientRequest *request, PbClientResponse *response) {
-	fprintf(stderr, "server %s is processing peer put function from %s\n", info.get_local().toString().c_str(),
-					request->senderid().c_str());
+//	fprintf(stderr, "server %s is processing peer put function from %s\n", info.get_local().toString().c_str(),
+//					request->senderid().c_str());
 	Entry log;
 	log.term = state_.currentTerm;
 	log.command = request->command();

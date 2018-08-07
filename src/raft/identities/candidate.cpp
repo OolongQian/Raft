@@ -61,7 +61,7 @@ namespace SJTU {
 				PbRequestVoteResponse response;
 				grpc::ClientContext context;
 
-				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(50));
+				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(PEER_TIMEOUT_MILLISECOND));
 				grpc::Status status = client_ends_[i]->stub_->RequestVoteRPC(&context, request, &response);
 
 				if (!status.ok()) {

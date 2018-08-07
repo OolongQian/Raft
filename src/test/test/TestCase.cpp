@@ -953,32 +953,183 @@ void Test1() {
 	IdentityTestHelper helper;
 	auto p = helper.makeServers(3);
 
+	std::atomic<int> follower2Candidate{0}, candidate2Leader{0};
+
 	for (auto &srv : p) {
 		srv->Init();
+		RaftDebugContext &debugContext = srv->GetCtx();
+		debugContext.before_tranform = [&follower2Candidate, &candidate2Leader](IdentityNo from, IdentityNo &to) mutable {
+			if (from == FollowerNo && to == CandidateNo)
+				++follower2Candidate;
+			if (from == CandidateNo && to == LeaderNo)
+				++candidate2Leader;
+		};
 	}
 
-	RaftDebugContext &debugContext = p.front()->GetCtx();
-	std::atomic<int> follower2Candidate{0}, candidate2Leader;
-	debugContext.before_tranform = [&follower2Candidate](IdentityNo from, IdentityNo &to) mutable {
-		if (from == FollowerNo && to == CandidateNo)
-			++follower2Candidate;
-		if (from == CandidateNo && to == LeaderNo)
-			++candidate2Leader;
-	};
-	p[0]->StartUp();
-//	sleep(1);
-//	p[0]->Pause();
-//	sleep(2);
-//	p[0]->Resume();
+	for (auto &srv : p) {
+		srv->StartUp();
+	}
 	sleep(10);
-	p[0]->ShutDown();
-	printf("initialize one server, transform from follower to candidate for %d time\n", (int) follower2Candidate);
+	for (auto &srv : p) {
+		srv->ShutDown();
+	}
+	printf("begin with 3 servers, follower2Candidate: %d, candidate2Leader %d\n", (int) follower2Candidate,
+				 (int) candidate2Leader);
+}
+
+void Test2() {
+	IdentityTestHelper helper;
+	const std::size_t SrvNum = 3;
+	auto srvs = helper.makeServers(SrvNum);
+
+	for (auto &per_srv : srvs) {
+		per_srv->Init();
+	}
+
+	std::cout << "Test Put method..." << std::endl;
+
+	for (auto &per_srv : srvs) {
+		per_srv->StartUp();
+	}
+	sleep(1);
+
+	std::vector<std::unique_ptr<RaftPeerClientImpl> > clients;
+	for (auto &per_srv : srvs) {
+		clients.push_back(std::make_unique<RaftPeerClientImpl>(per_srv->GetInfo().get_local()));
+	}
+
+	boost::atomic<bool> down[SrvNum];
+	memset(down, false, sizeof(down));
+
+	boost::thread th_down([&]() mutable {
+		for (int i = 0; i < 3; ++i) {
+			boost::this_thread::disable_interruption di;
+			boost::this_thread::sleep_for(boost::chrono::milliseconds(1000));
+			int d = 0;
+			while (true) {
+				if (srvs[d]->GetState().currentIdentity != 2) d = (d + 1) % 3;
+				else break;
+			}
+			down[d] = true;
+			srvs[d]->Pause();
+			boost::this_thread::sleep_for(boost::chrono::milliseconds(4000));
+			down[d] = false;
+			srvs[d]->Resume();
+			{
+				boost::this_thread::restore_interruption ri(di);
+				boost::this_thread::interruption_point();
+			}
+		}
+	});
+
+	for (int i = 0; i < 20; ++i) {
+		/// randomly choose one client to send.
+		int send_to;
+		while (true) {
+			send_to = rand() % clients.size();
+			if (down[send_to]) continue;
+			break;
+		}
+		auto &client = clients[send_to];
+		client->th.join();
+		client->th = boost::thread([&client, i]() mutable {
+			/// make key and value
+			grpc::ClientContext ctx;
+			PbClientRequest msg;
+			PbClientResponse rsp;
+			std::string str_key = "key";
+			std::string str_val = "value";
+			std::string number = "";
+			msg.set_command("Put");
+			int num = i;
+			while (num) {
+				number.insert(number.begin(), char('0' + num % 10));
+				num /= 10;
+			}
+			str_key += number;
+			str_val += number;
+			msg.set_key(str_key);
+			msg.set_val(str_val);
+
+			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(5000));
+			std::cerr << "request message " << i << ": " + msg.key() + " " + msg.val() + " sent" << std::endl;
+			grpc::Status status = client->stub_->ClientRPC(&ctx, msg, &rsp);
+			if (status.ok()) {
+				std::cout << "request message " << i << ": " + msg.key() + " " + msg.val() + ", reply: " << rsp.replymsg()
+									<< std::endl;
+			} else {
+				std::cout << status.error_code() << " " << status.error_message() << std::endl;
+			}
+		});
+		client->th.join();
+		boost::this_thread::sleep_for(boost::chrono::milliseconds(1000));
+	}
+	th_down.interrupt();
+	th_down.join();
+
+	sleep(5);
+	for (auto &per_srv : srvs) {
+		auto m = per_srv->GetKV();
+		std::cout << "KV map for server: " << per_srv->GetInfo().get_local().toString() << std::endl;
+		for (auto elem : m) {
+			std::cout << elem.first << ' ' << elem.second << std::endl;
+		}
+	}
+
+	std::cout << "Test Get method..." << std::endl;
+	for (int i = 0; i < 20; ++i) {
+		/// randomly choose one client to send.
+		int send_to;
+		while (true) {
+			send_to = rand() % clients.size();
+			if (down[send_to]) continue;
+			break;
+		}
+		auto &client = clients[send_to];
+		client->th.join();
+		client->th = boost::thread([&client, i]() mutable {
+			/// make key and value
+			grpc::ClientContext ctx;
+			PbClientRequest msg;
+			PbClientResponse rsp;
+			std::string str_key = "key";
+			std::string str_val = "value";
+			std::string number = "";
+			msg.set_command("Get");
+			int num = i;
+			while (num) {
+				number.insert(number.begin(), char('0' + num % 10));
+				num /= 10;
+			}
+			str_key += number;
+			str_val += number;
+			msg.set_key(str_key);
+			msg.set_val(str_val);
+
+			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(500));
+			std::cerr << "request message " << i << ": " + msg.key() + " " + msg.val() + " sent" << std::endl;
+			grpc::Status status = client->stub_->ClientRPC(&ctx, msg, &rsp);
+			if (status.ok()) {
+				std::cerr << "request message " << i << ": " + msg.key() + " " + msg.val() + ", reply: " << rsp.replymsg()
+									<< std::endl;
+			} else {
+				std::cerr << status.error_code() << " " << status.error_message() << std::endl;
+			}
+		});
+		boost::this_thread::sleep_for(boost::chrono::milliseconds(1000));
+	}
+	for (auto &per_srv : srvs) {
+		printf("log size: %zu commit index: %lld\n", per_srv->GetState().log.length(), per_srv->GetState().commitIndex);
+		per_srv->ShutDown();
+	}
 }
 };
 
 using namespace SJTU;
 
 int main() {
+//	SJTU::Test1();
+//	SJTU::Test2();
 
 //	SJTU::finalTest();
 //	SJTU::ShutDownComprehensiveAsync();
@@ -989,7 +1140,7 @@ int main() {
 //	SJTU::PutBroadcastFromFollower();
 //	SJTU::PutLeaderDirectly();
 //	SJTU::PutBasic();
-	SJTU::Follower_Basic();
+//	SJTU::Follower_Basic();
 //	SJTU::Follower_AppendEntry();
 //	SJTU::Candidate_Basic();
 //	SJTU::CandidateNaive();

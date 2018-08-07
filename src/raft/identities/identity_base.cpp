@@ -10,14 +10,14 @@ void
 SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request, PbAppendEntriesResponse *response) {
 	boost::timer t;
 	while (paused) {
-		if (t.elapsed() > YIELD_TIMEOUT)
+		if (t.elapsed() * 1000 > PEER_TIMEOUT_MILLISECOND)
 			return;
 		std::this_thread::yield();
 	}
-	printf("%lf\n", t.elapsed());
+//	printf("%lf\n", t.elapsed());
 
-	fprintf(stderr, "serverId %s is processing appendEntries RPC, Identity %d\n", info.get_local().toString().c_str(),
-					state_.currentIdentity);
+//	fprintf(stderr, "serverId %s is processing appendEntries RPC, Identity %d\n", info.get_local().toString().c_str(),
+//					state_.currentIdentity);
 
 	response->set_inconsist(false);
 
@@ -71,34 +71,9 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 
 		if (!log.has(index)) {
 			log.insert(cpp_entry, index);
-			if (log.at(index).prmIndex == log.at(index - 1).prmIndex) {
-				fprintf(stderr, "\t 1. %dth element in appendEntry: ", i);
-				Entry entry = log.at(index);
-				Entry entryp = log.at(index - 1);
-				fprintf(stderr, "serverId %s, identity %d\n", info.get_local().toString().c_str(), state_.currentIdentity);
-				fprintf(stderr, "\tserverId %s, previous: %s %s %s %lld %lld %s %lld\n", info.get_local().toString().c_str(),
-								entryp.command.c_str(), entryp.key.c_str(), entryp.val.c_str(), entryp.term, entryp.entryIndex,
-								entryp.replyerId.c_str(), entryp.prmIndex);
-				fprintf(stderr, "\tserverId %s, current: %s %s %s %lld %lld %s %lld\n", info.get_local().toString().c_str(),
-								entry.command.c_str(), entry.key.c_str(), entry.val.c_str(), entry.term, entry.entryIndex,
-								entry.replyerId.c_str(), entry.prmIndex);
-			}
 		} else if (log.has(index) && log.at(index).term != cpp_entry.term) {
-//			response->set_inconsist(true);
 			log.flushToEnd(index);
 			log.insert(cpp_entry, index);
-			if (log.at(index).prmIndex == log.at(index - 1).prmIndex) {
-				fprintf(stderr, "\t 2. %dth element in appendEntry: ", i);
-				Entry entry = log.at(index);
-				Entry entryp = log.at(index - 1);
-				fprintf(stderr, "serverId %s, identity %d\n", info.get_local().toString().c_str(), state_.currentIdentity);
-				fprintf(stderr, "\tserverId %s, previous: %s %s %s %lld %lld %s %lld\n", info.get_local().toString().c_str(),
-								entryp.command.c_str(), entryp.key.c_str(), entryp.val.c_str(), entryp.term, entryp.entryIndex,
-								entryp.replyerId.c_str(), entryp.prmIndex);
-				fprintf(stderr, "\tserverId %s, current: %s %s %s %lld %lld %s %lld\n", info.get_local().toString().c_str(),
-								entry.command.c_str(), entry.key.c_str(), entry.val.c_str(), entry.term, entry.entryIndex,
-								entry.replyerId.c_str(), entry.prmIndex);
-			}
 		} else if (log.has(index) && log.at(index).term == cpp_entry.term)
 			continue;  /// add for completeness.
 	}
@@ -131,11 +106,11 @@ SJTU::IdentityBase::ProcsAppendEntriesFunc(const PbAppendEntriesRequest *request
 void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *request, PbRequestVoteResponse *response) {
 	boost::timer t;
 	while (paused) {
-		if (t.elapsed() > YIELD_TIMEOUT)
+		if (t.elapsed() * 1000 > PEER_TIMEOUT_MILLISECOND)
 			return;
 		std::this_thread::yield();
 	}
-	printf("%lf\n", t.elapsed());
+//	printf("%lf\n", t.elapsed());
 
 
 	fprintf(stderr, "server %s is processing request vote function\n", info.get_local().toString().c_str());
@@ -148,8 +123,8 @@ void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *reques
 		state_.votedFor.clear();
 	}
 
-	fprintf(stderr, "serverId %s is processing requestVote RPC, Identity %d\n", info.get_local().toString().c_str(),
-					state_.currentIdentity);
+//	fprintf(stderr, "serverId %s is processing requestVote RPC, Identity %d\n", info.get_local().toString().c_str(),
+//					state_.currentIdentity);
 	/**
 	 * Default implementation.
 	 * */
@@ -214,11 +189,11 @@ void SJTU::IdentityBase::ProcsRequestVoteFunc(const PbRequestVoteRequest *reques
 void IdentityBase::ProcsClientFunc(const PbClientRequest *request, PbClientResponse *response) {
 	boost::timer t;
 	while (paused) {
-		if (t.elapsed() > YIELD_TIMEOUT)
+		if (t.elapsed() * 1000 > PEER_TIMEOUT_MILLISECOND)
 			return;
 		std::this_thread::yield();
 	}
-	printf("%lf\n", t.elapsed());
+//	printf("%lf\n", t.elapsed());
 
 	/**
 	 * Receive from client
@@ -232,11 +207,11 @@ void IdentityBase::ProcsClientFunc(const PbClientRequest *request, PbClientRespo
 }
 
 void IdentityBase::ProcsClientFromClient(const PbClientRequest *request, PbClientResponse *response) {
-	fprintf(stderr, "server %s is processing client put function\n", info.get_local().toString().c_str());
+//	fprintf(stderr, "server %s is processing client put function\n", info.get_local().toString().c_str());
 	/**
 	 * increment promise index, store promise and cache future handle.
 	 * */
-	static int cnt = 0;
+//	static int cnt = 0;
 	boost::unique_lock<boost::shared_mutex> repoIdxLk(state_.prmRepoIdxMtx);
 	long long cur_prm_index = state_.prmRepoIdx++;
 	repoIdxLk.unlock();
@@ -262,10 +237,13 @@ void IdentityBase::ProcsClientFromClient(const PbClientRequest *request, PbClien
 	/**
 	 * This kind of retry may cause replicated element inside our map, it's horrible.
 	 * */
-	for (int t = 0, retry_time = 1; t < retry_time; ++t) {
-		printf("times %d\n", cnt++);
+
+	int retry_time = 5;
+	for (int t = 0; t < retry_time; ++t) {
+//		printf("times %d\n", cnt++);
 		for (size_t i = 0; i < tmp_client_ends.size(); ++i) {
 			tmp_client_ends[i]->th = boost::thread([&, i]() mutable {
+
 				PbClientRequest redirect_rqs;
 				redirect_rqs.set_command(request->command());
 				redirect_rqs.set_key(request->key());
@@ -274,25 +252,29 @@ void IdentityBase::ProcsClientFromClient(const PbClientRequest *request, PbClien
 				redirect_rqs.set_senderid(info.get_local().toString());
 				redirect_rqs.set_prmindex(cur_prm_index);
 
+				PbClientResponse redirect_rsp;
 				grpc::ClientContext context;
-				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(50));
-				grpc::Status status = tmp_client_ends[i]->stub_->ClientRPC(&context, redirect_rqs, response);
+				context.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(PEER_TIMEOUT_MILLISECOND));
+				grpc::Status status = tmp_client_ends[i]->stub_->ClientRPC(&context, redirect_rqs, &redirect_rsp);
 				if (!status.ok()) {
-					fprintf(stderr, "IdentityBase ProcsPutFunc error, error code: %d, error msg: %s\n", status.error_code(),
-									status.error_message().c_str());
+//					fprintf(stderr, "IdentityBase ProcsPutFunc error, error code: %d, error msg: %s\n", status.error_code(),
+//									status.error_message().c_str());
 				} else {
-					if (response->success()) ++count_success;
+					if (redirect_rsp.success()) ++count_success;
 				}
 			});
 		}
 		for (size_t i = 0; i < tmp_client_ends.size(); ++i) {
 			tmp_client_ends[i]->th.join();
 		}
+		fprintf(stderr, "count success: %d\n", (int) count_success);
 		if (count_success > 1)
 			throw std::runtime_error("two leaders add log");
 		else if (count_success == 1) {
 			break;
 		}
+		boost::this_thread::yield();
+		boost::this_thread::sleep_for(boost::chrono::milliseconds(info.get_electionTimeout() * 2 / retry_time));
 	}
 
 	/**
@@ -303,7 +285,9 @@ void IdentityBase::ProcsClientFromClient(const PbClientRequest *request, PbClien
 		response->set_success(true);
 	}
 	else {
-		response->set_replymsg("Put request respond time exceeded");
+		char reply[100];
+		sprintf(reply, "Client request respond time exceeded, retry %d times, no leader is found", retry_time);
+		response->set_replymsg(std::string(reply));
 		response->set_success(false);
 	}
 }

@@ -1,7 +1,7 @@
 #ifndef RAFT_PROJ_MACRO_H
 #define RAFT_PROJ_MACRO_H
 
-#define YIELD_TIMEOUT 0.1
+#define PEER_TIMEOUT_MILLISECOND 50
 
 #define GEN_COPY(NAME, TYPE)                                                   \
   NAME(const NAME &) = TYPE;                                                   \

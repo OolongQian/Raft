@@ -59,12 +59,13 @@ void Server::StoreData(std::string filename) {
 }
 
 void Server::Resume() {
-	fprintf(stderr, "server %s is resuming\n", info.get_local().toString().c_str());
+//	fprintf(stderr, "server %s is resuming\n", info.get_local().toString().c_str());
 	pRaft->Resume();
 }
 
 void Server::Pause() {
-	fprintf(stderr, "server %s is pausing\n", info.get_local().toString().c_str());
+	fprintf(stderr, "server %s is pausing, current identity: %d\n", info.get_local().toString().c_str(),
+					pRaft->state.currentIdentity);
 	pRaft->Pause();
 }
 };

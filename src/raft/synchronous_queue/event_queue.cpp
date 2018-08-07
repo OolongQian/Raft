@@ -48,7 +48,6 @@ namespace SJTU {
 				cond_.wait(lk, [this] { return !events_.empty(); });
 			}
 			catch (boost::thread_interrupted &) {
-				fprintf(stderr, "event Queue is interrupted\n");
 				lk.unlock();
 				return;
 			}

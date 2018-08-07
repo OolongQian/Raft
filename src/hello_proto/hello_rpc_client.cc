@@ -107,12 +107,6 @@ int main() {
 		server->Wait();
 	});
 
-//	auto channel = grpc::CreateChannel("localhost:5000", grpc::InsecureChannelCredentials());
-//	HelloClient client(channel);
-//
-//	client.SayHello("Worrrlllllddddddddd..........");
-//
-
 	auto channel = grpc::CreateChannel("0.0.0.0:5000", grpc::InsecureChannelCredentials());
 	HelloClient greeter(channel);
 

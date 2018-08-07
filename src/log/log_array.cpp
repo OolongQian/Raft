@@ -109,7 +109,7 @@ void LogArray::insert(const Entry &entry, long long pos) {
 		v.push_back(entry);
 	}
 	else {
-		fprintf(stderr, "LogArray is overwriting an existing entry\n");
+//		fprintf(stderr, "LogArray is overwriting an existing entry\n");
 		v[pos] = entry;
 	}
 }

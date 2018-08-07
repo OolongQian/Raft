@@ -14,13 +14,13 @@ void RaftServer::Monitor() {
 		builder.AddListeningPort(serverId.toString(), grpc::InsecureServerCredentials());
 		builder.RegisterService(&service);  /// itself has implemented required interfaces.
 		server = builder.BuildAndStart();
-			std::cout << "Server listening on " << serverId.toString() << std::endl;
-			server->Wait();
-		});
-	}
+//			std::cout << "Server listening on " << serverId.toString() << std::endl;
+		server->Wait();
+	});
+}
 
 	void RaftServer::Stop() {
-		printf("gracefully shutting down, and join monitoring thread...\n");
+//		printf("gracefully shutting down, and join monitoring thread...\n");
 		server->Shutdown();
 		th.join();
 	}
@@ -36,7 +36,7 @@ void RaftServer::Monitor() {
 	RaftServer::RaftPeerServiceImpl::AppendEntriesRPC(grpc::ServerContext *context, const PbAppendEntriesRequest *request,
 																										PbAppendEntriesResponse *response) {
 //		response->set_term(100);
-		printf("Append Entries RPC received\n");
+//		printf("Append Entries RPC received\n");
 		appendEntriesFunc(request, response);
 		return grpc::Status::OK;
 	}
@@ -45,14 +45,14 @@ void RaftServer::Monitor() {
 	RaftServer::RaftPeerServiceImpl::RequestVoteRPC(grpc::ServerContext *context, const PbRequestVoteRequest *request,
 																									PbRequestVoteResponse *response) {
 //		response->set_term(100);
-		printf("Request Vote RPC received\n");
+//		printf("Request Vote RPC received\n");
 		requestVoteFunc(request, response);
 		return grpc::Status::OK;
 	}
 
 grpc::Status RaftServer::RaftPeerServiceImpl::ClientRPC(grpc::ServerContext *context, const PbClientRequest *request,
 																												PbClientResponse *response) {
-	printf("Put RPC received\n");
+//	printf("Put RPC received\n");
 	clientFunc(request, response);
 	return grpc::Status::OK;
 }
