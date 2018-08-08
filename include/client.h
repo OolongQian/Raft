@@ -9,7 +9,7 @@ class Client {
 public:
 	Client() = default;
 
-	void Config(std::string filename);
+	void Config(std::string addr);
 
 	std::string Put(std::string key, std::string val, int deadline_ms);
 

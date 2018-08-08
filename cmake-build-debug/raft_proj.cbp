@@ -126,6 +126,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/client.cpp">
+			<Option target="raft_proj"/>
+		</Unit>
 		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.grpc.pb.cc">
 			<Option target="raft_proj"/>
 		</Unit>
@@ -148,9 +151,6 @@
 			<Option target="raft_proj"/>
 		</Unit>
 		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/main.cpp">
-			<Option target="raft_proj"/>
-		</Unit>
-		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/my_server.cpp">
 			<Option target="raft_proj"/>
 		</Unit>
 		<Unit filename="/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/identities/candidate.cpp">

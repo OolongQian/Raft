@@ -6,6 +6,12 @@
 
 #IncludeRegexTransform: 
 
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/client.h
+string
+-
+raft/raft_proto/raft_client.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_client.h
+
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/debug_header.h
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/log/log_array.h
@@ -21,18 +27,6 @@ boost/thread/pthread/shared_mutex.hpp
 -
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/macro.h
-
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/my_server.h
-grpcpp/support/status.h
--
-boost/thread.hpp
--
-grpc++/server_builder.h
--
-grpcpp/security/server_credentials.h
--
-raft/raft_proto/raft_peer.grpc.pb.h
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_peer.grpc.pb.h
 
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/identities/candidate.h
 identity_base.h
@@ -79,8 +73,6 @@ identities/identity_base.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/identities/identity_base.h
 ../../src/test/debug_context/raft_debug_context.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/test/debug_context/raft_debug_context.h
-../my_server.h
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/my_server.h
 raft_proto/raft_server.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_server.h
 ../../include/raft/synchronous_queue/event_queue.h
@@ -350,6 +342,16 @@ boost/thread/lock_guard.hpp
 boost/thread.hpp
 -
 
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/client.cpp
+grpcpp/client_context.h
+-
+../include/client.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/client.h
+../include/raft/raft_proto/raft_peer.pb.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_peer.pb.h
+../include/raft/raft_proto/raft_client.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_client.h
+
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.grpc.pb.cc
 hello.pb.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/hello_proto/hello.pb.h
@@ -558,10 +560,6 @@ boost/thread/lock_guard.hpp
 boost/thread.hpp
 -
 
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/my_server.cpp
-../include/my_server.h
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/my_server.h
-
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/identities/candidate.cpp
 future
 -
@@ -707,8 +705,18 @@ IdentityTestHelper.h
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/raft/raft_proto/raft_server.h
 ../../../src/raft/raft.cpp
 /Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/src/raft/raft.cpp
-../../../include/my_server.h
-/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/my_server.h
+../../../include/client.h
+/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/include/client.h
+algorithm
+-
+boost/chrono/duration.hpp
+-
+boost/thread/thread.hpp
+-
+ctime
+-
+random
+-
 
 /usr/local/include/boost/any.hpp
 algorithm

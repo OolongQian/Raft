@@ -16,14 +16,6 @@ public:
 
 	~Leader() override;
 
-//	void ProcsAppendEntriesFunc(const PbAppendEntriesRequest *, PbAppendEntriesResponse *) override;
-
-//	void ProcsRequestVoteFunc(const PbRequestVoteRequest *, PbRequestVoteResponse *) override;
-
-//		CppAppendEntriesResponse ProcsAppendEntriesFunc(CppAppendEntriesRequest) override;
-
-//		CppRequestVoteResponse ProcsRequestVoteFunc(CppRequestVoteRequest) override;
-
 	void init() override;
 
 	void leave() override;
@@ -62,8 +54,6 @@ public:
 	size_t MakeHeartBeat(const ServerId &id, PbAppendEntriesRequest *request);
 
 private:
-	boost::mutex mtx_;
-
 	void ProcsClientFromClient(const PbClientRequest *request, PbClientResponse *response) override;
 
 	void ProcsClientFromPeer(const PbClientRequest *request, PbClientResponse *response) override;

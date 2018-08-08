@@ -140,6 +140,33 @@ raft_proj/fast:
 	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/build
 .PHONY : raft_proj/fast
 
+client.o: client.cpp.o
+
+.PHONY : client.o
+
+# target to build an object file
+client.cpp.o:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/client.cpp.o
+.PHONY : client.cpp.o
+
+client.i: client.cpp.i
+
+.PHONY : client.i
+
+# target to preprocess a source file
+client.cpp.i:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/client.cpp.i
+.PHONY : client.cpp.i
+
+client.s: client.cpp.s
+
+.PHONY : client.s
+
+# target to generate assembly for a file
+client.cpp.s:
+	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/client.cpp.s
+.PHONY : client.cpp.s
+
 hello_proto/hello.grpc.pb.o: hello_proto/hello.grpc.pb.cc.o
 
 .PHONY : hello_proto/hello.grpc.pb.o
@@ -301,33 +328,6 @@ main.s: main.cpp.s
 main.cpp.s:
 	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/main.cpp.s
 .PHONY : main.cpp.s
-
-my_server.o: my_server.cpp.o
-
-.PHONY : my_server.o
-
-# target to build an object file
-my_server.cpp.o:
-	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/my_server.cpp.o
-.PHONY : my_server.cpp.o
-
-my_server.i: my_server.cpp.i
-
-.PHONY : my_server.i
-
-# target to preprocess a source file
-my_server.cpp.i:
-	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/my_server.cpp.i
-.PHONY : my_server.cpp.i
-
-my_server.s: my_server.cpp.s
-
-.PHONY : my_server.s
-
-# target to generate assembly for a file
-my_server.cpp.s:
-	cd "/Users/qiansucheng/Desktop/ACM班/2018夏/ppca/Distributed System/Raft Proj/Raft/cmake-build-debug" && $(MAKE) -f bin/CMakeFiles/raft_proj.dir/build.make bin/CMakeFiles/raft_proj.dir/my_server.cpp.s
-.PHONY : my_server.cpp.s
 
 raft/identities/candidate.o: raft/identities/candidate.cpp.o
 
@@ -801,6 +801,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... hello"
 	@echo "... raft_proj"
+	@echo "... client.o"
+	@echo "... client.i"
+	@echo "... client.s"
 	@echo "... hello_proto/hello.grpc.pb.o"
 	@echo "... hello_proto/hello.grpc.pb.i"
 	@echo "... hello_proto/hello.grpc.pb.s"
@@ -819,9 +822,6 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... my_server.o"
-	@echo "... my_server.i"
-	@echo "... my_server.s"
 	@echo "... raft/identities/candidate.o"
 	@echo "... raft/identities/candidate.i"
 	@echo "... raft/identities/candidate.s"

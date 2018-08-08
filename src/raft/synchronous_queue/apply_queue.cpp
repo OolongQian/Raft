@@ -42,7 +42,8 @@ void ApplyQueue::applyCommand(Entry entry) {
 		sprintf(msg, "Client has associated key %s with value %s", entry.key.c_str(), entry.val.c_str());
 	} else if (entry.command == "Get") {
 //		fprintf(stderr, "I don't know who to apply Get\n");
-		sprintf(msg, "Client has got value %s from key %s", entry.val.c_str(), entry.key.c_str());
+//		sprintf(msg, "Client has got value %s from key %s", entry.val.c_str(), entry.key.c_str());
+		sprintf(msg, "%s", data.at(entry.key).c_str());
 	} else {
 		fprintf(stderr, "Unknown command in applyQueue\n");
 		sprintf(msg, "Unknown command");

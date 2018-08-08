@@ -2,7 +2,13 @@
 #include "IdentityTestHelper.h"
 #include "../../../include/raft/raft_proto/raft_server.h"
 #include "../../../src/raft/raft.cpp"
-#include "../../../include/my_server.h"
+#include "../../../include/client.h"
+#include <algorithm>
+#include <boost/chrono/duration.hpp>
+#include <boost/thread/thread.hpp>
+#include <ctime>
+
+#include <random>
 
 namespace SJTU {
 
@@ -22,10 +28,6 @@ void Follower_Basic() {
 			++follower2Candidate;
 	};
 	p[0]->StartUp();
-//	sleep(1);
-//	p[0]->Pause();
-//	sleep(2);
-//	p[0]->Resume();
 	sleep(10);
 	p[0]->ShutDown();
 	printf("initialize one server, transform from follower to candidate for %d time\n", (int) follower2Candidate);
@@ -995,25 +997,27 @@ void Test2() {
 	sleep(1);
 
 	std::vector<std::unique_ptr<RaftPeerClientImpl> > clients;
+
 	for (auto &per_srv : srvs) {
 		clients.push_back(std::make_unique<RaftPeerClientImpl>(per_srv->GetInfo().get_local()));
 	}
 
 	boost::atomic<bool> down[SrvNum];
 	memset(down, false, sizeof(down));
+	int timeout = srvs.front()->GetInfo().get_electionTimeout();
 
 	boost::thread th_down([&]() mutable {
 		for (int i = 0; i < 3; ++i) {
 			boost::this_thread::disable_interruption di;
-			boost::this_thread::sleep_for(boost::chrono::milliseconds(1000));
+			boost::this_thread::sleep_for(boost::chrono::milliseconds(2 * timeout));
 			int d = 0;
 			while (true) {
-				if (srvs[d]->GetState().currentIdentity != 2) d = (d + 1) % 3;
-				else break;
+				d = (d + 1) % 3;
+				break;
 			}
 			down[d] = true;
 			srvs[d]->Pause();
-			boost::this_thread::sleep_for(boost::chrono::milliseconds(4000));
+			boost::this_thread::sleep_for(boost::chrono::milliseconds(6 * timeout));
 			down[d] = false;
 			srvs[d]->Resume();
 			{
@@ -1022,6 +1026,7 @@ void Test2() {
 			}
 		}
 	});
+
 
 	for (int i = 0; i < 20; ++i) {
 		/// randomly choose one client to send.
@@ -1033,7 +1038,7 @@ void Test2() {
 		}
 		auto &client = clients[send_to];
 		client->th.join();
-		client->th = boost::thread([&client, i]() mutable {
+		client->th = boost::thread([&timeout, &client, i]() mutable {
 			/// make key and value
 			grpc::ClientContext ctx;
 			PbClientRequest msg;
@@ -1052,7 +1057,7 @@ void Test2() {
 			msg.set_key(str_key);
 			msg.set_val(str_val);
 
-			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(5000));
+			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(6 * timeout));
 			std::cerr << "request message " << i << ": " + msg.key() + " " + msg.val() + " sent" << std::endl;
 			grpc::Status status = client->stub_->ClientRPC(&ctx, msg, &rsp);
 			if (status.ok()) {
@@ -1062,13 +1067,13 @@ void Test2() {
 				std::cout << status.error_code() << " " << status.error_message() << std::endl;
 			}
 		});
-		client->th.join();
-		boost::this_thread::sleep_for(boost::chrono::milliseconds(1000));
+//		client->th.join();
+//		boost::this_thread::sleep_for(boost::chrono::milliseconds(10 * timeout));
 	}
 	th_down.interrupt();
 	th_down.join();
+	boost::this_thread::sleep_for(boost::chrono::milliseconds(10 * timeout));
 
-	sleep(5);
 	for (auto &per_srv : srvs) {
 		auto m = per_srv->GetKV();
 		std::cout << "KV map for server: " << per_srv->GetInfo().get_local().toString() << std::endl;
@@ -1088,7 +1093,7 @@ void Test2() {
 		}
 		auto &client = clients[send_to];
 		client->th.join();
-		client->th = boost::thread([&client, i]() mutable {
+		client->th = boost::thread([&timeout, &client, i]() mutable {
 			/// make key and value
 			grpc::ClientContext ctx;
 			PbClientRequest msg;
@@ -1107,7 +1112,7 @@ void Test2() {
 			msg.set_key(str_key);
 			msg.set_val(str_val);
 
-			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(500));
+			ctx.set_deadline(std::chrono::system_clock::now() + std::chrono::milliseconds(6 * timeout));
 			std::cerr << "request message " << i << ": " + msg.key() + " " + msg.val() + " sent" << std::endl;
 			grpc::Status status = client->stub_->ClientRPC(&ctx, msg, &rsp);
 			if (status.ok()) {
@@ -1117,38 +1122,107 @@ void Test2() {
 				std::cerr << status.error_code() << " " << status.error_message() << std::endl;
 			}
 		});
-		boost::this_thread::sleep_for(boost::chrono::milliseconds(1000));
+		boost::this_thread::sleep_for(boost::chrono::milliseconds(2 * timeout));
 	}
 	for (auto &per_srv : srvs) {
 		printf("log size: %zu commit index: %lld\n", per_srv->GetState().log.length(), per_srv->GetState().commitIndex);
 		per_srv->ShutDown();
 	}
 }
+
+template<class T>
+T intRand(T lb, T ub) {
+	static thread_local std::random_device rd;
+	static thread_local std::mt19937 generator(rd());
+	std::uniform_int_distribution<T> distribution(lb, ub);
+	return distribution(generator);
+}
+
 };
 
 using namespace SJTU;
 
 int main() {
-//	boost::timer t;
-//	while(true) {
-//		std::cout << t.elapsed() * 1000 << std::endl;
-//		if(t.elapsed() * 1000 > 100) break;
-//	}
-	SJTU::Test1();
-//	SJTU::Test2();
+	using namespace std::chrono_literals;
 
-//	SJTU::finalTest();
-//	SJTU::ShutDownComprehensiveAsync();
-//	SJTU::ShutDownNonLeaderComprehensiveAsync();
-//	SJTU::PutComprehensiveAsync();
-//	SJTU::PutFollowerAsync();
-//	SJTU::PutLeaderAsync();
-//	SJTU::PutBroadcastFromFollower();
-//	SJTU::PutLeaderDirectly();
-//	SJTU::PutBasic();
-//	SJTU::Follower_Basic();
-//	SJTU::Follower_AppendEntry();
-//	SJTU::Candidate_Basic();
-//	SJTU::CandidateNaive();
+	srand(time(nullptr));
+	std::string filename1 = "raft_0.json";
+	Server server1(filename1);
+
+	std::string filename2 = "raft_1.json";
+	Server server2(filename2);
+	std::string filename3 = "raft_2.json";
+	Server server3(filename3);
+//  server2.shutdown();
+//  server3.shutdown();
+
+	boost::this_thread::sleep_for(boost::chrono::seconds(2));
+	std::string addr = "127.0.0.1:50000";
+	Client client;
+	client.Config(addr);
+
+	server1.Init();
+	server2.Init();
+	server3.Init();
+	server1.StartUp();
+	server2.StartUp();
+	server3.StartUp();
+
+	std::vector<std::thread> ts;
+	for (char ch = 'a'; ch <= 'z'; ++ch) {
+		ts.emplace_back(std::thread([ch, &client] {
+			std::this_thread::sleep_for(std::chrono::milliseconds(intRand(30, 50)));
+			std::string key = {ch};
+			std::string val = {(char) std::toupper(ch)};
+			client.Put(key, val, 50000);
+		}));
+	}
+	for (auto &t : ts)
+		t.join();
+
+//  server2.start();
+//  server3.start();
+
+	std::atomic<int> fucked{0};
+
+	std::this_thread::sleep_for(2s);
+	ts.clear();
+	for (char ch = 'a'; ch <= 'z'; ++ch) {
+		ts.emplace_back(std::thread([ch, &client, &fucked] {
+			std::this_thread::sleep_for(std::chrono::milliseconds(intRand(30, 50)));
+			std::string key = {ch};
+			std::string ans = {(char) std::toupper(ch)};
+			try {
+				auto val = client.Get(key, 50000);
+				if (val != ans)
+					throw;
+			} catch (...) {
+				++fucked;
+			}
+		}));
+	}
+	for (auto &t : ts)
+		t.join();
+
+	std::cout << "Fucked = " << fucked << std::endl;
+
+	//    boost::this_thread::sleep_for(boost::chrono::seconds(2));
+	//    boost::thread t1(std::bind(&Client::Put, &client, "LZY", "DAZHAOGE",
+	//    5000)); t1.join(); boost::thread t2(std::bind(&Client::Get, &client,
+	//    "LZY", 5000)); t2.join(); boost::thread t3(std::bind(&Client::Put,
+	//    &client, "QSC", "DANIUGE", 5000)); t3.join(); boost::thread
+	//    t4(std::bind(&Client::Get, &client, "QSC", 5000)); t4.join();
+	//    boost::thread t5(std::bind(&Client::Put, &client, "RYW", "DABAOGE",
+	//    5000)); t5.join(); boost::thread t6(std::bind(&Client::Get, &client,
+	//    "RYW", 5000)); t6.join();
+
+	server1.ShutDown();
+	server2.ShutDown();
+	server3.ShutDown();
+
+	/*server3.shutdown();
+	boost::this_thread::sleep_for(boost::chrono::seconds(2));
+	server3.restart();
+	boost::this_thread::sleep_for(boost::chrono::seconds(2));*/
 	return 0;
 }

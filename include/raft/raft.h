@@ -8,7 +8,6 @@
 #include "identities/leader.h"
 #include "identities/identity_base.h"
 #include "../../src/test/debug_context/raft_debug_context.h"
-#include "../my_server.h"
 #include "raft_proto/raft_server.h"
 #include "../../include/raft/synchronous_queue/event_queue.h"
 #include "synchronous_queue/apply_queue.h"
